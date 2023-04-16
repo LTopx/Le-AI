@@ -90,6 +90,9 @@ devDependencies:
   '@tailwindcss/typography':
     specifier: 0.5.9
     version: 0.5.9(tailwindcss@3.3.1)
+  '@types/math-random':
+    specifier: ^1.0.0
+    version: 1.0.0
   '@types/react-syntax-highlighter':
     specifier: ^15.5.6
     version: 15.5.6
@@ -1854,6 +1857,10 @@ packages:
   /@types/katex@0.16.0:
     resolution: {integrity: sha512-hz+S3nV6Mym5xPbT9fnO8dDhBFQguMYpY0Ipxv06JMi1ORgnEM4M1ymWDUhUNer3ElLmT583opRo4RzxKmh9jw==}
     dev: false
+
+  /@types/math-random@1.0.0:
+    resolution: {integrity: sha512-vFiXGnKwCBILyNq1u1+8Kr4dTEtjc3LuhQFGBNpgyXrSOfe/rmU8TcM+ec16SrjStmzVgmY1z3If8VGnqOINgw==}
+    dev: true
 
   /@types/mathjax@0.0.37:
     resolution: {integrity: sha512-y0WSZBtBNQwcYipTU/BhgeFu1EZNlFvUNCmkMXV9kBQZq7/o5z82dNVyH3yy2Xv5zzeNeQoHSL4Xm06+EQiH+g==}

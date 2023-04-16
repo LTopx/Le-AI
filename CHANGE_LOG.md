@@ -7,3 +7,4 @@
 ### Changed
 
 - fixed pnpm-locl.yaml bug
+- fixed @types/math-random bug
