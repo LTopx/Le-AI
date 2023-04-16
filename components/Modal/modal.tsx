@@ -4,7 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import type { IModalPropTypes } from "./types";
 
 const Modal: React.FC<IModalPropTypes> = (props) => {
-  const { title, open, children, onClose, width = 520 } = props;
+  const { title = "Title", open, children, onClose, width = 520 } = props;
 
   const [isEnter, setIsEnter] = React.useState(true);
   const [isLeave, setIsLeave] = React.useState(false);
@@ -57,7 +57,7 @@ const Modal: React.FC<IModalPropTypes> = (props) => {
         >
           <div>
             <div className="relative h-14 flex items-center px-5">
-              <span className="font-bold text-lg">{title || "Title"}</span>
+              <span className="font-bold text-lg">{title}</span>
               <div
                 onClick={hideModal}
                 className="absolute text-black/40 hover:text-black transition-colors right-5 cursor-pointer w-6 h-6 flex justify-center items-center"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { AiOutlineCopy, AiOutlineCheck } from "react-icons/ai";
 import { useClipboard } from "l-hooks";
 
@@ -8,7 +8,7 @@ interface CopyIconProps {
 }
 
 const CopyIcon: React.FC<CopyIconProps> = ({ className, content }) => {
-  const [copySuccess, setCopySuccess] = useState(false);
+  const [copySuccess, setCopySuccess] = React.useState(false);
   const { copy } = useClipboard();
 
   const onCopy = () => {

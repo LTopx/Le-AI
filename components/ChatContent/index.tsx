@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import type { ChatItem } from "@/hooks/useChannel";
 import { MemoizedReactMarkdown } from "./reactMarkdown";
 import rehypeMathjax from "rehype-mathjax";

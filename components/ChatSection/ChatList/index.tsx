@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import classNames from "classnames";
 import { useDateFormat } from "l-hooks";
 import { CopyIcon, ChatContent } from "@/components";

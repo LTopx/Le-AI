@@ -1,5 +1,6 @@
 import * as React from "react";
 import classNames from "classnames";
+import { useTranslation } from "next-i18next";
 import { v4 as uuidv4 } from "uuid";
 import { useChatLoading, useChatAbort } from "@/state";
 import type { ChatItem } from "@/hooks/useChannel";
@@ -26,6 +27,8 @@ const ChatFooter: React.FC = () => {
   // ref
   const inputRef = React.useRef<any>(null);
 
+  const { t } = useTranslation("chat");
+  const { t: tPrompt } = useTranslation("prompt");
   const scrollToBottom = useScrollToBottom();
   const { decoder } = useStreamDecoder();
 
@@ -35,6 +38,8 @@ const ChatFooter: React.FC = () => {
   const findChannel = channel.list.find(
     (item) => item.channel_id === channel.activeId
   );
+
+  const placeholder = t("type-message");
 
   const onInput = () => {
     inputRef.current.style.height = "auto";
@@ -64,7 +69,7 @@ const ChatFooter: React.FC = () => {
   // stop generate or regenerate
   const onGenerate = () => {
     if (loadingFinish) {
-      toast.error("Canceled");
+      toast.error(t("canceled"));
       chatAbort?.abort();
       setLoadingStart(false);
       setLoadingFinish(false);
@@ -94,7 +99,7 @@ const ChatFooter: React.FC = () => {
   const send = async () => {
     if (loadingFinish) return;
     if (!inputValue.trim()) {
-      return toast.error("Please enter a message", {
+      return toast.error(t("enter-message"), {
         id: "empty-message",
         duration: 2000,
       });
@@ -194,8 +199,7 @@ const ChatFooter: React.FC = () => {
     }));
     chat_list.push({
       role: "system",
-      content:
-        "给这段对话拟一段标题。只返回标题文本即可，无需添加其他修饰。不超过20个字",
+      content: tPrompt("get-title"),
     });
     fetch("/api/gpt", {
       method: "post",
@@ -235,12 +239,12 @@ const ChatFooter: React.FC = () => {
           >
             {loadingFinish ? (
               <>
-                <BsStop size={20} /> Stop Generating
+                <BsStop size={20} /> {t("stop-generate")}
               </>
             ) : (
               <>
                 <AiOutlineRedo size={20} />
-                Regenerate response
+                {t("re-generate")}
               </>
             )}
           </div>
@@ -258,7 +262,7 @@ const ChatFooter: React.FC = () => {
         <textarea
           className="bg-transparent rounded-md h-full outline-none text-sm w-full max-h-56 py-3 px-4 resize-none block"
           ref={inputRef}
-          placeholder="Type a message..."
+          placeholder={placeholder}
           rows={1}
           onInput={onInput}
           onChange={onChange}

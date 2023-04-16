@@ -1,0 +1,6 @@
+{
+  "model": "LLM",
+  "set-openai-key": "Set Your OpenAI Key",
+  "setting": "Setting",
+  "theme": "Theme"
+}

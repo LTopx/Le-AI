@@ -4,7 +4,14 @@ import { AiOutlineClose } from "react-icons/ai";
 import type { IDrawerPropTypes } from "./types";
 
 const Drawer: React.FC<IDrawerPropTypes> = React.memo((props) => {
-  const { className, open, children, width = 378, onClose } = props;
+  const {
+    className,
+    title = "Title",
+    open,
+    children,
+    width = 378,
+    onClose,
+  } = props;
 
   const [isEnter, setIsEnter] = React.useState(true);
   const [isLeave, setIsLeave] = React.useState(false);
@@ -58,7 +65,7 @@ const Drawer: React.FC<IDrawerPropTypes> = React.memo((props) => {
         >
           <div>
             <div className="flex h-14 px-4 items-center relative">
-              <span className="font-bold text-lg">Title</span>
+              <span className="font-bold text-lg">{title}</span>
               <div
                 onClick={hideDrawer}
                 className="flex h-14 transition-colors right-0 text-black/40 w-14 absolute justify-center items-center hover:text-black"

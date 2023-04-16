@@ -1,4 +1,5 @@
-import React from "react";
+import * as React from "react";
+import { useTranslation } from "next-i18next";
 import { useClipboard } from "l-hooks";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const CodeBlock: React.FC<Props> = React.memo(({ language, value }) => {
+  const { t } = useTranslation("chat");
   const { copy } = useClipboard();
   const [copied, setCopied] = React.useState(false);
 
@@ -34,11 +36,12 @@ const CodeBlock: React.FC<Props> = React.memo(({ language, value }) => {
           >
             {copied ? (
               <>
-                <AiOutlineCheck className="text-[#52c41a]" size={18} /> Copied!
+                <AiOutlineCheck className="text-[#52c41a] mr-1" size={18} />
+                {t("copied")}!
               </>
             ) : (
               <>
-                <AiOutlineCopy size={18} /> Copy code
+                <AiOutlineCopy className="mr-1" size={18} /> {t("copy-code")}
               </>
             )}
           </button>

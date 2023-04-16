@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useOpenAIKey } from "@/hooks";
 import { ScrollToBottom } from "@/components";
 import ChatList from "./ChatList";

@@ -1,0 +1,6 @@
+{
+  "model": "大语言模型",
+  "set-openai-key": "请先配置 OpenAI Key",
+  "setting": "设置",
+  "theme": "主题"
+}

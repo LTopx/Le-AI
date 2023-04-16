@@ -1,0 +1,9 @@
+{
+  "canceled": "已取消",
+  "copied": "已复制",
+  "copy-code": "复制代码",
+  "enter-message": "请输入会话内容",
+  "re-generate": "重新生成",
+  "stop-generate": "停止生成",
+  "type-message": "请输入聊天内容（Enter发送）"
+}

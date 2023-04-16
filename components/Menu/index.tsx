@@ -1,5 +1,6 @@
-import React from "react";
+import * as React from "react";
 import classNames from "classnames";
+import { useTranslation } from "next-i18next";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsChatSquareText } from "react-icons/bs";
 import { useDateFormat } from "l-hooks";
@@ -7,9 +8,10 @@ import { v4 as uuidv4 } from "uuid";
 import { useChannel, initChannelList } from "@/hooks";
 
 const Menu: React.FC = () => {
-  const [channel, setChannel] = useChannel();
-
+  const { t } = useTranslation("menu");
   const { format } = useDateFormat();
+
+  const [channel, setChannel] = useChannel();
 
   const onAddChannel = () => {
     const channel_id = uuidv4();
@@ -34,7 +36,8 @@ const Menu: React.FC = () => {
 
   const onDeleteChannel = (e: any, id: string) => {
     e.stopPropagation();
-    if (!confirm("Are you sure delete this conversation?")) return;
+    const confirmMsg = t("delete-conversation");
+    if (!confirm(confirmMsg)) return;
 
     if (channel.list.length <= 1) {
       setChannel((channel) => {
@@ -59,7 +62,7 @@ const Menu: React.FC = () => {
         onClick={onAddChannel}
         className="rounded-lg cursor-pointer flex bg-[#678fff] h-12 text-white mb-2 transition-colors justify-center items-center hover:bg-[#678fff]/80"
       >
-        New Chat
+        {t("new-chat")}
       </div>
       <div className="h-pcMenu overflow-y-auto">
         {channel.list.map((item) => (
@@ -74,11 +77,13 @@ const Menu: React.FC = () => {
             <div className="flex justify-between items-center">
               <div className="font-medium text-sm text-ellipsis max-w-[26ch] pl-5 relative overflow-hidden whitespace-nowrap">
                 <BsChatSquareText className="top-[50%] left-0 translate-y-[-50%] absolute" />
-                {item.channel_name || "New Conversation"}
+                {item.channel_name || t("new-conversation")}
               </div>
             </div>
             <div className="flex text-[#858b96] justify-between group-hover:text-[#6e737b]">
-              <div>{item.chat_list.length} messages</div>
+              <div>
+                {item.chat_list.length} {t("messages")}
+              </div>
               <div className="transition-opacity text-[#858b96] group-hover:opacity-0">
                 {item.chat_list.length
                   ? item.chat_list.at(-1)?.time
