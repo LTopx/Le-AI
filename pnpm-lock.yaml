@@ -17,7 +17,7 @@ dependencies:
     specifier: 18.0.11
     version: 18.0.11
   ahooks:
-    specifier: ^3.7.6
+    specifier: 3.7.6
     version: 3.7.6(react@18.2.0)
   autoprefixer:
     specifier: 10.4.14
