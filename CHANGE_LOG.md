@@ -4,6 +4,10 @@
 
 > 2023-04-18
 
+### Fixed
+
+- fixed: prevents changing the session title when OpenAI Key is not configured
+
 ### Add
 
 - feat: can change conversation title now

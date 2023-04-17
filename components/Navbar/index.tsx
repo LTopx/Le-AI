@@ -23,7 +23,10 @@ const Navbar: React.FC = () => {
 
   const onOpenSetting = () => settingRef.current?.init();
 
-  const onChangeTitle = () => changeTitleRef.current?.init();
+  const onChangeTitle = () => {
+    if (!openAIKey) return;
+    changeTitleRef.current?.init();
+  };
 
   const activeChannel = channel.list.find(
     (item) => item.channel_id === channel.activeId
@@ -45,10 +48,12 @@ const Navbar: React.FC = () => {
           {openAIKey
             ? activeChannel?.channel_name || tMenu("new-conversation")
             : tNav("set-openai-key")}
-          <AiOutlineEdit
-            size={20}
-            className="absolute right-0 top-[50%] translate-y-[-50%]"
-          />
+          {!!openAIKey && (
+            <AiOutlineEdit
+              size={20}
+              className="absolute right-0 top-[50%] translate-y-[-50%]"
+            />
+          )}
         </div>
         <div
           onClick={onOpenSetting}
