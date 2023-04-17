@@ -30,10 +30,11 @@ const MobileMenu: React.FC = () => {
       channel.activeId = channel_id;
       return channel;
     });
+    onClose();
   };
 
   const onChangeChannel = (id: string) => {
-    if (id === channel.activeId) return;
+    if (id === channel.activeId) return onClose();
     setChannel((channel) => {
       channel.activeId = id;
       return channel;
@@ -84,7 +85,7 @@ const MobileMenu: React.FC = () => {
               key={item.channel_id}
               onClick={() => onChangeChannel(item.channel_id)}
               className={classNames(
-                "rounded-lg mt-1 cursor-pointer overflow-hidden relative flex flex-col h-16 text-xs text-base-color px-[0.5rem] transition-colors gap-1 group justify-center hover:bg-menu-hover",
+                "rounded-lg mt-1 overflow-hidden relative flex flex-col h-16 text-xs text-base-color px-[0.5rem] gap-1 justify-center",
                 { "!bg-menu-active": item.channel_id === channel.activeId }
               )}
             >
@@ -93,7 +94,7 @@ const MobileMenu: React.FC = () => {
                   <BsChatSquareText className="top-[50%] left-0 translate-y-[-50%] absolute" />
                   {item.channel_name || t("new-conversation")}
                 </div>
-                <div className="transition-opacity text-[#858b96] group-hover:opacity-0">
+                <div className="text-[#858b96]">
                   {item.chat_list.length
                     ? item.chat_list.at(-1)?.time
                       ? format(
@@ -104,7 +105,7 @@ const MobileMenu: React.FC = () => {
                     : ""}
                 </div>
               </div>
-              <div className="text-[#858b96] group-hover:text-[#6e737b]">
+              <div className="text-[#858b96]">
                 {item.chat_list.length} {t("messages")}
               </div>
               <AiOutlineDelete

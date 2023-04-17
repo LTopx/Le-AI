@@ -5,14 +5,15 @@ export const config = {
 const handler = async (req: Request) => {
   const Authorization = req.headers.get("Authorization") || "";
   const { chat_list } = await req.json();
-  const { OPENAI_API_PROXY, OPENAI_API_KEY } = process.env;
+  const { OPENAI_API_PROXY } = process.env;
 
-  const fetchURL = OPENAI_API_PROXY || "https://api.openai.com";
+  const proxyURL = OPENAI_API_PROXY || "https://api.openai.com";
+  const fetchURL = proxyURL + "/v1/chat/completions";
 
   const response = await fetch(fetchURL, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${OPENAI_API_KEY || Authorization}`,
+      Authorization: `Bearer ${Authorization}`,
     },
     method: "POST",
     body: JSON.stringify({

@@ -1,5 +1,6 @@
 {
   "canceled": "已取消",
+  "clear-current-conversation": "确认清空当前会话内容？",
   "copied": "已复制",
   "copy-code": "复制代码",
   "enter-message": "请输入会话内容",

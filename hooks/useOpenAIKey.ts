@@ -28,7 +28,10 @@ const useOpenAIKey = (): UseOpenAIKeyReturn => {
   const updateOpenAIKey = useStore((state) => state.update);
 
   React.useEffect(() => {
-    const localOpenaiKey = localStorage.getItem("openaiKey") || "";
+    const localOpenaiKey =
+      localStorage.getItem("openaiKey") ||
+      process.env.NEXT_PUBLIC_OPENAI_API_KEY ||
+      "";
     updateOpenAIKey(localOpenaiKey);
   }, []);
 

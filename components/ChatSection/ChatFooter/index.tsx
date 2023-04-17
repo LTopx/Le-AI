@@ -4,7 +4,12 @@ import { useTranslation } from "next-i18next";
 import { v4 as uuidv4 } from "uuid";
 import { useChatLoading, useChatAbort } from "@/state";
 import type { ChatItem } from "@/hooks/useChannel";
-import { AiOutlineSend, AiOutlineLoading, AiOutlineRedo } from "react-icons/ai";
+import {
+  AiOutlineSend,
+  AiOutlineLoading,
+  AiOutlineRedo,
+  AiOutlineClear,
+} from "react-icons/ai";
 import { BsStop } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
@@ -221,6 +226,19 @@ const ChatFooter: React.FC = () => {
     });
   };
 
+  const clearNowConversation = () => {
+    const confirmMsg = t("clear-current-conversation");
+    if (!confirm(confirmMsg)) return;
+    setChannel((channel) => {
+      const { activeId, list } = channel;
+      const findChannel = list.find((item) => item.channel_id === activeId);
+      if (!findChannel) return channel;
+      findChannel.chat_list = [];
+      findChannel.channel_name = "";
+      return channel;
+    });
+  };
+
   React.useEffect(() => {
     resetInput();
     if (!isMobile()) inputRef.current?.focus();
@@ -251,41 +269,51 @@ const ChatFooter: React.FC = () => {
         </div>
       )}
 
-      <div
-        className={classNames(
-          "bg-white border rounded-md transition-colors relative hover:border-[#4096ff] pr-5",
-          {
-            "border-[#4096ff] shadow-[0_0_0_2px_rgba(5,145,255,.1)]": isFocus,
-          }
-        )}
-      >
-        <textarea
-          className="bg-transparent rounded-md h-full outline-none text-sm w-full max-h-56 py-3 px-4 resize-none block"
-          ref={inputRef}
-          placeholder={placeholder}
-          rows={1}
-          onInput={onInput}
-          onChange={onChange}
-          value={inputValue}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onKeyDown={onKeyDown}
-        />
-        {loadingFinish ? (
-          <div className="rounded-md text-primary cursor-pointer flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center hover:bg-[#e3e5e5]">
-            <AiOutlineLoading size={24} className="animate-spin" />
-          </div>
-        ) : (
+      <div className="flex">
+        <div className="flex items-end">
           <div
-            onClick={sendMessage}
-            className={classNames(
-              "rounded-md cursor-pointer text-disabled flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center hover:bg-[#e3e5e5]",
-              inputValue ? "!text-primary" : ""
-            )}
+            onClick={clearNowConversation}
+            className="w-8 h-[2.75rem] flex items-center cursor-pointer transition-colors hover:text-[#678fff]"
           >
-            <AiOutlineSend size={24} />
+            <AiOutlineClear size={24} />
           </div>
-        )}
+        </div>
+        <div
+          className={classNames(
+            "flex-1 bg-white border rounded-md transition-colors relative hover:border-[#4096ff] pr-5",
+            {
+              "border-[#4096ff] shadow-[0_0_0_2px_rgba(5,145,255,.1)]": isFocus,
+            }
+          )}
+        >
+          <textarea
+            className="bg-transparent rounded-md h-full outline-none text-sm w-full max-h-56 py-3 px-4 resize-none block"
+            ref={inputRef}
+            placeholder={placeholder}
+            rows={1}
+            onInput={onInput}
+            onChange={onChange}
+            value={inputValue}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onKeyDown={onKeyDown}
+          />
+          {loadingFinish ? (
+            <div className="rounded-md text-primary cursor-pointer flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center hover:bg-[#e3e5e5]">
+              <AiOutlineLoading size={24} className="animate-spin" />
+            </div>
+          ) : (
+            <div
+              onClick={sendMessage}
+              className={classNames(
+                "rounded-md cursor-pointer text-disabled flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center hover:bg-[#e3e5e5]",
+                inputValue ? "!text-primary" : ""
+              )}
+            >
+              <AiOutlineSend size={24} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
