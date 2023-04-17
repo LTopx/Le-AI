@@ -1,6 +1,7 @@
 export interface IModalPropTypes extends React.PropsWithChildren {
-  title?: React.ReactNode;
-  open: boolean;
-  width?: number;
+  maskClosable?: boolean;
   onClose: () => void;
+  open: boolean;
+  title?: React.ReactNode;
+  width?: number;
 }

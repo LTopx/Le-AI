@@ -13,13 +13,14 @@ import {
 import { BsStop } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
-import { useChannel, useOpenAIKey, useStreamDecoder } from "@/hooks";
+import { useChannel, useOpenAIKey, useProxy, useStreamDecoder } from "@/hooks";
 import { useScrollToBottom } from "@/components";
 import { isMobile } from "@/utils";
 
 const ChatFooter: React.FC = () => {
   // data
   const [openAIKey] = useOpenAIKey();
+  const [proxyUrl] = useProxy();
   const [channel, setChannel] = useChannel();
   const [inputValue, setInputValue] = React.useState<string>("");
   const [isFocus, setIsFocus] = React.useState<boolean>(false);
@@ -144,6 +145,7 @@ const ChatFooter: React.FC = () => {
         },
         signal: controller.signal,
         body: JSON.stringify({
+          proxyUrl,
           chat_list: chat_list.map((item) => ({
             role: item.role,
             content: item.content,
@@ -212,7 +214,7 @@ const ChatFooter: React.FC = () => {
         "Content-Type": "application/json",
         Authorization: openAIKey,
       },
-      body: JSON.stringify({ chat_list }),
+      body: JSON.stringify({ proxyUrl, chat_list }),
     }).then(async (response) => {
       if (!response.ok || !response.body) return;
       decoder(response.body.getReader(), (content: string) => {

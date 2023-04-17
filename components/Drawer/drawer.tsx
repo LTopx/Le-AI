@@ -5,10 +5,11 @@ import type { IDrawerPropTypes } from "./types";
 
 const Drawer: React.FC<IDrawerPropTypes> = React.memo((props) => {
   const {
-    className,
-    title = "Title",
-    open,
     children,
+    className,
+    maskClosable = true,
+    open,
+    title = "Title",
     width = 378,
     onClose,
   } = props;
@@ -19,6 +20,10 @@ const Drawer: React.FC<IDrawerPropTypes> = React.memo((props) => {
   const stopHideDrawer = (e: any) => e.stopPropagation();
 
   const hideDrawer = () => onClose?.();
+
+  const onClickMask = () => {
+    if (maskClosable) onClose?.();
+  };
 
   React.useEffect(() => {
     let openTimer: NodeJS.Timer;
@@ -50,7 +55,7 @@ const Drawer: React.FC<IDrawerPropTypes> = React.memo((props) => {
           "animate-fadeOut": isLeave,
         })}
       />
-      <div onClick={hideDrawer} className="inset-0 z-[1000] fixed">
+      <div onClick={onClickMask} className="inset-0 z-[1000] fixed">
         <div
           onClick={stopHideDrawer}
           className={classNames("bg-white absolute inset-y-0 left-0", {

@@ -3,13 +3,14 @@ import { useTranslation } from "next-i18next";
 import { useMobileMenuOpen } from "@/state";
 import { Modal } from "@/components";
 import { AiOutlineMenuUnfold, AiOutlineSetting } from "react-icons/ai";
-import { useOpenAIKey, useChannel } from "@/hooks";
+import { useChannel, useOpenAIKey, useProxy } from "@/hooks";
 
 const Navbar: React.FC = () => {
   const { t: tMenu } = useTranslation("menu");
   const { t: tNav } = useTranslation("nav");
-  const [openAIKey, setOpenAIKey] = useOpenAIKey();
   const [channel] = useChannel();
+  const [openAIKey, setOpenAIKey] = useOpenAIKey();
+  const [proxyUrl, setProxyUrl] = useProxy();
   const [open, setOpen] = React.useState(false);
   const setMobileMenuOpen = useMobileMenuOpen((state) => state.update);
 
@@ -20,8 +21,6 @@ const Navbar: React.FC = () => {
   const onOpenSetting = () => setOpen(true);
 
   const onClose = () => setOpen(false);
-
-  const onChange = (e: any) => setOpenAIKey(e.target.value);
 
   const activeChannel = channel.list.find(
     (item) => item.channel_id === channel.activeId
@@ -48,7 +47,13 @@ const Navbar: React.FC = () => {
           <AiOutlineSetting size={24} />
         </div>
       </div>
-      <Modal title={settingText} width={600} open={open} onClose={onClose}>
+      <Modal
+        maskClosable={false}
+        title={settingText}
+        width={600}
+        open={open}
+        onClose={onClose}
+      >
         <div className="border-b flex border-slate-100 py-2 px-6 items-center justify-between">
           <div className="font-semibold text-sm">API key</div>
           <div className="text-xs">
@@ -57,7 +62,18 @@ const Navbar: React.FC = () => {
               type="password"
               placeholder="Set Your OpenAI Key"
               value={openAIKey}
-              onChange={onChange}
+              onChange={(e) => setOpenAIKey(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="border-b flex border-slate-100 py-2 px-6 items-center justify-between">
+          <div className="font-semibold text-sm">{tNav("proxy-url")}</div>
+          <div className="text-xs">
+            <input
+              className="border rounded-md p-2"
+              placeholder="Set Your OpenAI Key"
+              value={proxyUrl}
+              onChange={(e) => setProxyUrl(e.target.value)}
             />
           </div>
         </div>

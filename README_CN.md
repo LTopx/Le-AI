@@ -14,10 +14,10 @@ L-GPT 是一项开源项目，借助 OpenAI Api 模仿了 ChatGPT 的功能。�
 NEXT_PUBLIC_OPENAI_API_KEY=
 
 # 默认为 https://api.openai.com，您可以将其设置为您自己的代理服务器。
-OPENAI_API_PROXY=
+NEXT_PUBLIC_OPENAI_API_PROXY=
 ```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=OPENAI_API_PROXY)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY)
 
 ## 本地运行
 
@@ -49,7 +49,7 @@ pnpm i
 # sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NEXT_PUBLIC_OPENAI_API_KEY=
 # 你个人的 api 代理地址。默认为 https://api.openai.com
-OPENAI_API_PROXY=
+NEXT_PUBLIC_OPENAI_API_PROXY=
 ```
 
 **5. 运行项目**
@@ -68,7 +68,7 @@ pnpm build && pnpm start
 
 你可以配置以下环境变量。
 
-| 环境变量                     | 描述                             | 是否必须配置 | 默认值                   |
-| ---------------------------- | -------------------------------- | ------------ | ------------------------ |
-| `NEXT_PUBLIC_OPENAI_API_KEY` | 设置之后将会充当你默认的 api key | 否           |                          |
-| `OPENAI_API_PROXY`           | 你个人的 api 代理地址            | 否           | `https://api.openai.com` |
+| 环境变量                       | 描述                             | 是否必须配置 | 默认值                   |
+| ------------------------------ | -------------------------------- | ------------ | ------------------------ |
+| `NEXT_PUBLIC_OPENAI_API_KEY`   | 设置之后将会充当你默认的 api key | 否           |                          |
+| `NEXT_PUBLIC_OPENAI_API_PROXY` | 你个人的 api 代理地址            | 否           | `https://api.openai.com` |

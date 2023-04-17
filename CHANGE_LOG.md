@@ -8,6 +8,7 @@
 
 - feat: add en/cn language support
 - feat: add clear current conversation
+- feat: support setting your own proxy url
 
 ### Changed
 

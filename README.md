@@ -16,11 +16,11 @@ Get your own website.
 # sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NEXT_PUBLIC_OPENAI_API_KEY=
 
-# OPENAI_API_PROXY - Default is https://api.openai.com. you can set it to your own proxy server.
-OPENAI_API_PROXY=
+# NEXT_PUBLIC_OPENAI_API_PROXY - Default is https://api.openai.com. you can set it to your own proxy server.
+NEXT_PUBLIC_OPENAI_API_PROXY=
 ```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=OPENAI_API_PROXY)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY)
 
 ## Running Local
 
@@ -52,7 +52,7 @@ Rename .evn.local.demo to .env.local and configure it.
 # sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NEXT_PUBLIC_OPENAI_API_KEY=
 # your own api proxy url. default is https://api.openai.com
-OPENAI_API_PROXY=
+NEXT_PUBLIC_OPENAI_API_PROXY=
 ```
 
 **5. Run App**
@@ -71,7 +71,7 @@ pnpm build && pnpm start
 
 You can configure the following environment variables.
 
-| Environment Variable         | Desc                                              | Required | Default                  |
-| ---------------------------- | ------------------------------------------------- | -------- | ------------------------ |
-| `NEXT_PUBLIC_OPENAI_API_KEY` | when set,it will be used for your default api key | false    |                          |
-| `OPENAI_API_PROXY`           | your OpenAI proxy server                          | false    | `https://api.openai.com` |
+| Environment Variable           | Desc                                              | Required | Default                  |
+| ------------------------------ | ------------------------------------------------- | -------- | ------------------------ |
+| `NEXT_PUBLIC_OPENAI_API_KEY`   | when set,it will be used for your default api key | false    |                          |
+| `NEXT_PUBLIC_OPENAI_API_PROXY` | your OpenAI proxy server                          | false    | `https://api.openai.com` |

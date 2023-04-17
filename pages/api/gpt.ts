@@ -4,11 +4,10 @@ export const config = {
 
 const handler = async (req: Request) => {
   const Authorization = req.headers.get("Authorization") || "";
-  const { chat_list } = await req.json();
-  const { OPENAI_API_PROXY } = process.env;
+  const { chat_list, proxyUrl } = await req.json();
 
-  const proxyURL = OPENAI_API_PROXY || "https://api.openai.com";
-  const fetchURL = proxyURL + "/v1/chat/completions";
+  const proxy = proxyUrl || "https://api.openai.com";
+  const fetchURL = proxy + "/v1/chat/completions";
 
   const response = await fetch(fetchURL, {
     headers: {

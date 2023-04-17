@@ -4,7 +4,14 @@ import { AiOutlineClose } from "react-icons/ai";
 import type { IModalPropTypes } from "./types";
 
 const Modal: React.FC<IModalPropTypes> = (props) => {
-  const { title = "Title", open, children, onClose, width = 520 } = props;
+  const {
+    children,
+    maskClosable = true,
+    onClose,
+    open,
+    title = "Title",
+    width = 520,
+  } = props;
 
   const [isEnter, setIsEnter] = React.useState(true);
   const [isLeave, setIsLeave] = React.useState(false);
@@ -12,6 +19,10 @@ const Modal: React.FC<IModalPropTypes> = (props) => {
   const stopHideModal = (e: any) => e.stopPropagation();
 
   const hideModal = () => onClose?.();
+
+  const onClickMask = () => {
+    if (maskClosable) onClose?.();
+  };
 
   React.useEffect(() => {
     let openTimer: NodeJS.Timer;
@@ -43,7 +54,7 @@ const Modal: React.FC<IModalPropTypes> = (props) => {
           "animate-fadeOut": isLeave,
         })}
       />
-      <div onClick={hideModal} className="inset-0 fixed z-[1000]">
+      <div onClick={onClickMask} className="inset-0 fixed z-[1000]">
         <div
           onClick={stopHideModal}
           style={{ width }}
