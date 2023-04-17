@@ -1,5 +1,14 @@
 # L-GPT Change Log
 
+## v0.0.3
+
+> 2023-04-18
+
+### Add
+
+- feat: can change conversation title now
+- feat: can clear all the conversation now
+
 ## v0.0.2
 
 > 2023-04-17

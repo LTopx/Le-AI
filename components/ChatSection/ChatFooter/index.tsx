@@ -4,17 +4,12 @@ import { useTranslation } from "next-i18next";
 import { v4 as uuidv4 } from "uuid";
 import { useChatLoading, useChatAbort } from "@/state";
 import type { ChatItem } from "@/hooks/useChannel";
-import {
-  AiOutlineSend,
-  AiOutlineLoading,
-  AiOutlineRedo,
-  AiOutlineClear,
-} from "react-icons/ai";
+import { AiOutlineRedo, AiOutlineClear } from "react-icons/ai";
 import { BsStop } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
 import { useChannel, useOpenAIKey, useProxy, useStreamDecoder } from "@/hooks";
-import { useScrollToBottom } from "@/components";
+import { useScrollToBottom, Textarea } from "@/components";
 import { isMobile } from "@/utils";
 
 const ChatFooter: React.FC = () => {
@@ -23,7 +18,6 @@ const ChatFooter: React.FC = () => {
   const [proxyUrl] = useProxy();
   const [channel, setChannel] = useChannel();
   const [inputValue, setInputValue] = React.useState<string>("");
-  const [isFocus, setIsFocus] = React.useState<boolean>(false);
   const setLoadingStart = useChatLoading((state) => state.updateStart);
   const loadingFinish = useChatLoading((state) => state.loadingResponseFinish);
   const setLoadingFinish = useChatLoading((state) => state.updateFinish);
@@ -44,33 +38,6 @@ const ChatFooter: React.FC = () => {
   const findChannel = channel.list.find(
     (item) => item.channel_id === channel.activeId
   );
-
-  const placeholder = t("type-message");
-
-  const onInput = () => {
-    inputRef.current.style.height = "auto";
-    inputRef.current.style.height = inputRef.current.scrollHeight + "px";
-    inputRef.current.style.overflow =
-      inputRef.current.getBoundingClientRect().height ===
-      inputRef.current.scrollHeight
-        ? "hidden"
-        : "auto";
-  };
-
-  const onChange = (e: any) => setInputValue(e.target.value);
-
-  const onKeyDown = (e: any) => {
-    if (e.keyCode === 13 && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
-
-  const resetInput = () => {
-    inputRef.current.value = "";
-    onInput();
-    setInputValue("");
-  };
 
   // stop generate or regenerate
   const onGenerate = () => {
@@ -110,7 +77,8 @@ const ChatFooter: React.FC = () => {
         duration: 2000,
       });
     }
-    resetInput();
+    setInputValue("");
+    inputRef.current?.reset();
     let chat_list: ChatItem[] = [];
     setChannel((channel) => {
       const { list, activeId } = channel;
@@ -242,7 +210,8 @@ const ChatFooter: React.FC = () => {
   };
 
   React.useEffect(() => {
-    resetInput();
+    setInputValue("");
+    inputRef.current?.reset();
     if (!isMobile()) inputRef.current?.focus();
   }, [channel.activeId]);
 
@@ -280,42 +249,12 @@ const ChatFooter: React.FC = () => {
             <AiOutlineClear size={24} />
           </div>
         </div>
-        <div
-          className={classNames(
-            "flex-1 bg-white border rounded-md transition-colors relative hover:border-[#4096ff] pr-5",
-            {
-              "border-[#4096ff] shadow-[0_0_0_2px_rgba(5,145,255,.1)]": isFocus,
-            }
-          )}
-        >
-          <textarea
-            className="bg-transparent rounded-md h-full outline-none text-sm w-full max-h-56 py-3 px-4 resize-none block"
-            ref={inputRef}
-            placeholder={placeholder}
-            rows={1}
-            onInput={onInput}
-            onChange={onChange}
-            value={inputValue}
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-            onKeyDown={onKeyDown}
-          />
-          {loadingFinish ? (
-            <div className="rounded-md text-primary cursor-pointer flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center hover:bg-[#e3e5e5]">
-              <AiOutlineLoading size={24} className="animate-spin" />
-            </div>
-          ) : (
-            <div
-              onClick={sendMessage}
-              className={classNames(
-                "rounded-md cursor-pointer text-disabled flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center hover:bg-[#e3e5e5]",
-                inputValue ? "!text-primary" : ""
-              )}
-            >
-              <AiOutlineSend size={24} />
-            </div>
-          )}
-        </div>
+        <Textarea
+          ref={inputRef}
+          value={inputValue}
+          onChange={setInputValue}
+          onSubmit={sendMessage}
+        />
       </div>
     </div>
   );

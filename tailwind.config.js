@@ -15,8 +15,9 @@ module.exports = {
         baseModal: "calc(100vw - 2rem)",
       },
       height: {
-        pcMenu: "calc(100vh - 4.5rem)",
-        mobileMenu: "calc(100vh - 8rem)",
+        pcMenu: "calc(100vh - 11rem)",
+        // mobileMenu: "calc(100vh - 8rem)",
+        mobileMenu: "calc(100vh - 14rem)",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

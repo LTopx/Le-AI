@@ -1,26 +1,29 @@
 import * as React from "react";
 import { useTranslation } from "next-i18next";
 import { useMobileMenuOpen } from "@/state";
-import { Modal } from "@/components";
-import { AiOutlineMenuUnfold, AiOutlineSetting } from "react-icons/ai";
-import { useChannel, useOpenAIKey, useProxy } from "@/hooks";
+import {
+  AiOutlineMenuUnfold,
+  AiOutlineSetting,
+  AiOutlineEdit,
+} from "react-icons/ai";
+import { useChannel, useOpenAIKey } from "@/hooks";
+import Setting from "./setting";
+import ChangeTitle from "./changeTitle";
 
 const Navbar: React.FC = () => {
+  const settingRef = React.useRef<any>(null);
+  const changeTitleRef = React.useRef<any>(null);
   const { t: tMenu } = useTranslation("menu");
   const { t: tNav } = useTranslation("nav");
   const [channel] = useChannel();
-  const [openAIKey, setOpenAIKey] = useOpenAIKey();
-  const [proxyUrl, setProxyUrl] = useProxy();
-  const [open, setOpen] = React.useState(false);
+  const [openAIKey] = useOpenAIKey();
   const setMobileMenuOpen = useMobileMenuOpen((state) => state.update);
-
-  const settingText = tNav("setting");
 
   const onOpenMenu = () => setMobileMenuOpen(true);
 
-  const onOpenSetting = () => setOpen(true);
+  const onOpenSetting = () => settingRef.current?.init();
 
-  const onClose = () => setOpen(false);
+  const onChangeTitle = () => changeTitleRef.current?.init();
 
   const activeChannel = channel.list.find(
     (item) => item.channel_id === channel.activeId
@@ -35,10 +38,17 @@ const Navbar: React.FC = () => {
         >
           <AiOutlineMenuUnfold size={24} />
         </div>
-        <div className="text-ellipsis max-w-[50%] whitespace-nowrap overflow-hidden">
+        <div
+          onClick={onChangeTitle}
+          className="text-ellipsis max-w-[50%] cursor-pointer whitespace-nowrap overflow-hidden relative pr-6"
+        >
           {openAIKey
             ? activeChannel?.channel_name || tMenu("new-conversation")
             : tNav("set-openai-key")}
+          <AiOutlineEdit
+            size={20}
+            className="absolute right-0 top-[50%] translate-y-[-50%]"
+          />
         </div>
         <div
           onClick={onOpenSetting}
@@ -47,53 +57,8 @@ const Navbar: React.FC = () => {
           <AiOutlineSetting size={24} />
         </div>
       </div>
-      <Modal
-        maskClosable={false}
-        title={settingText}
-        width={600}
-        open={open}
-        onClose={onClose}
-      >
-        <div className="border-b flex border-slate-100 py-2 px-6 items-center justify-between">
-          <div className="font-semibold text-sm">API key</div>
-          <div className="text-xs">
-            <input
-              className="border rounded-md p-2"
-              type="password"
-              placeholder="Set Your OpenAI Key"
-              value={openAIKey}
-              onChange={(e) => setOpenAIKey(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="border-b flex border-slate-100 py-2 px-6 items-center justify-between">
-          <div className="font-semibold text-sm">{tNav("proxy-url")}</div>
-          <div className="text-xs">
-            <input
-              className="border rounded-md p-2"
-              placeholder="Set Your OpenAI Key"
-              value={proxyUrl}
-              onChange={(e) => setProxyUrl(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="border-b flex border-slate-100 py-2 px-6 items-center justify-between">
-          <div className="font-semibold text-sm">{tNav("model")}</div>
-          <div className="text-xs">
-            <select className="border rounded-md p-2">
-              <option value="gpt-3.5">gpt-3.5</option>
-            </select>
-          </div>
-        </div>
-        <div className="border-b flex border-slate-100 py-2 px-6 items-center justify-between">
-          <div className="font-semibold text-sm">{tNav("theme")}</div>
-          <div className="text-xs">
-            <select className="border rounded-md p-2">
-              <option value="auto">auto</option>
-            </select>
-          </div>
-        </div>
-      </Modal>
+      <Setting ref={settingRef} />
+      <ChangeTitle ref={changeTitleRef} />
     </>
   );
 };

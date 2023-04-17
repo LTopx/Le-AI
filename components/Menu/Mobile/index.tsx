@@ -2,7 +2,7 @@ import * as React from "react";
 import classNames from "classnames";
 import { useTranslation } from "next-i18next";
 import { useDateFormat } from "l-hooks";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete, AiFillGithub } from "react-icons/ai";
 import { BsChatSquareText } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
 import { Drawer } from "@/components";
@@ -64,6 +64,17 @@ const MobileMenu: React.FC = () => {
     }
   };
 
+  const onClearChannel = () => {
+    const confirmMsg = t("clear-conversation");
+    if (!confirm(confirmMsg)) return;
+
+    setChannel((channel) => {
+      channel.list = initChannelList;
+      channel.activeId = initChannelList[0].channel_id;
+      return channel;
+    });
+  };
+
   return (
     <Drawer
       className="md:hidden"
@@ -115,6 +126,21 @@ const MobileMenu: React.FC = () => {
               />
             </div>
           ))}
+        </div>
+        <div className="h-[6rem] flex flex-col border-t gap-1 pt-1">
+          <div
+            onClick={onClearChannel}
+            className="h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors hover:bg-menu-hover"
+          >
+            <AiOutlineDelete size={16} /> {t("clear-all-conversation")}
+          </div>
+          <a
+            href="https://github.com/Peek-A-Booo/L-GPT"
+            target="_blank"
+            className="h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors hover:bg-menu-hover"
+          >
+            <AiFillGithub size={16} /> Github
+          </a>
         </div>
       </div>
     </Drawer>

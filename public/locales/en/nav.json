@@ -1,7 +1,9 @@
 {
   "model": "LLM",
   "proxy-url": "Proxy URL",
+  "rename-conversation": "Rename Conversation",
   "set-openai-key": "Set Your OpenAI Key",
   "setting": "Setting",
-  "theme": "Theme"
+  "theme": "Theme",
+  "title": "Title"
 }

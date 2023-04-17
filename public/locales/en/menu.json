@@ -1,5 +1,7 @@
 {
   "coversation-list": "Conversation List",
+  "clear-all-conversation": "Clear Conversation",
+  "clear-conversation": "Are you sure clear all conversations?",
   "delete-conversation": "Are you sure delete this conversation?",
   "messages": "messages",
   "new-chat": "New Chat",

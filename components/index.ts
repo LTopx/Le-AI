@@ -11,3 +11,6 @@ export {
   default as ScrollToBottom,
   useScrollToBottom,
 } from "./ScrollToBottoms";
+export { default as Input } from "./Input";
+export { default as Textarea } from "./Textarea";
+export { default as Button } from "./Button";

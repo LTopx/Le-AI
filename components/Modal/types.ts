@@ -1,4 +1,5 @@
 export interface IModalPropTypes extends React.PropsWithChildren {
+  keyboard?: boolean;
   maskClosable?: boolean;
   onClose: () => void;
   open: boolean;

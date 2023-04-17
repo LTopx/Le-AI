@@ -7,6 +7,7 @@ const Drawer: React.FC<IDrawerPropTypes> = React.memo((props) => {
   const {
     children,
     className,
+    keyboard = true,
     maskClosable = true,
     open,
     title = "Title",
@@ -39,11 +40,21 @@ const Drawer: React.FC<IDrawerPropTypes> = React.memo((props) => {
       }, 200);
     }
 
+    const handleEscKey = (event: any) => {
+      if (event.keyCode === 27) {
+        onClose?.();
+      }
+    };
+
+    if (keyboard) document.addEventListener("keydown", handleEscKey);
+
     return () => {
       if (!open) {
         openTimer && clearTimeout(openTimer);
         leaveTimer && clearTimeout(leaveTimer);
       }
+
+      if (keyboard) document.removeEventListener("keydown", handleEscKey);
     };
   }, [open]);
 
