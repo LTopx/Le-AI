@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React from "react";
+import * as React from "react";
 import { BsChevronDoubleDown } from "react-icons/bs";
 import { HiOutlineChevronDoubleDown } from "react-icons/hi";
 

@@ -30,6 +30,8 @@ module.exports = {
         "menu-active": "#e6f0ff",
         "menu-hover": "#edeeee",
         "base-color": "rgba(0,0,0,0.85)",
+        icon: "rgba(0, 0, 0, 0.45)",
+        "icon-hover": "rgba(0, 0, 0, 0.88)",
       },
       keyframes: {
         fadeIn: {

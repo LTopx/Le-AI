@@ -13,7 +13,7 @@ const ChatSection: React.FC = () => {
   return (
     <ScrollToBottom
       className="h-full overflow-x-hidden"
-      scrollViewClassName="px-5"
+      scrollViewClassName="pl-5 pr-20"
       mode="bottom"
       nonce=""
     >

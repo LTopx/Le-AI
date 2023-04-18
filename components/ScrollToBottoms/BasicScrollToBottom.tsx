@@ -1,5 +1,5 @@
+import * as React from "react";
 import classNames from "classnames";
-import React from "react";
 
 import AutoHideFollowButton from "./ScrollToBottom/AutoHideFollowButton";
 import Composer from "./ScrollToBottom/Composer";

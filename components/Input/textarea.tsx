@@ -4,13 +4,19 @@ import classNames from "classnames";
 import { AiOutlineSend, AiOutlineLoading } from "react-icons/ai";
 import { useChatLoading } from "@/state";
 
-interface TextareaProps {
+export interface TextAreaProps {
   value: any;
   onChange: (value: any) => void;
   onSubmit: () => void;
 }
 
-const Textarea = React.forwardRef<any, TextareaProps>(
+export interface TextAreaRef {
+  focus: () => void;
+  blur: () => void;
+  reset: () => void;
+}
+
+const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
   ({ value, onChange, onSubmit }, forwardedRef) => {
     const { t } = useTranslation("chat");
 
@@ -45,6 +51,9 @@ const Textarea = React.forwardRef<any, TextareaProps>(
     React.useImperativeHandle(forwardedRef, () => ({
       focus() {
         inputRef.current?.focus();
+      },
+      blur() {
+        inputRef.current?.blur();
       },
       reset() {
         inputRef.current.value = "";
@@ -93,6 +102,6 @@ const Textarea = React.forwardRef<any, TextareaProps>(
   }
 );
 
-Textarea.displayName = "Textarea";
+TextArea.displayName = "TextArea";
 
-export default Textarea;
+export default TextArea;

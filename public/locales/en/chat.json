@@ -1,10 +1,12 @@
 {
   "canceled": "Canceled",
   "clear-current-conversation": "Are you sure to clear the current conversation?",
+  "content-deleted": "Content deleted.",
   "copied": "Copied",
   "copy-code": "Copy Code",
   "enter-message": "Please enter a message",
   "re-generate": "Regenerate response",
   "stop-generate": "Stop Generating",
-  "type-message": "Type a message..."
+  "type-message": "Type a message...",
+  "undo": "undo"
 }

@@ -1,16 +1,32 @@
 import * as React from "react";
 import classNames from "classnames";
 
-interface InputProps {
+export interface InputProps {
   className?: string;
   maxLength?: number;
   onChange: (value: any) => void;
   value: any;
 }
 
-const Input = React.forwardRef<any, InputProps>(
+export interface InputRef {
+  focus: () => void;
+  blur: () => void;
+}
+
+const Input = React.forwardRef<InputRef, InputProps>(
   ({ className, maxLength, onChange, value }, forwardedRef) => {
+    const inputRef = React.useRef<any>(null);
+
     const [isFocus, setIsFocus] = React.useState<boolean>(false);
+
+    React.useImperativeHandle(forwardedRef, () => ({
+      focus() {
+        inputRef.current?.focus();
+      },
+      blur() {
+        inputRef.current?.blur();
+      },
+    }));
 
     return (
       <div
@@ -25,6 +41,7 @@ const Input = React.forwardRef<any, InputProps>(
         <input
           type="text"
           className="bg-transparent rounded-md h-8 outline-none text-sm w-full py-1 px-3 block"
+          ref={inputRef}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           value={value}

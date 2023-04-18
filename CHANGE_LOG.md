@@ -10,8 +10,9 @@
 
 ### Add
 
-- feat: can change conversation title now
-- feat: can clear all the conversation now
+- feat: Support for modifying conversation titles.
+- feat: Added the function to clear all conversations.
+- feat: Support for deleting and undoing conversation content.
 
 ## v0.0.2
 

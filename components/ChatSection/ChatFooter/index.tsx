@@ -9,7 +9,7 @@ import { BsStop } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
 import { useChannel, useOpenAIKey, useProxy, useStreamDecoder } from "@/hooks";
-import { useScrollToBottom, Textarea } from "@/components";
+import { useScrollToBottom, Input } from "@/components";
 import { isMobile } from "@/utils";
 
 const ChatFooter: React.FC = () => {
@@ -249,7 +249,7 @@ const ChatFooter: React.FC = () => {
             <AiOutlineClear size={24} />
           </div>
         </div>
-        <Textarea
+        <Input.TextArea
           ref={inputRef}
           value={inputValue}
           onChange={setInputValue}
