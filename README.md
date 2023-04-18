@@ -11,7 +11,7 @@ theme adopts the style of Feishu. [Demo](https://gpt.ltops.cn)
 
 Get your own website.
 
-```
+```bash
 # Configure Project
 
 # OpenAI API Key - If set, it will be used as the default authentication information for requesting the OpenAI API. Otherwise, it needs to be configured after the project is up and running.
@@ -20,9 +20,12 @@ NEXT_PUBLIC_OPENAI_API_KEY=
 
 # NEXT_PUBLIC_OPENAI_API_PROXY - Default is https://api.openai.com. you can set it to your own proxy server.
 NEXT_PUBLIC_OPENAI_API_PROXY=
+
+# set your own sentry dsn. if empty here, it will not report error to sentry
+NEXT_PUBLIC_SENTRY_DSN=
 ```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY&env=NEXT_PUBLIC_SENTRY_DSN)
 
 ## Running Local
 
@@ -55,6 +58,8 @@ Rename .evn.local.demo to .env.local and configure it.
 NEXT_PUBLIC_OPENAI_API_KEY=
 # your own api proxy url. default is https://api.openai.com
 NEXT_PUBLIC_OPENAI_API_PROXY=
+# set your own sentry dsn. if empty here, it will not report error to sentry
+NEXT_PUBLIC_SENTRY_DSN=
 ```
 
 **5. Run App**
@@ -73,7 +78,8 @@ pnpm build && pnpm start
 
 You can configure the following environment variables.
 
-| Environment Variable           | Desc                                              | Required | Default                  |
-| ------------------------------ | ------------------------------------------------- | -------- | ------------------------ |
-| `NEXT_PUBLIC_OPENAI_API_KEY`   | when set,it will be used for your default api key | false    |                          |
-| `NEXT_PUBLIC_OPENAI_API_PROXY` | your OpenAI proxy server                          | false    | `https://api.openai.com` |
+| Environment Variable           | Desc                                                          | Required | Default                  |
+| ------------------------------ | ------------------------------------------------------------- | -------- | ------------------------ |
+| `NEXT_PUBLIC_OPENAI_API_KEY`   | when set, it will be used for your default api key            | false    |                          |
+| `NEXT_PUBLIC_OPENAI_API_PROXY` | your OpenAI proxy server                                      | false    | `https://api.openai.com` |
+| `NEXT_PUBLIC_SENTRY_DSN`       | your sentry dsn. If empty, it will not report error to sentry | false    |                          |

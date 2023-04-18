@@ -1,5 +1,13 @@
 # L-GPT Change Log
 
+## v0.0.4
+
+> 2023-04-19
+
+### Add
+
+- feat: Introducing Sentry to perform error log detection
+
 ## v0.0.3
 
 > 2023-04-18
