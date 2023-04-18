@@ -2,6 +2,8 @@
 
 L-GPT 是一项开源项目，借助 OpenAI Api 模仿了 ChatGPT 的功能。整体主题采用了类似\"飞书\"的风格。 [Demo](https://gpt.ltops.cn)
 
+![L-GPT](./public/screenshots/screenshot-cn.png)
+
 ## 发布到 Vercel
 
 搭建属于你自己的网站。

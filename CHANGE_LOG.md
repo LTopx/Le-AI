@@ -13,6 +13,7 @@
 - feat: Support for modifying conversation titles.
 - feat: Added the function to clear all conversations.
 - feat: Support for deleting and undoing conversation content.
+- feat: Introducing Radix-UI dialog to enhance the interactive effect of the confirm event
 
 ## v0.0.2
 

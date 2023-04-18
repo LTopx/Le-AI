@@ -1,3 +1,5 @@
+const { mauve, violet, red, blackA } = require("@radix-ui/colors");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -10,13 +12,14 @@ module.exports = {
       width: {
         sections: "calc(100vw - 17.5rem)",
         baseModal: "32.5rem",
+        "confirm-modal": "28rem",
       },
       maxWidth: {
         baseModal: "calc(100vw - 2rem)",
+        "confirm-modal": "calc(100vw - 2rem)",
       },
       height: {
         pcMenu: "calc(100vh - 11rem)",
-        // mobileMenu: "calc(100vh - 8rem)",
         mobileMenu: "calc(100vh - 14rem)",
       },
       backgroundImage: {
@@ -25,6 +28,10 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
+        ...mauve,
+        ...violet,
+        ...red,
+        ...blackA,
         primary: "#678fff",
         disabled: "rgba(0,0,0,.25)",
         "menu-active": "#e6f0ff",

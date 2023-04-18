@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@emotion/css": "11.10.6",
+    "@radix-ui/colors": "^0.1.8",
+    "@radix-ui/react-alert-dialog": "^1.0.3",
     "@svgr/webpack": "7.0.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.37",

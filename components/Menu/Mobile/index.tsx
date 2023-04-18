@@ -5,7 +5,7 @@ import { useDateFormat } from "l-hooks";
 import { AiOutlineDelete, AiFillGithub } from "react-icons/ai";
 import { BsChatSquareText } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
-import { Drawer } from "@/components";
+import { Drawer, Confirm } from "@/components";
 import { useChannel, initChannelList } from "@/hooks";
 import { useMobileMenuOpen } from "@/state";
 
@@ -18,6 +18,8 @@ const MobileMenu: React.FC = () => {
   const { format } = useDateFormat();
 
   const onClose = () => setOpen(false);
+
+  const stopPropagation = (e: any) => e.stopPropagation();
 
   const onAddChannel = () => {
     const channel_id = uuidv4();
@@ -42,11 +44,7 @@ const MobileMenu: React.FC = () => {
     onClose();
   };
 
-  const onDeleteChannel = (e: any, id: string) => {
-    e.stopPropagation();
-    const confirmMsg = t("delete-conversation");
-    if (!confirm(confirmMsg)) return;
-
+  const onDeleteChannel = (id: string) => {
     if (channel.list.length <= 1) {
       setChannel((channel) => {
         channel.list = initChannelList;
@@ -65,9 +63,6 @@ const MobileMenu: React.FC = () => {
   };
 
   const onClearChannel = () => {
-    const confirmMsg = t("clear-conversation");
-    if (!confirm(confirmMsg)) return;
-
     setChannel((channel) => {
       channel.list = initChannelList;
       channel.activeId = initChannelList[0].channel_id;
@@ -119,21 +114,34 @@ const MobileMenu: React.FC = () => {
               <div className="text-[#858b96]">
                 {item.chat_list.length} {t("messages")}
               </div>
-              <AiOutlineDelete
-                size={20}
-                onClick={(e: any) => onDeleteChannel(e, item.channel_id)}
-                className="right-2 bottom-1 absolute"
+              <Confirm
+                title={t("delete-this-conversation")}
+                content={t("delete-conversation")}
+                trigger={
+                  <div
+                    className="right-2 bottom-1 absolute"
+                    onClick={stopPropagation}
+                  >
+                    <AiOutlineDelete size={20} />
+                  </div>
+                }
+                onOk={() => onDeleteChannel(item.channel_id)}
               />
             </div>
           ))}
         </div>
         <div className="h-[6rem] flex flex-col border-t gap-1 pt-1">
-          <div
-            onClick={onClearChannel}
-            className="h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors hover:bg-menu-hover"
-          >
-            <AiOutlineDelete size={16} /> {t("clear-all-conversation")}
-          </div>
+          <Confirm
+            title={t("clear-all-conversation")}
+            content={t("clear-conversation")}
+            trigger={
+              <div className="h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors hover:bg-menu-hover">
+                <AiOutlineDelete size={16} /> {t("clear-all-conversation")}
+              </div>
+            }
+            onOk={onClearChannel}
+          />
+
           <a
             href="https://github.com/Peek-A-Booo/L-GPT"
             target="_blank"

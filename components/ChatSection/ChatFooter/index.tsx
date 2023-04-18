@@ -9,7 +9,7 @@ import { BsStop } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
 import { useChannel, useOpenAIKey, useProxy, useStreamDecoder } from "@/hooks";
-import { useScrollToBottom, Input } from "@/components";
+import { useScrollToBottom, Input, Confirm } from "@/components";
 import { isMobile } from "@/utils";
 
 const ChatFooter: React.FC = () => {
@@ -28,6 +28,7 @@ const ChatFooter: React.FC = () => {
   const inputRef = React.useRef<any>(null);
 
   const { t } = useTranslation("chat");
+  const { t: tMenu } = useTranslation("menu");
   const { t: tPrompt } = useTranslation("prompt");
   const scrollToBottom = useScrollToBottom();
   const { decoder } = useStreamDecoder();
@@ -197,8 +198,6 @@ const ChatFooter: React.FC = () => {
   };
 
   const clearNowConversation = () => {
-    const confirmMsg = t("clear-current-conversation");
-    if (!confirm(confirmMsg)) return;
     setChannel((channel) => {
       const { activeId, list } = channel;
       const findChannel = list.find((item) => item.channel_id === activeId);
@@ -242,12 +241,16 @@ const ChatFooter: React.FC = () => {
 
       <div className="flex">
         <div className="flex items-end">
-          <div
-            onClick={clearNowConversation}
-            className="w-8 h-[2.75rem] flex items-center cursor-pointer transition-colors hover:text-[#678fff]"
-          >
-            <AiOutlineClear size={24} />
-          </div>
+          <Confirm
+            title={tMenu("clear-all-conversation")}
+            content={t("clear-current-conversation")}
+            trigger={
+              <div className="w-8 h-[2.75rem] flex items-center cursor-pointer transition-colors hover:text-[#678fff]">
+                <AiOutlineClear size={24} />
+              </div>
+            }
+            onOk={clearNowConversation}
+          />
         </div>
         <Input.TextArea
           ref={inputRef}
