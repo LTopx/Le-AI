@@ -12,6 +12,8 @@
 ### Add
 
 - feat: Introducing Sentry to perform error log detection
+- feat: support dark mode(90%)
+- feat: Introducing @radix-ui/react-select to build Select Component
 
 ### Changed
 

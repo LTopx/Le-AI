@@ -78,38 +78,42 @@ const ChatList: React.FC = () => {
                 </div>
               )}
               {item.role === "user" && (
-                <div className="rounded-full flex bg-[#000]/25 h-8 w-8 justify-center items-center">
-                  <FaUserAlt className="text-white" />
+                <div className="rounded-full flex bg-[#000]/25 dark:bg-slate-50 h-8 w-8 justify-center items-center">
+                  <FaUserAlt className="text-white dark:text-neutral-600" />
                 </div>
               )}
             </div>
             <div className="flex flex-col gap-1">
-              <div className="text-sm text-[#a4a9b1]">
+              <div className="text-sm text-[#a4a9b1] dark:text-neutral-500">
                 {format(Number(item.time), "MM-DD HH:mm:ss")}
               </div>
               <div
                 className={classNames(
                   "self-start py-2.5 px-3 rounded-md relative",
-                  { "bg-[#d1e3ff]": item.role === "user" },
-                  { "bg-[#ebeced]": item.role === "assistant" }
+                  { "bg-[#d1e3ff] dark:bg-blue-900": item.role === "user" },
+                  {
+                    "bg-[#ebeced] dark:bg-neutral-800":
+                      item.role === "assistant",
+                  }
                 )}
               >
                 <ChatContent data={item} />
                 <div
                   className={classNames(
-                    "opacity-0 invisible bg-white border border-[#dee0e3] rounded-md flex gap-0.5 transition-all absolute group-hover:opacity-100 group-hover:visible",
+                    "opacity-0 invisible bg-white dark:bg-neutral-900 border border-[#dee0e3] rounded-md flex gap-0.5 transition-all absolute group-hover:opacity-100 group-hover:visible",
                     "top-[-1.7rem] left-[6.5rem] group-hover:left-28",
-                    "md:top-0 md:left-auto md:right-[-3.2rem] md:group-hover:right-[-3.7rem] md:group-hover:left-auto"
+                    "md:top-0 md:left-auto md:right-[-3.2rem] md:group-hover:right-[-3.7rem] md:group-hover:left-auto",
+                    "text-icon dark:text-neutral-500 dark:border-neutral-700"
                   )}
                 >
                   <CopyIcon
-                    className="text-icon hover:text-icon-hover transition-colors h-6 w-6 flex justify-center items-center cursor-pointer"
+                    className="hover:text-icon-hover dark:hover:text-blue-500 transition-colors h-6 w-6 flex justify-center items-center cursor-pointer"
                     content={item.content}
                   />
-                  <div className="w-[1px] bg-[#dee0e3]" />
+                  <div className="w-[1px] bg-[#dee0e3] dark:bg-neutral-800" />
                   <div
                     onClick={() => onDelete(item)}
-                    className="text-icon hover:text-icon-hover transition-colors h-6 w-6 flex justify-center items-center cursor-pointer"
+                    className="hover:text-icon-hover dark:hover:text-blue-500 transition-colors h-6 w-6 flex justify-center items-center cursor-pointer"
                   >
                     <AiOutlineDelete size={18} />
                   </div>

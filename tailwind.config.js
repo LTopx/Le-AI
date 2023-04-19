@@ -2,6 +2,7 @@ const { mauve, violet, red, blackA } = require("@radix-ui/colors");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -21,6 +22,12 @@ module.exports = {
       height: {
         pcMenu: "calc(100vh - 11rem)",
         mobileMenu: "calc(100vh - 14rem)",
+      },
+      backgroundSize: {
+        "magic-size": "200% 100%",
+      },
+      backgroundPosition: {
+        "magic-position": "100% 0",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

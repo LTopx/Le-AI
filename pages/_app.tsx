@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import { appWithTranslation } from "next-i18next";
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
 
 import "@/styles/globals.css";
@@ -27,7 +28,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <div className={inter.className}>
         <Toaster />
-        <Component {...pageProps} />
+        <ThemeProvider attribute="class">
+          <Component {...pageProps} />
+        </ThemeProvider>
       </div>
     </>
   );

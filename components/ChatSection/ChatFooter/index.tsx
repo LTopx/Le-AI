@@ -215,13 +215,18 @@ const ChatFooter: React.FC = () => {
   }, [channel.activeId]);
 
   return (
-    <div className="bg-gradient-to-b from-transparent via-white to-white w-full px-5 pb-5 bottom-0 left-0 absolute">
+    <div
+      className={classNames(
+        "bg-gradient-to-b from-transparent via-white dark:via-neutral-950 to-white dark:to-neutral-950 w-full px-5 pb-5 bottom-0 left-0 absolute"
+      )}
+    >
       {!!findChannel?.chat_list?.length && (
         <div className="flex py-3 justify-center items-center">
           <div
             className={classNames(
               "bg-white border rounded-md flex gap-2 items-center cursor-pointer border-[#d9d9d9] text-sm py-2 px-4 transition-all shadow-[0_2px_0_rgba(0,0,0,0.02)] select-none",
-              "hover:text-[#4096ff] hover:border-[#4096ff] active:text-[#0958d9] active:border-[#0958d9]"
+              "hover:text-[#4096ff] hover:border-[#4096ff] active:text-[#0958d9] active:border-[#0958d9]",
+              "dark:bg-zinc-800 dark:border-stone-600 dark:hover:border-stone-700"
             )}
             onClick={generate}
           >

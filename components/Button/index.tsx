@@ -14,7 +14,7 @@ const Button = React.forwardRef<any, ButtonProps>(
         className={classNames(
           "h-8 py-1 px-4 transition-all rounded-md border text-sm",
           {
-            "bg-white border-[#d9d9d9] shadow-[0_2px_0_rgba(0,0,0,.02)] hover:text-[#4096ff] hover:border-[#4096ff] active:text-[#0958d9] active:border-[#0958d9] focus-visible:outline-4 focus-visible:outline focus-visible:outline-[#91caff]":
+            "bg-white border-[#d9d9d9] text-black shadow-[0_2px_0_rgba(0,0,0,.02)] hover:text-[#4096ff] hover:border-[#4096ff] active:text-[#0958d9] active:border-[#0958d9] focus-visible:outline-4 focus-visible:outline focus-visible:outline-[#91caff]":
               type === "default",
           },
           {

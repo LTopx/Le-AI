@@ -81,7 +81,10 @@ const MobileMenu: React.FC = () => {
       <div className="p-2">
         <div
           onClick={onAddChannel}
-          className="rounded-lg cursor-pointer flex bg-[#678fff] h-12 text-white mb-2 transition-colors justify-center items-center hover:bg-[#678fff]/80"
+          className={classNames(
+            "rounded-lg cursor-pointer flex h-12 text-white mb-2 transition-all justify-center items-center",
+            "bg-gradient-to-r from-cyan-500 to-blue-500 bg-magic-size hover:bg-magic-position"
+          )}
         >
           {t("new-chat")}
         </div>
@@ -92,15 +95,26 @@ const MobileMenu: React.FC = () => {
               onClick={() => onChangeChannel(item.channel_id)}
               className={classNames(
                 "rounded-lg mt-1 overflow-hidden relative flex flex-col h-16 text-xs text-base-color px-[0.5rem] gap-1 justify-center",
-                { "!bg-menu-active": item.channel_id === channel.activeId }
+                {
+                  "!bg-menu-active dark:!bg-slate-700":
+                    item.channel_id === channel.activeId,
+                }
               )}
             >
               <div className="flex justify-between items-center">
-                <div className="font-medium text-sm text-ellipsis max-w-[22ch] pl-5 overflow-hidden whitespace-nowrap relative">
+                <div className="font-medium text-sm text-ellipsis max-w-[22ch] pl-5 overflow-hidden whitespace-nowrap relative dark:text-white">
                   <BsChatSquareText className="top-[50%] left-0 translate-y-[-50%] absolute" />
                   {item.channel_name || t("new-conversation")}
                 </div>
-                <div className="text-[#858b96]">
+                <div
+                  className={classNames(
+                    "text-[#858b96] dark:text-neutral-500",
+                    {
+                      "dark:text-neutral-400":
+                        item.channel_id === channel.activeId,
+                    }
+                  )}
+                >
                   {item.chat_list.length
                     ? item.chat_list.at(-1)?.time
                       ? format(
@@ -111,7 +125,11 @@ const MobileMenu: React.FC = () => {
                     : ""}
                 </div>
               </div>
-              <div className="text-[#858b96]">
+              <div
+                className={classNames("text-[#858b96] dark:text-neutral-500", {
+                  "dark:text-neutral-400": item.channel_id === channel.activeId,
+                })}
+              >
                 {item.chat_list.length} {t("messages")}
               </div>
               <Confirm
@@ -119,7 +137,7 @@ const MobileMenu: React.FC = () => {
                 content={t("delete-conversation")}
                 trigger={
                   <div
-                    className="right-2 bottom-1 absolute"
+                    className="right-2 bottom-1 absolute dark:text-white"
                     onClick={stopPropagation}
                   >
                     <AiOutlineDelete size={20} />

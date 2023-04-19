@@ -5,19 +5,20 @@ import { AiOutlineSend, AiOutlineLoading } from "react-icons/ai";
 import { useChatLoading } from "@/state";
 
 export interface TextAreaProps {
-  value: any;
+  className?: string | undefined;
   onChange: (value: any) => void;
   onSubmit: () => void;
+  value: any;
 }
 
 export interface TextAreaRef {
-  focus: () => void;
   blur: () => void;
+  focus: () => void;
   reset: () => void;
 }
 
 const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
-  ({ value, onChange, onSubmit }, forwardedRef) => {
+  ({ className, value, onChange, onSubmit }, forwardedRef) => {
     const { t } = useTranslation("chat");
 
     // data
@@ -64,9 +65,11 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     return (
       <div
         className={classNames(
-          "flex-1 bg-white border rounded-md transition-colors relative hover:border-[#4096ff] pr-5",
+          className,
+          "flex-1 bg-white dark:bg-neutral-900 border dark:border-neutral-700 rounded-md transition-colors relative hover:border-[#4096ff] pr-5",
           {
-            "border-[#4096ff] shadow-[0_0_0_2px_rgba(5,145,255,.1)]": isFocus,
+            "border-[#4096ff] dark:border-sky-700 shadow-[0_0_0_2px_rgba(5,145,255,.1)]":
+              isFocus,
           }
         )}
       >
@@ -90,7 +93,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
           <div
             onClick={onSubmit}
             className={classNames(
-              "rounded-md cursor-pointer text-disabled flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center hover:bg-[#e3e5e5]",
+              "rounded-md cursor-pointer text-disabled dark:text-neutral-500 flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center hover:bg-[#e3e5e5] dark:hover:bg-neutral-800",
               value ? "!text-primary" : ""
             )}
           >

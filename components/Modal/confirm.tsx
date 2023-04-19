@@ -48,7 +48,7 @@ const Confirm: React.FC<ConfirmProps> = ({ content, onOk, title, trigger }) => {
                 <AlertDialog.Title className="text-base-color m-0 font-semibold">
                   {title || "Title"}
                 </AlertDialog.Title>
-                <AlertDialog.Description className="mt-2 mb-3 text-sm">
+                <AlertDialog.Description className="text-base-color mt-2 mb-3 text-sm">
                   {content}
                 </AlertDialog.Description>
               </div>

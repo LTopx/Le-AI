@@ -69,10 +69,13 @@ const Drawer: React.FC<IDrawerPropTypes> = React.memo((props) => {
       <div onClick={onClickMask} className="inset-0 z-[1000] fixed">
         <div
           onClick={stopHideDrawer}
-          className={classNames("bg-white absolute inset-y-0 left-0", {
-            "animate-showLeft": isEnter,
-            "animate-hideLeft": isLeave,
-          })}
+          className={classNames(
+            "bg-white dark:bg-zinc-900 absolute inset-y-0 left-0",
+            {
+              "animate-showLeft": isEnter,
+              "animate-hideLeft": isLeave,
+            }
+          )}
           style={{
             width,
             boxShadow:

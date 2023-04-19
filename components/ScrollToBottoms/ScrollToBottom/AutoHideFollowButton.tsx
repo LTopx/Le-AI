@@ -39,7 +39,8 @@ const AutoHideFollowButton: React.FC<
     <button
       className={classNames(
         rootCSS,
-        "absolute !bottom-20 !w-10 !h-10 !bg-white !rounded-full justify-center items-center flex shadow-md"
+        "absolute !bottom-20 !w-10 !h-10 !bg-white !rounded-full transition-colors justify-center items-center flex shadow-md",
+        "dark:!bg-neutral-800 dark:border dark:border-neutral-600 dark:hover:!bg-neutral-900"
       )}
       onClick={scrollToEnd}
       type="button"

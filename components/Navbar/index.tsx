@@ -1,4 +1,5 @@
 import * as React from "react";
+import classNames from "classnames";
 import { useTranslation } from "next-i18next";
 import { useMobileMenuOpen } from "@/state";
 import {
@@ -21,6 +22,8 @@ const Navbar: React.FC = () => {
 
   const onOpenMenu = () => setMobileMenuOpen(true);
 
+  // setTheme(theme === "dark" ? "light" : "dark");
+
   const onOpenSetting = () => settingRef.current?.init();
 
   const onChangeTitle = () => {
@@ -34,7 +37,12 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <div className="flex bg-[hsla(0,0%,100%,.8)] h-14 w-full top-0 left-0 z-50 backdrop-saturate-[1.8] backdrop-blur-[5px] absolute justify-center items-center">
+      <div
+        className={classNames(
+          "flex h-14 w-full top-0 left-0 z-50 backdrop-saturate-[1.8] backdrop-blur-[5px] absolute justify-center items-center",
+          "transition-colors bg-[hsla(0,0%,100%,.8)] dark:bg-zinc-900/80"
+        )}
+      >
         <div
           onClick={onOpenMenu}
           className="flex h-14 left-0 w-14 justify-center items-center absolute md:hidden"

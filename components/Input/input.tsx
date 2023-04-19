@@ -40,7 +40,7 @@ const Input = React.forwardRef<InputRef, InputProps>(
       >
         <input
           type="text"
-          className="bg-transparent rounded-md h-8 outline-none text-sm w-full py-1 px-3 block"
+          className="bg-transparent text-black rounded-md h-8 outline-none text-sm w-full py-1 px-3 block"
           ref={inputRef}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
