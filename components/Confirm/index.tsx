@@ -5,7 +5,7 @@ import { useTranslation } from "next-i18next";
 import { AiFillExclamationCircle } from "react-icons/ai";
 import Button from "../Button";
 
-interface ConfirmProps {
+export interface ConfirmProps {
   content?: React.ReactNode;
   onOk?: () => void;
   title?: React.ReactNode;

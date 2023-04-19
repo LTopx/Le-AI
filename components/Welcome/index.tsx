@@ -3,13 +3,13 @@ import { useTranslation } from "next-i18next";
 import { useOpenAIKey } from "@/hooks";
 
 /**
- * when the OpenAI Key in empty, show the welcome page
+ * when the OpenAI Key and env OpenAI Key Configuration are empty, show the welcome page
  */
 const Welcome: React.FC = () => {
   const { t } = useTranslation("welcome");
-  const [openAIKey] = useOpenAIKey();
+  const [openAIKey, , envOpenAIKey] = useOpenAIKey();
 
-  if (openAIKey) return null;
+  if (openAIKey || envOpenAIKey) return null;
 
   return (
     <div className="flex h-full justify-center items-center">

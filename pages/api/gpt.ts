@@ -3,10 +3,20 @@ export const config = {
 };
 
 const handler = async (req: Request) => {
-  const Authorization = req.headers.get("Authorization") || "";
+  // first use local
+  // then use env configuration
+  // or empty
+  const Authorization =
+    req.headers.get("Authorization") ||
+    process.env.NEXT_PUBLIC_OPENAI_API_KEY ||
+    "";
   const { chat_list, proxyUrl } = await req.json();
 
-  const proxy = proxyUrl || "https://api.openai.com";
+  const proxy =
+    proxyUrl ||
+    process.env.NEXT_PUBLIC_OPENAI_API_PROXY ||
+    "https://api.openai.com";
+
   const fetchURL = proxy + "/v1/chat/completions";
 
   const response = await fetch(fetchURL, {

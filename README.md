@@ -14,11 +14,15 @@ Get your own website.
 ```bash
 # Configure Project
 
-# OpenAI API Key - If set, it will be used as the default authentication information for requesting the OpenAI API. Otherwise, it needs to be configured after the project is up and running.
+# Prefer using user-configured key.
+# If user hasn't configured, then use this key.
+# If neither are configured, it is not possible to use.
 # sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NEXT_PUBLIC_OPENAI_API_KEY=
 
-# NEXT_PUBLIC_OPENAI_API_PROXY - Default is https://api.openai.com. you can set it to your own proxy server.
+# Prefer using user-configured proxy address.
+# If the user hasn't configured, then use this proxy.
+# If none of these are being used, then connect directly to the Open AI official address: https://api.openai.com.
 NEXT_PUBLIC_OPENAI_API_PROXY=
 
 # set your own sentry dsn. if empty here, it will not report error to sentry
@@ -56,7 +60,7 @@ Rename .evn.local.demo to .env.local and configure it.
 ```bash
 # sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NEXT_PUBLIC_OPENAI_API_KEY=
-# your own api proxy url. default is https://api.openai.com
+# your own api proxy url.
 NEXT_PUBLIC_OPENAI_API_PROXY=
 # set your own sentry dsn. if empty here, it will not report error to sentry
 NEXT_PUBLIC_SENTRY_DSN=
@@ -80,6 +84,6 @@ You can configure the following environment variables.
 
 | Environment Variable           | Desc                                                          | Required | Default                  |
 | ------------------------------ | ------------------------------------------------------------- | -------- | ------------------------ |
-| `NEXT_PUBLIC_OPENAI_API_KEY`   | when set, it will be used for your default api key            | false    |                          |
-| `NEXT_PUBLIC_OPENAI_API_PROXY` | your OpenAI proxy server                                      | false    | `https://api.openai.com` |
+| `NEXT_PUBLIC_OPENAI_API_KEY`   | your OpenAI API Key                                           | false    |                          |
+| `NEXT_PUBLIC_OPENAI_API_PROXY` | your OpenAI API proxy server                                  | false    | `https://api.openai.com` |
 | `NEXT_PUBLIC_SENTRY_DSN`       | your sentry dsn. If empty, it will not report error to sentry | false    |                          |

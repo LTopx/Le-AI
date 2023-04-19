@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
   const { t: tMenu } = useTranslation("menu");
   const { t: tNav } = useTranslation("nav");
   const [channel] = useChannel();
-  const [openAIKey] = useOpenAIKey();
+  const [openAIKey, , envOpenAIKey] = useOpenAIKey();
   const setMobileMenuOpen = useMobileMenuOpen((state) => state.update);
 
   const onOpenMenu = () => setMobileMenuOpen(true);
@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
   const onOpenSetting = () => settingRef.current?.init();
 
   const onChangeTitle = () => {
-    if (!openAIKey) return;
+    if (!openAIKey && !envOpenAIKey) return;
     changeTitleRef.current?.init();
   };
 
@@ -45,10 +45,10 @@ const Navbar: React.FC = () => {
           onClick={onChangeTitle}
           className="text-ellipsis max-w-[50%] cursor-pointer whitespace-nowrap overflow-hidden relative pr-6"
         >
-          {openAIKey
+          {openAIKey || envOpenAIKey
             ? activeChannel?.channel_name || tMenu("new-conversation")
             : tNav("set-openai-key")}
-          {!!openAIKey && (
+          {!!(openAIKey || envOpenAIKey) && (
             <AiOutlineEdit
               size={20}
               className="absolute right-0 top-[50%] translate-y-[-50%]"

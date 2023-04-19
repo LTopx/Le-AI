@@ -11,11 +11,15 @@ L-GPT 是一项开源项目，借助 OpenAI Api 模仿了 ChatGPT 的功能。�
 ```bash
 # Configure Project
 
-# 如果设置了的话，它将被用作请求OpenAI API的默认身份验证信息。否则，需要在项目启动后进行配置。
+# 优先使用用户配置key
+# 用户没有配置则使用此key
+# 都没配置则无法使用
 # sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NEXT_PUBLIC_OPENAI_API_KEY=
 
-# 默认为 https://api.openai.com，您可以将其设置为您自己的代理服务器。
+# 优先使用用户配置的代理地址
+# 用户没有配就使用此代理
+# 都没有使用则直连Open AI 官方地址：https://api.openai.com
 NEXT_PUBLIC_OPENAI_API_PROXY=
 
 # 配置你的 sentry dsn地址。如果为空, 将不会将错误报告到 sentry
@@ -53,7 +57,7 @@ pnpm i
 ```bash
 # sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NEXT_PUBLIC_OPENAI_API_KEY=
-# 你个人的 api 代理地址。默认为 https://api.openai.com
+# 你个人的 api 代理地址。
 NEXT_PUBLIC_OPENAI_API_PROXY=
 # 配置你的 sentry dsn地址。如果为空, 将不会将错误报告到 sentry
 NEXT_PUBLIC_SENTRY_DSN=
@@ -77,6 +81,6 @@ pnpm build && pnpm start
 
 | 环境变量                       | 描述                                                      | 是否必须配置 | 默认值                   |
 | ------------------------------ | --------------------------------------------------------- | ------------ | ------------------------ |
-| `NEXT_PUBLIC_OPENAI_API_KEY`   | 设置之后将会充当你默认的 api key                          | 否           |                          |
-| `NEXT_PUBLIC_OPENAI_API_PROXY` | 你个人的 api 代理地址                                     | 否           | `https://api.openai.com` |
+| `NEXT_PUBLIC_OPENAI_API_KEY`   | 你个人的 OpenAI API key                                   | 否           |                          |
+| `NEXT_PUBLIC_OPENAI_API_PROXY` | 你个人的 API 代理地址                                     | 否           | `https://api.openai.com` |
 | `NEXT_PUBLIC_SENTRY_DSN`       | 你的 sentry dsn 地址。如果为空, 将不会将错误报告到 sentry | 否           |                          |

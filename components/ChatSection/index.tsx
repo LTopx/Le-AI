@@ -5,10 +5,11 @@ import ChatList from "./ChatList";
 import ChatFooter from "./ChatFooter";
 
 const ChatSection: React.FC = () => {
-  const [openAIKey] = useOpenAIKey();
+  const [openAIKey, , envOpenAIKey] = useOpenAIKey();
 
-  // only the openAI key is not empty, show the chat section
-  if (!openAIKey) return null;
+  // only the OpenAI Key or env OpenAI Key Configuration is not empty, show the chat section
+  // if (!openAIKey) return null;
+  if (!openAIKey && !envOpenAIKey) return null;
 
   return (
     <ScrollToBottom

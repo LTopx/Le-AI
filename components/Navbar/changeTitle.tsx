@@ -1,11 +1,10 @@
 import * as React from "react";
 import { useTranslation } from "next-i18next";
-import { Modal, Input, Button } from "@/components";
+import { Input, Modal } from "@/components";
 import { useChannel } from "@/hooks";
 
 const ChangeTitle = React.forwardRef((_, forwardedRef) => {
   const { t } = useTranslation("nav");
-  const { t: tCommon } = useTranslation("common");
 
   const [channel, setChannel] = useChannel();
   const [open, setOpen] = React.useState(false);
@@ -40,8 +39,9 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
       maskClosable={false}
       open={open}
       onClose={onClose}
+      onOk={submit}
     >
-      <div className="flex gap-6 items-center p-5 pt-2">
+      <div className="flex gap-6 items-center pt-2">
         <div>{t("title")}</div>
         <Input
           className="flex-1"
@@ -49,12 +49,6 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
           value={name}
           onChange={setName}
         />
-      </div>
-      <div className="flex gap-2 px-5 pb-4 justify-end">
-        <Button onClick={onClose}>{tCommon("cancel")}</Button>
-        <Button type="primary" onClick={submit}>
-          {tCommon("ok")}
-        </Button>
       </div>
     </Modal>
   );

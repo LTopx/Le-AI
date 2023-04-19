@@ -2,7 +2,7 @@ import * as React from "react";
 import classNames from "classnames";
 import { useTranslation } from "next-i18next";
 import { useDateFormat } from "l-hooks";
-import { CopyIcon, ChatContent } from "@/components";
+import { CopyIcon, ChatContent, useScrollToBottom } from "@/components";
 import { AiOutlineLoading, AiOutlineDelete } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import { useChannel, useRevoke } from "@/hooks";
@@ -25,6 +25,7 @@ const ChatList: React.FC = () => {
     tip: t("content-deleted") as string,
     btn: t("undo") as string,
   });
+  const scrollToBottom = useScrollToBottom();
 
   const onDelete = (item: ChatItem) => {
     const { id } = item;
@@ -57,6 +58,10 @@ const ChatList: React.FC = () => {
       return channel;
     });
   };
+
+  React.useEffect(() => {
+    scrollToBottom();
+  }, [channel.activeId]);
 
   return (
     <div>

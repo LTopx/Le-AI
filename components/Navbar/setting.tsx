@@ -20,36 +20,36 @@ const Setting = React.forwardRef((_, forwardedRef) => {
 
   return (
     <Modal
+      footer={null}
       maskClosable={false}
       title={t("setting")}
-      width={600}
       open={open}
       onClose={onClose}
     >
-      <div className="border-b flex border-slate-100 py-2 px-6 items-center justify-between">
+      <div className="border-b flex border-slate-100 py-2 px-1 items-center justify-between">
         <div className="font-semibold text-sm">API key</div>
         <div className="text-xs">
           <input
             className="border rounded-md p-2"
             type="password"
-            placeholder="Set Your OpenAI Key"
+            placeholder={t("set-openai-key") as string}
             value={openAIKey}
             onChange={(e) => setOpenAIKey(e.target.value)}
           />
         </div>
       </div>
-      <div className="border-b flex border-slate-100 py-2 px-6 items-center justify-between">
+      <div className="border-b flex border-slate-100 py-2 px-1 items-center justify-between">
         <div className="font-semibold text-sm">{t("proxy-url")}</div>
         <div className="text-xs">
           <input
             className="border rounded-md p-2"
-            placeholder="Set Your OpenAI Key"
+            placeholder={t("set-proxy-url") as string}
             value={proxyUrl}
             onChange={(e) => setProxyUrl(e.target.value)}
           />
         </div>
       </div>
-      <div className="border-b flex border-slate-100 py-2 px-6 items-center justify-between">
+      <div className="border-b flex border-slate-100 py-2 px-1 items-center justify-between">
         <div className="font-semibold text-sm">{t("model")}</div>
         <div className="text-xs">
           <select className="border rounded-md p-2">
@@ -57,7 +57,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
           </select>
         </div>
       </div>
-      <div className="border-b flex border-slate-100 py-2 px-6 items-center justify-between">
+      <div className="border-b flex border-slate-100 py-2 px-1 items-center justify-between">
         <div className="font-semibold text-sm">{t("theme")}</div>
         <div className="text-xs">
           <select className="border rounded-md p-2">

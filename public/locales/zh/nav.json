@@ -3,6 +3,7 @@
   "proxy-url": "代理地址",
   "rename-conversation": "重命名对话",
   "set-openai-key": "请先配置 OpenAI Key",
+  "set-proxy-url": "配置你的代理地址",
   "setting": "设置",
   "theme": "主题",
   "title": "标题"

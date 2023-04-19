@@ -24,10 +24,7 @@ const useProxy = (): UseProxyReturn => {
   const updateProxyUrl = useStore((state) => state.update);
 
   React.useEffect(() => {
-    const localProxyUrl =
-      localStorage.getItem("proxyUrl") ||
-      process.env.NEXT_PUBLIC_OPENAI_API_PROXY ||
-      "";
+    const localProxyUrl = localStorage.getItem("proxyUrl") || "";
     updateProxyUrl(localProxyUrl);
   }, []);
 

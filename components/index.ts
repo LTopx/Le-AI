@@ -1,7 +1,6 @@
 export { default as Menu } from "./Menu";
 export { default as MobileMenu } from "./Menu/Mobile";
 export { default as Navbar } from "./Navbar";
-export { default as Modal } from "./Modal";
 export { default as Drawer } from "./Drawer";
 export { default as Welcome } from "./Welcome";
 export { default as ChatSection } from "./ChatSection";
@@ -14,3 +13,4 @@ export {
 export { default as Input } from "./Input";
 export { default as Button } from "./Button";
 export { default as Confirm } from "./Confirm";
+export { default as Modal } from "./Modal";
