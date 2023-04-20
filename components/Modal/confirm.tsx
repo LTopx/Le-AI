@@ -28,7 +28,7 @@ const Confirm: React.FC<ConfirmProps> = ({ content, onOk, title, trigger }) => {
       <AlertDialog.Portal>
         <AlertDialog.Overlay
           className={classNames(
-            "bg-mask z-[1500] fixed inset-0",
+            "bg-mask z-[1500] fixed inset-0 backdrop-blur-sm backdrop-filter",
             "data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut"
           )}
           onClick={stopPropagation}

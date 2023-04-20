@@ -3,6 +3,13 @@ const useStreamDecoder = () => {
   let decoderDone = false;
   const textDecoder = new TextDecoder();
 
+  const checkFragmentErr = (fragment: string) => {
+    try {
+      if (JSON.parse(fragment).error) return true;
+    } catch {}
+    return false;
+  };
+
   const checkFragment = (fragment: string) => {
     const lines = fragment.split("\n").filter((item) => item.trim());
     let valid = true;
@@ -19,7 +26,8 @@ const useStreamDecoder = () => {
 
   const decoder = async (
     reader: ReadableStreamDefaultReader<Uint8Array>,
-    handler: (val: string) => void
+    handler: (val: string) => void,
+    errHandler: () => void
   ) => {
     // if error, add in errorFragment
     let errorFragment = "";
@@ -42,6 +50,11 @@ const useStreamDecoder = () => {
         const { done, value } = await reader.read();
         decoderDone = done;
         const fragment = textDecoder.decode(value);
+        const checkIsError = checkFragmentErr(fragment);
+        if (checkIsError) {
+          decoderDone = true;
+          return errHandler();
+        }
         const check1 = checkFragment(fragment);
         if (!check1) {
           errorFragment += fragment;

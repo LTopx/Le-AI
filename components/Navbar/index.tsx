@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
       <div
         className={classNames(
           "flex h-14 w-full top-0 left-0 z-50 backdrop-saturate-[1.8] backdrop-blur-[5px] absolute justify-center items-center",
-          "transition-colors bg-[hsla(0,0%,100%,.8)] dark:bg-zinc-900/80"
+          "transition-colors bg-[hsla(0,0%,100%,.8)] dark:bg-gray-900/50 dark:backdrop-blur dark:backdrop-filter"
         )}
       >
         <div

@@ -2,7 +2,7 @@
 // with Sentry.
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-const { withSentryConfig } = require('@sentry/nextjs');
+const { withSentryConfig } = require("@sentry/nextjs");
 
 const { i18n } = require("./next-i18next.config");
 
@@ -14,7 +14,7 @@ const nextConfig = {
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
-    }); // 针对 SVG 的处理规则
+    });
 
     return config;
   },
@@ -25,5 +25,5 @@ module.exports = nextConfig;
 module.exports = withSentryConfig(
   module.exports,
   { silent: true },
-  { hideSourceMaps: true },
+  { hideSourceMaps: true }
 );

@@ -61,10 +61,13 @@ const Drawer: React.FC<IDrawerPropTypes> = React.memo((props) => {
   return (
     <div className={className}>
       <div
-        className={classNames("inset-0 z-[1000] fixed bg-mask", {
-          "animate-fadeIn": isEnter,
-          "animate-fadeOut": isLeave,
-        })}
+        className={classNames(
+          "inset-0 z-[1000] fixed bg-mask backdrop-blur-sm backdrop-filter",
+          {
+            "animate-fadeIn": isEnter,
+            "animate-fadeOut": isLeave,
+          }
+        )}
       />
       <div onClick={onClickMask} className="inset-0 z-[1000] fixed">
         <div

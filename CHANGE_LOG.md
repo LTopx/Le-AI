@@ -4,6 +4,11 @@
 
 > 2023-04-20
 
+### Fixed
+
+- Replace structureClone with JSON.parse(JSON.stringify()) to solve compatibility issues on some old devices
+- Add error prompts for some error cases
+
 ### Add
 
 - Add @vercel/analytics

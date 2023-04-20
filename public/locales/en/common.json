@@ -4,5 +4,6 @@
   "light-mode": "Light Mode",
   "ok": "OK",
   "please-enter": "Please enter",
+  "service-error": "Service is having a hiccup, please try again later",
   "system-theme": "System theme"
 }

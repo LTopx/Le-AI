@@ -30,6 +30,7 @@ const ChatFooter: React.FC = () => {
   const { t } = useTranslation("chat");
   const { t: tMenu } = useTranslation("menu");
   const { t: tPrompt } = useTranslation("prompt");
+  const { t: tCommon } = useTranslation("common");
   const scrollToBottom = useScrollToBottom();
   const { decoder } = useStreamDecoder();
 
@@ -132,35 +133,43 @@ const ChatFooter: React.FC = () => {
           let channel_name = "";
           let channel_chat_list: ChatItem[] = [];
 
-          await decoder(response.body.getReader(), (content: string) => {
-            setChannel((channel) => {
-              const findChannel = channel.list.find(
-                (item) => item.channel_id === channel.activeId
-              );
-              if (!findChannel) return channel;
-              const lastItem = findChannel.chat_list.at(-1);
-              if (!lastItem) return channel;
-              if (lastItem.role === "user") {
-                findChannel.chat_list.push({
-                  id: uuidv4(),
-                  role: "assistant",
-                  time: String(+new Date()),
-                  content,
-                });
-              } else {
-                lastItem.content += content;
-              }
-              channel_name = findChannel.channel_name;
-              channel_id = findChannel.channel_id;
-              channel_chat_list = findChannel.chat_list;
-              return channel;
-            });
-          });
+          await decoder(
+            response.body.getReader(),
+            (content: string) => {
+              setChannel((channel) => {
+                const findChannel = channel.list.find(
+                  (item) => item.channel_id === channel.activeId
+                );
+                if (!findChannel) return channel;
+                const lastItem = findChannel.chat_list.at(-1);
+                if (!lastItem) return channel;
+                if (lastItem.role === "user") {
+                  findChannel.chat_list.push({
+                    id: uuidv4(),
+                    role: "assistant",
+                    time: String(+new Date()),
+                    content,
+                  });
+                } else {
+                  lastItem.content += content;
+                }
+                channel_name = findChannel.channel_name;
+                channel_id = findChannel.channel_id;
+                channel_chat_list = findChannel.chat_list;
+                return channel;
+              });
+            },
+            () => {
+              toast.error(tCommon("service-error"));
+              setLoadingStart(false);
+              setLoadingFinish(false);
+            }
+          );
           setLoadingFinish(false);
           // get gpt title
           if (!channel_name) getChannelNameByGPT(channel_id, channel_chat_list);
         })
-        .catch(() => {
+        .catch((err) => {
           setLoadingStart(false);
           setLoadingFinish(false);
         });
@@ -186,14 +195,20 @@ const ChatFooter: React.FC = () => {
       body: JSON.stringify({ proxyUrl, chat_list }),
     }).then(async (response) => {
       if (!response.ok || !response.body) return;
-      decoder(response.body.getReader(), (content: string) => {
-        setChannel((channel) => {
-          const findChannel = channel.list.find((e) => e.channel_id === id);
-          if (!findChannel) return channel;
-          findChannel.channel_name += content;
-          return channel;
-        });
-      });
+      decoder(
+        response.body.getReader(),
+        (content: string) => {
+          setChannel((channel) => {
+            const findChannel = channel.list.find((e) => e.channel_id === id);
+            if (!findChannel) return channel;
+            findChannel.channel_name += content;
+            return channel;
+          });
+        },
+        () => {
+          toast.error(tCommon("service-error"));
+        }
+      );
     });
   };
 
@@ -217,7 +232,8 @@ const ChatFooter: React.FC = () => {
   return (
     <div
       className={classNames(
-        "bg-gradient-to-b from-transparent via-white dark:via-neutral-950 to-white dark:to-neutral-950 w-full px-5 pb-5 bottom-0 left-0 absolute"
+        "bg-gradient-to-b from-transparent via-white to-white w-full px-5 pb-5 bottom-0 left-0 absolute",
+        "dark:via-[#16181a] dark:to-[#16181a]"
       )}
     >
       {!!findChannel?.chat_list?.length && (

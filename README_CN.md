@@ -1,6 +1,6 @@
 # L-GPT
 
-L-GPT 是一项开源项目，借助 OpenAI Api 模仿了 ChatGPT 的功能。整体主题采用了类似\"飞书\"的风格。 [Demo](https://gpt.ltops.cn)
+L-GPT 是一项开源项目，借助 OpenAI Api 模仿了 ChatGPT 的功能。 [Demo](https://gpt.ltops.cn)
 
 <img src="./public/screenshots/screenshot.png">
 
@@ -10,6 +10,14 @@ L-GPT 是一项开源项目，借助 OpenAI Api 模仿了 ChatGPT 的功能。�
 - 支持响应式，暗黑模式和 PWA
 - 安全，所有数据均基于本地存储
 - 支持 i18n
+
+## 下一步计划
+
+- [ ] 引入提示词以及提示词模板
+- [ ] 支持 GPT-4 和 Claude
+- [ ] 桌面版本开发？
+- [ ] 聊天记录导入导出
+- [ ] 压缩上下文，节省聊天 token
 
 ## 发布到 Vercel
 

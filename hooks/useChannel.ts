@@ -37,10 +37,12 @@ const useStore = create<State & Action>((set) => ({
   update: async (args: SaveChannel) => {
     if (typeof args === "function") {
       set((state) => {
-        const newState = structuredClone({
-          activeId: state.activeId,
-          list: state.list,
-        });
+        const newState = JSON.parse(
+          JSON.stringify({
+            activeId: state.activeId,
+            list: state.list,
+          })
+        );
         const { activeId, list } = args(newState);
         localStorage.setItem("activeId", activeId);
         localStorage.setItem("channelList", JSON.stringify(list));

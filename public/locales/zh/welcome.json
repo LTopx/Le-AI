@@ -1,6 +1,6 @@
 {
   "apply-openai-key": "如果您没有OpenAI Key，可以点击此处申请：",
-  "desc": "L-GPT是一项开源项目，借助OpenAI Api 模仿了ChatGPT的功能。整体主题采用了类似\"飞书\"的风格。",
+  "desc": "L-GPT是一项开源项目，借助OpenAI Api 模仿了ChatGPT的功能。",
   "set-openai-key": "请通过右上角设置按钮点击设置OpenAI Key。",
   "welcome": "欢迎来到 L-GPT"
 }

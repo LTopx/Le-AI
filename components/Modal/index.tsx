@@ -42,7 +42,7 @@ const Modal: React.FC<ModalProps> = ({
       <Dialog.Portal>
         <Dialog.Overlay
           className={classNames(
-            "bg-mask z-[1500] fixed inset-0",
+            "bg-mask z-[1500] fixed inset-0 backdrop-blur-sm backdrop-filter",
             "data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut"
           )}
           onClick={onClickOverlay}
