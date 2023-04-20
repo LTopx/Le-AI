@@ -7,7 +7,6 @@
 ### Fixed
 
 - Replace structureClone with JSON.parse(JSON.stringify()) to solve compatibility issues on some old devices
-- Add error prompts for some error cases
 
 ### Add
 
@@ -18,6 +17,7 @@
 - Adjust the autofocus logic of the Modal component
 - Adjust the styles of select and Modal to better support dark mode
 - Adjust multiple global styles to enhance the details of dark mode
+- Add error prompts for some error cases
 
 ## v0.0.4
 
