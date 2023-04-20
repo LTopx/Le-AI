@@ -4,6 +4,10 @@
 
 > 2023-04-20
 
+### Add
+
+- Add @vercel/analytics
+
 ### Changed
 
 - Adjust the autofocus logic of the Modal component

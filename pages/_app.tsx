@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { appWithTranslation } from "next-i18next";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
-
+import { Analytics } from "@vercel/analytics/react";
 import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -37,6 +37,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <ThemeProvider attribute="class">
           <Component {...pageProps} />
         </ThemeProvider>
+        <Analytics />
       </div>
     </>
   );
