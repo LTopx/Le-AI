@@ -4,9 +4,6 @@ dependencies:
   '@emotion/css':
     specifier: 11.10.6
     version: 11.10.6
-  '@radix-ui/colors':
-    specifier: 0.1.8
-    version: 0.1.8
   '@radix-ui/react-alert-dialog':
     specifier: 1.0.3
     version: 1.0.3(@types/react@18.0.37)(react-dom@18.2.0)(react@18.2.0)
@@ -62,7 +59,7 @@ dependencies:
     specifier: 13.2.2
     version: 13.2.2(i18next@22.4.14)(next@13.3.0)(react-i18next@12.2.0)(react@18.2.0)
   next-themes:
-    specifier: ^0.2.1
+    specifier: 0.2.1
     version: 0.2.1(next@13.3.0)(react-dom@18.2.0)(react@18.2.0)
   postcss:
     specifier: 8.4.22
@@ -1699,10 +1696,6 @@ packages:
       picocolors: 1.0.0
       tiny-glob: 0.2.9
       tslib: 2.5.0
-    dev: false
-
-  /@radix-ui/colors@0.1.8:
-    resolution: {integrity: sha512-jwRMXYwC0hUo0mv6wGpuw254Pd9p/R6Td5xsRpOmaWkUHlooNWqVcadgyzlRumMq3xfOTXwJReU0Jv+EIy4Jbw==}
     dev: false
 
   /@radix-ui/number@1.0.0:

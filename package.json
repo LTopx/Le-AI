@@ -1,6 +1,6 @@
 {
   "name": "lgpt",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@emotion/css": "11.10.6",
-    "@radix-ui/colors": "0.1.8",
     "@radix-ui/react-alert-dialog": "1.0.3",
     "@radix-ui/react-dialog": "1.0.3",
     "@radix-ui/react-select": "^1.2.1",
@@ -29,7 +28,7 @@
     "math-random": "2.0.1",
     "next": "13.3.0",
     "next-i18next": "13.2.2",
-    "next-themes": "^0.2.1",
+    "next-themes": "0.2.1",
     "postcss": "8.4.22",
     "react": "18.2.0",
     "react-dom": "18.2.0",

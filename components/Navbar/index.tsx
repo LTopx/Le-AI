@@ -22,8 +22,6 @@ const Navbar: React.FC = () => {
 
   const onOpenMenu = () => setMobileMenuOpen(true);
 
-  // setTheme(theme === "dark" ? "light" : "dark");
-
   const onOpenSetting = () => settingRef.current?.init();
 
   const onChangeTitle = () => {

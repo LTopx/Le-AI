@@ -89,10 +89,10 @@ const ChatList: React.FC = () => {
               </div>
               <div
                 className={classNames(
-                  "self-start py-2.5 px-3 rounded-md relative",
+                  "self-start py-2.5 px-3 rounded-md relative border border-transparent",
                   { "bg-[#d1e3ff] dark:bg-blue-900": item.role === "user" },
                   {
-                    "bg-[#ebeced] dark:bg-neutral-800":
+                    "bg-[#ebeced] dark:bg-[#232323] dark:border-[#333335]":
                       item.role === "assistant",
                   }
                 )}

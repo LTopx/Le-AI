@@ -5,20 +5,14 @@ English / [简体中文](./README_CN.md)
 L-GPT is an open-source project that imitates the OpenAI ChatGPT. The
 theme adopts the style of Feishu. [Demo](https://gpt.ltops.cn)
 
+<img src="./public/screenshots/screenshot.png">
+
 ## Features
 
 - Deploy for free on Vercel
 - Responsive design, dark mode and PWA
 - Safe, All data based on local
 - Support i18n
-
-<center class="half">
-<img src="./public/screenshots/screenshot-en.png">
-<img src="./public/screenshots/screenshot-en-dark.png">
-</center>
-
-<!-- ![L-GPT](./public/screenshots/screenshot-en.png)
-![L-GPT](./public/screenshots/screenshot-en-dark.png) -->
 
 ## Deploy on Vercel
 

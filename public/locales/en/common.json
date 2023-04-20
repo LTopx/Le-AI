@@ -1,4 +1,8 @@
 {
   "cancel": "Cancel",
-  "ok": "OK"
+  "dark-mode": "Dark Mode",
+  "light-mode": "Light Mode",
+  "ok": "OK",
+  "please-enter": "Please enter",
+  "system-theme": "System theme"
 }

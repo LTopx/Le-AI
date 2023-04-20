@@ -8,7 +8,7 @@ export default function Home() {
     <div className="flex h-screen w-full">
       <Menu />
       <MobileMenu />
-      <section className="bg-[#fafbfc] transition-colors dark:bg-neutral-950 h-screen w-full relative md:w-sections">
+      <section className="bg-[#fafbfc] dark:bg-[#16181a] transition-colors h-screen w-full relative md:w-section">
         <Navbar />
         <Welcome />
         <ChatSection />

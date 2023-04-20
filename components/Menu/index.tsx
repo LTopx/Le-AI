@@ -64,7 +64,7 @@ const Menu: React.FC = () => {
   };
 
   return (
-    <div className="p-2 select-none hidden md:block md:w-[17.5rem] transition-colors dark:bg-zinc-900">
+    <div className="p-2 select-none hidden md:block md:w-[17.5rem] transition-colors dark:bg-[#232324]">
       <div
         onClick={onAddChannel}
         className={classNames(
@@ -81,7 +81,7 @@ const Menu: React.FC = () => {
             onClick={() => onChangeChannel(item.channel_id)}
             className={classNames(
               "rounded-lg cursor-pointer mb-1 overflow-hidden relative flex flex-col h-16 text-xs text-base-color px-[0.5rem] transition-colors gap-1 group justify-center",
-              "hover:bg-menu-hover dark:hover:bg-neutral-800",
+              "hover:bg-menu-hover dark:hover:bg-color-fill-1",
               {
                 "!bg-menu-active dark:!bg-slate-700":
                   item.channel_id === channel.activeId,
@@ -96,9 +96,11 @@ const Menu: React.FC = () => {
             </div>
             <div
               className={classNames(
-                "flex text-[#858b96] justify-between transition-all group-hover:text-[#6e737b] dark:text-neutral-500 dark:group-hover:text-neutral-400",
+                "flex justify-between transition-all",
+                "text-[#858b96] dark:text-neutral-500 dark:group-hover:text-neutral-400",
                 {
-                  "dark:text-neutral-400": item.channel_id === channel.activeId,
+                  "dark:!text-neutral-400":
+                    item.channel_id === channel.activeId,
                 }
               )}
             >
@@ -137,7 +139,7 @@ const Menu: React.FC = () => {
           title={t("clear-all-conversation")}
           content={t("clear-conversation")}
           trigger={
-            <div className="h-11 rounded-md transition-colors text-sm hover:bg-menu-hover dark:hover:bg-neutral-800 cursor-pointer flex items-center gap-2 px-2">
+            <div className="h-11 rounded-md transition-colors text-sm hover:bg-menu-hover dark:hover:bg-color-fill-1 cursor-pointer flex items-center gap-2 px-2">
               <AiOutlineDelete size={16} /> {t("clear-all-conversation")}
             </div>
           }
@@ -146,7 +148,7 @@ const Menu: React.FC = () => {
         <a
           href="https://github.com/Peek-A-Booo/L-GPT"
           target="_blank"
-          className="h-11 rounded-md transition-colors text-sm hover:bg-menu-hover dark:hover:bg-neutral-800 cursor-pointer flex items-center gap-2 px-2"
+          className="h-11 rounded-md transition-colors text-sm hover:bg-menu-hover dark:hover:bg-color-fill-1 cursor-pointer flex items-center gap-2 px-2"
         >
           <AiFillGithub size={16} /> Github
         </a>

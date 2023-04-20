@@ -1,10 +1,37 @@
 import * as React from "react";
 import classNames from "classnames";
 
+type HTMLInputTypeAttribute =
+  | "button"
+  | "checkbox"
+  | "color"
+  | "date"
+  | "datetime-local"
+  | "email"
+  | "file"
+  | "hidden"
+  | "image"
+  | "month"
+  | "number"
+  | "password"
+  | "radio"
+  | "range"
+  | "reset"
+  | "search"
+  | "submit"
+  | "tel"
+  | "text"
+  | "time"
+  | "url"
+  | "week"
+  | (string & {});
+
 export interface InputProps {
   className?: string;
   maxLength?: number;
   onChange: (value: any) => void;
+  placeholder?: string;
+  type?: HTMLInputTypeAttribute;
   value: any;
 }
 
@@ -14,7 +41,10 @@ export interface InputRef {
 }
 
 const Input = React.forwardRef<InputRef, InputProps>(
-  ({ className, maxLength, onChange, value }, forwardedRef) => {
+  (
+    { className, maxLength, onChange, placeholder, type = "text", value },
+    forwardedRef
+  ) => {
     const inputRef = React.useRef<any>(null);
 
     const [isFocus, setIsFocus] = React.useState<boolean>(false);
@@ -31,17 +61,18 @@ const Input = React.forwardRef<InputRef, InputProps>(
     return (
       <div
         className={classNames(
-          "bg-white border rounded-md transition-colors inline-block relative hover:border-[#4096ff]",
-          {
-            "border-[#4096ff] shadow-[0_0_0_2px_rgba(5,145,255,.1)]": isFocus,
-          },
+          "px-3 border border-transparent",
+          "bg-[#f2f3f5] hover:bg-[#e5e6eb] rounded transition-colors",
+          "dark:bg-[#383838] dark:text-color-text-1 dark:hover:bg-[#434343]",
+          { "!border-sky-600 !bg-white dark:!bg-[#232323]": isFocus },
           className
         )}
       >
         <input
-          type="text"
-          className="bg-transparent text-black rounded-md h-8 outline-none text-sm w-full py-1 px-3 block"
+          className="outline-none appearance-none rounded text-sm bg-transparent py-1 w-full leading-[1.5715]"
+          type={type}
           ref={inputRef}
+          placeholder={placeholder}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           value={value}

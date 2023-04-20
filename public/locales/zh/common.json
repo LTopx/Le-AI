@@ -1,4 +1,8 @@
 {
   "cancel": "取 消",
-  "ok": "确 定"
+  "dark-mode": "暗黑模式",
+  "light-mode": "亮色模式",
+  "ok": "确 定",
+  "please-enter": "请输入",
+  "system-theme": "跟随系统"
 }

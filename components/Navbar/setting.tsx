@@ -1,28 +1,13 @@
 import * as React from "react";
 import { useTranslation } from "next-i18next";
 import { useTheme } from "next-themes";
-import { Modal, Select } from "@/components";
+import { Modal, Select, Input } from "@/components";
 import { useOpenAIKey, useProxy } from "@/hooks";
 
 const moduleOptions = [
   {
     label: "gpt-3.5",
     value: "gpt-3.5",
-  },
-];
-
-const themeOptions = [
-  {
-    label: "light",
-    value: "light",
-  },
-  {
-    label: "dark",
-    value: "dark",
-  },
-  {
-    label: "auto",
-    value: "auto",
   },
 ];
 
@@ -33,6 +18,22 @@ const Setting = React.forwardRef((_, forwardedRef) => {
   const [proxyUrl, setProxyUrl] = useProxy();
 
   const { t } = useTranslation("nav");
+  const { t: tCommon } = useTranslation("common");
+
+  const themeOptions = [
+    {
+      label: tCommon("light-mode"),
+      value: "light",
+    },
+    {
+      label: tCommon("dark-mode"),
+      value: "dark",
+    },
+    {
+      label: tCommon("system-theme"),
+      value: "system",
+    },
+  ];
 
   const onClose = () => setOpen(false);
 
@@ -51,41 +52,56 @@ const Setting = React.forwardRef((_, forwardedRef) => {
       open={open}
       onClose={onClose}
     >
-      <div className="border-b flex border-slate-100 py-2 px-1 items-center justify-between">
-        <div className="font-semibold text-sm text-black">API key</div>
-        <div className="text-xs">
-          <input
-            className="border rounded-md p-2 dark:bg-white"
+      <div className="border-b flex border-slate-100 dark:border-neutral-500 py-2 px-1 items-center justify-between">
+        <div className="font-semibold text-sm text-black dark:text-neutral-50">
+          API key
+        </div>
+        <div>
+          <Input
+            className="w-44"
             type="password"
             placeholder={t("set-openai-key") as string}
             value={openAIKey}
-            onChange={(e) => setOpenAIKey(e.target.value)}
+            onChange={setOpenAIKey}
           />
         </div>
       </div>
-      <div className="border-b flex border-slate-100 py-2 px-1 items-center justify-between">
-        <div className="font-semibold text-sm text-black">{t("proxy-url")}</div>
-        <div className="text-xs">
-          <input
-            className="border rounded-md p-2 dark:bg-white"
+      <div className="border-b flex border-slate-100 dark:border-neutral-500 py-2 px-1 items-center justify-between">
+        <div className="font-semibold text-sm text-black dark:text-neutral-50">
+          {t("proxy-url")}
+        </div>
+        <div>
+          <Input
+            className="w-44"
             placeholder={t("set-proxy-url") as string}
             value={proxyUrl}
-            onChange={(e) => setProxyUrl(e.target.value)}
+            onChange={setProxyUrl}
           />
         </div>
       </div>
-      <div className="border-b flex border-slate-100 py-2 px-1 items-center justify-between">
-        <div className="font-semibold text-sm text-black">{t("model")}</div>
-        <div className="text-xs">
-          <Select options={moduleOptions} />
+      <div className="border-b flex border-slate-100 dark:border-neutral-500 py-2 px-1 items-center justify-between">
+        <div className="font-semibold text-sm text-black dark:text-neutral-50">
+          {t("model")}
+        </div>
+        <div>
+          <Select
+            className="w-44"
+            contentClassName="w-44"
+            options={moduleOptions}
+            value="gpt-3.5"
+          />
         </div>
       </div>
-      <div className="border-b flex border-slate-100 py-2 px-1 items-center justify-between">
-        <div className="font-semibold text-sm text-black">{t("theme")}</div>
-        <div className="text-xs">
+      <div className="border-b flex border-slate-100 dark:border-neutral-500 py-2 px-1 items-center justify-between">
+        <div className="font-semibold text-sm text-black dark:text-neutral-50">
+          {t("theme")}
+        </div>
+        <div>
           <Select
+            className="w-44"
+            contentClassName="w-44"
             options={themeOptions}
-            placeholder="Select"
+            placeholder="Please Select"
             value={theme}
             onChange={setTheme}
           />

@@ -1,5 +1,3 @@
-const { mauve, violet, red, blackA } = require("@radix-ui/colors");
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
@@ -10,8 +8,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      borderColor: {
+        "color-border": "#333335",
+        "color-fill-3": "hsla(0,0%,100%,0.12)",
+      },
       width: {
-        sections: "calc(100vw - 17.5rem)",
+        section: "calc(100vw - 17.5rem)",
         baseModal: "32.5rem",
         "confirm-modal": "28rem",
       },
@@ -22,6 +24,17 @@ module.exports = {
       height: {
         pcMenu: "calc(100vh - 11rem)",
         mobileMenu: "calc(100vh - 14rem)",
+      },
+      backgroundColor: {
+        "color-fill-1": "hsla(0,0%,100%,0.04)",
+        "color-fill-2": "hsla(0,0%,100%,0.08)",
+        "color-fill-3": "hsla(0,0%,100%,0.12)",
+        "color-bg-2": "#232324",
+        "color-bg-5": "#373739",
+        "gray-2": "rgb(242,243,245)",
+
+        // mask,confirm,drawer
+        mask: "rgba(23,23,26,0.6)",
       },
       backgroundSize: {
         "magic-size": "200% 100%",
@@ -35,10 +48,6 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        ...mauve,
-        ...violet,
-        ...red,
-        ...blackA,
         primary: "#678fff",
         disabled: "rgba(0,0,0,.25)",
         "menu-active": "#e6f0ff",
@@ -46,6 +55,9 @@ module.exports = {
         "base-color": "rgba(0,0,0,0.85)",
         icon: "rgba(0, 0, 0, 0.45)",
         "icon-hover": "rgba(0, 0, 0, 0.88)",
+        "color-text-1": "hsla(0,0%,100%,0.9)",
+        "color-text-2": "hsla(0,0%,100%,0.7)",
+        "gray-8": "rgb(78,89,105)",
       },
       keyframes: {
         fadeIn: {

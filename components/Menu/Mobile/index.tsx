@@ -110,7 +110,7 @@ const MobileMenu: React.FC = () => {
                   className={classNames(
                     "text-[#858b96] dark:text-neutral-500",
                     {
-                      "dark:text-neutral-400":
+                      "dark:!text-neutral-400":
                         item.channel_id === channel.activeId,
                     }
                   )}
@@ -127,7 +127,8 @@ const MobileMenu: React.FC = () => {
               </div>
               <div
                 className={classNames("text-[#858b96] dark:text-neutral-500", {
-                  "dark:text-neutral-400": item.channel_id === channel.activeId,
+                  "dark:!text-neutral-400":
+                    item.channel_id === channel.activeId,
                 })}
               >
                 {item.chat_list.length} {t("messages")}
@@ -153,7 +154,7 @@ const MobileMenu: React.FC = () => {
             title={t("clear-all-conversation")}
             content={t("clear-conversation")}
             trigger={
-              <div className="h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors hover:bg-menu-hover">
+              <div className="h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors hover:bg-menu-hover dark:hover:bg-color-fill-1">
                 <AiOutlineDelete size={16} /> {t("clear-all-conversation")}
               </div>
             }
@@ -163,7 +164,7 @@ const MobileMenu: React.FC = () => {
           <a
             href="https://github.com/Peek-A-Booo/L-GPT"
             target="_blank"
-            className="h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors hover:bg-menu-hover"
+            className="h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors hover:bg-menu-hover dark:hover:bg-color-fill-1"
           >
             <AiFillGithub size={16} /> Github
           </a>

@@ -28,7 +28,7 @@ const Confirm: React.FC<ConfirmProps> = ({ content, onOk, title, trigger }) => {
       <AlertDialog.Portal>
         <AlertDialog.Overlay
           className={classNames(
-            "bg-black/40 z-[1500] fixed inset-0",
+            "bg-mask z-[1500] fixed inset-0",
             "data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut"
           )}
           onClick={stopPropagation}
@@ -36,31 +36,37 @@ const Confirm: React.FC<ConfirmProps> = ({ content, onOk, title, trigger }) => {
         <div className="inset-0 fixed z-[1500]" onClick={stopPropagation}>
           <AlertDialog.Content
             className={classNames(
-              "bg-white w-confirm-modal max-w-confirm-modal p-5 mx-auto relative top-36 rounded-md shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px]",
+              "w-confirm-modal max-w-confirm-modal p-5 mx-auto relative top-36 rounded-md shadow-md",
+              "bg-white dark:bg-[#2a2a2b]",
               "data-[state=open]:animate-fadeUp data-[state=closed]:animate-fadeOut"
             )}
           >
-            <div className="flex gap-3">
-              <div>
-                <AiFillExclamationCircle className="text-[#faad14]" size={22} />
+            <div className="flex flex-col">
+              <div className="flex justify-center mb-6">
+                <div className="flex items-center gap-2">
+                  <AiFillExclamationCircle
+                    className="text-[#faad14]"
+                    size={20}
+                  />
+                  <AlertDialog.Title className="text-base-color dark:text-color-text-1 m-0 font-medium">
+                    {title || "Title"}
+                  </AlertDialog.Title>
+                </div>
               </div>
               <div>
-                <AlertDialog.Title className="text-base-color m-0 font-semibold">
-                  {title || "Title"}
-                </AlertDialog.Title>
-                <AlertDialog.Description className="text-base-color mt-2 mb-3 text-sm">
+                <AlertDialog.Description className="text-base-color dark:text-color-text-1 text-sm">
                   {content}
                 </AlertDialog.Description>
               </div>
             </div>
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-center gap-2 mt-8">
               <AlertDialog.Cancel asChild>
                 <Button type="default" onClick={stopPropagation}>
                   {t("cancel")}
                 </Button>
               </AlertDialog.Cancel>
               <AlertDialog.Action asChild>
-                <Button type="primary" onClick={onClickOk}>
+                <Button type="danger" onClick={onClickOk}>
                   {t("ok")}
                 </Button>
               </AlertDialog.Action>

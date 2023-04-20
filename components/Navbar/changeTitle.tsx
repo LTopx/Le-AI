@@ -5,6 +5,7 @@ import { useChannel } from "@/hooks";
 
 const ChangeTitle = React.forwardRef((_, forwardedRef) => {
   const { t } = useTranslation("nav");
+  const { t: tCommon } = useTranslation("common");
 
   const [channel, setChannel] = useChannel();
   const [open, setOpen] = React.useState(false);
@@ -46,6 +47,7 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
         <Input
           className="flex-1"
           maxLength={30}
+          placeholder={tCommon("please-enter") as string}
           value={name}
           onChange={setName}
         />
