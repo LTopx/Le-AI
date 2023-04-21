@@ -25,6 +25,7 @@ const ChatList: React.FC = () => {
     tip: t("content-deleted") as string,
     btn: t("undo") as string,
   });
+
   const scrollToBottom = useScrollToBottom();
 
   const onDelete = (item: ChatItem) => {
