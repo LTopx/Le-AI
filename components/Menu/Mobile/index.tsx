@@ -1,11 +1,12 @@
 import * as React from "react";
 import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import { useTranslation } from "next-i18next";
 import { useDateFormat } from "l-hooks";
 import { AiOutlineDelete, AiFillGithub } from "react-icons/ai";
 import { BsChatSquareText } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
-import { Drawer, Confirm } from "@/components";
+import { Drawer, Confirm, NewButton } from "@/components";
 import { useChannel, initChannelList } from "@/hooks";
 import { useMobileMenuOpen } from "@/state";
 
@@ -73,44 +74,54 @@ const MobileMenu: React.FC = () => {
   return (
     <Drawer
       className="md:hidden"
+      overlayClassName="md:hidden"
       title={t("coversation-list")}
-      width="85%"
+      width="78%"
       open={open}
       onClose={onClose}
     >
       <div className="p-2">
-        <div
+        <NewButton
+          className="mb-2"
+          type="primary"
+          size="lg"
+          block
           onClick={onAddChannel}
-          className={classNames(
-            "rounded-lg cursor-pointer flex h-12 text-white mb-2 transition-all justify-center items-center",
-            "bg-gradient-to-r from-cyan-500 to-blue-500 bg-magic-size hover:bg-magic-position"
-          )}
         >
           {t("new-chat")}
-        </div>
-        <div className="h-mobileMenu overflow-y-auto">
+        </NewButton>
+        <div className="h-mobileMenu overflow-y-auto select-none">
           {channel.list.map((item) => (
             <div
               key={item.channel_id}
               onClick={() => onChangeChannel(item.channel_id)}
-              className={classNames(
-                "rounded-lg mt-1 overflow-hidden relative flex flex-col h-16 text-xs text-base-color px-[0.5rem] gap-1 justify-center",
-                {
-                  "!bg-menu-active dark:!bg-slate-700":
-                    item.channel_id === channel.activeId,
-                }
+              className={twMerge(
+                classNames(
+                  "rounded-lg mb-1 cursor-pointer transition-colors overflow-hidden relative flex flex-col h-16 text-xs px-[0.5rem] gap-1 justify-center",
+                  "hover:bg-gray-200/60 dark:hover:bg-slate-700/70",
+                  {
+                    "bg-menu-active hover:bg-menu-active dark:bg-slate-600 dark:hover:bg-slate-600":
+                      item.channel_id === channel.activeId,
+                  }
+                )
               )}
             >
-              <div className="flex justify-between items-center">
-                <div className="font-medium text-sm text-ellipsis max-w-[22ch] pl-5 overflow-hidden whitespace-nowrap relative dark:text-white">
+              <div className="flex justify-between items-center gap-2">
+                <div
+                  className={classNames(
+                    "font-medium text-sm text-ellipsis pl-5 overflow-hidden whitespace-nowrap relative",
+                    "text-black/90",
+                    "dark:text-white/90"
+                  )}
+                >
                   <BsChatSquareText className="top-[50%] left-0 translate-y-[-50%] absolute" />
                   {item.channel_name || t("new-conversation")}
                 </div>
                 <div
                   className={classNames(
-                    "text-[#858b96] dark:text-neutral-500",
+                    "text-neutral-500/90 dark:text-neutral-500 dark:group-hover:text-neutral-400 tabular-nums flex-none text-right",
                     {
-                      "dark:!text-neutral-400":
+                      "dark:text-neutral-400/80":
                         item.channel_id === channel.activeId,
                     }
                   )}
@@ -126,10 +137,13 @@ const MobileMenu: React.FC = () => {
                 </div>
               </div>
               <div
-                className={classNames("text-[#858b96] dark:text-neutral-500", {
-                  "dark:!text-neutral-400":
-                    item.channel_id === channel.activeId,
-                })}
+                className={classNames(
+                  "text-neutral-500/90 dark:text-neutral-500 dark:group-hover:text-neutral-400",
+                  {
+                    "dark:text-neutral-400/80":
+                      item.channel_id === channel.activeId,
+                  }
+                )}
               >
                 {item.chat_list.length} {t("messages")}
               </div>
@@ -138,7 +152,11 @@ const MobileMenu: React.FC = () => {
                 content={t("delete-conversation")}
                 trigger={
                   <div
-                    className="right-2 bottom-1 absolute dark:text-white"
+                    className={classNames(
+                      "right-2 bottom-1 absolute",
+                      "text-black/90",
+                      "dark:text-white/90"
+                    )}
                     onClick={stopPropagation}
                   >
                     <AiOutlineDelete size={20} />
@@ -154,7 +172,13 @@ const MobileMenu: React.FC = () => {
             title={t("clear-all-conversation")}
             content={t("clear-conversation")}
             trigger={
-              <div className="h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors hover:bg-menu-hover dark:hover:bg-color-fill-1">
+              <div
+                className={classNames(
+                  "h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors",
+                  "hover:bg-gray-200/60 text-black/90",
+                  "dark:hover:bg-slate-700/70 dark:text-white/90"
+                )}
+              >
                 <AiOutlineDelete size={16} /> {t("clear-all-conversation")}
               </div>
             }
@@ -164,7 +188,11 @@ const MobileMenu: React.FC = () => {
           <a
             href="https://github.com/Peek-A-Booo/L-GPT"
             target="_blank"
-            className="h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors hover:bg-menu-hover dark:hover:bg-color-fill-1"
+            className={classNames(
+              "h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors",
+              "hover:bg-gray-200/60 text-black/90",
+              "dark:hover:bg-slate-700/70 dark:text-white/90"
+            )}
           >
             <AiFillGithub size={16} /> Github
           </a>

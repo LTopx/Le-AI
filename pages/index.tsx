@@ -1,4 +1,5 @@
 import * as React from "react";
+import classNames from "classnames";
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Menu, MobileMenu, Navbar, Welcome, ChatSection } from "@/components";
@@ -8,7 +9,13 @@ export default function Home() {
     <div className="flex h-screen w-full">
       <Menu />
       <MobileMenu />
-      <section className="bg-[#fafbfc] dark:bg-[#16181a] transition-colors h-screen w-full relative md:w-section">
+      <section
+        className={classNames(
+          "transition-colors h-screen w-full relative md:w-section",
+          "bg-gray-100/60",
+          "dark:bg-neutral-900"
+        )}
+      >
         <Navbar />
         <Welcome />
         <ChatSection />
@@ -28,7 +35,6 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
         "nav",
         "welcome",
       ])),
-      // Will be passed to the page component as props
     },
   };
 };

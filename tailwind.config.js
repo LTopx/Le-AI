@@ -40,7 +40,7 @@ module.exports = {
         "magic-size": "200% 100%",
       },
       backgroundPosition: {
-        "magic-position": "100% 0",
+        "magic-position": "50% 0",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -77,20 +77,20 @@ module.exports = {
           "100%": { opacity: 0, transform: "translate3d(0,2rem,0)" },
         },
         showLeft: {
-          "0%": { transform: "translate3d(-100%,0,0)" },
-          "100%": { transform: "translateZ(0)" },
+          "0%": { transform: "translate3d(-100%,0,0)", opacity: 0.8 },
+          "100%": { transform: "translateZ(0)", opacity: 1 },
         },
         hideLeft: {
-          "0%": { transform: "translateZ(0)" },
-          "100%": { transform: "translate3d(-100%,0,0)" },
+          "0%": { transform: "translateZ(0)", opacity: 1 },
+          "100%": { transform: "translate3d(-100%,0,0)", opacity: 0.8 },
         },
       },
       animation: {
         fadeIn: "fadeIn 0.2s ease-in-out",
         fadeOut: "fadeOut 0.2s ease-in-out",
         fadeUp: "fadeUp 0.2s cubic-bezier(.08,.82,.17,1)",
-        showLeft: "showLeft 0.2s ease-in-out",
-        hideLeft: "hideLeft 0.2s ease-in-out",
+        showLeft: "showLeft 0.3s ease-in-out",
+        hideLeft: "hideLeft 0.3s ease-in-out",
       },
     },
   },

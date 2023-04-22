@@ -1,5 +1,14 @@
 # L-GPT Change Log
 
+## v0.1.0
+
+> 2023-04-23
+
+### Changed
+
+- Adjust global CSS and use as many tailwind built-in CSS values as possible to optimize some color matching effects.
+- Replace React.PropsWithChildren with React.HTMLAttributes
+
 ## v0.0.5
 
 > 2023-04-20

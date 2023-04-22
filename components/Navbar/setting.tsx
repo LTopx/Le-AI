@@ -1,7 +1,8 @@
 import * as React from "react";
+import classNames from "classnames";
 import { useTranslation } from "next-i18next";
 import { useTheme } from "next-themes";
-import { Modal, Select, Input } from "@/components";
+import { Select, Input, Modal } from "@/components";
 import { useOpenAIKey, useProxy } from "@/hooks";
 
 const moduleOptions = [
@@ -40,7 +41,6 @@ const Setting = React.forwardRef((_, forwardedRef) => {
   React.useImperativeHandle(forwardedRef, () => ({
     init() {
       setOpen(true);
-      console.log(theme, "theme");
     },
   }));
 
@@ -52,8 +52,13 @@ const Setting = React.forwardRef((_, forwardedRef) => {
       open={open}
       onClose={onClose}
     >
-      <div className="border-b flex border-slate-100 dark:border-neutral-500 py-2 px-1 items-center justify-between">
-        <div className="font-semibold text-sm text-black dark:text-neutral-50">
+      <div
+        className={classNames(
+          "border-b flex py-2 px-1 items-center justify-between",
+          "border-slate-100 dark:border-neutral-500/60"
+        )}
+      >
+        <div className="font-medium text-sm text-black/90 dark:text-white/90">
           API key
         </div>
         <div>
@@ -66,8 +71,13 @@ const Setting = React.forwardRef((_, forwardedRef) => {
           />
         </div>
       </div>
-      <div className="border-b flex border-slate-100 dark:border-neutral-500 py-2 px-1 items-center justify-between">
-        <div className="font-semibold text-sm text-black dark:text-neutral-50">
+      <div
+        className={classNames(
+          "border-b flex py-2 px-1 items-center justify-between",
+          "border-slate-100 dark:border-neutral-500/60"
+        )}
+      >
+        <div className="font-medium text-sm text-black/90 dark:text-white/90">
           {t("proxy-url")}
         </div>
         <div>
@@ -79,8 +89,13 @@ const Setting = React.forwardRef((_, forwardedRef) => {
           />
         </div>
       </div>
-      <div className="border-b flex border-slate-100 dark:border-neutral-500 py-2 px-1 items-center justify-between">
-        <div className="font-semibold text-sm text-black dark:text-neutral-50">
+      <div
+        className={classNames(
+          "border-b flex py-2 px-1 items-center justify-between",
+          "border-slate-100 dark:border-neutral-500/60"
+        )}
+      >
+        <div className="font-medium text-sm text-black/90 dark:text-white/90">
           {t("model")}
         </div>
         <div>
@@ -92,8 +107,13 @@ const Setting = React.forwardRef((_, forwardedRef) => {
           />
         </div>
       </div>
-      <div className="border-b flex border-slate-100 dark:border-neutral-500 py-2 px-1 items-center justify-between">
-        <div className="font-semibold text-sm text-black dark:text-neutral-50">
+      <div
+        className={classNames(
+          "flex py-2 px-1 items-center justify-between",
+          "border-slate-100 dark:border-neutral-500/60"
+        )}
+      >
+        <div className="font-medium text-sm text-black/90 dark:text-white/90">
           {t("theme")}
         </div>
         <div>

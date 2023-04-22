@@ -42,7 +42,7 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
       onClose={onClose}
       onOk={submit}
     >
-      <div className="flex gap-6 items-center pt-2">
+      <div className="flex gap-5 items-center pt-2">
         <div>{t("title")}</div>
         <Input
           className="flex-1"

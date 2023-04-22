@@ -1,7 +1,6 @@
 export { default as Menu } from "./Menu";
 export { default as MobileMenu } from "./Menu/Mobile";
 export { default as Navbar } from "./Navbar";
-export { default as Drawer } from "./Drawer";
 export { default as Welcome } from "./Welcome";
 export { default as ChatSection } from "./ChatSection";
 export { default as ChatContent } from "./ChatContent";
@@ -12,7 +11,6 @@ export {
 } from "./ScrollToBottoms";
 export { default as Input } from "./Input";
 export { default as Button } from "./Button";
-export { default as Modal } from "./Modal";
-export { default as Confirm } from "./Modal/confirm";
 export { default as Select } from "./Select";
 export { default as Prompt } from "./Prompt";
+export { Button as NewButton, Confirm, Drawer, Modal } from "./ui";

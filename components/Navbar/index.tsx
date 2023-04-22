@@ -37,35 +37,51 @@ const Navbar: React.FC = () => {
     <>
       <div
         className={classNames(
-          "flex h-14 w-full top-0 left-0 z-50 backdrop-saturate-[1.8] backdrop-blur-[5px] absolute justify-center items-center",
-          "transition-colors bg-[hsla(0,0%,100%,.8)] dark:bg-gray-900/50 dark:backdrop-blur dark:backdrop-filter"
+          "flex h-14 w-full top-0 left-0 z-50 absolute justify-center items-center backdrop-blur-sm transition-colors",
+          "bg-white/90 dark:bg-gray-900/50"
         )}
       >
         <div
           onClick={onOpenMenu}
-          className="flex h-14 left-0 w-14 justify-center items-center absolute md:hidden"
+          className={classNames(
+            "flex h-14 left-0 w-14 justify-center items-center absolute cursor-pointer transition-colors md:hidden",
+            "text-black/90 hover:text-sky-400",
+            "dark:text-white/90 dark:hover:text-sky-400/90"
+          )}
         >
-          <AiOutlineMenuUnfold size={24} />
+          <AiOutlineMenuUnfold size={22} />
         </div>
         <div
           onClick={onChangeTitle}
-          className="text-ellipsis max-w-[50%] cursor-pointer whitespace-nowrap overflow-hidden relative pr-6"
+          className={classNames(
+            "text-ellipsis group max-w-[50%] cursor-pointer whitespace-nowrap overflow-hidden relative pr-6",
+            "text-black/90",
+            "dark:text-white/90"
+          )}
         >
           {openAIKey || envOpenAIKey
             ? activeChannel?.channel_name || tMenu("new-conversation")
             : tNav("set-openai-key")}
           {!!(openAIKey || envOpenAIKey) && (
             <AiOutlineEdit
-              size={20}
-              className="absolute right-0 top-[50%] translate-y-[-50%]"
+              size={18}
+              className={classNames(
+                "absolute right-0 top-[50%] translate-y-[-50%] transition-colors",
+                "group-hover:text-sky-400",
+                "dark:hover:text-sky-400/90"
+              )}
             />
           )}
         </div>
         <div
           onClick={onOpenSetting}
-          className="cursor-pointer flex h-14 transition-colors right-0 w-14 justify-center items-center absolute hover:text-[#678fff]"
+          className={classNames(
+            "cursor-pointer flex h-14 transition-colors right-0 w-14 justify-center items-center absolute",
+            "text-black/90 hover:text-sky-400",
+            "dark:text-white/90 dark:hover:text-sky-400/90"
+          )}
         >
-          <AiOutlineSetting size={24} />
+          <AiOutlineSetting size={22} />
         </div>
       </div>
       <Setting ref={settingRef} />

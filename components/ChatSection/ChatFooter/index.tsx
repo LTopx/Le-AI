@@ -232,8 +232,9 @@ const ChatFooter: React.FC = () => {
   return (
     <div
       className={classNames(
-        "bg-gradient-to-b from-transparent via-white to-white w-full px-5 pb-5 bottom-0 left-0 absolute",
-        "dark:via-[#16181a] dark:to-[#16181a]"
+        "bg-gradient-to-b from-transparent w-full px-5 pb-5 bottom-0 left-0 absolute",
+        "via-gray-100 to-gray-100",
+        "dark:via-neutral-900 dark:to-neutral-900"
       )}
     >
       {!!findChannel?.chat_list?.length && (

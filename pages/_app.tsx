@@ -27,13 +27,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <div className={inter.className}>
-        <Toaster
-          toastOptions={{
-            style: {
-              fontSize: 14,
-            },
-          }}
-        />
+        <Toaster toastOptions={{ style: { fontSize: 14 } }} />
         <ThemeProvider attribute="class">
           <Component {...pageProps} />
         </ThemeProvider>
