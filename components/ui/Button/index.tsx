@@ -1,7 +1,7 @@
 import * as React from "react";
 import classNames from "classnames";
 
-type ButtonType = "default" | "primary" | "danger";
+type ButtonType = "default" | "primary" | "danger" | "outline";
 
 type ButtonSize = "xs" | "sm" | "base" | "lg";
 
@@ -39,7 +39,7 @@ const Button = React.forwardRef<any, ButtonProps>(
           { "w-full": block },
           // default
           {
-            "bg-slate-300 hover:bg-slate-400/60 active:bg-slate-400/80 text-neutral-600/90":
+            "bg-gray-100 hover:bg-gray-200 active:bg-gray-300 text-slate-600/80":
               type === "default",
           },
           {
@@ -65,6 +65,16 @@ const Button = React.forwardRef<any, ButtonProps>(
           {
             "dark:bg-rose-400/90 dark:hover:bg-rose-500/90 dark:active:bg-rose-600/90":
               type === "danger",
+          },
+
+          // outline
+          {
+            "border border-sky-400 text-sky-400 bg-white/80 backdrop-blur-sm hover:bg-sky-100/80 active:bg-sky-200/60":
+              type === "outline",
+          },
+          {
+            "dark:bg-neutral-900/80 dark:border-sky-400/90 dark:text-sky-400/90 dark:hover:bg-sky-50/10 dark:active:bg-sky-50/20":
+              type === "outline",
           },
           className
         )}

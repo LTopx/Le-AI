@@ -7,7 +7,7 @@ import { BsChatSquareText } from "react-icons/bs";
 import { useDateFormat } from "l-hooks";
 import { v4 as uuidv4 } from "uuid";
 import { useChannel, initChannelList } from "@/hooks";
-import { NewButton, Confirm } from "@/components";
+import { Button, Confirm } from "@/components";
 
 const Menu: React.FC = () => {
   const { t } = useTranslation("menu");
@@ -72,7 +72,7 @@ const Menu: React.FC = () => {
         "dark:bg-slate-800"
       )}
     >
-      <NewButton
+      <Button
         className="mb-2"
         type="primary"
         size="lg"
@@ -80,7 +80,7 @@ const Menu: React.FC = () => {
         onClick={onAddChannel}
       >
         {t("new-chat")}
-      </NewButton>
+      </Button>
       <div className="h-pcMenu overflow-y-auto">
         {channel.list.map((item) => (
           <div

@@ -9,7 +9,7 @@ import { BsStop } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
 import { useChannel, useOpenAIKey, useProxy, useStreamDecoder } from "@/hooks";
-import { useScrollToBottom, Input, Confirm } from "@/components";
+import { useScrollToBottom, Confirm, Button, Textarea } from "@/components";
 import { isMobile } from "@/utils";
 
 const ChatFooter: React.FC = () => {
@@ -239,25 +239,16 @@ const ChatFooter: React.FC = () => {
     >
       {!!findChannel?.chat_list?.length && (
         <div className="flex py-3 justify-center items-center">
-          <div
-            className={classNames(
-              "bg-white border rounded-md flex gap-2 items-center cursor-pointer border-[#d9d9d9] text-sm py-2 px-4 transition-all shadow-[0_2px_0_rgba(0,0,0,0.02)] select-none",
-              "hover:text-[#4096ff] hover:border-[#4096ff] active:text-[#0958d9] active:border-[#0958d9]",
-              "dark:bg-zinc-800 dark:border-stone-600 dark:hover:border-stone-700"
-            )}
+          <Button
+            size="sm"
+            type="outline"
             onClick={generate}
+            leftIcon={
+              loadingFinish ? <BsStop size={20} /> : <AiOutlineRedo size={20} />
+            }
           >
-            {loadingFinish ? (
-              <>
-                <BsStop size={20} /> {t("stop-generate")}
-              </>
-            ) : (
-              <>
-                <AiOutlineRedo size={20} />
-                {t("re-generate")}
-              </>
-            )}
-          </div>
+            {loadingFinish ? t("stop-generate") : t("re-generate")}
+          </Button>
         </div>
       )}
 
@@ -267,14 +258,20 @@ const ChatFooter: React.FC = () => {
             title={tMenu("clear-all-conversation")}
             content={t("clear-current-conversation")}
             trigger={
-              <div className="w-8 h-[2.75rem] flex items-center cursor-pointer transition-colors hover:text-[#678fff]">
+              <div
+                className={classNames(
+                  "w-8 h-[2.75rem] flex items-center cursor-pointer transition-colors",
+                  "text-black/90 hover:text-sky-400",
+                  "dark:text-white/90 dark:hover:text-sky-400/90"
+                )}
+              >
                 <AiOutlineClear size={24} />
               </div>
             }
             onOk={clearNowConversation}
           />
         </div>
-        <Input.TextArea
+        <Textarea
           ref={inputRef}
           value={inputValue}
           onChange={setInputValue}

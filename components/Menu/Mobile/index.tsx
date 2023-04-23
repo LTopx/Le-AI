@@ -6,7 +6,7 @@ import { useDateFormat } from "l-hooks";
 import { AiOutlineDelete, AiFillGithub } from "react-icons/ai";
 import { BsChatSquareText } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
-import { Drawer, Confirm, NewButton } from "@/components";
+import { Drawer, Confirm, Button } from "@/components";
 import { useChannel, initChannelList } from "@/hooks";
 import { useMobileMenuOpen } from "@/state";
 
@@ -81,7 +81,7 @@ const MobileMenu: React.FC = () => {
       onClose={onClose}
     >
       <div className="p-2">
-        <NewButton
+        <Button
           className="mb-2"
           type="primary"
           size="lg"
@@ -89,7 +89,7 @@ const MobileMenu: React.FC = () => {
           onClick={onAddChannel}
         >
           {t("new-chat")}
-        </NewButton>
+        </Button>
         <div className="h-mobileMenu overflow-y-auto select-none">
           {channel.list.map((item) => (
             <div

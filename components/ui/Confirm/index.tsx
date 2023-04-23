@@ -3,7 +3,7 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import classNames from "classnames";
 import { useTranslation } from "next-i18next";
 import { AiFillExclamationCircle } from "react-icons/ai";
-import { NewButton } from "@/components";
+import { Button } from "@/components";
 
 interface ConfirmProps {
   /** The AlertDialog's title */
@@ -84,17 +84,17 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
               </AlertDialog.Description>
               <div className="flex justify-end gap-2">
                 <AlertDialog.Cancel asChild>
-                  <NewButton
+                  <Button
                     type="default"
                     onClick={(event) => event.stopPropagation()}
                   >
                     {t("cancel")}
-                  </NewButton>
+                  </Button>
                 </AlertDialog.Cancel>
                 <AlertDialog.Action asChild>
-                  <NewButton type="danger" onClick={onClickOk}>
+                  <Button type="danger" onClick={onClickOk}>
                     {t("ok")}
-                  </NewButton>
+                  </Button>
                 </AlertDialog.Action>
               </div>
             </AlertDialog.Content>

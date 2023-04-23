@@ -79,21 +79,26 @@ const ChatList: React.FC = () => {
                 </div>
               )}
               {item.role === "user" && (
-                <div className="rounded-full flex bg-[#000]/25 dark:bg-slate-50 h-8 w-8 justify-center items-center">
+                <div
+                  className={classNames(
+                    "rounded-full flex h-8 w-8 justify-center items-center",
+                    "bg-black/25 dark:bg-slate-50"
+                  )}
+                >
                   <FaUserAlt className="text-white dark:text-neutral-600" />
                 </div>
               )}
             </div>
             <div className="flex flex-col gap-1">
-              <div className="text-sm text-[#a4a9b1] dark:text-neutral-500">
+              <div className="text-sm text-neutral-500 dark:text-neutral-300/90">
                 {format(Number(item.time), "MM-DD HH:mm:ss")}
               </div>
               <div
                 className={classNames(
                   "self-start py-2.5 px-3 rounded-md relative border border-transparent",
-                  { "bg-[#d1e3ff] dark:bg-blue-900": item.role === "user" },
+                  { "bg-blue-200/70 dark:bg-blue-900": item.role === "user" },
                   {
-                    "bg-[#ebeced] dark:bg-[#232323] dark:border-[#333335]":
+                    "bg-neutral-200/60 dark:bg-neutral-800/90 dark:border-neutral-600/60":
                       item.role === "assistant",
                   }
                 )}
@@ -101,20 +106,27 @@ const ChatList: React.FC = () => {
                 <ChatContent data={item} />
                 <div
                   className={classNames(
-                    "opacity-0 invisible bg-white dark:bg-neutral-900 border border-[#dee0e3] rounded-md flex gap-0.5 transition-all absolute group-hover:opacity-100 group-hover:visible",
+                    "opacity-0 invisible border border-[#dee0e3] rounded-md flex gap-0.5 transition-all absolute group-hover:opacity-100 group-hover:visible",
+                    "bg-white dark:bg-neutral-800",
                     "top-[-1.7rem] left-[6.5rem] group-hover:left-28",
                     "md:top-0 md:left-auto md:right-[-3.2rem] md:group-hover:right-[-3.7rem] md:group-hover:left-auto",
-                    "text-icon dark:text-neutral-500 dark:border-neutral-700"
+                    "text-neutral-500/90 dark:text-neutral-400 dark:border-neutral-700"
                   )}
                 >
                   <CopyIcon
-                    className="hover:text-icon-hover dark:hover:text-blue-500 transition-colors h-6 w-6 flex justify-center items-center cursor-pointer"
+                    className={classNames(
+                      "transition-colors h-6 w-6 flex justify-center items-center cursor-pointer",
+                      "hover:text-icon-hover dark:hover:text-sky-400/90"
+                    )}
                     content={item.content}
                   />
-                  <div className="w-[1px] bg-[#dee0e3] dark:bg-neutral-800" />
+                  <div className="w-[1px] bg-neutral-200 dark:bg-neutral-600" />
                   <div
                     onClick={() => onDelete(item)}
-                    className="hover:text-icon-hover dark:hover:text-blue-500 transition-colors h-6 w-6 flex justify-center items-center cursor-pointer"
+                    className={classNames(
+                      "transition-colors h-6 w-6 flex justify-center items-center cursor-pointer",
+                      "hover:text-icon-hover dark:hover:text-sky-400/90"
+                    )}
                   >
                     <AiOutlineDelete size={18} />
                   </div>
@@ -126,7 +138,7 @@ const ChatList: React.FC = () => {
         {loadingStart && (
           <AiOutlineLoading
             size={24}
-            className="animate-spin text-primary ml-11"
+            className="animate-spin text-sky-400 ml-11 dark:text-sky-400/90"
           />
         )}
       </div>

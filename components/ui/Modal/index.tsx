@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import classNames from "classnames";
 import { AiOutlineClose } from "react-icons/ai";
 import { useTranslation } from "next-i18next";
-import { NewButton } from "@/components";
+import { Button } from "@/components";
 
 interface ModalProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
   /** The Drawer is open or not */
@@ -101,10 +101,10 @@ const Modal = React.forwardRef<any, ModalProps>(
                 footer
               ) : (
                 <div className="flex justify-end gap-2">
-                  <NewButton onClick={onClose}>{t("cancel")}</NewButton>
-                  <NewButton type="primary" onClick={onOk}>
+                  <Button onClick={onClose}>{t("cancel")}</Button>
+                  <Button type="primary" onClick={onOk}>
                     {t("ok")}
-                  </NewButton>
+                  </Button>
                 </div>
               )}
               <Dialog.Close asChild>

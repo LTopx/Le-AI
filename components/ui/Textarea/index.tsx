@@ -65,12 +65,12 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     return (
       <div
         className={classNames(
-          className,
-          "flex-1 bg-white dark:bg-neutral-900 border dark:border-neutral-700 rounded-md transition-colors relative hover:border-[#4096ff] pr-5",
+          "bg-white hover:border-sky-400 flex-1 border rounded-md transition-colors relative pr-5",
+          "dark:bg-neutral-900/90 dark:border-neutral-700 dark:backdrop-blur-sm",
           {
-            "border-[#4096ff] dark:border-sky-700 shadow-[0_0_0_2px_rgba(5,145,255,.1)]":
-              isFocus,
-          }
+            "border-sky-400 dark:border-sky-400/90 shadow": isFocus,
+          },
+          className
         )}
       >
         <textarea
@@ -86,15 +86,23 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
           onKeyDown={onKeyDown}
         />
         {loadingFinish ? (
-          <div className="rounded-md text-primary cursor-pointer flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center hover:bg-[#e3e5e5]">
+          <div
+            className={classNames(
+              "rounded-md cursor-pointer flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center",
+              "text-sky-400 hover:bg-[#e3e5e5]",
+              "dark:text-sky-400/90"
+            )}
+          >
             <AiOutlineLoading size={24} className="animate-spin" />
           </div>
         ) : (
           <div
             onClick={onSubmit}
             className={classNames(
-              "rounded-md cursor-pointer text-disabled dark:text-neutral-500 flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center hover:bg-[#e3e5e5] dark:hover:bg-neutral-800",
-              value ? "!text-primary" : ""
+              "rounded-md cursor-pointer flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center",
+              "text-gray-400/70 dark:text-neutral-500",
+              "hover:bg-gray-200 dark:hover:bg-neutral-700/80",
+              { "text-sky-400 dark:text-sky-400/90": value }
             )}
           >
             <AiOutlineSend size={24} />

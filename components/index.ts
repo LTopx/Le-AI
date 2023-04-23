@@ -9,8 +9,5 @@ export {
   default as ScrollToBottom,
   useScrollToBottom,
 } from "./ScrollToBottoms";
-export { default as Input } from "./Input";
-export { default as Button } from "./Button";
-export { default as Select } from "./Select";
 export { default as Prompt } from "./Prompt";
-export { Button as NewButton, Confirm, Drawer, Modal } from "./ui";
+export { Button, Confirm, Drawer, Input, Modal, Select, Textarea } from "./ui";

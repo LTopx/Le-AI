@@ -8,7 +8,6 @@ const ChatSection: React.FC = () => {
   const [openAIKey, , envOpenAIKey] = useOpenAIKey();
 
   // only the OpenAI Key or env OpenAI Key Configuration is not empty, show the chat section
-  // if (!openAIKey) return null;
   if (!openAIKey && !envOpenAIKey) return null;
 
   return (

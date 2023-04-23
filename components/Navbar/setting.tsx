@@ -2,7 +2,7 @@ import * as React from "react";
 import classNames from "classnames";
 import { useTranslation } from "next-i18next";
 import { useTheme } from "next-themes";
-import { Select, Input, Modal } from "@/components";
+import { Modal, Input, Select } from "@/components";
 import { useOpenAIKey, useProxy } from "@/hooks";
 
 const moduleOptions = [
@@ -65,6 +65,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
           <Input
             className="w-44"
             type="password"
+            allowClear
             placeholder={t("set-openai-key") as string}
             value={openAIKey}
             onChange={setOpenAIKey}
@@ -83,6 +84,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
         <div>
           <Input
             className="w-44"
+            allowClear
             placeholder={t("set-proxy-url") as string}
             value={proxyUrl}
             onChange={setProxyUrl}

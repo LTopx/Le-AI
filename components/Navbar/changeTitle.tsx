@@ -46,6 +46,7 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
         <div>{t("title")}</div>
         <Input
           className="flex-1"
+          allowClear
           maxLength={30}
           placeholder={tCommon("please-enter") as string}
           value={name}

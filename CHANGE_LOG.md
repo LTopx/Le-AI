@@ -7,7 +7,7 @@
 ### Changed
 
 - Adjust global CSS and use as many tailwind built-in CSS values as possible to optimize some color matching effects.
-- Replace React.PropsWithChildren with React.HTMLAttributes
+- Refactor all common components with radix-ui.
 
 ## v0.0.5
 

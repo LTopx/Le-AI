@@ -17,7 +17,7 @@ const Welcome: React.FC = () => {
         <div className="font-bold text-4xl">{t("welcome")}</div>
         <div className="mt-5 text-lg mb-3">{t("desc")}</div>
         <div className="mb-3 text-gray-500">{t("set-openai-key")}</div>
-        <div className="text-gray-500">
+        <div className="text-gray-500 flex gap-2">
           {t("apply-openai-key")}
           <a
             className="text-blue-500 hover:underline"
