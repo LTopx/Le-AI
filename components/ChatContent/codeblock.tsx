@@ -17,12 +17,11 @@ const CodeBlock: React.FC<Props> = React.memo(({ language, value }) => {
 
   const copyToClipboard = () => {
     if (copied) return;
-    copy(value).then(() => {
-      setCopied(true);
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-    });
+    copy(value);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 1800);
   };
 
   return (

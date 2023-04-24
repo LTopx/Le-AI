@@ -13,13 +13,11 @@ const CopyIcon: React.FC<CopyIconProps> = ({ className, content }) => {
 
   const onCopy = () => {
     if (copySuccess) return;
-    copy(content).then(() => {
-      setCopySuccess(true);
-
-      setTimeout(() => {
-        setCopySuccess(false);
-      }, 1800);
-    });
+    copy(content);
+    setCopySuccess(true);
+    setTimeout(() => {
+      setCopySuccess(false);
+    }, 1800);
   };
 
   return (
