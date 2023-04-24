@@ -100,7 +100,7 @@ const MobileMenu: React.FC = () => {
                   "rounded-lg mb-1 cursor-pointer transition-colors overflow-hidden relative flex flex-col h-16 text-xs px-[0.5rem] gap-1 justify-center",
                   "hover:bg-gray-200/60 dark:hover:bg-slate-700/70",
                   {
-                    "bg-menu-active hover:bg-menu-active dark:bg-slate-600 dark:hover:bg-slate-600":
+                    "bg-sky-100 hover:bg-sky-100 dark:bg-slate-600 dark:hover:bg-slate-600":
                       item.channel_id === channel.activeId,
                   }
                 )

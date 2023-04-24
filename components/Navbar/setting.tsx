@@ -2,8 +2,10 @@ import * as React from "react";
 import classNames from "classnames";
 import { useTranslation } from "next-i18next";
 import { useTheme } from "next-themes";
-import { Modal, Input, Select } from "@/components";
-import { useOpenAIKey, useProxy } from "@/hooks";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { Modal, Input, Select, Slider, Tooltip } from "@/components";
+import { useProxy, useOpenAI } from "@/hooks";
+import type { StateOpenAI } from "@/hooks";
 
 const moduleOptions = [
   {
@@ -15,7 +17,7 @@ const moduleOptions = [
 const Setting = React.forwardRef((_, forwardedRef) => {
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [openAIKey, setOpenAIKey] = useOpenAIKey();
+  const [openAI, setOpenAI] = useOpenAI();
   const [proxyUrl, setProxyUrl] = useProxy();
 
   const { t } = useTranslation("nav");
@@ -37,6 +39,19 @@ const Setting = React.forwardRef((_, forwardedRef) => {
   ];
 
   const onClose = () => setOpen(false);
+
+  const onChangeOpenAI = (value: any, key: keyof StateOpenAI) => {
+    setOpenAI((openai) => {
+      if (key === "openAIKey") {
+        openai[key] = value;
+      } else if (key === "temperature") {
+        openai[key] = value;
+      } else if (key === "max_tokens") {
+        openai[key] = value;
+      }
+      return openai;
+    });
+  };
 
   React.useImperativeHandle(forwardedRef, () => ({
     init() {
@@ -67,8 +82,8 @@ const Setting = React.forwardRef((_, forwardedRef) => {
             type="password"
             allowClear
             placeholder={t("set-openai-key") as string}
-            value={openAIKey}
-            onChange={setOpenAIKey}
+            value={openAI.openAIKey}
+            onChange={(value) => onChangeOpenAI(value, "openAIKey")}
           />
         </div>
       </div>
@@ -98,6 +113,26 @@ const Setting = React.forwardRef((_, forwardedRef) => {
         )}
       >
         <div className="font-medium text-sm text-black/90 dark:text-white/90">
+          {t("theme")}
+        </div>
+        <div>
+          <Select
+            className="w-44"
+            contentClassName="w-44"
+            options={themeOptions}
+            placeholder="Please Select"
+            value={theme}
+            onChange={setTheme}
+          />
+        </div>
+      </div>
+      <div
+        className={classNames(
+          "border-b flex py-2 px-1 items-center justify-between",
+          "border-slate-100 dark:border-neutral-500/60"
+        )}
+      >
+        <div className="font-medium text-sm text-black/90 dark:text-white/90">
           {t("model")}
         </div>
         <div>
@@ -111,21 +146,24 @@ const Setting = React.forwardRef((_, forwardedRef) => {
       </div>
       <div
         className={classNames(
-          "flex py-2 px-1 items-center justify-between",
+          "border-b flex py-2 px-1 items-center justify-between",
           "border-slate-100 dark:border-neutral-500/60"
         )}
       >
-        <div className="font-medium text-sm text-black/90 dark:text-white/90">
-          {t("theme")}
+        <div className="font-medium flex gap-2 items-center text-sm text-black/90 dark:text-white/90">
+          {t("temperature")}
+          <Tooltip title={t("temperature-tip")}>
+            <AiOutlineQuestionCircle size={18} />
+          </Tooltip>
         </div>
         <div>
-          <Select
+          <Slider
             className="w-44"
-            contentClassName="w-44"
-            options={themeOptions}
-            placeholder="Please Select"
-            value={theme}
-            onChange={setTheme}
+            showValue
+            max={1}
+            step={0.1}
+            value={openAI.temperature}
+            onChange={(value) => onChangeOpenAI(value, "temperature")}
           />
         </div>
       </div>

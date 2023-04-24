@@ -7,7 +7,7 @@ import {
   AiOutlineSetting,
   AiOutlineEdit,
 } from "react-icons/ai";
-import { useChannel, useOpenAIKey } from "@/hooks";
+import { useChannel, useOpenAI } from "@/hooks";
 import Setting from "./setting";
 import ChangeTitle from "./changeTitle";
 
@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
   const { t: tMenu } = useTranslation("menu");
   const { t: tNav } = useTranslation("nav");
   const [channel] = useChannel();
-  const [openAIKey, , envOpenAIKey] = useOpenAIKey();
+  const [openai] = useOpenAI();
   const setMobileMenuOpen = useMobileMenuOpen((state) => state.update);
 
   const onOpenMenu = () => setMobileMenuOpen(true);
@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
   const onOpenSetting = () => settingRef.current?.init();
 
   const onChangeTitle = () => {
-    if (!openAIKey && !envOpenAIKey) return;
+    if (!openai.openAIKey && !openai.envOpenAIKey) return;
     changeTitleRef.current?.init();
   };
 
@@ -59,10 +59,10 @@ const Navbar: React.FC = () => {
             "dark:text-white/90"
           )}
         >
-          {openAIKey || envOpenAIKey
+          {openai.openAIKey || openai.envOpenAIKey
             ? activeChannel?.channel_name || tMenu("new-conversation")
             : tNav("set-openai-key")}
-          {!!(openAIKey || envOpenAIKey) && (
+          {!!(openai.openAIKey || openai.envOpenAIKey) && (
             <AiOutlineEdit
               size={18}
               className={classNames(

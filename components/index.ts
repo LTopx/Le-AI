@@ -10,4 +10,16 @@ export {
   useScrollToBottom,
 } from "./ScrollToBottoms";
 export { default as Prompt } from "./Prompt";
-export { Button, Confirm, Drawer, Input, Modal, Select, Textarea } from "./ui";
+export {
+  Button,
+  Confirm,
+  ContextMenu,
+  Drawer,
+  Input,
+  Modal,
+  Select,
+  Slider,
+  Textarea,
+  Tooltip,
+} from "./ui";
+export type { ContextMenuOption } from "./ui";

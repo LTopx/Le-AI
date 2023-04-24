@@ -1,5 +1,20 @@
 # L-GPT Change Log
 
+## v0.1.1
+
+> 2023-04-24
+
+### Add
+
+- Chat conversations support right-click menu for copying and deleting.
+- Conversation channels support right-click menu for pinning and deleting.
+- Added custom polyfill to resolve excessive error collection in Sentry.
+- Added configurable temperature feature.
+
+### Changed
+
+- Proxy address now compatible with both trailing slash and non-trailing slash.
+
 ## v0.1.0
 
 > 2023-04-23

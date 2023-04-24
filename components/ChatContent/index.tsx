@@ -1,9 +1,9 @@
 import * as React from "react";
 import type { ChatItem } from "@/hooks/useChannel";
-import { MemoizedReactMarkdown } from "./reactMarkdown";
 import rehypeMathjax from "rehype-mathjax";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
+import { MemoizedReactMarkdown } from "./reactMarkdown";
 import CodeBlock from "./codeblock";
 
 interface Props {

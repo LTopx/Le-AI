@@ -1,5 +1,15 @@
+import { isUndefined } from "@/utils";
+
 export const config = {
   runtime: "edge",
+};
+
+const getProxyUrl = () => {
+  const API_PROXY = process.env.NEXT_PUBLIC_OPENAI_API_PROXY;
+  if (!API_PROXY) return "";
+  if (API_PROXY[API_PROXY.length - 1] === "/")
+    return API_PROXY.slice(0, API_PROXY.length - 1);
+  return API_PROXY;
 };
 
 const handler = async (req: Request) => {
@@ -10,12 +20,12 @@ const handler = async (req: Request) => {
     req.headers.get("Authorization") ||
     process.env.NEXT_PUBLIC_OPENAI_API_KEY ||
     "";
-  const { chat_list, proxyUrl } = await req.json();
 
-  const proxy =
-    proxyUrl ||
-    process.env.NEXT_PUBLIC_OPENAI_API_PROXY ||
-    "https://api.openai.com";
+  const { proxyUrl, temperature, chat_list } = await req.json();
+
+  const API_PROXY = getProxyUrl();
+
+  const proxy = proxyUrl || API_PROXY || "https://api.openai.com";
 
   const fetchURL = proxy + "/v1/chat/completions";
 
@@ -28,6 +38,8 @@ const handler = async (req: Request) => {
     body: JSON.stringify({
       stream: true,
       model: "gpt-3.5-turbo",
+      temperature: isUndefined(temperature) ? temperature : 1,
+      max_tokens: 2000,
       messages: [
         {
           role: "system",

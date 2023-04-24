@@ -5,6 +5,7 @@ import { appWithTranslation } from "next-i18next";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
+import "@/utils/polyfill";
 import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

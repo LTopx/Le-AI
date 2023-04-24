@@ -5,6 +5,8 @@
   "set-openai-key": "请先配置 OpenAI Key",
   "set-proxy-url": "配置你的代理地址",
   "setting": "设置",
+  "temperature": "随机性",
+  "temperature-tip": "较高的数值（例如0.8）会使输出更随机，而较低的数值（例如0.2）会使输出更加聚焦和确定性更强。",
   "theme": "主题",
   "title": "标题"
 }
