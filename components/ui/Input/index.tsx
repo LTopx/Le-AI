@@ -2,15 +2,19 @@ import * as React from "react";
 import classNames from "classnames";
 import { twMerge } from "tailwind-merge";
 import { AiOutlineClose } from "react-icons/ai";
+import { isUndefined } from "@/utils";
 
-type InputType = "text" | "password";
+type InputType = "text" | "password" | "number";
 
 interface InputProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "onChange"> {
   type?: InputType;
   value: any;
   allowClear?: boolean;
+  min?: number;
+  max?: number;
   maxLength?: number;
+  step?: number;
   onChange?: (value: any) => void;
 }
 
@@ -22,7 +26,10 @@ const Input = React.forwardRef<any, InputProps>(
       placeholder,
       value,
       allowClear,
+      min,
+      max,
       maxLength,
+      step,
       onChange,
     },
     forwardedRef
@@ -39,11 +46,33 @@ const Input = React.forwardRef<any, InputProps>(
     };
 
     const onBlur = (event: any) => {
+      if (type === "number") {
+        const value = Number(event.target.value);
+        if (max && value > max) {
+          onChange?.(max);
+          inputRef.current.value = max;
+        } else if (min && value < min) {
+          onChange?.(min);
+          inputRef.current.value = min;
+        } else if (!isUndefined(step) && step > 0) {
+          const stepValue = Math.round(value / step) * step;
+          onChange?.(stepValue);
+          inputRef.current.value = stepValue;
+        } else {
+          onChange?.(event.target.value);
+        }
+      }
       setIsFocus(false);
       event.preventDefault();
       setTimeout(() => {
         if (forceUpdate.current) inputRef.current?.focus();
       }, 0);
+    };
+
+    const onChangeValue = (e: any) => {
+      if (!isUndefined(min) || !isUndefined(max)) return;
+      const value = e.target.value;
+      onChange?.(value);
     };
 
     const onMouseEnter = () => {
@@ -84,13 +113,16 @@ const Input = React.forwardRef<any, InputProps>(
         <input
           className="w-full bg-transparent appearance-none outline-none leading-[1.375rem]"
           type={type}
+          max={max}
           ref={inputRef}
           placeholder={placeholder}
           maxLength={maxLength}
           onFocus={() => setIsFocus(true)}
           onBlur={onBlur}
-          value={value}
-          onChange={(e) => onChange?.(e.target.value)}
+          // value={value}
+          defaultValue={value}
+          // onChange={(e) => onChange?.(e.target.value)}
+          onChange={onChangeValue}
         />
         {!!value && allowClear && (
           <span

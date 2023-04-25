@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as Select from "@radix-ui/react-select";
-import classnames from "classnames";
+import classNames from "classnames";
 import { twMerge } from "tailwind-merge";
 import { BsChevronDown } from "react-icons/bs";
+import { AiOutlineLoading } from "react-icons/ai";
 import Item from "./item";
-import classNames from "classnames";
 
 type Options = {
   label: string;
@@ -14,6 +14,7 @@ type Options = {
 interface LSelectProps extends React.HTMLAttributes<HTMLElement> {
   contentClassName?: string;
   options: Options[];
+  loading?: boolean;
   value?: any;
   onChange?: (value: any) => void;
 }
@@ -23,6 +24,7 @@ const LSelect: React.FC<LSelectProps> = ({
   contentClassName,
   placeholder,
   options,
+  loading,
   onChange,
   value,
 }) => {
@@ -48,10 +50,14 @@ const LSelect: React.FC<LSelectProps> = ({
       >
         <Select.Value placeholder={placeholder} />
         <Select.Icon className="text-neutral-800 dark:text-neutral-300">
-          <BsChevronDown
-            size={12}
-            className={classnames({ "rotate-180": isOpen })}
-          />
+          {loading ? (
+            <AiOutlineLoading size={14} className="animate-spin" />
+          ) : (
+            <BsChevronDown
+              size={12}
+              className={classNames({ "rotate-180": isOpen })}
+            />
+          )}
         </Select.Icon>
       </Select.Trigger>
 

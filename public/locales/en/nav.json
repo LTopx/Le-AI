@@ -1,4 +1,5 @@
 {
+  "max-tokens": "Max Tokens",
   "model": "LLM",
   "proxy-url": "Proxy URL",
   "rename-conversation": "Rename Conversation",

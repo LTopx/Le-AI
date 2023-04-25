@@ -1,4 +1,5 @@
 import { isUndefined } from "@/utils";
+import { modelOptions } from "@/hooks";
 
 export const config = {
   runtime: "edge",
@@ -21,7 +22,13 @@ const handler = async (req: Request) => {
     process.env.NEXT_PUBLIC_OPENAI_API_KEY ||
     "";
 
-  const { proxyUrl, temperature, chat_list } = await req.json();
+  const { proxyUrl, model, temperature, max_tokens, chat_list } =
+    await req.json();
+
+  const findModel = modelOptions.find((m) => m.value === model);
+  if (!findModel) {
+    return new Response("Error", { status: 500, statusText: "error" });
+  }
 
   const API_PROXY = getProxyUrl();
 
@@ -37,9 +44,9 @@ const handler = async (req: Request) => {
     method: "POST",
     body: JSON.stringify({
       stream: true,
-      model: "gpt-3.5-turbo",
-      temperature: isUndefined(temperature) ? temperature : 1,
-      max_tokens: 2000,
+      model,
+      temperature: isUndefined(temperature) ? 1 : temperature,
+      max_tokens: isUndefined(max_tokens) ? 2000 : max_tokens,
       messages: [
         {
           role: "system",

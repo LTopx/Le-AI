@@ -107,16 +107,20 @@ const ChatFooter: React.FC = () => {
       const controller = new AbortController();
       setChatAbort(controller);
 
+      const { openAIKey, model, temperature, max_tokens } = openai;
+
       fetch("/api/gpt", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
-          Authorization: openai.openAIKey,
+          Authorization: openAIKey,
         },
         signal: controller.signal,
         body: JSON.stringify({
           proxyUrl,
-          temperature: openai.temperature,
+          model,
+          temperature,
+          max_tokens,
           chat_list: chat_list.map((item) => ({
             role: item.role,
             content: item.content,
@@ -187,15 +191,18 @@ const ChatFooter: React.FC = () => {
       role: "system",
       content: tPrompt("get-title"),
     });
+
+    const { openAIKey, model } = openai;
+
     fetch("/api/gpt", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization: openai.openAIKey,
+        Authorization: openAIKey,
       },
       body: JSON.stringify({
+        model,
         proxyUrl,
-        temperature: openai.temperature,
         chat_list,
       }),
     }).then(async (response) => {

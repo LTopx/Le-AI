@@ -77,7 +77,7 @@ const Modal = React.forwardRef<any, ModalProps>(
           <div className="fixed top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[1500]">
             <Dialog.Content
               className={classNames(
-                "p-6 shadow rounded-md max-w-confirm-modal relative",
+                "p-6 shadow rounded-md max-w-confirm-modal relative outline-none",
                 "data-[state=open]:animate-fadeUp data-[state=closed]:animate-fadeOut",
                 "bg-white",
                 "dark:bg-slate-800 dark:border dark:border-neutral-700/30",

@@ -22,6 +22,11 @@ type State = {
    * @default 2000
    */
   max_tokens: number;
+
+  /**
+   * ID of the model to use
+   */
+  model: string;
 };
 
 export type StateOpenAI = Omit<State, "envOpenAIKey">;
@@ -35,11 +40,23 @@ type Action = {
 
 export type UseOpenAIReturn = [State, (args: SaveOpenAI) => void];
 
+const modelOptions = [
+  {
+    label: "gpt-3.5-turbo-0301",
+    value: "gpt-3.5-turbo-0301",
+  },
+  {
+    label: "gpt-3.5-turbo",
+    value: "gpt-3.5-turbo",
+  },
+];
+
 const useStore = create<State & Action>((set) => ({
   openAIKey: "",
   envOpenAIKey: "",
   temperature: 1,
   max_tokens: 2000,
+  model: "gpt-3.5-turbo",
 
   update: (args: SaveOpenAI) => {
     if (typeof args === "function") {
@@ -51,18 +68,20 @@ const useStore = create<State & Action>((set) => ({
             max_tokens: state.max_tokens,
           })
         );
-        const { openAIKey, temperature, max_tokens } = args(newState);
+        const { openAIKey, model, temperature, max_tokens } = args(newState);
         localStorage.setItem("openaiKey", openAIKey);
+        localStorage.setItem("language_model", model);
         localStorage.setItem("temperature", String(temperature));
         localStorage.setItem("max_tokens", String(max_tokens));
-        return { openAIKey, temperature, max_tokens };
+        return { openAIKey, model, temperature, max_tokens };
       });
     } else {
-      const { openAIKey, temperature, max_tokens } = args;
+      const { openAIKey, model, temperature, max_tokens } = args;
       localStorage.setItem("openaiKey", openAIKey);
+      localStorage.setItem("language_model", model);
       localStorage.setItem("temperature", String(temperature));
       localStorage.setItem("max_tokens", String(max_tokens));
-      set(() => ({ openAIKey, temperature, max_tokens }));
+      set(() => ({ openAIKey, model, temperature, max_tokens }));
     }
   },
   updateEnvOpenAIKey: (envOpenAIKey) => {
@@ -71,7 +90,7 @@ const useStore = create<State & Action>((set) => ({
 }));
 
 const useOpenAI = (): UseOpenAIReturn => {
-  const { openAIKey, envOpenAIKey, temperature, max_tokens } = useStore(
+  const { openAIKey, model, envOpenAIKey, temperature, max_tokens } = useStore(
     (state) => state
   );
 
@@ -83,10 +102,14 @@ const useOpenAI = (): UseOpenAIReturn => {
     const localOpenaiKey = localStorage.getItem("openaiKey") || "";
     const localTemperature = Number(localStorage.getItem("temperature") || "1");
     const localMaxToken = Number(localStorage.getItem("max_tokens") || "2000");
+    const localModel =
+      localStorage.getItem("language_model") || "gpt-3.5-turbo";
+
     update({
       openAIKey: localOpenaiKey,
       temperature: isNaN(localTemperature) ? 1 : localTemperature,
       max_tokens: isNaN(localMaxToken) ? 2000 : localMaxToken,
+      model: localModel,
     });
     updateEnvOpenAIKey(process.env.NEXT_PUBLIC_OPENAI_API_KEY || "");
   }, []);
@@ -94,6 +117,7 @@ const useOpenAI = (): UseOpenAIReturn => {
   return [
     {
       openAIKey,
+      model,
       envOpenAIKey,
       temperature,
       max_tokens,
@@ -102,4 +126,4 @@ const useOpenAI = (): UseOpenAIReturn => {
   ];
 };
 
-export { useOpenAI };
+export { useOpenAI, modelOptions };

@@ -14,6 +14,7 @@ module.exports = {
       },
       maxWidth: {
         "confirm-modal": "calc(100vw - 2rem)",
+        popover: "calc(100vw - 10rem)",
       },
       height: {
         pcMenu: "calc(100vh - 11rem)",

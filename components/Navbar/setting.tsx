@@ -2,17 +2,11 @@ import * as React from "react";
 import classNames from "classnames";
 import { useTranslation } from "next-i18next";
 import { useTheme } from "next-themes";
+import { useDebounceFn } from "ahooks";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { Modal, Input, Select, Slider, Tooltip } from "@/components";
-import { useProxy, useOpenAI } from "@/hooks";
+import { useProxy, useOpenAI, modelOptions } from "@/hooks";
 import type { StateOpenAI } from "@/hooks";
-
-const moduleOptions = [
-  {
-    label: "gpt-3.5",
-    value: "gpt-3.5",
-  },
-];
 
 const Setting = React.forwardRef((_, forwardedRef) => {
   const { theme, setTheme } = useTheme();
@@ -22,6 +16,11 @@ const Setting = React.forwardRef((_, forwardedRef) => {
 
   const { t } = useTranslation("nav");
   const { t: tCommon } = useTranslation("common");
+
+  const { run: onChangeTemperature } = useDebounceFn(
+    (value: number) => onChangeOpenAI(value, "temperature"),
+    { wait: 500 }
+  );
 
   const themeOptions = [
     {
@@ -48,6 +47,8 @@ const Setting = React.forwardRef((_, forwardedRef) => {
         openai[key] = value;
       } else if (key === "max_tokens") {
         openai[key] = value;
+      } else if (key === "model") {
+        openai[key] = value;
       }
       return openai;
     });
@@ -67,6 +68,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
       open={open}
       onClose={onClose}
     >
+      {/* API KEY */}
       <div
         className={classNames(
           "border-b flex py-2 px-1 items-center justify-between",
@@ -87,6 +89,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
           />
         </div>
       </div>
+      {/* PROXY URL */}
       <div
         className={classNames(
           "border-b flex py-2 px-1 items-center justify-between",
@@ -106,6 +109,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
           />
         </div>
       </div>
+      {/* THEME */}
       <div
         className={classNames(
           "border-b flex py-2 px-1 items-center justify-between",
@@ -126,6 +130,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
           />
         </div>
       </div>
+      {/* LLM */}
       <div
         className={classNames(
           "border-b flex py-2 px-1 items-center justify-between",
@@ -139,11 +144,13 @@ const Setting = React.forwardRef((_, forwardedRef) => {
           <Select
             className="w-44"
             contentClassName="w-44"
-            options={moduleOptions}
-            value="gpt-3.5"
+            options={modelOptions}
+            value={openAI.model}
+            onChange={(value) => onChangeOpenAI(value, "model")}
           />
         </div>
       </div>
+      {/* TEMPERATURE */}
       <div
         className={classNames(
           "border-b flex py-2 px-1 items-center justify-between",
@@ -156,14 +163,37 @@ const Setting = React.forwardRef((_, forwardedRef) => {
             <AiOutlineQuestionCircle size={18} />
           </Tooltip>
         </div>
-        <div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm">{openAI.temperature}</span>
           <Slider
-            className="w-44"
-            showValue
+            className="w-36 md:w-44"
             max={1}
             step={0.1}
-            value={openAI.temperature}
-            onChange={(value) => onChangeOpenAI(value, "temperature")}
+            defaultValue={openAI.temperature}
+            onChange={onChangeTemperature}
+          />
+        </div>
+      </div>
+      {/* MAX TOKENS */}
+      <div
+        className={classNames(
+          "border-b flex py-2 px-1 items-center justify-between",
+          "border-slate-100 dark:border-neutral-500/60"
+        )}
+      >
+        <div className="font-medium text-sm text-black/90 dark:text-white/90">
+          {t("max-tokens")}
+        </div>
+        <div>
+          <Input
+            className="w-44"
+            type="number"
+            min={1}
+            max={4097}
+            step={1}
+            placeholder={t("set-proxy-url") as string}
+            value={openAI.max_tokens}
+            onChange={(value) => onChangeOpenAI(value, "max_tokens")}
           />
         </div>
       </div>
