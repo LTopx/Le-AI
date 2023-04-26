@@ -1,5 +1,5 @@
 import * as React from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 import { useTranslation } from "next-i18next";
 import { v4 as uuidv4 } from "uuid";
 import { useChatLoading, useChatAbort } from "@/state";
@@ -243,7 +243,7 @@ const ChatFooter: React.FC = () => {
 
   return (
     <div
-      className={classNames(
+      className={clsx(
         "bg-gradient-to-b from-transparent w-full px-5 pb-5 bottom-0 left-0 absolute",
         "via-gray-100 to-gray-100",
         "dark:via-neutral-900 dark:to-neutral-900"
@@ -271,7 +271,7 @@ const ChatFooter: React.FC = () => {
             content={t("clear-current-conversation")}
             trigger={
               <div
-                className={classNames(
+                className={clsx(
                   "w-8 h-[2.75rem] flex items-center cursor-pointer transition-colors",
                   "text-black/90 hover:text-sky-400",
                   "dark:text-white/90 dark:hover:text-sky-400/90"

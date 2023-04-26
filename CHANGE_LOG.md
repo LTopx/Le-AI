@@ -2,12 +2,20 @@
 
 ## v0.1.2
 
-> 2023-04-26
+> 2023-04-27
+
+### Fixed
+
+- Fixed a bug where certain states would appear abnormal when modifying content on the settings page.
 
 ### Add
 
 - Add the ability to configure max_tokens
 - Add the ability to select a model
+
+### Changed
+
+- Prohibited zooming on mobile Safari browser.
 
 ## v0.1.1
 

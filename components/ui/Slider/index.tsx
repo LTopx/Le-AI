@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Slider from "@radix-ui/react-slider";
-import classNames from "classnames";
+import clsx from "clsx";
 import { isUndefined } from "@/utils";
 
 interface LSliderProps
@@ -32,7 +32,7 @@ const LSlider: React.FC<LSliderProps> = ({
 
   return (
     <div
-      className={classNames(
+      className={clsx(
         "px-3 cursor-pointer rounded transition-colors",
         "bg-gray-200/70 hover:bg-gray-200",
         "dark:bg-neutral-700/90 dark:hover:bg-zinc-600",
@@ -40,7 +40,7 @@ const LSlider: React.FC<LSliderProps> = ({
       )}
     >
       <Slider.Root
-        className={classNames(
+        className={clsx(
           "relative flex items-center select-none touch-none h-8"
         )}
         max={max}
@@ -50,20 +50,20 @@ const LSlider: React.FC<LSliderProps> = ({
         onValueChange={onValueChange}
       >
         <Slider.Track
-          className={classNames(
+          className={clsx(
             "bg-white relative grow rounded-full h-[3px]",
             "dark:bg-neutral-400"
           )}
         >
           <Slider.Range
-            className={classNames(
+            className={clsx(
               "absolute bg-sky-400 rounded-full h-full",
               "dark:bg-sky-400/90"
             )}
           />
         </Slider.Track>
         <Slider.Thumb
-          className={classNames(
+          className={clsx(
             "block w-3 h-3 border-2 shadow-lg rounded-full focus:outline-none transition-transform",
             "hover:scale-125",
             "border-sky-400 bg-white",

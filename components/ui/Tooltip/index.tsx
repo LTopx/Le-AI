@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Popover from "@radix-ui/react-popover";
-import classNames from "classnames";
+import clsx from "clsx";
 
 interface LPopoverProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
@@ -15,8 +15,8 @@ const LPopover: React.FC<LPopoverProps> = ({ children, title }) => {
         <Popover.Content
           side="top"
           align="start"
-          className={classNames(
-            "z-[2000] py-2 px-4 text-sm rounded-md shadow-md max-w-popover md:max-w-xs break-words",
+          className={clsx(
+            "z-[2000] py-2 px-4 text-sm rounded-md shadow-md max-w-[calc(100vw-10rem)] md:max-w-xs break-words",
             "data-[state=open]:animate-fadeInUp data-[state=closed]:animate-fadeOut",
             "bg-neutral-800 text-white/90",
             "dark:bg-neutral-700 dark:text-white/90"

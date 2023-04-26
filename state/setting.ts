@@ -8,8 +8,8 @@ type Action = {
   update: (open: State["open"]) => void;
 };
 
-/** is Mobile Menu Open */
-export const useMobileMenuOpen = create<State & Action>((set) => ({
+/** is Setting Menu Open */
+export const useSettingOpen = create<State & Action>((set) => ({
   open: false,
   update: (open: boolean) => set(() => ({ open })),
 }));

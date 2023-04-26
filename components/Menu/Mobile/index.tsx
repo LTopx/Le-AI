@@ -1,20 +1,25 @@
 import * as React from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import { useTranslation } from "next-i18next";
 import { useDateFormat } from "l-hooks";
-import { AiOutlineDelete, AiFillGithub } from "react-icons/ai";
+import {
+  AiOutlineDelete,
+  AiFillGithub,
+  AiOutlineSetting,
+} from "react-icons/ai";
 import { BsChatSquareText } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
 import { Drawer, Confirm, Button } from "@/components";
 import { useChannel, initChannelList } from "@/hooks";
-import { useMobileMenuOpen } from "@/state";
+import { useMobileMenuOpen, useSettingOpen } from "@/state";
 
 const MobileMenu: React.FC = () => {
   const { t } = useTranslation("menu");
   const [channel, setChannel] = useChannel();
   const open = useMobileMenuOpen((state) => state.open);
   const setOpen = useMobileMenuOpen((state) => state.update);
+  const setSettingOpen = useSettingOpen((state) => state.update);
 
   const { format } = useDateFormat();
 
@@ -71,6 +76,8 @@ const MobileMenu: React.FC = () => {
     });
   };
 
+  const onSettingOpen = () => setSettingOpen(true);
+
   return (
     <Drawer
       className="md:hidden"
@@ -90,13 +97,13 @@ const MobileMenu: React.FC = () => {
         >
           {t("new-chat")}
         </Button>
-        <div className="h-mobileMenu overflow-y-auto select-none">
+        <div className="h-[calc(100vh-17rem)] overflow-y-auto select-none">
           {channel.list.map((item) => (
             <div
               key={item.channel_id}
               onClick={() => onChangeChannel(item.channel_id)}
               className={twMerge(
-                classNames(
+                clsx(
                   "rounded-lg mb-1 cursor-pointer transition-colors overflow-hidden relative flex flex-col h-16 text-xs px-[0.5rem] gap-1 justify-center",
                   "hover:bg-gray-200/60 dark:hover:bg-slate-700/70",
                   {
@@ -108,7 +115,7 @@ const MobileMenu: React.FC = () => {
             >
               <div className="flex justify-between items-center gap-2">
                 <div
-                  className={classNames(
+                  className={clsx(
                     "font-medium text-sm text-ellipsis pl-5 overflow-hidden whitespace-nowrap relative",
                     "text-black/90",
                     "dark:text-white/90"
@@ -118,7 +125,7 @@ const MobileMenu: React.FC = () => {
                   {item.channel_name || t("new-conversation")}
                 </div>
                 <div
-                  className={classNames(
+                  className={clsx(
                     "text-neutral-500/90 dark:text-neutral-500 dark:group-hover:text-neutral-400 tabular-nums flex-none text-right",
                     {
                       "dark:text-neutral-400/80":
@@ -137,7 +144,7 @@ const MobileMenu: React.FC = () => {
                 </div>
               </div>
               <div
-                className={classNames(
+                className={clsx(
                   "text-neutral-500/90 dark:text-neutral-500 dark:group-hover:text-neutral-400",
                   {
                     "dark:text-neutral-400/80":
@@ -152,7 +159,7 @@ const MobileMenu: React.FC = () => {
                 content={t("delete-conversation")}
                 trigger={
                   <div
-                    className={classNames(
+                    className={clsx(
                       "right-2 bottom-1 absolute",
                       "text-black/90",
                       "dark:text-white/90"
@@ -167,13 +174,13 @@ const MobileMenu: React.FC = () => {
             </div>
           ))}
         </div>
-        <div className="h-[6rem] flex flex-col border-t gap-1 pt-1">
+        <div className="h-[9rem] flex flex-col border-t gap-1 pt-1">
           <Confirm
             title={t("clear-all-conversation")}
             content={t("clear-conversation")}
             trigger={
               <div
-                className={classNames(
+                className={clsx(
                   "h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors",
                   "hover:bg-gray-200/60 text-black/90",
                   "dark:hover:bg-slate-700/70 dark:text-white/90"
@@ -184,11 +191,10 @@ const MobileMenu: React.FC = () => {
             }
             onOk={onClearChannel}
           />
-
           <a
             href="https://github.com/Peek-A-Booo/L-GPT"
             target="_blank"
-            className={classNames(
+            className={clsx(
               "h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors",
               "hover:bg-gray-200/60 text-black/90",
               "dark:hover:bg-slate-700/70 dark:text-white/90"
@@ -196,6 +202,16 @@ const MobileMenu: React.FC = () => {
           >
             <AiFillGithub size={16} /> Github
           </a>
+          <div
+            onClick={onSettingOpen}
+            className={clsx(
+              "h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors",
+              "hover:bg-gray-200/60 text-black/90",
+              "dark:hover:bg-slate-700/70 dark:text-white/90"
+            )}
+          >
+            <AiOutlineSetting size={16} /> {t("setting")}
+          </div>
         </div>
       </div>
     </Drawer>

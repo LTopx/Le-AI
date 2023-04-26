@@ -8,18 +8,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      width: {
-        section: "calc(100vw - 17.5rem)",
-        "confirm-modal": "28rem",
-      },
-      maxWidth: {
-        "confirm-modal": "calc(100vw - 2rem)",
-        popover: "calc(100vw - 10rem)",
-      },
-      height: {
-        pcMenu: "calc(100vh - 11rem)",
-        mobileMenu: "calc(100vh - 14rem)",
-      },
       keyframes: {
         fadeIn: {
           "0%": { opacity: 0 },

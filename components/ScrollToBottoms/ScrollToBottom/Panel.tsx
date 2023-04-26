@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import clsx from "clsx";
 import React, { useContext } from "react";
 
 import InternalContext from "./InternalContext";
@@ -19,10 +19,7 @@ const Panel: React.FC<PanelProps> = ({ children, className }) => {
   const rootCSS = useStyleToClassName()(ROOT_STYLE);
 
   return (
-    <div
-      className={classNames(rootCSS, (className || "") + "")}
-      ref={setTarget}
-    >
+    <div className={clsx(rootCSS, (className || "") + "")} ref={setTarget}>
       {children}
     </div>
   );

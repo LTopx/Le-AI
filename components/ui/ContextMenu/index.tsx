@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ContextMenu from "@radix-ui/react-context-menu";
-import classNames from "classnames";
+import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export interface ContextMenuOption {
@@ -26,7 +26,7 @@ const LContextMenu: React.FC<ContextMenuProps> = ({
       <ContextMenu.Portal>
         <ContextMenu.Content
           className={twMerge(
-            classNames(
+            clsx(
               "w-32 rounded-md border overflow-hidden shadow-lg p-1",
               "bg-white",
               "dark:bg-slate-700"
@@ -40,7 +40,7 @@ const LContextMenu: React.FC<ContextMenuProps> = ({
               onSelect={() => onSelect?.(item)}
             >
               <div
-                className={classNames(
+                className={clsx(
                   "outline-none rounded-md pl-2 text-sm transition-colors h-8 flex items-center gap-2 cursor-pointer",
                   "text-black/80 hover:bg-neutral-200",
                   "dark:text-white/70 dark:hover:bg-slate-600/80"

@@ -26,6 +26,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-title" content="L-GPT" />
         <link rel="icon" href="/favicon.svg" />
+        <script src="/disableSafariScalable.js" async />
       </Head>
       <div className={inter.className}>
         <Toaster toastOptions={{ style: { fontSize: 14 } }} />

@@ -6,5 +6,6 @@
   "delete-conversation": "Are you sure delete this conversation?",
   "messages": "messages",
   "new-chat": "New Chat",
-  "new-conversation": "New Conversation"
+  "new-conversation": "New Conversation",
+  "setting": "Setting"
 }

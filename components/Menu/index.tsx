@@ -1,11 +1,12 @@
 import * as React from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import { useTranslation } from "next-i18next";
 import {
   AiOutlineDelete,
   AiFillGithub,
   AiOutlineVerticalAlignTop,
+  AiOutlineSetting,
 } from "react-icons/ai";
 import { BsChatSquareText } from "react-icons/bs";
 import { useDateFormat } from "l-hooks";
@@ -14,10 +15,12 @@ import { useChannel, initChannelList } from "@/hooks";
 import type { ChannelListItem } from "@/hooks";
 import { Button, Confirm, ContextMenu } from "@/components";
 import type { ContextMenuOption } from "@/components";
+import { useSettingOpen } from "@/state";
 
 const Menu: React.FC = () => {
   const { t } = useTranslation("menu");
   const { format } = useDateFormat();
+  const setOpen = useSettingOpen((state) => state.update);
 
   const [channel, setChannel] = useChannel();
   const menuOptions: ContextMenuOption[] = [
@@ -98,9 +101,11 @@ const Menu: React.FC = () => {
     }
   };
 
+  const onOpenSetting = () => setOpen(true);
+
   return (
     <div
-      className={classNames(
+      className={clsx(
         "p-2 hidden md:block md:w-[17.5rem] transition-colors select-none",
         "bg-white",
         "dark:bg-slate-800"
@@ -115,7 +120,7 @@ const Menu: React.FC = () => {
       >
         {t("new-chat")}
       </Button>
-      <div className="h-pcMenu overflow-y-auto">
+      <div className="h-[calc(100vh-13.75rem)] overflow-y-auto">
         {channel.list.map((item) => (
           <ContextMenu
             key={item.channel_id}
@@ -125,7 +130,7 @@ const Menu: React.FC = () => {
             <div
               onClick={() => onChangeChannel(item.channel_id)}
               className={twMerge(
-                classNames(
+                clsx(
                   "rounded-lg cursor-pointer mb-1 overflow-hidden relative flex flex-col h-16 text-xs px-[0.5rem] transition-colors gap-1 group justify-center",
                   "hover:bg-gray-200/60 dark:hover:bg-slate-700/70",
                   {
@@ -136,7 +141,7 @@ const Menu: React.FC = () => {
               )}
             >
               <div
-                className={classNames(
+                className={clsx(
                   "flex justify-between items-center",
                   "text-black/90",
                   "dark:text-white/90"
@@ -151,7 +156,7 @@ const Menu: React.FC = () => {
               </div>
               <div
                 className={twMerge(
-                  classNames(
+                  clsx(
                     "flex justify-between transition-all",
                     "text-neutral-500/90 dark:text-neutral-500 dark:group-hover:text-neutral-400",
                     {
@@ -179,7 +184,7 @@ const Menu: React.FC = () => {
                 trigger={
                   <div
                     onClick={stopPropagation}
-                    className={classNames(
+                    className={clsx(
                       "opacity-0 transition-all right-[-2rem] absolute group-hover:opacity-100 group-hover:right-2",
                       "text-neutral-500/90 hover:text-black/90",
                       "dark:text-neutral-400 dark:hover:text-white/90"
@@ -194,13 +199,13 @@ const Menu: React.FC = () => {
           </ContextMenu>
         ))}
       </div>
-      <div className="h-[6.5rem] flex flex-col gap-2 border-t dark:border-white/20 pt-2">
+      <div className="h-[9.25rem] flex flex-col gap-1 border-t dark:border-white/20 pt-2">
         <Confirm
           title={t("clear-all-conversation")}
           content={t("clear-conversation")}
           trigger={
             <div
-              className={classNames(
+              className={clsx(
                 "hover:bg-gray-200/60 h-11 rounded-lg transition-colors text-sm cursor-pointer flex items-center gap-2 px-2",
                 "dark:hover:bg-slate-700/70"
               )}
@@ -213,13 +218,22 @@ const Menu: React.FC = () => {
         <a
           href="https://github.com/Peek-A-Booo/L-GPT"
           target="_blank"
-          className={classNames(
+          className={clsx(
             "hover:bg-gray-200/60 h-11 rounded-lg transition-colors text-sm cursor-pointer flex items-center gap-2 px-2",
             "dark:hover:bg-slate-700/70"
           )}
         >
           <AiFillGithub size={16} /> Github
         </a>
+        <div
+          onClick={onOpenSetting}
+          className={clsx(
+            "hover:bg-gray-200/60 h-11 rounded-lg transition-colors text-sm cursor-pointer flex items-center gap-2 px-2",
+            "dark:hover:bg-slate-700/70"
+          )}
+        >
+          <AiOutlineSetting size={16} /> {t("setting")}
+        </div>
       </div>
     </div>
   );

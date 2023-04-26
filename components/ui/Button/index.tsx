@@ -1,5 +1,5 @@
 import * as React from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 
 type ButtonType = "default" | "primary" | "danger" | "outline";
 
@@ -30,7 +30,7 @@ const Button = React.forwardRef<any, ButtonProps>(
     return (
       <button
         onClick={onClick}
-        className={classNames(
+        className={clsx(
           "transition-all duration-100 ease-linear rounded-md font-medium flex items-center justify-center gap-2 tracking-wide",
           { "h-6 text-xs px-2": size === "xs" },
           { "h-8 text-sm px-3": size === "sm" },

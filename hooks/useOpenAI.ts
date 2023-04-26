@@ -64,6 +64,7 @@ const useStore = create<State & Action>((set) => ({
         const newState = JSON.parse(
           JSON.stringify({
             openAIKey: state.openAIKey,
+            model: state.model,
             temperature: state.temperature,
             max_tokens: state.max_tokens,
           })

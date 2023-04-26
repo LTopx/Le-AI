@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import classNames from "classnames";
+import clsx from "clsx";
 import { AiOutlineClose } from "react-icons/ai";
 import { useTranslation } from "next-i18next";
 import { Button } from "@/components";
@@ -69,15 +69,15 @@ const Modal = React.forwardRef<any, ModalProps>(
       <Dialog.Root open={open} onOpenChange={onOpenChange}>
         <Dialog.Portal>
           <Dialog.Overlay
-            className={classNames(
+            className={clsx(
               "bg-gray-900/40 backdrop-blur-sm fixed inset-0 z-[1500]",
               "data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut"
             )}
           />
           <div className="fixed top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[1500]">
             <Dialog.Content
-              className={classNames(
-                "p-6 shadow rounded-md max-w-confirm-modal relative outline-none",
+              className={clsx(
+                "p-6 shadow rounded-md max-w-[calc(100vw-2rem)] relative outline-none",
                 "data-[state=open]:animate-fadeUp data-[state=closed]:animate-fadeOut",
                 "bg-white",
                 "dark:bg-slate-800 dark:border dark:border-neutral-700/30",
@@ -88,7 +88,7 @@ const Modal = React.forwardRef<any, ModalProps>(
               onInteractOutside={onInteractOutside}
             >
               <Dialog.Title
-                className={classNames(
+                className={clsx(
                   "flex items-center gap-1.5 text-lg font-medium leading-6",
                   "text-gray-900",
                   "dark:text-white/90"
@@ -109,7 +109,7 @@ const Modal = React.forwardRef<any, ModalProps>(
               )}
               <Dialog.Close asChild>
                 <button
-                  className={classNames(
+                  className={clsx(
                     "absolute right-2 top-2 w-7 h-7 flex items-center justify-center transition-colors",
                     "text-black/40 hover:text-black/90",
                     "dark:text-white/40 dark:hover:text-white/90"

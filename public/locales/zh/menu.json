@@ -6,5 +6,6 @@
   "delete-conversation": "你确认删除该会话?",
   "messages": "条会话",
   "new-chat": "新建会话",
-  "new-conversation": "新会话"
+  "new-conversation": "新会话",
+  "setting": "设置"
 }

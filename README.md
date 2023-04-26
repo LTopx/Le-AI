@@ -4,6 +4,8 @@ English / [简体中文](./README_CN.md)
 
 L-GPT is an open-source project that imitates the OpenAI ChatGPT. [Demo](https://gpt.ltops.cn)
 
+[QQ 群](./public/screenshots/qq.jpeg)
+
 <img src="./public/screenshots/screenshot.png">
 
 ## Features

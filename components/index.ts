@@ -5,6 +5,7 @@ export { default as Welcome } from "./Welcome";
 export { default as ChatSection } from "./ChatSection";
 export { default as ChatContent } from "./ChatContent";
 export { default as CopyIcon } from "./CopyIcon";
+export { default as Setting } from "./Setting";
 export {
   default as ScrollToBottom,
   useScrollToBottom,

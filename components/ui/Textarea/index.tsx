@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useTranslation } from "next-i18next";
-import classNames from "classnames";
+import clsx from "clsx";
 import { AiOutlineSend, AiOutlineLoading } from "react-icons/ai";
 import { useChatLoading } from "@/state";
 
@@ -64,7 +64,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
 
     return (
       <div
-        className={classNames(
+        className={clsx(
           "bg-white hover:border-sky-400 flex-1 border rounded-md transition-colors relative pr-5",
           "dark:bg-neutral-900/90 dark:border-neutral-700 dark:backdrop-blur-sm",
           {
@@ -87,7 +87,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
         />
         {loadingFinish ? (
           <div
-            className={classNames(
+            className={clsx(
               "rounded-md cursor-pointer flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center",
               "text-sky-400 hover:bg-[#e3e5e5]",
               "dark:text-sky-400/90"
@@ -98,7 +98,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
         ) : (
           <div
             onClick={onSubmit}
-            className={classNames(
+            className={clsx(
               "rounded-md cursor-pointer flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center",
               "text-gray-400/70 dark:text-neutral-500",
               "hover:bg-gray-200 dark:hover:bg-neutral-700/80",

@@ -1,5 +1,5 @@
 import * as React from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 
 import AutoHideFollowButton from "./ScrollToBottom/AutoHideFollowButton";
 import Composer from "./ScrollToBottom/Composer";
@@ -21,7 +21,7 @@ const BasicScrollToBottomCore: React.FC<
   Omit<BasicScrollToBottomProps, "mode" | "nonce">
 > = ({ children, className, followButtonClassName, scrollViewClassName }) => {
   return (
-    <div className={classNames("realative", className)}>
+    <div className={clsx("realative", className)}>
       <Panel className={(scrollViewClassName || "") + ""}>{children}</Panel>
       <AutoHideFollowButton className={(followButtonClassName || "") + ""} />
     </div>

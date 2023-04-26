@@ -1,5 +1,5 @@
 import * as React from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import { AiOutlineClose } from "react-icons/ai";
 import { isUndefined } from "@/utils";
@@ -95,7 +95,7 @@ const Input = React.forwardRef<any, InputProps>(
     return (
       <div
         className={twMerge(
-          classNames(
+          clsx(
             "border group border-transparent w-full inline-flex items-center rounded overflow-hidden transition-colors text-sm py-1 px-3",
             "bg-gray-200/70 hover:bg-gray-200",
             "dark:bg-neutral-700/90 dark:hover:bg-zinc-600",
@@ -129,7 +129,7 @@ const Input = React.forwardRef<any, InputProps>(
             onClick={onClear}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            className={classNames(
+            className={clsx(
               "relative text-gray-800 hover:before:bg-gray-400/40",
               "opacity-0 group-hover:opacity-100",
               "before:h-[1.25rem] before:w-[1.25rem] before:left-[50%] before:top-[50%] before:translate-x-[-50%] before:translate-y-[-50%]",

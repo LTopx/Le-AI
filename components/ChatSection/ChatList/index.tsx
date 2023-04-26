@@ -1,5 +1,5 @@
 import * as React from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 import { useTranslation } from "next-i18next";
 import { useDateFormat, useClipboard } from "l-hooks";
 import {
@@ -103,7 +103,7 @@ const ChatList: React.FC = () => {
         {chatList.map((item, index) => (
           <div
             key={item.id}
-            className={classNames("flex gap-3 group", { "mt-12": index === 0 })}
+            className={clsx("flex gap-3 group", { "mt-12": index === 0 })}
           >
             <div>
               {item.role === "assistant" && (
@@ -113,7 +113,7 @@ const ChatList: React.FC = () => {
               )}
               {item.role === "user" && (
                 <div
-                  className={classNames(
+                  className={clsx(
                     "rounded-full flex h-8 w-8 justify-center items-center",
                     "bg-black/25 dark:bg-slate-50"
                   )}
@@ -131,7 +131,7 @@ const ChatList: React.FC = () => {
                 onSelect={(params) => onSelectMenu(params, item)}
               >
                 <div
-                  className={classNames(
+                  className={clsx(
                     "self-start py-2.5 px-3 rounded-md relative border border-transparent",
                     { "bg-blue-200/70 dark:bg-blue-900": item.role === "user" },
                     {
@@ -142,7 +142,7 @@ const ChatList: React.FC = () => {
                 >
                   <ChatContent data={item} />
                   <div
-                    className={classNames(
+                    className={clsx(
                       "opacity-0 invisible border border-[#dee0e3] rounded-md flex gap-0.5 transition-all absolute group-hover:opacity-100 group-hover:visible",
                       "bg-white dark:bg-neutral-800",
                       "top-[-1.7rem] left-[6.5rem] group-hover:left-28",
@@ -151,7 +151,7 @@ const ChatList: React.FC = () => {
                     )}
                   >
                     <CopyIcon
-                      className={classNames(
+                      className={clsx(
                         "transition-colors h-6 w-6 flex justify-center items-center cursor-pointer",
                         "hover:text-black/90 dark:hover:text-sky-400/90"
                       )}
@@ -160,7 +160,7 @@ const ChatList: React.FC = () => {
                     <div className="w-[1px] bg-neutral-200 dark:bg-neutral-600" />
                     <div
                       onClick={() => onDelete(item)}
-                      className={classNames(
+                      className={clsx(
                         "transition-colors h-6 w-6 flex justify-center items-center cursor-pointer",
                         "hover:text-black/90 dark:hover:text-sky-400/90"
                       )}

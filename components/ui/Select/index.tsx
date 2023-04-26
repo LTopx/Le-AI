@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Select from "@radix-ui/react-select";
-import classNames from "classnames";
+import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import { BsChevronDown } from "react-icons/bs";
 import { AiOutlineLoading } from "react-icons/ai";
@@ -38,7 +38,7 @@ const LSelect: React.FC<LSelectProps> = ({
     >
       <Select.Trigger
         className={twMerge(
-          classNames(
+          clsx(
             "px-3 h-8 transition-colors rounded inline-flex text-sm items-center justify-between border border-transparent",
             "bg-gray-200/70 hover:bg-gray-200",
             "dark:bg-neutral-700/90 dark:hover:bg-zinc-600",
@@ -55,7 +55,7 @@ const LSelect: React.FC<LSelectProps> = ({
           ) : (
             <BsChevronDown
               size={12}
-              className={classNames({ "rotate-180": isOpen })}
+              className={clsx({ "rotate-180": isOpen })}
             />
           )}
         </Select.Icon>
@@ -65,7 +65,7 @@ const LSelect: React.FC<LSelectProps> = ({
         <Select.Content
           position="popper"
           sideOffset={4}
-          className={classNames(
+          className={clsx(
             "z-[1999] py-1 rounded border shadow-md",
             "bg-white",
             "dark:bg-neutral-700 dark:border-neutral-600",

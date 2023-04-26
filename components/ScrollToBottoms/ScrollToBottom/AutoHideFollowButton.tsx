@@ -1,6 +1,5 @@
-import classNames from "classnames";
+import clsx from "clsx";
 import * as React from "react";
-import { BsChevronDoubleDown } from "react-icons/bs";
 import { HiOutlineChevronDoubleDown } from "react-icons/hi";
 
 import useScrollToEnd from "../hooks/useScrollToEnd";
@@ -37,7 +36,7 @@ const AutoHideFollowButton: React.FC<
   if (sticky) return null;
   return (
     <button
-      className={classNames(
+      className={clsx(
         rootCSS,
         "absolute !bottom-20 !w-10 !h-10 !bg-white/80 backdrop-blur-sm !rounded-full transition-colors justify-center items-center flex shadow-md",
         "dark:!bg-white/20 dark:hover:!bg-white/30 dark:border dark:border-white/20"

@@ -1,5 +1,5 @@
 import * as React from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 import { useTranslation } from "next-i18next";
 import { useTheme } from "next-themes";
 import { useDebounceFn } from "ahooks";
@@ -7,14 +7,16 @@ import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { Modal, Input, Select, Slider, Tooltip } from "@/components";
 import { useProxy, useOpenAI, modelOptions } from "@/hooks";
 import type { StateOpenAI } from "@/hooks";
+import { useSettingOpen } from "@/state";
 
-const Setting = React.forwardRef((_, forwardedRef) => {
+const Setting: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const [open, setOpen] = React.useState(false);
   const [openAI, setOpenAI] = useOpenAI();
   const [proxyUrl, setProxyUrl] = useProxy();
+  const open = useSettingOpen((state) => state.open);
+  const setOpen = useSettingOpen((state) => state.update);
 
-  const { t } = useTranslation("nav");
+  const { t } = useTranslation("setting");
   const { t: tCommon } = useTranslation("common");
 
   const { run: onChangeTemperature } = useDebounceFn(
@@ -54,23 +56,17 @@ const Setting = React.forwardRef((_, forwardedRef) => {
     });
   };
 
-  React.useImperativeHandle(forwardedRef, () => ({
-    init() {
-      setOpen(true);
-    },
-  }));
-
   return (
     <Modal
       footer={null}
       maskClosable={false}
-      title={t("setting")}
+      title={t("title")}
       open={open}
       onClose={onClose}
     >
       {/* API KEY */}
       <div
-        className={classNames(
+        className={clsx(
           "border-b flex py-2 px-1 items-center justify-between",
           "border-slate-100 dark:border-neutral-500/60"
         )}
@@ -91,7 +87,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
       </div>
       {/* PROXY URL */}
       <div
-        className={classNames(
+        className={clsx(
           "border-b flex py-2 px-1 items-center justify-between",
           "border-slate-100 dark:border-neutral-500/60"
         )}
@@ -111,7 +107,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
       </div>
       {/* THEME */}
       <div
-        className={classNames(
+        className={clsx(
           "border-b flex py-2 px-1 items-center justify-between",
           "border-slate-100 dark:border-neutral-500/60"
         )}
@@ -132,7 +128,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
       </div>
       {/* LLM */}
       <div
-        className={classNames(
+        className={clsx(
           "border-b flex py-2 px-1 items-center justify-between",
           "border-slate-100 dark:border-neutral-500/60"
         )}
@@ -152,7 +148,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
       </div>
       {/* TEMPERATURE */}
       <div
-        className={classNames(
+        className={clsx(
           "border-b flex py-2 px-1 items-center justify-between",
           "border-slate-100 dark:border-neutral-500/60"
         )}
@@ -176,7 +172,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
       </div>
       {/* MAX TOKENS */}
       <div
-        className={classNames(
+        className={clsx(
           "border-b flex py-2 px-1 items-center justify-between",
           "border-slate-100 dark:border-neutral-500/60"
         )}
@@ -199,7 +195,7 @@ const Setting = React.forwardRef((_, forwardedRef) => {
       </div>
     </Modal>
   );
-});
+};
 
 Setting.displayName = "Setting";
 

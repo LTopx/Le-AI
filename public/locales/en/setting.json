@@ -1,0 +1,11 @@
+{
+  "max-tokens": "Max Tokens",
+  "model": "LLM",
+  "proxy-url": "Proxy URL",
+  "set-openai-key": "Set Your OpenAI Key",
+  "set-proxy-url": "Set Your Proxy URL",
+  "temperature": "Temperature",
+  "temperature-tip": "Higher values (such as 0.8) will make the output more random, while lower values (such as 0.2) will make the output more focused and more deterministic.",
+  "theme": "Theme",
+  "title": "L-GPT Setting"
+}

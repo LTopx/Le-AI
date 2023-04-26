@@ -2,6 +2,8 @@
 
 L-GPT 是一项开源项目，借助 OpenAI Api 模仿了 ChatGPT 的功能。 [Demo](https://gpt.ltops.cn)
 
+[QQ 群](./public/screenshots/qq.jpeg)
+
 <img src="./public/screenshots/screenshot.png">
 
 ## 特性
