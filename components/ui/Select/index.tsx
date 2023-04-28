@@ -6,9 +6,15 @@ import { BsChevronDown } from "react-icons/bs";
 import { AiOutlineLoading } from "react-icons/ai";
 import Item from "./item";
 
+type OptionsChildren = {
+  label: string;
+  value: any;
+};
+
 type Options = {
   label: string;
   value: any;
+  children?: OptionsChildren[];
 };
 
 interface LSelectProps extends React.HTMLAttributes<HTMLElement> {
@@ -75,9 +81,22 @@ const LSelect: React.FC<LSelectProps> = ({
         >
           <Select.Viewport>
             {options.map((item) => (
-              <Item key={item.value} value={item.value}>
-                {item.label}
-              </Item>
+              <Select.Group key={item.value}>
+                {item.children?.length ? (
+                  <>
+                    <Select.Label className="px-3 text-xs pt-2 text-gray-500 select-none">
+                      {item.label}
+                    </Select.Label>
+                    {item.children.map((child) => (
+                      <Item key={child.value} value={child.value}>
+                        {child.label}
+                      </Item>
+                    ))}
+                  </>
+                ) : (
+                  <Item value={item.value}>{item.label}</Item>
+                )}
+              </Select.Group>
             ))}
           </Select.Viewport>
         </Select.Content>

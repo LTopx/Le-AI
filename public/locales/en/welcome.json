@@ -1,6 +1,6 @@
 {
   "apply-openai-key": "If you don't have an OpenAI API Key, you can get one here:",
   "desc": "L-GPT is an open-source project that imitates the OpenAI ChatGPT.",
-  "set-openai-key": "Please set your OpenAI API Key in the top right of the navbar.",
+  "set-openai-key": "Please click on the settings button in the bottom left corner and enter your OpenAI API Key.",
   "welcome": "Welcome to L-GPT"
 }

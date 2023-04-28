@@ -1,5 +1,17 @@
 # L-GPT Change Log
 
+## v0.1.3
+
+> 2023-04-28
+
+### Fixed
+
+- Fix the issue where clicking the clear button in Input does not clear the value
+
+### Add
+
+- Support Azure OpenAI Service
+
 ## v0.1.2
 
 > 2023-04-27

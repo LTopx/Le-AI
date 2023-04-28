@@ -45,6 +45,8 @@ const Setting: React.FC = () => {
     setOpenAI((openai) => {
       if (key === "openAIKey") {
         openai[key] = value;
+      } else if (key === "azureOpenAIKey") {
+        openai[key] = value;
       } else if (key === "temperature") {
         openai[key] = value;
       } else if (key === "max_tokens") {
@@ -56,6 +58,17 @@ const Setting: React.FC = () => {
     });
   };
 
+  const onChangeProxy = (value: any, key: "openai" | "azure") => {
+    setProxyUrl((proxy) => {
+      if (key === "openai") {
+        proxy.openaiProxyUrl = value;
+      } else if (key === "azure") {
+        proxy.azureProxyUrl = value;
+      }
+      return proxy;
+    });
+  };
+
   return (
     <Modal
       footer={null}
@@ -64,7 +77,7 @@ const Setting: React.FC = () => {
       open={open}
       onClose={onClose}
     >
-      {/* API KEY */}
+      {/* OpenAI API KEY */}
       <div
         className={clsx(
           "border-b flex py-2 px-1 items-center justify-between",
@@ -72,7 +85,7 @@ const Setting: React.FC = () => {
         )}
       >
         <div className="font-medium text-sm text-black/90 dark:text-white/90">
-          API key
+          OpenAI key
         </div>
         <div>
           <Input
@@ -85,7 +98,7 @@ const Setting: React.FC = () => {
           />
         </div>
       </div>
-      {/* PROXY URL */}
+      {/* OpenAI PROXY URL */}
       <div
         className={clsx(
           "border-b flex py-2 px-1 items-center justify-between",
@@ -93,15 +106,56 @@ const Setting: React.FC = () => {
         )}
       >
         <div className="font-medium text-sm text-black/90 dark:text-white/90">
-          {t("proxy-url")}
+          {t("openai-proxy-url")}
         </div>
         <div>
           <Input
             className="w-44"
             allowClear
             placeholder={t("set-proxy-url") as string}
-            value={proxyUrl}
-            onChange={setProxyUrl}
+            value={proxyUrl.openai}
+            onChange={(value) => onChangeProxy(value, "openai")}
+          />
+        </div>
+      </div>
+      {/* Azure OpenAI key */}
+      <div
+        className={clsx(
+          "border-b flex py-2 px-1 items-center justify-between",
+          "border-slate-100 dark:border-neutral-500/60"
+        )}
+      >
+        <div className="font-medium text-sm text-black/90 dark:text-white/90">
+          Azure OpenAI key
+        </div>
+        <div>
+          <Input
+            className="w-44"
+            type="password"
+            allowClear
+            placeholder={t("set-azure-key") as string}
+            value={openAI.azureOpenAIKey}
+            onChange={(value) => onChangeOpenAI(value, "azureOpenAIKey")}
+          />
+        </div>
+      </div>
+      {/* Azure OpenAI PROXY URL */}
+      <div
+        className={clsx(
+          "border-b flex py-2 px-1 items-center justify-between",
+          "border-slate-100 dark:border-neutral-500/60"
+        )}
+      >
+        <div className="font-medium text-sm text-black/90 dark:text-white/90">
+          {t("azure-proxy-url")}
+        </div>
+        <div>
+          <Input
+            className="w-44"
+            allowClear
+            placeholder={t("set-proxy-url") as string}
+            value={proxyUrl.azure}
+            onChange={(value) => onChangeProxy(value, "azure")}
           />
         </div>
       </div>

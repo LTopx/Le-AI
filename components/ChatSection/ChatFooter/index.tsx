@@ -15,7 +15,7 @@ import { isMobile } from "@/utils";
 const ChatFooter: React.FC = () => {
   // data
   const [openai] = useOpenAI();
-  const [proxyUrl] = useProxy();
+  const [proxy] = useProxy();
   const [channel, setChannel] = useChannel();
   const [inputValue, setInputValue] = React.useState<string>("");
   const setLoadingStart = useChatLoading((state) => state.updateStart);
@@ -107,13 +107,27 @@ const ChatFooter: React.FC = () => {
       const controller = new AbortController();
       setChatAbort(controller);
 
-      const { openAIKey, model, temperature, max_tokens } = openai;
+      const { openAIKey, azureOpenAIKey, model, temperature, max_tokens } =
+        openai;
 
-      fetch("/api/gpt", {
+      let fetchUrl = "";
+      let proxyUrl = "";
+      let Authorization = "";
+      if (model.startsWith("openai")) {
+        fetchUrl = "/api/openai";
+        proxyUrl = proxy.openai;
+        Authorization = openAIKey;
+      } else if (model.startsWith("azure")) {
+        fetchUrl = "/api/azure";
+        proxyUrl = proxy.azure;
+        Authorization = azureOpenAIKey;
+      }
+
+      fetch(fetchUrl, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
-          Authorization: openAIKey,
+          Authorization,
         },
         signal: controller.signal,
         body: JSON.stringify({
@@ -192,13 +206,26 @@ const ChatFooter: React.FC = () => {
       content: tPrompt("get-title"),
     });
 
-    const { openAIKey, model } = openai;
+    const { openAIKey, azureOpenAIKey, model } = openai;
 
-    fetch("/api/gpt", {
+    let fetchUrl = "";
+    let proxyUrl = "";
+    let Authorization = "";
+    if (model.startsWith("openai")) {
+      fetchUrl = "/api/openai";
+      proxyUrl = proxy.openai;
+      Authorization = openAIKey;
+    } else if (model.startsWith("azure")) {
+      fetchUrl = "/api/azure";
+      proxyUrl = proxy.azure;
+      Authorization = azureOpenAIKey;
+    }
+
+    fetch(fetchUrl, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization: openAIKey,
+        Authorization,
       },
       body: JSON.stringify({
         model,

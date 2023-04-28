@@ -12,9 +12,11 @@ L-GPT 是一项开源项目，借助 OpenAI Api 模仿了 ChatGPT 的功能。 [
 - 支持响应式，暗黑模式和 PWA
 - 安全，所有数据均基于本地存储
 - 支持 i18n
+- 支持 Azure OpenAI Service
 
 ## 下一步计划
 
+- [x] 支持 Azure OpenAI
 - [ ] 引入提示词以及提示词模板
 - [ ] 支持 GPT-4 和 Claude
 - [ ] 桌面版本开发？
@@ -39,11 +41,17 @@ NEXT_PUBLIC_OPENAI_API_KEY=
 # 都没有使用则直连Open AI 官方地址：https://api.openai.com
 NEXT_PUBLIC_OPENAI_API_PROXY=
 
+# 配置你的 Azure OpenAI key.
+NEXT_PUBLIC_AZURE_OPENAI_API_KEY=
+
+# 配置你的 Azure OpenAI proxy.
+NEXT_PUBLIC_AZURE_OPENAI_API_PROXY=
+
 # 配置你的 sentry dsn地址。如果为空, 将不会将错误报告到 sentry
 NEXT_PUBLIC_SENTRY_DSN=
 ```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY&env=NEXT_PUBLIC_SENTRY_DSN)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY&env=NEXT_PUBLIC_AZURE_OPENAI_API_KEY&env=NEXT_PUBLIC_AZURE_OPENAI_API_PROXY&env=NEXT_PUBLIC_SENTRY_DSN)
 
 ## 本地运行
 
@@ -72,10 +80,14 @@ pnpm i
 将 .evn.local.demo 重命名为 .env.local 并进行配置。
 
 ```bash
-# sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# OpenAI 官方key： sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NEXT_PUBLIC_OPENAI_API_KEY=
-# 你个人的 api 代理地址。
+# 你个人的 OpenAI api 代理地址。
 NEXT_PUBLIC_OPENAI_API_PROXY=
+# Azure OpenAI Key： eg: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NEXT_PUBLIC_AZURE_OPENAI_API_KEY=
+# 配置你的Azure OpenAI代理地址。 If it is empty, the Azure OpenAI Service will not function properly.
+NEXT_PUBLIC_AZURE_OPENAI_API_PROXY=
 # 配置你的 sentry dsn地址。如果为空, 将不会将错误报告到 sentry
 NEXT_PUBLIC_SENTRY_DSN=
 ```
@@ -96,8 +108,10 @@ pnpm build && pnpm start
 
 你可以配置以下环境变量。
 
-| 环境变量                       | 描述                                                      | 是否必须配置 | 默认值                   |
-| ------------------------------ | --------------------------------------------------------- | ------------ | ------------------------ |
-| `NEXT_PUBLIC_OPENAI_API_KEY`   | 你个人的 OpenAI API key                                   | 否           |                          |
-| `NEXT_PUBLIC_OPENAI_API_PROXY` | 你个人的 API 代理地址                                     | 否           | `https://api.openai.com` |
-| `NEXT_PUBLIC_SENTRY_DSN`       | 你的 sentry dsn 地址。如果为空, 将不会将错误报告到 sentry | 否           |                          |
+| 环境变量                             | 描述                                                      | 是否必须配置 | 默认值                   |
+| ------------------------------------ | --------------------------------------------------------- | ------------ | ------------------------ |
+| `NEXT_PUBLIC_OPENAI_API_KEY`         | 你个人的 OpenAI API key                                   | 否           |                          |
+| `NEXT_PUBLIC_OPENAI_API_PROXY`       | 你个人的 OpenAI API 代理地址                              | 否           | `https://api.openai.com` |
+| `NEXT_PUBLIC_AZURE_OPENAI_API_KEY`   | 你个人的 Azure OpenAI API key                             | 否           |                          |
+| `NEXT_PUBLIC_AZURE_OPENAI_API_PROXY` | 你个人的 Azure OpenAI API 代理地址                        | 否           |                          |
+| `NEXT_PUBLIC_SENTRY_DSN`             | 你的 sentry dsn 地址。如果为空, 将不会将错误报告到 sentry | 否           |                          |

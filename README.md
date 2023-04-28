@@ -14,9 +14,11 @@ L-GPT is an open-source project that imitates the OpenAI ChatGPT. [Demo](https:/
 - Responsive design, dark mode and PWA
 - Safe, all data based on local
 - Support i18n
+- Support Azure OpenAI Service
 
 ## Next
 
+- [x] Support Azure OpenAI
 - [ ] Introduce prompt words and prompt word templates
 - [ ] Support GPT-4 and Claude
 - [ ] Desktop version development?
@@ -41,11 +43,17 @@ NEXT_PUBLIC_OPENAI_API_KEY=
 # If none of these are being used, then connect directly to the Open AI official address: https://api.openai.com.
 NEXT_PUBLIC_OPENAI_API_PROXY=
 
+# Set Your Azure OpenAI key.
+NEXT_PUBLIC_AZURE_OPENAI_API_KEY=
+
+# Set Your Azure OpenAI proxy.
+NEXT_PUBLIC_AZURE_OPENAI_API_PROXY=
+
 # set your own sentry dsn. if empty here, it will not report error to sentry
 NEXT_PUBLIC_SENTRY_DSN=
 ```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY&env=NEXT_PUBLIC_SENTRY_DSN)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY&env=NEXT_PUBLIC_AZURE_OPENAI_API_KEY&env=NEXT_PUBLIC_AZURE_OPENAI_API_PROXY&env=NEXT_PUBLIC_SENTRY_DSN)
 
 ## Running Local
 
@@ -76,8 +84,12 @@ Rename .evn.local.demo to .env.local and configure it.
 ```bash
 # sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NEXT_PUBLIC_OPENAI_API_KEY=
-# your own api proxy url.
+# your own OpenAI Api proxy url.
 NEXT_PUBLIC_OPENAI_API_PROXY=
+# Azure OpenAI Key. eg: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NEXT_PUBLIC_AZURE_OPENAI_API_KEY=
+# your own Azure OpenAI api proxy url. If it is empty, the Azure OpenAI Service will not function properly.
+NEXT_PUBLIC_AZURE_OPENAI_API_PROXY=
 # set your own sentry dsn. if empty here, it will not report error to sentry
 NEXT_PUBLIC_SENTRY_DSN=
 ```
@@ -98,8 +110,10 @@ pnpm build && pnpm start
 
 You can configure the following environment variables.
 
-| Environment Variable           | Desc                                                          | Required | Default                  |
-| ------------------------------ | ------------------------------------------------------------- | -------- | ------------------------ |
-| `NEXT_PUBLIC_OPENAI_API_KEY`   | your OpenAI API Key                                           | false    |                          |
-| `NEXT_PUBLIC_OPENAI_API_PROXY` | your OpenAI API proxy server                                  | false    | `https://api.openai.com` |
-| `NEXT_PUBLIC_SENTRY_DSN`       | your sentry dsn. If empty, it will not report error to sentry | false    |                          |
+| Environment Variable                 | Desc                                                          | Required | Default                  |
+| ------------------------------------ | ------------------------------------------------------------- | -------- | ------------------------ |
+| `NEXT_PUBLIC_OPENAI_API_KEY`         | your OpenAI API Key                                           | false    |                          |
+| `NEXT_PUBLIC_OPENAI_API_PROXY`       | your OpenAI API proxy server                                  | false    | `https://api.openai.com` |
+| `NEXT_PUBLIC_AZURE_OPENAI_API_KEY`   | your Azure OpenAI API Key                                     | false    |                          |
+| `NEXT_PUBLIC_AZURE_OPENAI_API_PROXY` | your Azure OpenAI API proxy server                            | false    |                          |
+| `NEXT_PUBLIC_SENTRY_DSN`             | your sentry dsn. If empty, it will not report error to sentry | false    |                          |

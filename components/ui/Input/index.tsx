@@ -43,6 +43,7 @@ const Input = React.forwardRef<any, InputProps>(
       forceUpdate.current = false;
       onChange?.("");
       inputRef.current?.focus();
+      inputRef.current.value = "";
     };
 
     const onBlur = (event: any) => {
@@ -119,9 +120,7 @@ const Input = React.forwardRef<any, InputProps>(
           maxLength={maxLength}
           onFocus={() => setIsFocus(true)}
           onBlur={onBlur}
-          // value={value}
           defaultValue={value}
-          // onChange={(e) => onChange?.(e.target.value)}
           onChange={onChangeValue}
         />
         {!!value && allowClear && (
