@@ -1,5 +1,5 @@
 import { isUndefined } from "@/utils";
-import { modelOptions } from "@/hooks";
+import { AI_MODELS } from "@/utils/models";
 
 export const config = {
   runtime: "edge",
@@ -22,15 +22,31 @@ const handler = async (req: Request) => {
     process.env.NEXT_PUBLIC_OPENAI_API_KEY ||
     "";
 
-  const { proxyUrl, model, temperature, max_tokens, chat_list } =
-    await req.json();
+  if (!Authorization) {
+    return new Response("Error", {
+      status: 500,
+      statusText: "Missing API Key",
+    });
+  }
 
-  const findModel = modelOptions.find((item) => {
-    return item.children.find((val) => val.value === model);
+  const {
+    model,
+    proxy: proxyUrl,
+    temperature,
+    max_tokens,
+    prompt,
+    chat_list,
+  } = await req.json();
+
+  const findModel = AI_MODELS.find((item) => {
+    return item.models.find((val) => val.value === model);
   });
 
   if (!findModel) {
-    return new Response("Error", { status: 500, statusText: "error" });
+    return new Response("Error", {
+      status: 500,
+      statusText: "Language model parameters are incorrect",
+    });
   }
 
   const ENV_API_PROXY = getEnvProxyUrl();
@@ -39,31 +55,31 @@ const handler = async (req: Request) => {
 
   const fetchURL = proxy + "/v1/chat/completions";
 
-  console.log(fetchURL, "fetchURL");
+  const messages = [...chat_list];
 
-  const response = await fetch(fetchURL, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${Authorization}`,
-    },
-    method: "POST",
-    body: JSON.stringify({
-      stream: true,
-      model: model.split("-").slice(1).join("-"),
-      temperature: isUndefined(temperature) ? 1 : temperature,
-      max_tokens: isUndefined(max_tokens) ? 2000 : max_tokens,
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.",
-        },
-        ...chat_list,
-      ],
-    }),
-  });
+  if (prompt) messages.unshift({ role: "system", content: prompt });
 
-  return new Response(response.body);
+  try {
+    const response = await fetch(fetchURL, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Authorization}`,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        stream: true,
+        model,
+        temperature: isUndefined(temperature) ? 1 : temperature,
+        max_tokens: isUndefined(max_tokens) ? 2000 : max_tokens,
+        messages,
+      }),
+    });
+
+    return new Response(response.body);
+  } catch (error) {
+    console.log(error, "openai error");
+    return new Response("Error", { status: 500 });
+  }
 };
 
 export default handler;

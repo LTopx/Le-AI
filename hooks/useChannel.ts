@@ -1,5 +1,12 @@
 import * as React from "react";
 import { create } from "zustand";
+import { v4 as uuidv4 } from "uuid";
+import { AI_MODELS } from "@/utils/models";
+
+export interface ChatModel {
+  type: string;
+  name: string;
+}
 
 export interface ChatItem {
   id: string;
@@ -11,7 +18,10 @@ export interface ChatItem {
 
 export interface ChannelListItem {
   channel_id: string;
+  channel_icon: string;
   channel_name: string;
+  channel_model: ChatModel;
+  channel_prompt: string;
   chat_list: ChatItem[];
 }
 
@@ -59,8 +69,14 @@ const useStore = create<State & Action>((set) => ({
 
 export const initChannelList: ChannelListItem[] = [
   {
-    channel_id: "init_channel_id",
+    channel_id: uuidv4(),
+    channel_icon: "RiChatSmile2Line",
     channel_name: "",
+    channel_model: {
+      type: AI_MODELS[0].value,
+      name: AI_MODELS[0].models[0].value,
+    },
+    channel_prompt: "",
     chat_list: [],
   },
 ];
@@ -71,7 +87,20 @@ const getInitChannelList = () => {
   try {
     const localChannelList = localStorage.getItem("channelList");
     if (localChannelList && JSON.parse(localChannelList).length) {
-      channelList = JSON.parse(localChannelList);
+      // Compatibility with old data
+      channelList = JSON.parse(localChannelList).map(
+        (item: ChannelListItem) => {
+          if (!item.channel_model) {
+            item.channel_icon = "RiChatSmile2Line";
+            item.channel_model = {
+              type: AI_MODELS[0].value,
+              name: AI_MODELS[0].models[0].value,
+            };
+            item.channel_prompt = "";
+          }
+          return item;
+        }
+      );
     }
   } catch {}
 
@@ -90,12 +119,16 @@ const getInitActiveId = (channelList: ChannelListItem[]) => {
   return "";
 };
 
+let isInit = false;
+
 const useChannel = (): UseNewChannelReturn => {
   const activeId = useStore((state) => state.activeId);
   const list = useStore((state) => state.list);
   const update = useStore((state) => state.update);
 
   React.useEffect(() => {
+    if (isInit) return;
+    isInit = true;
     const initChannelList = getInitChannelList();
     const initActiveId = getInitActiveId(initChannelList);
 

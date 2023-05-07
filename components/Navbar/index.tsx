@@ -9,7 +9,6 @@ import ChangeTitle from "./changeTitle";
 const Navbar: React.FC = () => {
   const changeTitleRef = React.useRef<any>(null);
   const { t: tMenu } = useTranslation("menu");
-  const { t: tNav } = useTranslation("nav");
   const { t: tSetting } = useTranslation("setting");
   const [channel] = useChannel();
   const [openai] = useOpenAI();
@@ -18,7 +17,13 @@ const Navbar: React.FC = () => {
   const onOpenMenu = () => setMobileMenuOpen(true);
 
   const onChangeTitle = () => {
-    if (!openai.openAIKey && !openai.envOpenAIKey) return;
+    if (
+      !openai.openai.apiKey &&
+      !openai.azure.apiKey &&
+      !openai.env.OPENAI_API_KEY &&
+      !openai.env.AZURE_API_KEY
+    )
+      return;
     changeTitleRef.current?.init();
   };
 
@@ -47,15 +52,32 @@ const Navbar: React.FC = () => {
         <div
           onClick={onChangeTitle}
           className={clsx(
-            "text-ellipsis group max-w-[50%] cursor-pointer whitespace-nowrap overflow-hidden relative pr-6",
+            "text-ellipsis group max-w-[50%] cursor-pointer whitespace-nowrap overflow-hidden relative",
+            {
+              "pr-6": !!(
+                openai.openai.apiKey ||
+                openai.azure.apiKey ||
+                openai.env.OPENAI_API_KEY ||
+                openai.env.AZURE_API_KEY
+              ),
+            },
             "text-black/90",
             "dark:text-white/90"
           )}
         >
-          {openai.openAIKey || openai.envOpenAIKey
+          {openai.openai.apiKey ||
+          openai.azure.apiKey ||
+          openai.env.OPENAI_API_KEY ||
+          openai.env.AZURE_API_KEY
             ? activeChannel?.channel_name || tMenu("new-conversation")
-            : tSetting("set-openai-key")}
-          {!!(openai.openAIKey || openai.envOpenAIKey) && (
+            : tSetting("set-api-key")}
+
+          {!!(
+            openai.openai.apiKey ||
+            openai.azure.apiKey ||
+            openai.env.OPENAI_API_KEY ||
+            openai.env.AZURE_API_KEY
+          ) && (
             <AiOutlineEdit
               size={18}
               className={clsx(

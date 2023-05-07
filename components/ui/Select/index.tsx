@@ -19,10 +19,13 @@ type Options = {
 
 interface LSelectProps extends React.HTMLAttributes<HTMLElement> {
   contentClassName?: string;
+  defaultValue?: any;
   options: Options[];
   loading?: boolean;
   value?: any;
   onChange?: (value: any) => void;
+  renderLabel?: (value: any) => React.ReactNode;
+  size?: "default" | "large";
 }
 
 const LSelect: React.FC<LSelectProps> = ({
@@ -32,22 +35,46 @@ const LSelect: React.FC<LSelectProps> = ({
   options,
   loading,
   onChange,
+  renderLabel,
+  size = "default",
+  defaultValue,
   value,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const triggerRef = React.useRef<any>(null);
+  const [width, setWidth] = React.useState<number>(0);
+
+  const onOpenChange = (open: boolean) => {
+    if (open) {
+      setIsOpen(true);
+    } else {
+      setTimeout(() => {
+        setIsOpen(false);
+      });
+    }
+  };
+
+  React.useEffect(() => {
+    setWidth(triggerRef.current?.clientWidth || 0);
+  }, []);
 
   return (
     <Select.Root
+      open={isOpen}
       value={value}
+      defaultValue={defaultValue}
       onValueChange={onChange}
-      onOpenChange={setIsOpen}
+      onOpenChange={onOpenChange}
     >
       <Select.Trigger
+        ref={triggerRef}
         className={twMerge(
           clsx(
-            "px-3 h-8 transition-colors rounded inline-flex text-sm items-center justify-between border border-transparent",
+            "px-3  transition-colors rounded inline-flex text-sm items-center justify-between border border-transparent",
             "bg-gray-200/70 hover:bg-gray-200",
             "dark:bg-neutral-700/90 dark:hover:bg-zinc-600",
+            { "h-8": size === "default" },
+            { "h-9": size === "large" },
             { "bg-white border-sky-500": isOpen },
             { "dark:bg-transparent": isOpen },
             className
@@ -67,7 +94,7 @@ const LSelect: React.FC<LSelectProps> = ({
         </Select.Icon>
       </Select.Trigger>
 
-      <Select.Portal>
+      <Select.Portal style={{ width }}>
         <Select.Content
           position="popper"
           sideOffset={4}
@@ -89,12 +116,14 @@ const LSelect: React.FC<LSelectProps> = ({
                     </Select.Label>
                     {item.children.map((child) => (
                       <Item key={child.value} value={child.value}>
-                        {child.label}
+                        {renderLabel ? renderLabel(child) : child.label}
                       </Item>
                     ))}
                   </>
                 ) : (
-                  <Item value={item.value}>{item.label}</Item>
+                  <Item value={item.value}>
+                    {renderLabel ? renderLabel(item) : item.label}
+                  </Item>
                 )}
               </Select.Group>
             ))}

@@ -18,6 +18,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { useChannel, useRevoke } from "@/hooks";
 import type { ChatItem } from "@/hooks";
 import { useChatLoading } from "@/state";
+import Configure from "./configure";
 import GPTSvg from "@/assets/gpt.svg";
 
 const ChatList: React.FC = () => {
@@ -41,9 +42,11 @@ const ChatList: React.FC = () => {
     },
   ];
 
-  const chatList =
-    channel.list.find((item) => item.channel_id === channel.activeId)
-      ?.chat_list || [];
+  const findChannel = channel.list.find(
+    (item) => item.channel_id === channel.activeId
+  );
+
+  const chatList = findChannel?.chat_list || [];
 
   const { set } = useRevoke({
     revoke: (value) => onRevoke(value),
@@ -98,7 +101,8 @@ const ChatList: React.FC = () => {
   }, [channel.activeId]);
 
   return (
-    <div>
+    <>
+      {!chatList.length && !findChannel?.channel_prompt && <Configure />}
       <div className="flex flex-col mt-5 gap-5 ">
         {chatList.map((item, index) => (
           <div
@@ -181,7 +185,7 @@ const ChatList: React.FC = () => {
         )}
       </div>
       <div className="h-32 overflow-hidden" />
-    </div>
+    </>
   );
 };
 

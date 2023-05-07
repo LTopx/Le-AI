@@ -7,12 +7,17 @@ import ChatFooter from "./ChatFooter";
 const ChatSection: React.FC = () => {
   const [openai] = useOpenAI();
 
-  // only the OpenAI Key or env OpenAI Key Configuration is not empty, show the chat section
-  if (!openai.openAIKey && !openai.envOpenAIKey) return null;
+  if (
+    !openai.openai.apiKey &&
+    !openai.azure.apiKey &&
+    !openai.env.OPENAI_API_KEY &&
+    !openai.env.AZURE_API_KEY
+  )
+    return null;
 
   return (
     <ScrollToBottom
-      className="h-full overflow-x-hidden"
+      className="h-full overflow-x-hidden relative"
       scrollViewClassName="pl-5 pr-20"
       mode="bottom"
       nonce=""

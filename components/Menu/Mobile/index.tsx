@@ -2,26 +2,32 @@ import * as React from "react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import { useTranslation } from "next-i18next";
+import { useTheme } from "next-themes";
 import { useDateFormat } from "l-hooks";
 import {
   AiOutlineDelete,
   AiFillGithub,
   AiOutlineSetting,
 } from "react-icons/ai";
-import { BsChatSquareText } from "react-icons/bs";
+import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
+import { HiLightBulb } from "react-icons/hi";
 import { v4 as uuidv4 } from "uuid";
 import { Drawer, Confirm, Button } from "@/components";
 import { useChannel, initChannelList } from "@/hooks";
 import { useMobileMenuOpen, useSettingOpen } from "@/state";
+import { AI_MODELS } from "@/utils/models";
+import renderIcon from "../renderIcon";
 
 const MobileMenu: React.FC = () => {
   const { t } = useTranslation("menu");
+  const { theme, setTheme } = useTheme();
+  const { format } = useDateFormat();
+  const setOpen = useMobileMenuOpen((state) => state.update);
+  const [nowTheme, setNowTheme] = React.useState<any>("");
+
   const [channel, setChannel] = useChannel();
   const open = useMobileMenuOpen((state) => state.open);
-  const setOpen = useMobileMenuOpen((state) => state.update);
   const setSettingOpen = useSettingOpen((state) => state.update);
-
-  const { format } = useDateFormat();
 
   const onClose = () => setOpen(false);
 
@@ -32,7 +38,13 @@ const MobileMenu: React.FC = () => {
     setChannel((channel) => {
       channel.list.push({
         channel_id,
+        channel_icon: "RiChatSmile2Line",
         channel_name: "",
+        channel_model: {
+          type: AI_MODELS[0].value,
+          name: AI_MODELS[0].models[0].value,
+        },
+        channel_prompt: "",
         chat_list: [],
       });
       channel.activeId = channel_id;
@@ -76,18 +88,32 @@ const MobileMenu: React.FC = () => {
     });
   };
 
+  const onToggleTheme = () => setTheme(nowTheme === "light" ? "dark" : "light");
+
+  const onOpenPrompt = () => alert("Prompt Manage ToDo...");
+
   const onSettingOpen = () => setSettingOpen(true);
+
+  React.useEffect(() => {
+    setNowTheme(theme === "dark" ? "dark" : "light");
+  }, [theme]);
 
   return (
     <Drawer
       className="md:hidden"
       overlayClassName="md:hidden"
-      title={t("coversation-list")}
+      title={
+        <div className="font-extrabold text-transparent text-xl">
+          <span className="bg-clip-text bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
+            L - GPT
+          </span>
+        </div>
+      }
       width="78%"
       open={open}
       onClose={onClose}
     >
-      <div className="p-2">
+      <div className="p-2 h-[calc(100%-3.5rem)] flex flex-col">
         <Button
           className="mb-2"
           type="primary"
@@ -97,7 +123,7 @@ const MobileMenu: React.FC = () => {
         >
           {t("new-chat")}
         </Button>
-        <div className="h-[calc(100vh-17rem)] overflow-y-auto select-none">
+        <div className="flex-1 overflow-y-auto select-none">
           {channel.list.map((item) => (
             <div
               key={item.channel_id}
@@ -121,7 +147,7 @@ const MobileMenu: React.FC = () => {
                     "dark:text-white/90"
                   )}
                 >
-                  <BsChatSquareText className="top-[50%] left-0 translate-y-[-50%] absolute" />
+                  {renderIcon(item.channel_icon)}
                   {item.channel_name || t("new-conversation")}
                 </div>
                 <div
@@ -144,12 +170,14 @@ const MobileMenu: React.FC = () => {
                 </div>
               </div>
               <div
-                className={clsx(
-                  "text-neutral-500/90 dark:text-neutral-500 dark:group-hover:text-neutral-400",
-                  {
-                    "dark:text-neutral-400/80":
-                      item.channel_id === channel.activeId,
-                  }
+                className={twMerge(
+                  clsx(
+                    "text-neutral-500/90 dark:text-neutral-500 dark:group-hover:text-neutral-400",
+                    {
+                      "dark:text-neutral-400":
+                        item.channel_id === channel.activeId,
+                    }
+                  )
                 )}
               >
                 {item.chat_list.length} {t("messages")}
@@ -174,7 +202,7 @@ const MobileMenu: React.FC = () => {
             </div>
           ))}
         </div>
-        <div className="h-[9rem] flex flex-col border-t gap-1 pt-1">
+        <div className="h-[6rem] flex flex-col border-t gap-1 pt-1">
           <Confirm
             title={t("clear-all-conversation")}
             content={t("clear-conversation")}
@@ -191,26 +219,60 @@ const MobileMenu: React.FC = () => {
             }
             onOk={onClearChannel}
           />
-          <a
-            href="https://github.com/Peek-A-Booo/L-GPT"
-            target="_blank"
-            className={clsx(
-              "h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors",
-              "hover:bg-gray-200/60 text-black/90",
-              "dark:hover:bg-slate-700/70 dark:text-white/90"
-            )}
-          >
-            <AiFillGithub size={16} /> Github
-          </a>
-          <div
-            onClick={onSettingOpen}
-            className={clsx(
-              "h-11 rounded-md text-sm flex items-center gap-2 px-2 transition-colors",
-              "hover:bg-gray-200/60 text-black/90",
-              "dark:hover:bg-slate-700/70 dark:text-white/90"
-            )}
-          >
-            <AiOutlineSetting size={16} /> {t("setting")}
+          <div className="h-11 items-center justify-center flex">
+            <div className="flex-1 flex justify-center">
+              <div
+                onClick={onToggleTheme}
+                className={clsx(
+                  "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
+                  "hover:bg-gray-200/60",
+                  "dark:hover:bg-slate-700/70"
+                )}
+              >
+                {nowTheme === "light" ? (
+                  <MdDarkMode size={20} />
+                ) : (
+                  <MdOutlineLightMode size={20} />
+                )}
+              </div>
+            </div>
+            <div className="flex-1 flex justify-center">
+              <a
+                href="https://github.com/Peek-A-Booo/L-GPT"
+                target="_blank"
+                className={clsx(
+                  "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
+                  "hover:bg-gray-200/60",
+                  "dark:hover:bg-slate-700/70"
+                )}
+              >
+                <AiFillGithub size={20} />
+              </a>
+            </div>
+            <div className="flex-1 flex justify-center">
+              <div
+                onClick={onOpenPrompt}
+                className={clsx(
+                  "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
+                  "hover:bg-gray-200/60",
+                  "dark:hover:bg-slate-700/70"
+                )}
+              >
+                <HiLightBulb size={20} />
+              </div>
+            </div>
+            <div className="flex-1 flex justify-center">
+              <div
+                onClick={onSettingOpen}
+                className={clsx(
+                  "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
+                  "hover:bg-gray-200/60",
+                  "dark:hover:bg-slate-700/70"
+                )}
+              >
+                <AiOutlineSetting size={20} />
+              </div>
+            </div>
           </div>
         </div>
       </div>

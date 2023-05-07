@@ -8,14 +8,14 @@ import { AiOutlineRedo, AiOutlineClear } from "react-icons/ai";
 import { BsStop } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
-import { useChannel, useOpenAI, useProxy, useStreamDecoder } from "@/hooks";
+import { useChannel, useOpenAI, useStreamDecoder } from "@/hooks";
 import { useScrollToBottom, Confirm, Button, Textarea } from "@/components";
 import { isMobile } from "@/utils";
+import { PROMPT_BASE } from "@/prompt";
 
 const ChatFooter: React.FC = () => {
   // data
-  const [openai] = useOpenAI();
-  const [proxy] = useProxy();
+  const [newOpenAI] = useOpenAI();
   const [channel, setChannel] = useChannel();
   const [inputValue, setInputValue] = React.useState<string>("");
   const setLoadingStart = useChatLoading((state) => state.updateStart);
@@ -101,51 +101,67 @@ const ChatFooter: React.FC = () => {
 
   const sendToGPT = React.useCallback(
     (chat_list: ChatItem[]) => {
+      const modelType: any = findChannel?.channel_model.type;
+      const modelConfig = (newOpenAI as any)[modelType];
+      const prompt = findChannel?.channel_prompt || PROMPT_BASE;
+      if (!findChannel?.channel_prompt) {
+        setChannel((channel) => {
+          const { list, activeId } = channel;
+          const findCh = list.find((item) => item.channel_id === activeId);
+          if (!findCh) return channel;
+          findCh.channel_prompt = PROMPT_BASE;
+          return channel;
+        });
+      }
+
       setLoadingStart(true);
       setLoadingFinish(true);
 
       const controller = new AbortController();
       setChatAbort(controller);
 
-      const { openAIKey, azureOpenAIKey, model, temperature, max_tokens } =
-        openai;
+      const fetchUrl = `/api/${modelType}`;
 
-      let fetchUrl = "";
-      let proxyUrl = "";
-      let Authorization = "";
-      if (model.startsWith("openai")) {
-        fetchUrl = "/api/openai";
-        proxyUrl = proxy.openai;
-        Authorization = openAIKey;
-      } else if (model.startsWith("azure")) {
-        fetchUrl = "/api/azure";
-        proxyUrl = proxy.azure;
-        Authorization = azureOpenAIKey;
+      let params: any = {};
+      if (modelType === "openai") {
+        params = {
+          model: findChannel?.channel_model.name,
+          temperature: modelConfig.temperature,
+          max_tokens: modelConfig.max_tokens,
+          prompt,
+          proxy: modelConfig.proxy,
+        };
+      } else if (modelType === "azure") {
+        params = {
+          model: findChannel?.channel_model.name,
+          temperature: modelConfig.temperature,
+          max_tokens: modelConfig.max_tokens,
+          prompt,
+          resourceName: modelConfig.resourceName,
+        };
       }
+
+      params.chat_list = chat_list.map((item) => ({
+        role: item.role,
+        content: item.content,
+      }));
 
       fetch(fetchUrl, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
-          Authorization,
+          Authorization: modelConfig.apiKey,
         },
         signal: controller.signal,
-        body: JSON.stringify({
-          proxyUrl,
-          model,
-          temperature,
-          max_tokens,
-          chat_list: chat_list.map((item) => ({
-            role: item.role,
-            content: item.content,
-          })),
-        }),
+        body: JSON.stringify(params),
       })
         .then(async (response) => {
           setLoadingStart(false);
+
           if (!response.ok || !response.body) {
             setLoadingFinish(false);
-            if (!response.ok) toast.error(response.statusText);
+            if (!response.ok)
+              toast.error(response.statusText || tCommon("service-error"));
             return;
           }
           let channel_id = "";
@@ -156,8 +172,9 @@ const ChatFooter: React.FC = () => {
             response.body.getReader(),
             (content: string) => {
               setChannel((channel) => {
-                const findChannel = channel.list.find(
-                  (item) => item.channel_id === channel.activeId
+                const { list, activeId } = channel;
+                const findChannel = list.find(
+                  (item) => item.channel_id === activeId
                 );
                 if (!findChannel) return channel;
                 const lastItem = findChannel.chat_list.at(-1);
@@ -188,7 +205,7 @@ const ChatFooter: React.FC = () => {
           // get gpt title
           if (!channel_name) getChannelNameByGPT(channel_id, channel_chat_list);
         })
-        .catch((err) => {
+        .catch(() => {
           setLoadingStart(false);
           setLoadingFinish(false);
         });
@@ -206,32 +223,37 @@ const ChatFooter: React.FC = () => {
       content: tPrompt("get-title"),
     });
 
-    const { openAIKey, azureOpenAIKey, model } = openai;
+    const modelType: any = findChannel?.channel_model.type;
+    const modelConfig = (newOpenAI as any)[modelType];
 
-    let fetchUrl = "";
-    let proxyUrl = "";
-    let Authorization = "";
-    if (model.startsWith("openai")) {
-      fetchUrl = "/api/openai";
-      proxyUrl = proxy.openai;
-      Authorization = openAIKey;
-    } else if (model.startsWith("azure")) {
-      fetchUrl = "/api/azure";
-      proxyUrl = proxy.azure;
-      Authorization = azureOpenAIKey;
+    const fetchUrl = `/api/${modelType}`;
+
+    let params: any = {};
+    if (modelType === "openai") {
+      params = {
+        model: findChannel?.channel_model.name,
+        temperature: modelConfig.temperature,
+        max_tokens: modelConfig.max_tokens,
+        proxy: modelConfig.proxy,
+      };
+    } else if (modelType === "azure") {
+      params = {
+        model: findChannel?.channel_model.name,
+        temperature: modelConfig.temperature,
+        max_tokens: modelConfig.max_tokens,
+        resourceName: modelConfig.resourceName,
+      };
     }
+
+    params.chat_list = chat_list;
 
     fetch(fetchUrl, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization,
+        Authorization: modelConfig.apiKey,
       },
-      body: JSON.stringify({
-        model,
-        proxyUrl,
-        chat_list,
-      }),
+      body: JSON.stringify(params),
     }).then(async (response) => {
       if (!response.ok || !response.body) return;
       decoder(
@@ -256,8 +278,10 @@ const ChatFooter: React.FC = () => {
       const { activeId, list } = channel;
       const findChannel = list.find((item) => item.channel_id === activeId);
       if (!findChannel) return channel;
+      findChannel.channel_icon = "RiChatSmile2Line";
       findChannel.chat_list = [];
       findChannel.channel_name = "";
+      findChannel.channel_prompt = "";
       return channel;
     });
   };

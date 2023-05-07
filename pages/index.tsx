@@ -13,13 +13,13 @@ import {
 
 export default function Home() {
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex fixed w-full h-full left-0 top-0">
       <Menu />
       <MobileMenu />
       <Setting />
       <section
         className={clsx(
-          "transition-colors h-screen w-full relative md:w-[calc(100vw-17.5rem)]",
+          "transition-colors h-full w-full relative md:w-[calc(100vw-17.5rem)]",
           "bg-gray-100/60",
           "dark:bg-neutral-900"
         )}

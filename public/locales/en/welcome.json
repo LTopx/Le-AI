@@ -1,6 +1,7 @@
 {
+  "apply-azure-key": "If you don't have an Azure OpenAI API Key, you can get one here:",
   "apply-openai-key": "If you don't have an OpenAI API Key, you can get one here:",
-  "desc": "L-GPT is an open-source project that imitates the OpenAI ChatGPT.",
-  "set-openai-key": "Please click on the settings button in the bottom left corner and enter your OpenAI API Key.",
-  "welcome": "Welcome to L-GPT"
+  "desc": "L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
+  "set-openai-key": "Please click on the settings button in the lower left corner to configure your API Key.",
+  "welcome": "Welcome to"
 }

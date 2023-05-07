@@ -1,13 +1,15 @@
 {
+  "api-proxy": "API 代理地址",
+  "deterministic": "准确",
   "max-tokens": "单次回复限制",
-  "model": "大语言模型",
-  "openai-proxy-url": "OpenAI 代理地址",
-  "azure-proxy-url": "Azure 代理地址",
-  "set-openai-key": "请先配置 OpenAI Key",
-  "set-azure-key": "请先配置 Azure Key",
-  "set-proxy-url": "配置你的代理地址",
+  "neutral": "适中",
+  "random": "随机",
+  "resource-name": "资源名称",
+  "set-api-key": "请配置 API Key",
+  "set-api-proxy": "请配置 API 代理地址",
+  "set-resource-name": "请配置资源名称",
+  "set-temperature": "请配置随机性",
   "temperature": "随机性",
-  "temperature-tip": "较高的数值（例如0.8）会使输出更随机，而较低的数值（例如0.2）会使输出更加聚焦和确定性更强。",
-  "theme": "主题",
+  "temperature-tip": "较高的数值会使输出更随机，而较低的数值会使输出更加聚焦和确定性更强。",
   "title": "L-GPT 设置"
 }

@@ -1,5 +1,22 @@
 # L-GPT Change Log
 
+## v0.2.0
+
+> 2023-05-07
+
+### Fixed
+
+- Fixed the issue of incorrect input box position caused by the vertical scroll bar appearing on some mobile browsers
+
+### Add
+
+- Introduce prompt words and prompt word templates
+
+### Changed
+
+- Refactor some pages and interaction logic
+- Improve the error message content for front-end fetch requests
+
 ## v0.1.3
 
 > 2023-04-28
