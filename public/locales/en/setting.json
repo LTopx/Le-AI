@@ -1,9 +1,13 @@
 {
   "api-proxy": "API Proxy",
   "deterministic": "Deterministic",
+  "export-import": "Export / Import",
+  "import-success": "Data imported successfully!",
   "max-tokens": "Max Tokens",
   "neutral": "Neutral",
   "random": "Random",
+  "reset-data": "Reset Data",
+  "reset-data-tip": "Are you sure you want to reset all data? (Including chat and settings data)",
   "resource-name": "Resource Name",
   "set-api-key": "Configure API Key",
   "set-api-proxy": "Configure API Proxy",

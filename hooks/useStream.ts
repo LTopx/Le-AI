@@ -11,7 +11,7 @@ const useStreamDecoder = () => {
   };
 
   const checkFragment = (fragment: string) => {
-    const lines = fragment.split("\n").filter((item) => item.trim());
+    const lines = fragment.split("\n").filter((item) => item?.trim());
     let valid = true;
     for (const line of lines) {
       const message = line.replace(/^data: /, "");
@@ -34,7 +34,7 @@ const useStreamDecoder = () => {
     decoderDone = false;
 
     const handleFragment = (fragment: string) => {
-      const lines = fragment.split("\n").filter((item) => item.trim());
+      const lines = fragment.split("\n").filter((item) => item?.trim());
       for (const line of lines) {
         const message = line.replace(/^data: /, "");
         if (message === "[DONE]") decoderDone = true;

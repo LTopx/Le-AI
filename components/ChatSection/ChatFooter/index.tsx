@@ -73,7 +73,7 @@ const ChatFooter: React.FC = () => {
 
   const send = async () => {
     if (loadingFinish) return;
-    if (!inputValue.trim()) {
+    if (!inputValue?.trim()) {
       return toast.error(t("enter-message"), {
         id: "empty-message",
         duration: 2000,

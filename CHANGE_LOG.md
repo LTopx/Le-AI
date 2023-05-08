@@ -1,5 +1,18 @@
 # L-GPT Change Log
 
+## v0.2.1
+
+> 2023-05-08
+
+### Fixed
+
+- Add findLastIndex Polyfill
+
+### Add
+
+- Allow reset all data (available in case of unexpected data errors or data format incompatibility caused by version updates)
+- Support for data import and export
+
 ## v0.2.0
 
 > 2023-05-07
