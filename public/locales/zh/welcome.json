@@ -1,7 +1,0 @@
-{
-  "apply-azure-key": "如果您没有 Azure OpenAI API Key, 可以点击此处申请:",
-  "apply-openai-key": "如果您没有 OpenAI API Key, 可以点击此处申请:",
-  "desc": "L - GPT是一款开源项目，通过提供不同的AI模型来帮助你提高学习、工作、生活的效率。",
-  "set-openai-key": "请点击左下角设置按钮来配置您的API Key。",
-  "welcome": "欢迎来到"
-}

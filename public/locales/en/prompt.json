@@ -1,4 +1,0 @@
-{
-  "get-title": "Give this dialogue a title. Only return the text of the title, no need to add any other embellishments. It should not exceed 20 words.",
-  "model": "Model"
-}

@@ -1,5 +1,13 @@
 # L-GPT Change Log
 
+## v0.3.0
+
+> 2023-05-11
+
+### Changed
+
+- 迁移项目到 APP router
+
 ## v0.2.1
 
 > 2023-05-08
