@@ -4,9 +4,14 @@
 
 > 2023-05-11
 
+### Add
+
+- Support language switching
+
 ### Changed
 
-- 迁移项目到 APP router
+- Migration of Pages Router to App Router
+- Change polyfill reference location
 
 ## v0.2.1
 

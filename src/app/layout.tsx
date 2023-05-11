@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "react-hot-toast";
 import { Providers } from "./providers";
-import "@/utils/plugins";
 import "@/styles/globals.css";
 
 interface RootLayoutProps {
@@ -27,6 +26,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <Script src="/disableSafariScalable.js" async />
+      <Script src="/polyfill.js" async />
       <body className={inter.className}>
         <Providers>{children}</Providers>
         <Toaster />

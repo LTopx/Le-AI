@@ -17,6 +17,7 @@ export {
   Confirm,
   ContextMenu,
   Drawer,
+  Dropdown,
   Input,
   Modal,
   Select,
@@ -24,4 +25,4 @@ export {
   Textarea,
   Tooltip,
 } from "./ui";
-export type { ContextMenuOption } from "./ui";
+export type { ContextMenuOption, IDropdownItems } from "./ui";

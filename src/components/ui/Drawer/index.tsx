@@ -25,75 +25,77 @@ interface DrawerProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
   onClose?: () => void;
 }
 
-const Drawer = React.forwardRef<any, DrawerProps>(
-  (
-    {
-      children,
-      className,
-      open,
-      overlayClassName,
-      title,
-      width = 378,
-      autoFocus = false,
-      onClose,
-    },
-    forwardedRef
-  ) => {
-    const onOpenChange = (open: boolean) => {
-      if (!open) onClose?.();
-    };
+const Drawer = React.memo(
+  React.forwardRef<any, DrawerProps>(
+    (
+      {
+        children,
+        className,
+        open,
+        overlayClassName,
+        title,
+        width = 378,
+        autoFocus = false,
+        onClose,
+      },
+      forwardedRef
+    ) => {
+      const onOpenChange = (open: boolean) => {
+        if (!open) onClose?.();
+      };
 
-    const onOpenAutoFocus = (event: Event) => {
-      if (!autoFocus) event.preventDefault();
-    };
+      const onOpenAutoFocus = (event: Event) => {
+        if (!autoFocus) event.preventDefault();
+      };
 
-    return (
-      <Dialog.Root open={open} onOpenChange={onOpenChange}>
-        <Dialog.Portal>
-          <Dialog.Overlay
-            className={clsx(
-              "bg-gray-900/40 backdrop-blur-sm fixed inset-0 z-[1500]",
-              "data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut",
-              overlayClassName
-            )}
-          />
-          <Dialog.Content
-            className={clsx(
-              "fixed top-0 bottom-0 h-full w-20 z-[1500] max-w-[calc(100vw-2rem)]",
-              "data-[state=open]:animate-showLeft data-[state=closed]:animate-hideLeft",
-              "bg-white/90 backdrop-blur-sm",
-              "dark:bg-slate-800/90",
-              className
-            )}
-            style={{ width }}
-            onOpenAutoFocus={onOpenAutoFocus}
-          >
-            <Dialog.Title
+      return (
+        <Dialog.Root open={open} onOpenChange={onOpenChange}>
+          <Dialog.Portal>
+            <Dialog.Overlay
               className={clsx(
-                "h-14 px-4 flex items-center text-lg font-medium leading-6",
-                "text-gray-900",
-                "dark:text-white/90"
+                "bg-gray-900/40 backdrop-blur-sm fixed inset-0 z-[1500]",
+                "data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut",
+                overlayClassName
               )}
+            />
+            <Dialog.Content
+              className={clsx(
+                "fixed top-0 bottom-0 h-full w-20 z-[1500] max-w-[calc(100vw-2rem)]",
+                "data-[state=open]:animate-showLeft data-[state=closed]:animate-hideLeft",
+                "bg-white/90 backdrop-blur-sm",
+                "dark:bg-slate-800/90",
+                className
+              )}
+              style={{ width }}
+              onOpenAutoFocus={onOpenAutoFocus}
             >
-              {title || "Title"}
-            </Dialog.Title>
-            {children}
-            <Dialog.Close asChild>
-              <button
+              <Dialog.Title
                 className={clsx(
-                  "outline-none transition-colors absolute h-14 w-14 flex justify-center items-center top-0 right-0",
-                  "text-black/40 hover:text-black/90",
-                  "dark:text-white/40 dark:hover:text-white/90"
+                  "h-14 px-4 flex items-center text-lg font-medium leading-6",
+                  "text-gray-900",
+                  "dark:text-white/90"
                 )}
               >
-                <AiOutlineClose size={18} />
-              </button>
-            </Dialog.Close>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-    );
-  }
+                {title || "Title"}
+              </Dialog.Title>
+              {children}
+              <Dialog.Close asChild>
+                <button
+                  className={clsx(
+                    "outline-none transition-colors absolute h-14 w-14 flex justify-center items-center top-0 right-0",
+                    "text-black/40 hover:text-black/90",
+                    "dark:text-white/40 dark:hover:text-white/90"
+                  )}
+                >
+                  <AiOutlineClose size={18} />
+                </button>
+              </Dialog.Close>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
+      );
+    }
+  )
 );
 
 Drawer.displayName = "Drawer";

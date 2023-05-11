@@ -1,6 +1,5 @@
 import * as React from "react";
-import clsx from "clsx";
-import { twMerge } from "tailwind-merge";
+import { useRouter, useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useDateFormat } from "l-hooks";
@@ -10,9 +9,10 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
-import { HiLightBulb } from "react-icons/hi";
+import { HiLightBulb, HiOutlineTranslate } from "react-icons/hi";
 import { v4 as uuidv4 } from "uuid";
-import { Drawer, Confirm, Button } from "@/components";
+import { cn } from "@/lib";
+import { Drawer, Confirm, Button, Dropdown } from "@/components";
 import {
   useChannel,
   initChannelList,
@@ -21,6 +21,7 @@ import {
 } from "@/hooks";
 import { LLM } from "@/utils/constant";
 import MenuIcon from "./icon";
+import { lans } from "./index";
 
 const MobileMenu: React.FC = () => {
   const { theme, setTheme } = useTheme();
@@ -31,6 +32,11 @@ const MobileMenu: React.FC = () => {
   const [, setSettingVisible] = useSetting();
 
   const [nowTheme, setNowTheme] = React.useState<any>("");
+
+  const params = useParams();
+  const router = useRouter();
+
+  const locale = params?.locale || "en";
 
   const onClose = () => setMobileMenuVisible(false);
 
@@ -93,6 +99,13 @@ const MobileMenu: React.FC = () => {
 
   const onOpenPrompt = () => alert("Prompt Manage ToDo...");
 
+  const onLocaleChange = (value: string) => {
+    if (value === locale) return;
+    onClose();
+    router.push(value);
+    document.body.style.pointerEvents = "";
+  };
+
   React.useEffect(() => {
     setNowTheme(theme === "dark" ? "dark" : "light");
   }, [theme]);
@@ -127,20 +140,18 @@ const MobileMenu: React.FC = () => {
             <div
               key={item.channel_id}
               onClick={() => onChannelChange(item.channel_id)}
-              className={twMerge(
-                clsx(
-                  "rounded-lg mb-1 cursor-pointer transition-colors overflow-hidden relative flex flex-col h-16 text-xs px-[0.5rem] gap-1 justify-center",
-                  "hover:bg-gray-200/60 dark:hover:bg-slate-700/70",
-                  {
-                    "bg-sky-100 hover:bg-sky-100 dark:bg-slate-600 dark:hover:bg-slate-600":
-                      item.channel_id === channel.activeId,
-                  }
-                )
+              className={cn(
+                "rounded-lg mb-1 cursor-pointer transition-colors overflow-hidden relative flex flex-col h-16 text-xs px-[0.5rem] gap-1 justify-center",
+                "hover:bg-gray-200/60 dark:hover:bg-slate-700/70",
+                {
+                  "bg-sky-100 hover:bg-sky-100 dark:bg-slate-600 dark:hover:bg-slate-600":
+                    item.channel_id === channel.activeId,
+                }
               )}
             >
               <div className="flex justify-between items-center gap-2">
                 <div
-                  className={clsx(
+                  className={cn(
                     "font-medium text-sm text-ellipsis pl-5 overflow-hidden whitespace-nowrap relative",
                     "text-black/90",
                     "dark:text-white/90"
@@ -150,7 +161,7 @@ const MobileMenu: React.FC = () => {
                   {item.channel_name || t("new-conversation")}
                 </div>
                 <div
-                  className={clsx(
+                  className={cn(
                     "text-neutral-500/90 dark:text-neutral-500 dark:group-hover:text-neutral-400 tabular-nums flex-none text-right",
                     {
                       "dark:text-neutral-400/80":
@@ -169,14 +180,12 @@ const MobileMenu: React.FC = () => {
                 </div>
               </div>
               <div
-                className={twMerge(
-                  clsx(
-                    "text-neutral-500/90 dark:text-neutral-500 dark:group-hover:text-neutral-400",
-                    {
-                      "dark:text-neutral-400":
-                        item.channel_id === channel.activeId,
-                    }
-                  )
+                className={cn(
+                  "text-neutral-500/90 dark:text-neutral-500 dark:group-hover:text-neutral-400",
+                  {
+                    "dark:text-neutral-400":
+                      item.channel_id === channel.activeId,
+                  }
                 )}
               >
                 {item.chat_list.length} {t("messages")}
@@ -186,7 +195,7 @@ const MobileMenu: React.FC = () => {
                 content={t("delete-conversation")}
                 trigger={
                   <div
-                    className={clsx(
+                    className={cn(
                       "right-2 bottom-1 absolute",
                       "text-black/90",
                       "dark:text-white/90"
@@ -207,7 +216,7 @@ const MobileMenu: React.FC = () => {
             content={t("clear-conversation")}
             trigger={
               <div
-                className={clsx(
+                className={cn(
                   "h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors",
                   "hover:bg-gray-200/60 text-black/90",
                   "dark:hover:bg-slate-700/70 dark:text-white/90"
@@ -222,7 +231,7 @@ const MobileMenu: React.FC = () => {
             <div className="flex-1 flex justify-center">
               <div
                 onClick={onToggleTheme}
-                className={clsx(
+                className={cn(
                   "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
                   "hover:bg-gray-200/60",
                   "dark:hover:bg-slate-700/70"
@@ -239,7 +248,7 @@ const MobileMenu: React.FC = () => {
               <a
                 href="https://github.com/Peek-A-Booo/L-GPT"
                 target="_blank"
-                className={clsx(
+                className={cn(
                   "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
                   "hover:bg-gray-200/60",
                   "dark:hover:bg-slate-700/70"
@@ -251,7 +260,7 @@ const MobileMenu: React.FC = () => {
             <div className="flex-1 flex justify-center">
               <div
                 onClick={onOpenPrompt}
-                className={clsx(
+                className={cn(
                   "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
                   "hover:bg-gray-200/60",
                   "dark:hover:bg-slate-700/70"
@@ -260,10 +269,28 @@ const MobileMenu: React.FC = () => {
                 <HiLightBulb size={20} />
               </div>
             </div>
+            <Dropdown
+              options={lans}
+              value={locale}
+              onChange={onLocaleChange}
+              trigger={
+                <div className="flex flex-1 justify-center">
+                  <div
+                    className={cn(
+                      "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
+                      "hover:bg-gray-200/60",
+                      "dark:hover:bg-slate-700/70"
+                    )}
+                  >
+                    <HiOutlineTranslate size={20} />
+                  </div>
+                </div>
+              }
+            />
             <div className="flex-1 flex justify-center">
               <div
                 onClick={() => setSettingVisible(true)}
-                className={clsx(
+                className={cn(
                   "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
                   "hover:bg-gray-200/60",
                   "dark:hover:bg-slate-700/70"

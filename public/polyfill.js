@@ -1,7 +1,5 @@
-type ArrayLikes = Array<any> | string | Int8Array;
-
 // Array.at polyfill
-function at(this: ArrayLikes, n: number) {
+function at(n) {
   // ToInteger() abstract op
   n = Math.trunc(n) || 0;
   // Allow negative indexing from the end
@@ -13,9 +11,9 @@ function at(this: ArrayLikes, n: number) {
 }
 
 if (![].at) {
-  const TypedArray: any = Reflect.getPrototypeOf(Int8Array);
+  const TypedArray = Reflect.getPrototypeOf(Int8Array);
   for (const C of [Array, String, TypedArray]) {
-    Object.defineProperty(C?.prototype, "at", {
+    Object.defineProperty(C.prototype, "at", {
       value: at,
       writable: true,
       enumerable: false,
