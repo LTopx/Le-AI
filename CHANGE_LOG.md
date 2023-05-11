@@ -11,6 +11,7 @@
 ### Add
 
 - Support language switching
+- Adding Custom 404 Page
 
 ### Changed
 

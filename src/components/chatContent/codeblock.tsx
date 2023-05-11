@@ -49,7 +49,11 @@ const CodeBlock: React.FC<Props> = React.memo(({ language, value }) => {
       <SyntaxHighlighter
         language={language}
         style={oneDark}
-        customStyle={{ margin: 0 }}
+        customStyle={{
+          margin: 0,
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+        }}
       >
         {value}
       </SyntaxHighlighter>
