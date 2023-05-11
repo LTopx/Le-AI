@@ -4,6 +4,10 @@
 
 > 2023-05-11
 
+### Fixed
+
+- Fix dark mode style issue with Dropdown component
+
 ### Add
 
 - Support language switching
@@ -12,6 +16,7 @@
 
 - Migration of Pages Router to App Router
 - Change polyfill reference location
+- Optimize markdown table style
 
 ## v0.2.1
 

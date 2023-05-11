@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -33,7 +33,7 @@
     "l-hooks": "0.4.5",
     "math-random": "2.0.1",
     "next": "13.4.1",
-    "next-intl": "2.14.0",
+    "next-intl": "2.14.1",
     "next-themes": "0.2.1",
     "postcss": "8.4.23",
     "react": "18.2.0",
