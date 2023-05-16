@@ -53,10 +53,18 @@ const AuthForm: React.FC = () => {
     }
   };
 
+  const onGithubLogin = async () => {
+    await signIn("github", { redirect: false, callbackUrl: "/" });
+  };
+
+  const onGoogleLogin = async () => {
+    await signIn("google", { redirect: false, callbackUrl: "/" });
+  };
+
   return (
     <>
       <div className="text-3xl font-bold mb-10">{t("title")}</div>
-      <div className="w-[20rem]">
+      <div className="w-[20rem] max-w-[calc(100vw-3rem)]">
         <Input
           ref={inputRef}
           className="w-full"
@@ -78,10 +86,20 @@ const AuthForm: React.FC = () => {
         </Button>
         <div className="w-full h-[1px] bg-neutral-200 mb-4" />
         <div className="flex flex-col gap-2">
-          <Button size="base" block leftIcon={<AiFillGithub />}>
+          <Button
+            size="base"
+            block
+            leftIcon={<AiFillGithub />}
+            onClick={onGithubLogin}
+          >
             Continue with Github
           </Button>
-          <Button size="base" block leftIcon={<FcGoogle />}>
+          <Button
+            size="base"
+            block
+            leftIcon={<FcGoogle />}
+            onClick={onGoogleLogin}
+          >
             Continue with Google
           </Button>
         </div>

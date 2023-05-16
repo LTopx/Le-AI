@@ -29,7 +29,7 @@
     "log-out": "Log Out",
     "return-to-home-page": "Return to home page",
     "sign-in": "Sign in",
-    "title": "Login / Sign up to L-GPT",
+    "title": "Login/Sign up to L-GPT",
     "verification": "Unable to sign in",
     "verification-1": "The sign in link is no longer valid.",
     "verification-2": "It may have been used already or it may have expired."
@@ -101,5 +101,11 @@
     "desc": "L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
     "set-openai-key": "Please click on the settings button in the lower left corner to configure your API Key.",
     "welcome": "Welcome to"
+  },
+  "zLog": {
+    "title": "Project Release Announcement v0.4.0",
+    "text1": "Since the project was launched, I have been using my personal API Key (no need to configure additional keys). As the number of users increased, it became a bit difficult. Therefore, in the previous version, the key was replaced with a free key that is not bound to a credit card.",
+    "text2": "OpenAI's free API key has a very strict call frequency limit of only 3 calls per minute, which is clearly insufficient to meet the demands.",
+    "text3": "Therefore, this version includes an account system. You can configure your own API Key without logging in, and after logging in, you can enjoy free and more stable services."
   }
 }

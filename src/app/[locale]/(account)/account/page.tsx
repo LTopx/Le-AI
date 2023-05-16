@@ -114,6 +114,8 @@ const Account: React.FC = () => {
           <div className="text-sm mb-1.5">{t("avatar")}</div>
           <Input
             allowClear
+            disabled
+            placeholder="Todo..."
             value={userInfo.image}
             onChange={(value) => onchange(value, "image")}
           />

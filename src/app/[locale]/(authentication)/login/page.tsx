@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib";
 import AuthForm from "@/components/auth/form";
+import Logo from "@/components/logo";
 
 const Login: React.FC = () => {
   return (
@@ -11,11 +12,7 @@ const Login: React.FC = () => {
           "dark:border-neutral-600"
         )}
       >
-        <div className="flex font-extrabold h-12 text-transparent text-2xl items-center">
-          <span className="bg-clip-text bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
-            L - GPT
-          </span>
-        </div>
+        <Logo />
       </div>
       <div className="flex flex-col justify-center items-center flex-1">
         <AuthForm />

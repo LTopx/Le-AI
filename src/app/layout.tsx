@@ -29,7 +29,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <Script src="/polyfill.js" async />
       <body className={inter.className}>
         <Providers>{children}</Providers>
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            style: { maxWidth: "calc(100vw - 2rem)" },
+          }}
+        />
         <Analytics debug={false} />
       </body>
     </html>

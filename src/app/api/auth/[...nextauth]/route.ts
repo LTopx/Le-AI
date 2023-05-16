@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/email";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
@@ -19,18 +20,14 @@ export const authOptions: NextAuthOptions = {
       },
       from: process.env.EMAIL_FROM,
     }),
-    // EmailProvider({
-    //   // server: "smtp://276900785@qq.com:fnmvpdkxjtqjbjgc@smtp.qq.com:465",
-    //   server: "smtp://liushuxiang1993:WFCLNBQGTRTMDORC@smtp.163.com:465",
-    //   // from: "NextAuth <noreply@example.com>",
-    //   // WFCLNBQGTRTMDORC
-    //   // qq: fnmvpdkxjtqjbjgc
-    //   maxAge: 24 * 60 * 60, // 设置邮箱链接失效时间，默认24小时
-    // }),
-    // GithubProvider({
-    //   clientId: "894f395fe1e70358caca",
-    //   clientSecret: "fd5a93dcc14cc6e2c0566436f983ed0b2578ce05",
-    // }),
+    GithubProvider({
+      clientId: process.env.GITHUB_ID || "",
+      clientSecret: process.env.GITHUB_SECRET || "",
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    }),
   ],
   secret: process.env.EMAIL_SECRET,
   callbacks: {

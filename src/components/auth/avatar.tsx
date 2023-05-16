@@ -71,6 +71,8 @@ const Avatar: React.FC = () => {
     } else if (item === "account") {
       if (pathname.includes("/account")) return;
       router.push("/account");
+    } else if (item === "documentation") {
+      console.log("文档");
     }
   };
 
@@ -103,7 +105,9 @@ const Avatar: React.FC = () => {
       content={
         user ? (
           <div className="border-b pb-1 px-2">
-            <div className="font-medium text-sm">{user.name}</div>
+            <div className="font-medium text-sm">
+              {user.name || "(Nickname)"}
+            </div>
             <div className="text-xs">{user.email}</div>
           </div>
         ) : null
