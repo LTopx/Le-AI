@@ -3,13 +3,11 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useDateFormat, useClipboard } from "l-hooks";
-import {
-  CopyIcon,
-  ChatContent,
-  useScrollToBottom,
-  ContextMenu,
-} from "@/components";
-import type { ContextMenuOption } from "@/components";
+import CopyIcon from "@/components/copyIcon";
+import ChatContent from "@/components/chatContent";
+import { useScrollToBottom } from "@/components/scrollToBottoms";
+import ContextMenu from "@/components/ui/ContextMenu";
+import type { ContextMenuOption } from "@/components/ui/ContextMenu";
 import {
   AiOutlineLoading,
   AiOutlineDelete,

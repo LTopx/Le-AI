@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import clsx from "clsx";
 import { AiOutlineClose } from "react-icons/ai";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components";
+import Button from "@/components/ui/Button";
 
 interface ModalProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
   /** The Drawer is open or not */

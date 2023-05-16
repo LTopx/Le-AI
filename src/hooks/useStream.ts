@@ -5,7 +5,7 @@ const useStreamDecoder = () => {
 
   const checkFragmentError = (fragment: string) => {
     try {
-      if (JSON.parse(fragment).error) return true;
+      if (JSON.parse(fragment).error) return JSON.parse(fragment).error;
     } catch {}
     return false;
   };
@@ -27,7 +27,7 @@ const useStreamDecoder = () => {
   const decoder = async (
     reader: ReadableStreamDefaultReader<Uint8Array>,
     handler: (val: string) => void,
-    errHandler: () => void
+    errHandler: (error: any) => void
   ) => {
     // if error, add in errorFragment
     let errorFragment = "";
@@ -53,7 +53,7 @@ const useStreamDecoder = () => {
         const checkIsError = checkFragmentError(fragment);
         if (checkIsError) {
           decoderDone = true;
-          return errHandler();
+          return errHandler(checkIsError);
         }
         const check1 = checkFragment(fragment);
         if (!check1) {

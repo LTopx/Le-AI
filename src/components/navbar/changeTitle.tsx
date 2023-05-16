@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useTranslations } from "next-intl";
-import { Input, Modal } from "@/components";
+import Input from "@/components/ui/Input";
+import Modal from "@/components/ui/Modal";
 import { useChannel } from "@/hooks";
 
 const ChangeTitle = React.forwardRef((_, forwardedRef) => {

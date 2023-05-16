@@ -3,6 +3,7 @@
 import type * as React from "react";
 import { ThemeProvider } from "next-themes";
 import { AnimatePresence } from "framer-motion";
+import { SessionProvider } from "next-auth/react";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -10,8 +11,10 @@ interface ProvidersProps {
 
 export function Providers({ children }: ProvidersProps) {
   return (
-    <ThemeProvider attribute="class">
-      <AnimatePresence>{children}</AnimatePresence>
-    </ThemeProvider>
+    <SessionProvider>
+      <ThemeProvider attribute="class">
+        <AnimatePresence>{children}</AnimatePresence>
+      </ThemeProvider>
+    </SessionProvider>
   );
 }

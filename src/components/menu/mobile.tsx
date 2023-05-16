@@ -12,7 +12,10 @@ import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
 import { HiLightBulb, HiOutlineTranslate } from "react-icons/hi";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
-import { Drawer, Confirm, Button, Dropdown } from "@/components";
+import Drawer from "@/components/ui/Drawer";
+import Confirm from "@/components/ui/Confirm";
+import Button from "@/components/ui/Button";
+import Dropdown from "@/components/ui/Dropdown";
 import {
   useChannel,
   initChannelList,
@@ -270,9 +273,10 @@ const MobileMenu: React.FC = () => {
               </div>
             </div>
             <Dropdown
+              selectable
               options={lans}
               value={locale}
-              onChange={onLocaleChange}
+              onSelect={onLocaleChange}
               trigger={
                 <div className="flex flex-1 justify-center">
                   <div

@@ -1,8 +1,11 @@
 import { headers } from "next/headers";
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { LLM } from "@/utils/constant";
 import { isUndefined } from "@/lib";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 const apiVersion = "2023-03-15-preview";
 
@@ -49,20 +52,26 @@ const stream = async (readable: ReadableStream, writable: WritableStream) => {
 };
 
 export async function POST(request: Request) {
+  const session = await getServerSession(authOptions);
+  const headersList = headers();
+  const headerApiKey = headersList.get("Authorization");
+  const NEXT_PUBLIC_AZURE_OPENAI_API_KEY =
+    process.env.NEXT_PUBLIC_AZURE_OPENAI_API_KEY;
+
+  /**
+   * If not logged in, only the locally configured API Key can be used.
+   */
+  if (!session && !headerApiKey) {
+    return NextResponse.json({ error: 10001 }, { status: 500 });
+  }
+
   // first use local
   // then use env configuration
   // or empty
-  const headersList = headers();
-  const Authorization =
-    headersList.get("Authorization") ||
-    process.env.NEXT_PUBLIC_AZURE_OPENAI_API_KEY ||
-    "";
+  const Authorization = headerApiKey || NEXT_PUBLIC_AZURE_OPENAI_API_KEY || "";
 
   if (!Authorization) {
-    return new Response("Error", {
-      status: 500,
-      statusText: "Missing API Key",
-    });
+    return NextResponse.json({ error: 10002 }, { status: 500 });
   }
 
   const {
@@ -82,10 +91,7 @@ export async function POST(request: Request) {
   });
 
   if (!findModel) {
-    return new Response("Error", {
-      status: 500,
-      statusText: "Language model parameters are incorrect",
-    });
+    return NextResponse.json({ error: 10003 }, { status: 500 });
   }
 
   const fetchURL = `https://${resourceName}.openai.azure.com/openai/deployments/${model}/chat/completions?api-version=${apiVersion}`;

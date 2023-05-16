@@ -6,58 +6,92 @@ import { cn } from "@/lib";
 import { BsCheck2 } from "react-icons/bs";
 
 export interface IDropdownItems {
-  label: string;
-  value: string;
+  label?: string;
+  value?: string;
   icon?: React.ReactNode;
+  type?: string;
 }
 
 interface IDropdownMenuProps {
   /** A ReactNode that open the AlertDialog */
   trigger: React.ReactNode;
 
-  value?: any;
+  align?: "start" | "center" | "end";
+
+  /** support selection */
+  selectable?: boolean;
+
+  content?: React.ReactNode;
 
   options?: IDropdownItems[];
 
-  onChange?: (value: any) => void;
+  value?: any;
+
+  onSelect?: (value: any) => void;
 }
 
 const LDropdownMenu = React.forwardRef<any, IDropdownMenuProps>(
-  ({ trigger, value, options, onChange }, forwardedRef) => {
+  (
+    {
+      trigger,
+      align = "center",
+      selectable = false,
+      content,
+      options,
+      value,
+      onSelect,
+    },
+    forwardedRef
+  ) => {
     return (
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>{trigger}</DropdownMenu.Trigger>
         <DropdownMenu.Portal>
           <DropdownMenu.Content
+            align={align}
             className={cn(
-              "z-[2000] bg-white border",
-              "data-[state=open]:animate-fadeInUp data-[state=closed]:animate-fadeOut rounded-lg p-1",
+              "z-[2000] bg-white border rounded-lg p-1",
+              "data-[side=top]:animate-fadeInUp data-[side=bottom]:animate-fadeInDown data-[state=closed]:animate-fadeOut",
               "dark:bg-slate-800 dark:border-slate-200/30"
             )}
           >
-            {options?.map((item) => (
-              <DropdownMenu.Item
-                key={item.value}
-                onSelect={() => onChange?.(item.value)}
-                className={cn(
-                  "select-none cursor-pointer outline-none border-none rounded-md h-9 px-2 flex items-center text-sm transition-colors",
-                  "bg-white hover:bg-neutral-200",
-                  "dark:bg-slate-800 dark:hover:bg-slate-700/70"
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <BsCheck2
-                    className={cn("opacity-0", {
-                      "opacity-100": item.value === value,
-                    })}
-                  />
-                  <div className="flex gap-1">
-                    <span>{item.icon}</span>
-                    <span>{item.label}</span>
+            {!!content && (
+              <DropdownMenu.Label className="mb-1">
+                {content}
+              </DropdownMenu.Label>
+            )}
+            {options?.map((item) =>
+              item.type === "seperate" ? (
+                <DropdownMenu.Separator
+                  key={item.value}
+                  className="h-[1px] my-1 bg-neutral-200 dark:bg-neutral-600"
+                />
+              ) : (
+                <DropdownMenu.Item
+                  key={item.value}
+                  onSelect={() => onSelect?.(item.value)}
+                  className={cn(
+                    "select-none cursor-pointer outline-none border-none rounded-md h-8 px-2 flex items-center text-sm transition-colors",
+                    "bg-white hover:bg-neutral-200",
+                    "dark:bg-slate-800 dark:hover:bg-slate-700/70"
+                  )}
+                >
+                  <div className="flex items-center gap-2">
+                    {!!selectable && (
+                      <BsCheck2
+                        className={cn("opacity-0", {
+                          "opacity-100": item.value === value,
+                        })}
+                      />
+                    )}
+                    <div className="flex gap-2 items-center">
+                      <span>{item.icon}</span>
+                      <span>{item.label}</span>
+                    </div>
                   </div>
-                </div>
-              </DropdownMenu.Item>
-            ))}
+                </DropdownMenu.Item>
+              )
+            )}
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>

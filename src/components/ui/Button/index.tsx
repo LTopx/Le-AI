@@ -1,5 +1,6 @@
 import * as React from "react";
-import clsx from "clsx";
+import { cn } from "@/lib";
+import { AiOutlineLoading } from "react-icons/ai";
 
 type ButtonType = "default" | "primary" | "danger" | "outline";
 
@@ -12,6 +13,7 @@ interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
   rightIcon?: React.ReactNode;
   size?: ButtonSize;
   type?: ButtonType;
+  loading?: boolean;
 }
 
 const Button = React.forwardRef<any, ButtonProps>(
@@ -25,13 +27,19 @@ const Button = React.forwardRef<any, ButtonProps>(
       rightIcon,
       size = "sm",
       type = "default",
+      loading,
     },
     forwardedRef
   ) => {
+    const onBtnClick = (e: any) => {
+      if (loading) return;
+      onClick?.(e);
+    };
+
     return (
       <button
-        onClick={onClick}
-        className={clsx(
+        onClick={onBtnClick}
+        className={cn(
           "transition-all duration-100 ease-linear rounded-md font-medium flex items-center justify-center gap-2 tracking-wide",
           { "h-6 text-xs px-2": size === "xs" },
           { "h-8 text-sm px-3": size === "sm" },
@@ -52,6 +60,10 @@ const Button = React.forwardRef<any, ButtonProps>(
           {
             "bg-sky-400 hover:bg-sky-500 active:bg-sky-600 text-white":
               type === "primary",
+          },
+          {
+            "bg-sky-400/80 hover:bg-sky-400/80 active:bg-sky-400/80":
+              type === "primary" && loading,
           },
           {
             "dark:bg-sky-400/90 dark:hover:bg-sky-500/90 dark:active:bg-sky-600/90":
@@ -77,10 +89,17 @@ const Button = React.forwardRef<any, ButtonProps>(
             "dark:bg-neutral-900/80 dark:border-sky-400/90 dark:text-sky-400/90 dark:hover:bg-sky-50/10 dark:active:bg-sky-50/20":
               type === "outline",
           },
+          { "cursor-not-allowed": loading },
           className
         )}
       >
-        {leftIcon}
+        {leftIcon ? (
+          <>
+            {loading ? <AiOutlineLoading className="animate-spin" /> : leftIcon}
+          </>
+        ) : (
+          <>{loading ? <AiOutlineLoading className="animate-spin" /> : null}</>
+        )}
         {children}
         {rightIcon}
       </button>

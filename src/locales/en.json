@@ -1,4 +1,39 @@
 {
+  "account": {
+    "account": "Account",
+    "account-tip": "Set up account basic information",
+    "avatar": "Avatar",
+    "email": "Email",
+    "email-placeholder": "Please enter your email address",
+    "name": "Name",
+    "name-placeholder": "Please enter your name",
+    "save": "Save",
+    "save-success": "Save Success",
+    "teams": "Teams"
+  },
+  "auth": {
+    "access-denied": "Access Denied",
+    "access-denied-1": "You do not have permission to sign in.",
+    "account-center": "Account Center",
+    "auth-failed": "Authentication failed",
+    "auth-success": "Authentication success",
+    "button-text": "Login / Sign up",
+    "configuration": "Server error",
+    "configuration-1": "There is a problem with the server configuration.",
+    "configuration-2": "Check the server logs for more information.",
+    "documentation": "Documentation",
+    "error": "Error",
+    "input-email": "Please enter your email",
+    "input-valid-email": "Please enter a valid email address",
+    "log-in": "Login",
+    "log-out": "Log Out",
+    "return-to-home-page": "Return to home page",
+    "sign-in": "Sign in",
+    "title": "Login / Sign up to L-GPT",
+    "verification": "Unable to sign in",
+    "verification-1": "The sign in link is no longer valid.",
+    "verification-2": "It may have been used already or it may have expired."
+  },
   "chat": {
     "canceled": "Canceled",
     "clear-current-conversation": "Are you sure to clear the current conversation?",
@@ -35,6 +70,11 @@
   "prompt": {
     "get-title": "Give this dialogue a title. Only return the text of the title, no need to add any other embellishments. It should not exceed 20 words.",
     "model": "Model"
+  },
+  "responseErr": {
+    "10001": "Please log in or configure your API Key.",
+    "10002": "API Key missing, please check configuration or contact the developer",
+    "10003": "Language model parameter error"
   },
   "setting": {
     "api-proxy": "API Proxy",

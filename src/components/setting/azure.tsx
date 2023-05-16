@@ -2,7 +2,9 @@ import * as React from "react";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
-import { Input, Slider, Tooltip } from "@/components";
+import Input from "@/components/ui/Input";
+import Slider from "@/components/ui/Slider";
+import Tooltip from "@/components/ui/Tooltip";
 import { useOpenAI } from "@/hooks";
 
 const Azure: React.FC = () => {

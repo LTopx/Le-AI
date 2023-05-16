@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useChannel } from "@/hooks";
-import { Select } from "@/components";
+import Select from "@/components/ui/Select";
 import { LLM } from "@/utils/constant";
 import { PROMPT_DEFAULT } from "@/prompt";
 import type { Prompt } from "@/prompt";

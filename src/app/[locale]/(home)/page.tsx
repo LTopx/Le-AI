@@ -1,14 +1,12 @@
 "use client";
 
 import clsx from "clsx";
-import {
-  ChatSection,
-  Menu,
-  MobileMenu,
-  Navbar,
-  Setting,
-  Welcome,
-} from "@/components";
+import ChatSection from "@/components/chatSection";
+import Menu from "@/components/menu";
+import MobileMenu from "@/components/menu/mobile";
+import Navbar from "@/components/navbar";
+import Setting from "@/components/setting";
+import Welcome from "@/components/welcome";
 
 export default function Home() {
   return (

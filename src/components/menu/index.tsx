@@ -15,8 +15,12 @@ import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
 import { useSetting, useChannel, initChannelList } from "@/hooks";
 import type { ChannelListItem } from "@/hooks";
-import { Button, Confirm, ContextMenu, Dropdown } from "@/components";
-import type { ContextMenuOption, IDropdownItems } from "@/components";
+import Button from "@/components/ui/Button";
+import Confirm from "@/components/ui/Confirm";
+import ContextMenu from "@/components/ui/ContextMenu";
+import type { ContextMenuOption } from "@/components/ui/ContextMenu";
+import Dropdown from "@/components/ui/Dropdown";
+import type { IDropdownItems } from "@/components/ui/Dropdown";
 import { LLM } from "@/utils/constant";
 import MenuIcon from "./icon";
 
@@ -296,9 +300,10 @@ const Menu: React.FC = () => {
             </div>
           </div>
           <Dropdown
+            selectable
             options={lans}
             value={locale}
-            onChange={onLocaleChange}
+            onSelect={onLocaleChange}
             trigger={
               <div className="flex flex-1 justify-center">
                 <div

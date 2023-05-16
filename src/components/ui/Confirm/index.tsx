@@ -5,7 +5,7 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { AiFillExclamationCircle } from "react-icons/ai";
-import { Button } from "@/components";
+import Button from "@/components/ui/Button";
 
 interface ConfirmProps {
   /** The AlertDialog's title */

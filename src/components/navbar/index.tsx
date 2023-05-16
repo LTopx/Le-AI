@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { AiOutlineMenuUnfold, AiOutlineEdit } from "react-icons/ai";
 import { useChannel, useOpenAI, useMobileMenu } from "@/hooks";
+import Avatar from "@/components/auth/avatar";
 import ChangeTitle from "./changeTitle";
 
 const Navbar: React.FC = () => {
@@ -88,6 +89,7 @@ const Navbar: React.FC = () => {
             />
           )}
         </div>
+        <Avatar />
       </div>
       <ChangeTitle ref={changeTitleRef} />
     </>

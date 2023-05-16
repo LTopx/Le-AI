@@ -8,8 +8,11 @@ import { BsStop } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
 import { useChannel, useOpenAI, useStreamDecoder, useChat } from "@/hooks";
-import { useScrollToBottom, Confirm, Button, Textarea } from "@/components";
-import { isMobile } from "@/lib";
+import Confirm from "@/components/ui/Confirm";
+import Button from "@/components/ui/Button";
+import Textarea from "@/components/ui/Textarea";
+import { useScrollToBottom } from "@/components/scrollToBottoms";
+import { isMobile, getReadableStream } from "@/lib";
 import { PROMPT_BASE } from "@/prompt";
 
 const ChatFooter: React.FC = () => {
@@ -32,6 +35,7 @@ const ChatFooter: React.FC = () => {
   const tMenu = useTranslations("menu");
   const tPrompt = useTranslations("prompt");
   const tCommon = useTranslations("common");
+  const tRes = useTranslations("responseErr");
   const scrollToBottom = useScrollToBottom();
   const { decoder } = useStreamDecoder();
 
@@ -158,11 +162,26 @@ const ChatFooter: React.FC = () => {
       })
         .then(async (response) => {
           updateStart(false);
-
           if (!response.ok || !response.body) {
             updateFinish(false);
-            if (!response.ok)
-              toast.error(response.statusText || tCommon("service-error"));
+            if (!response.ok) {
+              const stream = await getReadableStream(response.body);
+              const streamRes: any = JSON.parse(stream as string);
+
+              let errorMessage = "";
+
+              if (streamRes.error === 10001) {
+                errorMessage = tRes("10001");
+              } else if (streamRes.error === 10002) {
+                errorMessage = tRes("10002");
+              } else if (streamRes.error === 10003) {
+                errorMessage = tRes("10003");
+              } else {
+                errorMessage = response.statusText || tCommon("service-error");
+              }
+
+              toast.error(errorMessage, { duration: 4000 });
+            }
             return;
           }
           let channel_id = "";
@@ -196,8 +215,8 @@ const ChatFooter: React.FC = () => {
                 return channel;
               });
             },
-            () => {
-              toast.error(tCommon("service-error"));
+            (error: any) => {
+              toast.error(error?.code || tCommon("service-error"));
               updateStart(false);
               updateFinish(false);
             }
