@@ -46,28 +46,32 @@ const useStreamDecoder = () => {
     };
 
     return new Promise(async (resolve) => {
-      while (!decoderDone) {
-        const { done, value } = await reader.read();
-        decoderDone = done;
-        const fragment = textDecoder.decode(value);
-        const checkIsError = checkFragmentError(fragment);
-        if (checkIsError) {
-          decoderDone = true;
-          return errHandler(checkIsError);
-        }
-        const check1 = checkFragment(fragment);
-        if (!check1) {
-          errorFragment += fragment;
-          const check2 = checkFragment(errorFragment);
-          if (check2) {
-            handleFragment(errorFragment);
-            errorFragment = "";
+      try {
+        while (!decoderDone) {
+          const { done, value } = await reader.read();
+          decoderDone = done;
+          const fragment = textDecoder.decode(value);
+          const checkIsError = checkFragmentError(fragment);
+          if (checkIsError) {
+            decoderDone = true;
+            return errHandler(checkIsError);
           }
-        } else {
-          if (errorFragment) errorFragment = "";
-          handleFragment(fragment);
+          const check1 = checkFragment(fragment);
+          if (!check1) {
+            errorFragment += fragment;
+            const check2 = checkFragment(errorFragment);
+            if (check2) {
+              handleFragment(errorFragment);
+              errorFragment = "";
+            }
+          } else {
+            if (errorFragment) errorFragment = "";
+            handleFragment(fragment);
+          }
+          if (decoderDone) resolve(true);
         }
-        if (decoderDone) resolve(true);
+      } catch (error) {
+        console.log(error, "stream error");
       }
     });
   };

@@ -1,8 +1,13 @@
+"use client";
+
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib";
 import Logo from "@/components/logo";
 
 const AuthVerify: React.FC = () => {
+  const t = useTranslations("auth");
+
   return (
     <div className="bg-neutral-200 fixed inset-0">
       <div
@@ -12,8 +17,8 @@ const AuthVerify: React.FC = () => {
         )}
       >
         <Logo disabled size="large" />
-        <div className="text-2xl font-medium">Check your email</div>
-        <div>A sign in link has been sent to your email address.</div>
+        <div className="text-2xl font-medium">{t("check-email")}</div>
+        <div>{t("sign-in-link")}</div>
       </div>
     </div>
   );

@@ -12,7 +12,8 @@ export interface IDropdownItems {
   type?: string;
 }
 
-interface IDropdownMenuProps {
+interface IDropdownMenuProps
+  extends Omit<React.HTMLAttributes<HTMLElement>, "content"> {
   /** A ReactNode that open the AlertDialog */
   trigger: React.ReactNode;
 
@@ -33,6 +34,7 @@ interface IDropdownMenuProps {
 const LDropdownMenu = React.forwardRef<any, IDropdownMenuProps>(
   (
     {
+      className,
       trigger,
       align = "center",
       selectable = false,
@@ -52,7 +54,8 @@ const LDropdownMenu = React.forwardRef<any, IDropdownMenuProps>(
             className={cn(
               "z-[2000] bg-white border rounded-lg p-1",
               "data-[side=top]:animate-fadeInUp data-[side=bottom]:animate-fadeInDown data-[state=closed]:animate-fadeOut",
-              "dark:bg-slate-800 dark:border-slate-200/30"
+              "dark:bg-slate-800 dark:border-slate-200/30",
+              className
             )}
           >
             {!!content && (

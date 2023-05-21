@@ -18,8 +18,6 @@ const Announcement: React.FC = () => {
 
   React.useEffect(() => {
     const announcement_version = localStorage.getItem("announcement_version");
-    console.log(version, "version");
-    console.log(announcement_version, "announcement_version");
     if (version !== announcement_version) setOpen(true);
   }, []);
 

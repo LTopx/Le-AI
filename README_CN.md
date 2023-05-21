@@ -2,8 +2,6 @@
 
 L-GPT 是一款开源项目，通过提供不同的 AI 模型来帮助你提高学习、工作、生活的效率。 [Demo](https://gpt.ltopx.com)
 
-[QQ 群](./public/screenshots/qq.jpeg)
-
 ## 预览
 
 <img src="./public/screenshots/screenshot-pc.png">

@@ -4,6 +4,18 @@
 
 > 2023-05-16
 
+### Add
+
+- Add account system
+- Adding login guidance for users who are not logged in
+- Multi-language configuration for login email sending page
+
+### Changed
+
+- UI optimization
+- Cancel response immediately when switching channels if data is being requested or generated.
+- Trying to solve: Issue of error log being reported when canceling fetch requests
+
 ## v0.3.0
 
 > 2023-05-11

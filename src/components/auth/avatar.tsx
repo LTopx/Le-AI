@@ -78,6 +78,7 @@ const Avatar: React.FC = () => {
 
   return (
     <Dropdown
+      className="min-w-[8rem]"
       align="end"
       trigger={
         user ? (
@@ -98,7 +99,7 @@ const Avatar: React.FC = () => {
           </div>
         ) : (
           <div className="absolute right-3 h-14 flex items-center">
-            <Button>{t("log-in")}</Button>
+            <Button type="primary">{t("log-in")}</Button>
           </div>
         )
       }

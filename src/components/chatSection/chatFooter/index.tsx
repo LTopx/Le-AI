@@ -1,6 +1,7 @@
 import * as React from "react";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import type { ChatItem } from "@/hooks/useChannel";
 import { AiOutlineRedo, AiOutlineClear } from "react-icons/ai";
@@ -20,6 +21,7 @@ const ChatFooter: React.FC = () => {
   const [newOpenAI] = useOpenAI();
   const [channel, setChannel] = useChannel();
   const {
+    loadingResponseStart,
     loadingResponseFinish,
     abort: chatAbort,
     updateStart,
@@ -31,11 +33,14 @@ const ChatFooter: React.FC = () => {
   // ref
   const inputRef = React.useRef<any>(null);
 
+  const router = useRouter();
+
   const t = useTranslations("chat");
   const tMenu = useTranslations("menu");
   const tPrompt = useTranslations("prompt");
   const tCommon = useTranslations("common");
   const tRes = useTranslations("responseErr");
+  const tAuth = useTranslations("auth");
   const scrollToBottom = useScrollToBottom();
   const { decoder } = useStreamDecoder();
 
@@ -102,6 +107,11 @@ const ChatFooter: React.FC = () => {
     });
     sendToGPT(chat_list);
     scrollToBottom();
+  };
+
+  const handleLogin = () => {
+    router.push("/login");
+    toast.dismiss();
   };
 
   const sendToGPT = React.useCallback(
@@ -172,6 +182,17 @@ const ChatFooter: React.FC = () => {
 
               if (streamRes.error === 10001) {
                 errorMessage = tRes("10001");
+                return toast(
+                  (t) => (
+                    <div className="flex items-center gap-2">
+                      {errorMessage}
+                      <Button type="primary" onClick={handleLogin}>
+                        {tAuth("log-in")}
+                      </Button>
+                    </div>
+                  ),
+                  { duration: 4000 }
+                );
               } else if (streamRes.error === 10002) {
                 errorMessage = tRes("10002");
               } else if (streamRes.error === 10003) {
@@ -225,7 +246,8 @@ const ChatFooter: React.FC = () => {
           // get gpt title
           if (!channel_name) getChannelNameByGPT(channel_id, channel_chat_list);
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error, "error");
           updateStart(false);
           updateFinish(false);
         });
@@ -307,6 +329,14 @@ const ChatFooter: React.FC = () => {
   };
 
   React.useEffect(() => {
+    // Cancel response immediately when switching channels if data is being requested or generated.
+    if (loadingResponseStart || loadingResponseFinish) {
+      toast.error(t("canceled"));
+      chatAbort?.abort();
+      updateStart(false);
+      updateFinish(false);
+      return;
+    }
     setInputValue("");
     inputRef.current?.reset();
     if (!isMobile()) inputRef.current?.focus();

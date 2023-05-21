@@ -4,8 +4,6 @@ English / [简体中文](./README_CN.md)
 
 L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models. [Demo](https://gpt.ltopx.com)
 
-[QQ 群](./public/screenshots/qq.jpeg)
-
 ## Preview
 
 <img src="./public/screenshots/screenshot-pc.png">
