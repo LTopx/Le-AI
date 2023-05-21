@@ -5,6 +5,7 @@ import { AiOutlineMenuUnfold, AiOutlineEdit } from "react-icons/ai";
 import { useChannel, useOpenAI, useMobileMenu } from "@/hooks";
 import Avatar from "@/components/auth/avatar";
 import ChangeTitle from "./changeTitle";
+import { LLM } from "@/utils/constant";
 
 const Navbar: React.FC = () => {
   const changeTitleRef = React.useRef<any>(null);
@@ -14,6 +15,12 @@ const Navbar: React.FC = () => {
   const [openai] = useOpenAI();
 
   const [, setMobileMenuVisible] = useMobileMenu();
+
+  const apiKey =
+    openai.openai.apiKey ||
+    openai.azure.apiKey ||
+    openai.env.OPENAI_API_KEY ||
+    openai.env.AZURE_API_KEY;
 
   const onOpenMenu = () => setMobileMenuVisible(true);
 
@@ -31,6 +38,22 @@ const Navbar: React.FC = () => {
   const activeChannel = channel.list.find(
     (item) => item.channel_id === channel.activeId
   );
+
+  const renderIcon = () => {
+    if (!activeChannel?.chat_list?.length) return null;
+
+    const icon = LLM.find(
+      (item) => item.value === activeChannel?.channel_model.type
+    )?.ico;
+
+    return (
+      (
+        <div className="absolute left-0 top-[50%] translate-y-[-50%]">
+          {icon}
+        </div>
+      ) || null
+    );
+  };
 
   return (
     <>
@@ -53,32 +76,23 @@ const Navbar: React.FC = () => {
         <div
           onClick={onChangeTitle}
           className={clsx(
-            "text-ellipsis group max-w-[50%] cursor-pointer whitespace-nowrap overflow-hidden relative",
-            {
-              "pr-6": !!(
-                openai.openai.apiKey ||
-                openai.azure.apiKey ||
-                openai.env.OPENAI_API_KEY ||
-                openai.env.AZURE_API_KEY
-              ),
-            },
-            "text-black/90",
-            "dark:text-white/90"
+            "text-ellipsis group max-w-[60%] cursor-pointer whitespace-nowrap overflow-hidden relative transition-colors",
+            { "pr-6": !!apiKey, "pl-6": !!renderIcon() },
+            "text-slate-700 hover:text-slate-900",
+            "dark:text-slate-400 dark:hover:text-slate-300"
           )}
         >
-          {openai.openai.apiKey ||
-          openai.azure.apiKey ||
-          openai.env.OPENAI_API_KEY ||
-          openai.env.AZURE_API_KEY
-            ? activeChannel?.channel_name || tMenu("new-conversation")
-            : tSetting("set-api-key")}
+          {renderIcon()}
 
-          {!!(
-            openai.openai.apiKey ||
-            openai.azure.apiKey ||
-            openai.env.OPENAI_API_KEY ||
-            openai.env.AZURE_API_KEY
-          ) && (
+          {apiKey ? (
+            <span className="group-hover:underline">
+              {activeChannel?.channel_name || tMenu("new-conversation")}
+            </span>
+          ) : (
+            tSetting("set-api-key")
+          )}
+
+          {!!apiKey && (
             <AiOutlineEdit
               size={18}
               className={clsx(

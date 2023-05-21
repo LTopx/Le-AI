@@ -46,18 +46,19 @@ const AuthForm: React.FC = () => {
       toast.success(t("auth-success"));
       router.push(res.url);
     } catch (error) {
+      setLoading(false);
       console.log(error, "login failed");
       toast.error(t("auth-failed"));
-    } finally {
-      setLoading(false);
     }
   };
 
   const onGithubLogin = async () => {
+    setLoading(true);
     await signIn("github", { redirect: false, callbackUrl: "/" });
   };
 
   const onGoogleLogin = async () => {
+    setLoading(true);
     await signIn("google", { redirect: false, callbackUrl: "/" });
   };
 
@@ -89,6 +90,7 @@ const AuthForm: React.FC = () => {
           <Button
             size="base"
             block
+            loading={loading}
             leftIcon={<AiFillGithub />}
             onClick={onGithubLogin}
           >
@@ -97,6 +99,7 @@ const AuthForm: React.FC = () => {
           <Button
             size="base"
             block
+            loading={loading}
             leftIcon={<FcGoogle />}
             onClick={onGoogleLogin}
           >

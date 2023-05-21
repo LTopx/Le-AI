@@ -2,13 +2,18 @@
 
 ## v0.4.0
 
-> 2023-05-16
+> 2023-05-21
+
+### Fixed
+
+- Fix the issue of being unable to log in when binding the same email to both GitHub and Google.
 
 ### Add
 
 - Add account system
 - Adding login guidance for users who are not logged in
 - Multi-language configuration for login email sending page
+- Display the language model currently in use on the conversation interface
 
 ### Changed
 
