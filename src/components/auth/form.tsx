@@ -54,12 +54,12 @@ const AuthForm: React.FC = () => {
 
   const onGithubLogin = async () => {
     setLoading(true);
-    await signIn("github", { redirect: false, callbackUrl: "/" });
+    await signIn("github", { callbackUrl: "/" });
   };
 
   const onGoogleLogin = async () => {
     setLoading(true);
-    await signIn("google", { redirect: false, callbackUrl: "/" });
+    await signIn("google", { callbackUrl: "/" });
   };
 
   return (

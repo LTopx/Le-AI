@@ -1,6 +1,8 @@
 import * as React from "react";
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import type { ImageLoader } from "next/image";
 import { useTranslations } from "next-intl";
 import { useDateFormat, useClipboard } from "l-hooks";
 import CopyIcon from "@/components/copyIcon";
@@ -19,21 +21,27 @@ import type { ChatItem } from "@/hooks";
 import Configure from "./configure";
 
 const ChatList: React.FC = () => {
+  const session = useSession();
   const t = useTranslations("chat");
   const { copy } = useClipboard();
   const { format } = useDateFormat();
+
+  const user = session.data?.user;
+  const imageLoader: ImageLoader = ({ src }) => {
+    return src;
+  };
 
   const [channel, setChannel] = useChannel();
   const { loadingResponseStart } = useChat();
 
   const menuOptions: ContextMenuOption[] = [
     {
-      label: "复制",
+      label: t("copy"),
       value: "copy",
       icon: <AiOutlineCopy size={18} />,
     },
     {
-      label: "删除",
+      label: t("delete"),
       value: "delete",
       icon: <AiOutlineDelete size={18} />,
     },
@@ -119,7 +127,18 @@ const ChatList: React.FC = () => {
                     "bg-black/25 dark:bg-slate-50"
                   )}
                 >
-                  <FaUserAlt className="text-white dark:text-neutral-600" />
+                  {user?.image ? (
+                    <Image
+                      className="rounded-full"
+                      loader={imageLoader}
+                      src={user.image}
+                      alt="Avatar"
+                      width={32}
+                      height={32}
+                    />
+                  ) : (
+                    <FaUserAlt className="text-white dark:text-neutral-600" />
+                  )}
                 </div>
               )}
             </div>

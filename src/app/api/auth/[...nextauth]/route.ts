@@ -57,6 +57,11 @@ export const authOptions: NextAuthOptions = {
           email: token.email,
           picture: token.picture,
         };
+      } else {
+        await prisma.user.update({
+          data: { recentlyUse: new Date() },
+          where: { id: databaseUser.id },
+        });
       }
 
       return {

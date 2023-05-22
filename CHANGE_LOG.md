@@ -4,6 +4,11 @@
 
 > 2023-05-22
 
+### Add
+
+- Record the time of user information update and last activity time
+- Keep the conversation avatar synchronized with the user avatar
+
 ### Fixed
 
 - Attempt to fix the bug "globalThis is not defined"
