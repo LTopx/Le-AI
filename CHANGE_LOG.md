@@ -1,5 +1,13 @@
 # L-GPT Change Log
 
+## v0.4.1
+
+> 2023-05-22
+
+### Fixed
+
+- Attempt to fix the bug "globalThis is not defined"
+
 ## v0.4.0
 
 > 2023-05-21
