@@ -8,6 +8,10 @@
 
 - Attempt to fix the bug "globalThis is not defined"
 
+### Changed
+
+- update readme.md
+
 ## v0.4.0
 
 > 2023-05-21
