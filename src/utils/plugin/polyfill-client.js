@@ -34,6 +34,6 @@ if (!Array.prototype.findLastIndex) {
   };
 }
 
-if (typeof globalThis === "undefined") {
-  var globalThis = Function("return this")();
-}
+var globalThis = require("globalthis")();
+
+console.log(globalThis, "globalThis啊啊啊");

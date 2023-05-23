@@ -1,4 +1,6 @@
-console.log(globalThis, "globalThis");
+var globalThis = require("globalthis")();
+
+console.log(globalThis, "globalThis啊啊啊");
 
 // if (typeof globalThis !== "object") {
 //   Object.defineProperty(Object.prototype, "_T_", {
@@ -12,7 +14,3 @@ console.log(globalThis, "globalThis");
 //   });
 //   _T_;
 // }
-
-if (typeof globalThis === "undefined") {
-  var globalThis = Function("return this")();
-}
