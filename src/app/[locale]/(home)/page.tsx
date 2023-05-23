@@ -7,8 +7,14 @@ import MobileMenu from "@/components/menu/mobile";
 import Navbar from "@/components/navbar";
 import Setting from "@/components/setting";
 import Welcome from "@/components/welcome";
+import React from "react";
+import "@/utils/plugin/polyfill";
 
 export default function Home() {
+  React.useEffect(() => {
+    console.log(window, "window1");
+  }, []);
+
   return (
     <div className="flex h-full w-full top-0 left-0 fixed">
       <Menu />

@@ -26,7 +26,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <Script src="/disableSafariScalable.js" />
-      <Script src="/polyfill.js" />
       <body className={inter.className}>
         <Providers>{children}</Providers>
         <Toaster
