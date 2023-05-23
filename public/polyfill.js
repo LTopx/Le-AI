@@ -10,6 +10,8 @@ function at(n) {
   return this[n];
 }
 
+console.log([].at, "array at");
+
 if (![].at) {
   const TypedArray = Reflect.getPrototypeOf(Int8Array);
   for (const C of [Array, String, TypedArray]) {

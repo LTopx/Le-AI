@@ -25,8 +25,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Script src="/disableSafariScalable.js" async />
-      <Script src="/polyfill.js" async />
+      <Script src="/disableSafariScalable.js" />
+      <Script src="/polyfill.js" />
       <body className={inter.className}>
         <Providers>{children}</Providers>
         <Toaster
