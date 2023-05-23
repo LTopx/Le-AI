@@ -33,3 +33,7 @@ if (!Array.prototype.findLastIndex) {
     return -1;
   };
 }
+
+if (typeof globalThis === "undefined") {
+  var globalThis = Function("return this")();
+}
