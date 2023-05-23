@@ -5,7 +5,7 @@ import * as Toast from "@radix-ui/react-toast";
 import { useTranslations } from "next-intl";
 import { AiOutlineCheck } from "react-icons/ai";
 import { cn } from "@/lib";
-import { version } from "../../../package.json";
+// import { version } from "../../../package.json";
 
 const Announcement: React.FC = () => {
   const t = useTranslations("zLog");
@@ -13,7 +13,7 @@ const Announcement: React.FC = () => {
   const [open, setOpen] = React.useState(false);
 
   const onClick = () => {
-    localStorage.setItem("announcement_version", version);
+    // localStorage.setItem("announcement_version", version);
   };
 
   React.useEffect(() => {

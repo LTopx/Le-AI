@@ -5,7 +5,6 @@ import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "react-hot-toast";
 import { Providers } from "./providers";
 import "@/styles/globals.css";
-import "@/utils/plugin/polyfill-server";
 
 interface RootLayoutProps {
   children: React.ReactNode;

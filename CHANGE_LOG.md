@@ -12,6 +12,7 @@
 ### Fixed
 
 - Attempt to fix the bug "globalThis is not defined"
+- Adjust the import position of the polyfill file to solve the problem of its ineffectiveness.
 
 ### Changed
 

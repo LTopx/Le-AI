@@ -33,7 +33,3 @@ if (!Array.prototype.findLastIndex) {
     return -1;
   };
 }
-
-var globalThis = require("globalthis")();
-
-console.log(globalThis, "globalThis啊啊啊");

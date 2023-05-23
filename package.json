@@ -37,7 +37,6 @@
     "eslint-config-next": "13.4.3",
     "file-saver": "2.0.5",
     "framer-motion": "10.12.12",
-    "globalthis": "^1.0.3",
     "l-hooks": "0.4.5",
     "math-random": "2.0.1",
     "next": "13.4.3",
