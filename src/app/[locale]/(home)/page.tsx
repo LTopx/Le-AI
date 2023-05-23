@@ -8,7 +8,7 @@ import Navbar from "@/components/navbar";
 import Setting from "@/components/setting";
 import Welcome from "@/components/welcome";
 import React from "react";
-import "@/utils/plugin/polyfill";
+import "@/utils/plugin/polyfill-client";
 
 export default function Home() {
   React.useEffect(() => {
