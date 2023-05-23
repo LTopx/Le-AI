@@ -8,6 +8,7 @@
 
 - Record the time of user information update and last activity time
 - Keep the conversation avatar synchronized with the user avatar
+- Support custom avatars
 
 ### Fixed
 
@@ -17,6 +18,7 @@
 ### Changed
 
 - update readme.md
+- Adjust and optimize the prompt for generating conversation titles. It can now better generate titles related to the conversation.
 
 ## v0.4.0
 

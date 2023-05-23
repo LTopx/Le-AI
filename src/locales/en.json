@@ -3,6 +3,7 @@
     "account": "Account",
     "account-tip": "Set up account basic information",
     "avatar": "Avatar",
+    "avatar-placeholder": "Please enter your avatar URL here",
     "email": "Email",
     "email-placeholder": "Please enter your email address",
     "name": "Name",
@@ -72,7 +73,7 @@
     "rename-conversation": "Rename Conversation"
   },
   "prompt": {
-    "get-title": "Give this dialogue a title. Only return the text of the title, no need to add any other embellishments. It should not exceed 20 words.",
+    "get-title": "What would be a short and relevant title for this chat? You must strictly answer with only the title, no other text is allowed.",
     "model": "Model"
   },
   "responseErr": {

@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email;
-        session.user.picture = token.picture;
+        session.user.image = token.image;
       }
       return session;
     },
@@ -55,7 +55,7 @@ export const authOptions: NextAuthOptions = {
           id: user?.id || token?.id || "",
           name: token.name,
           email: token.email,
-          picture: token.picture,
+          image: token.image,
         };
       } else {
         await prisma.user.update({
@@ -68,7 +68,7 @@ export const authOptions: NextAuthOptions = {
         id: databaseUser.id,
         name: databaseUser.name,
         email: databaseUser.email,
-        picture: databaseUser.image,
+        image: databaseUser.image,
       };
     },
     async redirect({ url, baseUrl }) {
