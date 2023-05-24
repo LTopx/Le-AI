@@ -1,6 +1,6 @@
 {
   "name": "l-gpt",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,6 +13,7 @@
     "db-push": "prisma db push"
   },
   "dependencies": {
+    "@dqbd/tiktoken": "^1.0.7",
     "@emotion/css": "11.11.0",
     "@next-auth/prisma-adapter": "1.0.6",
     "@prisma/client": "4.14.1",
@@ -36,7 +37,8 @@
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
     "file-saver": "2.0.5",
-    "framer-motion": "10.12.13",
+    "framer-motion": "10.12.16",
+    "gpt-tokens": "^1.0.7",
     "l-hooks": "0.4.5",
     "math-random": "2.0.1",
     "next": "13.4.3",

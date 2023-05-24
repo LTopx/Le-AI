@@ -55,6 +55,8 @@ const MobileMenu: React.FC = () => {
           name: LLM[0].models[0].value,
         },
         channel_prompt: "",
+        channel_tokens: 0,
+        channel_usd: 0,
         chat_list: [],
       });
       channel.activeId = channel_id;

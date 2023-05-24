@@ -114,6 +114,29 @@ const ChatFooter: React.FC = () => {
     toast.dismiss();
   };
 
+  // calc current conversation token
+  const calcToken = (message_list: ChatItem[], model: string) => {
+    fetch("/api/tokens", {
+      method: "post",
+      body: JSON.stringify({ message_list, model }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const { usedTokens, usedUSD } = res.data;
+        setChannel((channel) => {
+          const { list, activeId } = channel;
+          const findChannel = list.find((item) => item.channel_id === activeId);
+          if (!findChannel) return channel;
+          // Compatibility handling
+          if (!findChannel.channel_tokens) findChannel.channel_tokens = 0;
+          if (!findChannel.channel_usd) findChannel.channel_usd = 0;
+          findChannel.channel_tokens += usedTokens;
+          findChannel.channel_usd += usedUSD;
+          return channel;
+        });
+      });
+  };
+
   const sendToGPT = React.useCallback(
     (chat_list: ChatItem[]) => {
       const modelType: any = findChannel?.channel_model.type;
@@ -243,6 +266,9 @@ const ChatFooter: React.FC = () => {
             }
           );
           updateFinish(false);
+          // calc current conversation token
+          calcToken(channel_chat_list, params.model);
+
           // get gpt title
           if (!channel_name) getChannelNameByGPT(channel_id, channel_chat_list);
         })
@@ -298,7 +324,7 @@ const ChatFooter: React.FC = () => {
       body: JSON.stringify(params),
     }).then(async (response) => {
       if (!response.ok || !response.body) return;
-      decoder(
+      await decoder(
         response.body.getReader(),
         (content: string) => {
           setChannel((channel) => {
@@ -312,6 +338,7 @@ const ChatFooter: React.FC = () => {
           toast.error(tCommon("service-error"));
         }
       );
+      calcToken(params.chat_list, params.model);
     });
   };
 
@@ -324,6 +351,8 @@ const ChatFooter: React.FC = () => {
       findChannel.chat_list = [];
       findChannel.channel_name = "";
       findChannel.channel_prompt = "";
+      findChannel.channel_tokens = 0;
+      findChannel.channel_usd = 0;
       return channel;
     });
   };

@@ -6,7 +6,6 @@ import type { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
-import type { ImageLoader } from "next/image";
 import { AiOutlineUser } from "react-icons/ai";
 import { BiUser, BiLogOut, BiLogIn } from "react-icons/bi";
 import { HiOutlineDocumentText } from "react-icons/hi";
@@ -21,10 +20,6 @@ const Avatar: React.FC = () => {
   const t = useTranslations("auth");
 
   const user = session.data?.user;
-
-  const imageLoader: ImageLoader = ({ src }) => {
-    return src;
-  };
 
   const getMenus = (session: Session | null): IDropdownItems[] => {
     let baseMenus = [
@@ -91,7 +86,6 @@ const Avatar: React.FC = () => {
             {user.image ? (
               <Image
                 className="rounded-full"
-                loader={imageLoader}
                 src={user.image}
                 alt="Avatar"
                 width={32}

@@ -130,7 +130,6 @@ const ChatList: React.FC = () => {
                   {user?.image ? (
                     <Image
                       className="rounded-full"
-                      loader={imageLoader}
                       src={user.image}
                       alt="Avatar"
                       width={32}

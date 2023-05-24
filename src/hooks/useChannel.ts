@@ -28,6 +28,8 @@ export interface ChannelListItem {
   channel_name: string;
   channel_model: ChannelModel;
   channel_prompt: string;
+  channel_tokens: number;
+  channel_usd: number;
   chat_list: ChatItem[];
 }
 
@@ -83,6 +85,8 @@ export const initChannelList: ChannelListItem[] = [
       name: LLM[0].models[0].value,
     },
     channel_prompt: "",
+    channel_tokens: 0,
+    channel_usd: 0,
     chat_list: [],
   },
 ];
@@ -104,6 +108,8 @@ const getInitChannelList = () => {
             };
             item.channel_prompt = "";
           }
+          if (!item.channel_tokens) item.channel_tokens = 0;
+          if (!item.channel_usd) item.channel_usd = 0;
           return item;
         }
       );

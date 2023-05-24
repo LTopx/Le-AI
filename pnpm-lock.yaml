@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@dqbd/tiktoken':
+    specifier: ^1.0.7
+    version: 1.0.7
   '@emotion/css':
     specifier: 11.11.0
     version: 11.11.0
@@ -71,8 +74,11 @@ dependencies:
     specifier: 2.0.5
     version: 2.0.5
   framer-motion:
-    specifier: 10.12.13
-    version: 10.12.13(react-dom@18.2.0)(react@18.2.0)
+    specifier: 10.12.16
+    version: 10.12.16(react-dom@18.2.0)(react@18.2.0)
+  gpt-tokens:
+    specifier: ^1.0.7
+    version: 1.0.7
   l-hooks:
     specifier: 0.4.5
     version: 0.4.5(@types/qs@6.9.7)(qs@6.11.1)(react-dom@18.2.0)(react@18.2.0)
@@ -1450,6 +1456,10 @@ packages:
       '@babel/helper-string-parser': 7.21.5
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
+    dev: false
+
+  /@dqbd/tiktoken@1.0.7:
+    resolution: {integrity: sha512-bhR5k5W+8GLzysjk8zTMVygQZsgvf7W1F0IlL4ZQ5ugjo5rCyiwGM5d8DYriXspytfu98tv59niang3/T+FoDw==}
     dev: false
 
   /@emotion/babel-plugin@11.11.0:
@@ -3464,6 +3474,10 @@ packages:
       ms: 2.1.2
     dev: false
 
+  /decimal.js@10.4.3:
+    resolution: {integrity: sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA==}
+    dev: false
+
   /decode-named-character-reference@1.0.2:
     resolution: {integrity: sha512-O8x12RzrUF8xyVcY0KJowWsmaJxQbmy0/EtnNtHRpsOcT7dFk5W598coHqBVpmWo1oQQfsCqfCmkZN5DJrZVdg==}
     dependencies:
@@ -4134,8 +4148,8 @@ packages:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
     dev: false
 
-  /framer-motion@10.12.13(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-JczRkFlu1ayXetPkUSoaUmoaK0+PsSHAnb25UFGiJeT2hTsX6IKwC+l0/rJYn+HdyzNbudWFKjeeNSHcykPI4Q==}
+  /framer-motion@10.12.16(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-w/SfWEIWJkYSgRHYBmln7EhcNo31ao8Xexol8lGXf1pR/tlnBtf1HcxoUmEiEh6pacB4/geku5ami53AAQWHMQ==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -4323,6 +4337,13 @@ packages:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
     dependencies:
       get-intrinsic: 1.2.0
+    dev: false
+
+  /gpt-tokens@1.0.7:
+    resolution: {integrity: sha512-5XANnpcOZjiSL0HA0G4BSuyTfEP6N+oPbCIr8ICL1l+ftiIq/7Y9sCA83U/KxETxVAc6pQPgEIyNK/PGuLcFwA==}
+    dependencies:
+      '@dqbd/tiktoken': 1.0.7
+      decimal.js: 10.4.3
     dev: false
 
   /graceful-fs@4.2.11:

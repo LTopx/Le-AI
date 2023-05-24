@@ -1,5 +1,13 @@
 # L-GPT Change Log
 
+## v0.4.2
+
+> 2023-05-24
+
+### Add
+
+- Add a feature to count conversation fees and allow users to view the current amount of USD or tokens consumed during the conversation.
+
 ## v0.4.1
 
 > 2023-05-22
