@@ -1,5 +1,6 @@
 import Decimal from "decimal.js";
-import { Tiktoken, encoding_for_model, get_encoding } from "tiktoken";
+// import { encoding_for_model, get_encoding } from "tiktoken";
+import { Tiktoken, getEncoding, encodingForModel } from "js-tiktoken";
 
 /**
  * This is a port of the Python code from
@@ -212,11 +213,11 @@ export class GPTTokens {
     let num_tokens = 0;
 
     try {
-      encoding = encoding_for_model(model);
+      encoding = encodingForModel(model);
     } catch (e) {
       this.warning("model not found. Using cl100k_base encoding.");
 
-      encoding = get_encoding("cl100k_base");
+      encoding = getEncoding("cl100k_base");
     }
 
     if (model === "gpt-3.5-turbo-0301") {
@@ -242,7 +243,7 @@ export class GPTTokens {
     }
 
     // Supplementary
-    encoding.free();
+    // encoding.free();
 
     return num_tokens + 3;
   }
