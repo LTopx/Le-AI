@@ -23,7 +23,7 @@ const CopyIcon: React.FC<React.HTMLAttributes<HTMLElement>> = ({
       {copySuccess ? (
         <AiOutlineCheck className="text-[#52c41a]" size={18} />
       ) : (
-        <AiOutlineCopy size={18} />
+        <AiOutlineCopy className="cursor-pointer" size={18} />
       )}
     </div>
   );

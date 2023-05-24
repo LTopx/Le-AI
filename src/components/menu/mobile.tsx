@@ -10,6 +10,7 @@ import {
 } from "react-icons/ai";
 import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
 import { HiLightBulb, HiOutlineTranslate } from "react-icons/hi";
+import { RiFeedbackLine } from "react-icons/ri";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
 import Drawer from "@/components/ui/Drawer";
@@ -215,7 +216,7 @@ const MobileMenu: React.FC = () => {
             </div>
           ))}
         </div>
-        <div className="h-[6rem] flex flex-col border-t gap-1 pt-1">
+        <div className="h-[9rem] flex flex-col border-t gap-1 pt-1">
           <Confirm
             title={t("clear-all-conversation")}
             content={t("clear-conversation")}
@@ -232,6 +233,17 @@ const MobileMenu: React.FC = () => {
             }
             onOk={onChannelClear}
           />
+          <a
+            className={cn(
+              "h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors",
+              "hover:bg-gray-200/60 text-black/90",
+              "dark:hover:bg-slate-700/70 dark:text-white/90"
+            )}
+            href="https://support.qq.com/products/594669"
+            target="_blank"
+          >
+            <RiFeedbackLine size={16} /> {t("feedback")}
+          </a>
           <div className="h-11 items-center justify-center flex">
             <div className="flex-1 flex justify-center">
               <div

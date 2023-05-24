@@ -1,5 +1,4 @@
 import Decimal from "decimal.js";
-// import { encoding_for_model, get_encoding } from "tiktoken";
 import { Tiktoken, getEncoding, encodingForModel } from "js-tiktoken";
 
 /**
@@ -241,9 +240,6 @@ export class GPTTokens {
         }
       }
     }
-
-    // Supplementary
-    // encoding.free();
 
     return num_tokens + 3;
   }

@@ -10,6 +10,7 @@ import {
 } from "react-icons/ai";
 import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
 import { HiLightBulb, HiOutlineTranslate } from "react-icons/hi";
+import { RiFeedbackLine } from "react-icons/ri";
 import { useDateFormat } from "l-hooks";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
@@ -168,7 +169,7 @@ const Menu: React.FC = () => {
       >
         {t("new-chat")}
       </Button>
-      <div className="h-[calc(100vh-13.75rem)] overflow-y-auto">
+      <div className="h-[calc(100vh-16.75rem)] overflow-y-auto">
         {channel.list.map((item) => (
           <ContextMenu
             key={item.channel_id}
@@ -243,7 +244,7 @@ const Menu: React.FC = () => {
           </ContextMenu>
         ))}
       </div>
-      <div className="border-t flex flex-col h-[6.25rem] pt-2 gap-1 dark:border-white/20">
+      <div className="border-t flex flex-col h-[9.25rem] pt-2 gap-1 dark:border-white/20">
         <Confirm
           title={t("clear-all-conversation")}
           content={t("clear-conversation")}
@@ -259,6 +260,16 @@ const Menu: React.FC = () => {
           }
           onOk={onChannelClear}
         />
+        <a
+          className={cn(
+            "hover:bg-gray-200/60 h-11 rounded-lg transition-colors text-sm cursor-pointer flex items-center gap-2 px-2",
+            "dark:hover:bg-slate-700/70"
+          )}
+          href="https://support.qq.com/products/594669"
+          target="_blank"
+        >
+          <RiFeedbackLine size={16} /> {t("feedback")}
+        </a>
         <div className="flex h-11 items-center justify-center">
           <div className="flex flex-1 justify-center">
             <div

@@ -15,6 +15,8 @@ import Textarea from "@/components/ui/Textarea";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
 import { isMobile, getReadableStream } from "@/lib";
 import { PROMPT_BASE } from "@/prompt";
+import { GPTTokens } from "@/lib/gpt-tokens";
+import type { supportModelType } from "@/lib/gpt-tokens";
 
 const ChatFooter: React.FC = () => {
   // data
@@ -116,25 +118,31 @@ const ChatFooter: React.FC = () => {
 
   // calc current conversation token
   const calcToken = (message_list: ChatItem[], model: string) => {
-    fetch("/api/tokens", {
-      method: "post",
-      body: JSON.stringify({ message_list, model }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const { usedTokens, usedUSD } = res.data;
-        setChannel((channel) => {
-          const { list, activeId } = channel;
-          const findChannel = list.find((item) => item.channel_id === activeId);
-          if (!findChannel) return channel;
-          // Compatibility handling
-          if (!findChannel.channel_tokens) findChannel.channel_tokens = 0;
-          if (!findChannel.channel_usd) findChannel.channel_usd = 0;
-          findChannel.channel_tokens += usedTokens;
-          findChannel.channel_usd += usedUSD;
-          return channel;
-        });
-      });
+    let calcModel = model === "lgpt-35-turbo" ? "gpt-3.5-turbo" : model;
+
+    const tokenInfo = new GPTTokens({
+      model: calcModel as supportModelType,
+      messages: message_list.map((item) => ({
+        role: item.role,
+        content: item.content,
+      })),
+    });
+
+    const { usedTokens, usedUSD } = tokenInfo;
+
+    setChannel((channel) => {
+      const { list, activeId } = channel;
+      const findChannel = list.find((item) => item.channel_id === activeId);
+      if (!findChannel) return channel;
+      // Compatibility handling
+      if (!findChannel.channel_tokens) findChannel.channel_tokens = 0;
+      if (!findChannel.channel_usd) findChannel.channel_usd = 0;
+      findChannel.channel_tokens += usedTokens;
+      findChannel.channel_usd += usedUSD;
+      findChannel.channel_tokens = parseInt(findChannel.channel_tokens as any);
+      findChannel.channel_usd = Number(findChannel.channel_usd.toFixed(5));
+      return channel;
+    });
   };
 
   const sendToGPT = React.useCallback(

@@ -63,6 +63,7 @@
     "delete": "Delete",
     "delete-this-conversation": "Delete conversation",
     "delete-conversation": "Are you sure delete this conversation?",
+    "feedback": "Issue Feedback / Discussion",
     "messages": "messages",
     "new-chat": "New Chat",
     "new-conversation": "New Conversation",
@@ -99,6 +100,22 @@
     "temperature": "Temperature",
     "temperature-tip": "Higher values will make the output more random, while lower values will make the output more focused and more deterministic.",
     "title": "L-GPT Setting"
+  },
+  "token": {
+    "conversation-cost": "Conversation cost",
+    "how-token-work": "How does Token work?",
+    "how-token-work-1": "It is calculated according to the rules of each language model based on the total length of the current session content.",
+    "how-token-work-2": "When the conversation reaches a certain length, you will no longer be able to add any more messages to the conversation. This is a contextual limit on the conversation content of each language model.",
+    "how-token-work-3": "For example, GPT-3.5 allows a maximum of 4,096 tokens per session. GPT-4 allows a maximum of 8,192 tokens per session in its 8K model, and a maximum of 32,768 tokens in its 32K model. The context length limit may increase for various language models in the future.",
+    "how-token-work-4": "If the current conversation reaches the context limit, you can delete some of the conversation content or start a new conversation to continue chatting.",
+    "how-to-cost": "How to cost?",
+    "how-to-cost-1": "Any content related to a chat conversation will incur conversation costs.",
+    "how-to-cost-2-1": "All costs are \"estimated values\" calculated by",
+    "how-to-cost-2-2": ".",
+    "how-to-cost-3": "Each language model has its own pricing, and the corresponding official website has a detailed description of the pricing.",
+    "know-more": "Click here to learn more about OpenAI models, tokens, and context limits.",
+    "token-desc": "Tokens are the basic unit that LLM models use to compute the length of a text. They are groups of characters, which sometimes align with words, but not always. In particular, it depends on the number of characters and includes punctuation signs or emojis.",
+    "what-is-token": "What is a Token?"
   },
   "welcome": {
     "apply-azure-key": "If you don't have an Azure OpenAI API Key, you can get one here:",

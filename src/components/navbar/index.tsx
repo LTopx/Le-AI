@@ -5,10 +5,12 @@ import { AiOutlineMenuUnfold, AiOutlineEdit } from "react-icons/ai";
 import { useChannel, useOpenAI, useMobileMenu } from "@/hooks";
 import Avatar from "@/components/auth/avatar";
 import ChangeTitle from "./changeTitle";
+import Token from "./token";
 import { LLM } from "@/utils/constant";
 
 const Navbar: React.FC = () => {
   const changeTitleRef = React.useRef<any>(null);
+  const tokenRef = React.useRef<any>(null);
   const tMenu = useTranslations("menu");
   const tSetting = useTranslations("setting");
   const [channel] = useChannel();
@@ -34,6 +36,8 @@ const Navbar: React.FC = () => {
       return;
     changeTitleRef.current?.init();
   };
+
+  const onCheckToken = () => tokenRef.current?.init();
 
   const activeChannel = channel.list.find(
     (item) => item.channel_id === channel.activeId
@@ -106,13 +110,17 @@ const Navbar: React.FC = () => {
           </div>
           {!!activeChannel?.channel_usd && (
             <div
+              onClick={onCheckToken}
               className={cn(
                 "text-xs absolute text-neutral-400 transition-colors left-[50%] translate-x-[-50%] bottom-1 px-2.5 py-0.5 rounded-full",
-                "hover:bg-neutral-200 hover:text-neutral-900"
+                "hover:bg-neutral-200 hover:text-neutral-900",
+                "dark:hover:bg-neutral-600 dark:hover:text-neutral-200"
               )}
             >
-              <div className="cursor-pointer select-none">
-                ${activeChannel.channel_usd}
+              <div className="cursor-pointer select-none whitespace-nowrap">
+                <span>${activeChannel.channel_usd}</span>
+                <span> / </span>
+                <span>{`${activeChannel.channel_tokens} Tokens`}</span>
               </div>
             </div>
           )}
@@ -121,6 +129,7 @@ const Navbar: React.FC = () => {
         <Avatar />
       </div>
       <ChangeTitle ref={changeTitleRef} />
+      <Token ref={tokenRef} />
     </>
   );
 };

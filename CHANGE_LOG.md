@@ -7,6 +7,12 @@
 ### Add
 
 - Add a feature to count conversation fees and allow users to view the current amount of USD or tokens consumed during the conversation.
+- Improve Token and session introduction
+- Access the Help and Feedback Platform at support.qq.com
+
+### Changed
+
+- Optimize the copy and delete UI of the conversation list to simplify the operation steps.
 
 ## v0.4.1
 

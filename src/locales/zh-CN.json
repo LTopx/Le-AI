@@ -63,6 +63,7 @@
     "delete": "删除",
     "delete-this-conversation": "删除会话",
     "delete-conversation": "你确认删除该会话?",
+    "feedback": "问题反馈 / 讨论",
     "messages": "条会话",
     "new-chat": "新建会话",
     "new-conversation": "新会话",
@@ -99,6 +100,22 @@
     "temperature": "随机性",
     "temperature-tip": "较高的数值会使输出更随机，而较低的数值会使输出更加聚焦和确定性更强。",
     "title": "L-GPT 设置"
+  },
+  "token": {
+    "conversation-cost": "会话成本",
+    "how-token-work": "Token 如何工作?",
+    "how-token-work-1": "是根据当前会话内容的总长度，按照各个语言模型的规则计算得出。",
+    "how-token-work-2": "当会话内容达到一定长度时，您将无法再向会话中添加任何消息。这是各个语言模型自身的会话内容上下文限制。",
+    "how-token-work-3": "例如GPT-3.5每个会话最多允许使用 4,096 个tokens。GPT-4在8K模型中每个会话最多允许使用 8,192 个tokens，而在32K模型中最多允许使用 32,768 个标记。各个语言模型未来可能会增加上下文长度限制。",
+    "how-token-work-4": "如果当前会话达到上下文限制，您可以删除一些会话内容或者新建一个会话继续聊天。",
+    "how-to-cost": "会话成本如何计算?",
+    "how-to-cost-1": "与聊天会话相关的内容都会产生会话成本。",
+    "how-to-cost-2-1": "所有成本均为“估算值”，是通过",
+    "how-to-cost-2-2": "计算而来。",
+    "how-to-cost-3": "不同的语言模型都有自己的定价，对应官网都有关于定价的详细描述。",
+    "know-more": "点此了解更多关于OpenAI模型、Token和上下文限制相关的信息。",
+    "token-desc": "Token 是LLM模型用于计算文本长度的基本单位。它们是字符组，有时与单词对齐，但不总是。特别是，它取决于字符数，包括标点符号或表情符号。",
+    "what-is-token": "什么是 Token?"
   },
   "welcome": {
     "apply-azure-key": "如果您没有 Azure OpenAI API Key, 可以点击此处申请:",
