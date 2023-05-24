@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import type { ChatItem } from "@/hooks/useChannel";
-import { GPTTokens } from "gpt-tokens";
-import type { supportModelType } from "gpt-tokens";
+// import { GPTTokens } from "gpt-tokens";
+// import type { supportModelType } from "gpt-tokens";
+import { GPTTokens } from "@/lib/gpt-tokens";
+import type { supportModelType } from "@/lib/gpt-tokens";
 
 /**
  * gpt-tokens Support Models
