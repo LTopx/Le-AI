@@ -263,7 +263,8 @@ const Menu: React.FC = () => {
         <a
           className={cn(
             "hover:bg-gray-200/60 h-11 rounded-lg transition-colors text-sm cursor-pointer flex items-center gap-2 px-2",
-            "dark:hover:bg-slate-700/70"
+            "dark:hover:bg-slate-700/70",
+            "text-rose-700 dark:text-rose-500"
           )}
           href="https://support.qq.com/products/594669"
           target="_blank"

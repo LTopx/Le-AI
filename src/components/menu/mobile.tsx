@@ -237,7 +237,8 @@ const MobileMenu: React.FC = () => {
             className={cn(
               "h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors",
               "hover:bg-gray-200/60 text-black/90",
-              "dark:hover:bg-slate-700/70 dark:text-white/90"
+              "dark:hover:bg-slate-700/70 dark:text-white/90",
+              "text-rose-700 dark:text-rose-500"
             )}
             href="https://support.qq.com/products/594669"
             target="_blank"
