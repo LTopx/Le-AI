@@ -130,9 +130,11 @@
     "welcome": "Welcome to"
   },
   "zLog": {
-    "title": "Project Release Announcement v0.4.0",
-    "text1": "Since the project was launched, I have been using my personal API Key (no need to configure additional keys). As the number of users increased, it became a bit difficult. Therefore, in the previous version, the key was replaced with a free key that is not bound to a credit card.",
-    "text2": "OpenAI's free API key has a very strict call frequency limit of only 3 calls per minute, which is clearly insufficient to meet the demands.",
-    "text3": "Therefore, this version includes an account system. You can configure your own API Key without logging in, and after logging in, you can enjoy free and more stable services."
+    "title": "Hot update for version v0.4.2 🔥🔥",
+    "text1": "Added display session token billing, supporting custom avatars",
+    "text2": "Added support for switching between Enter and Command+Enter (Mac)/Ctrl+Enter (Windows) input methods",
+    "text3": "Added support for clicking on session title to modify current session configuration",
+    "text4": "UI/UX adjustments",
+    "text5": "Numerous bug fixes"
   }
 }

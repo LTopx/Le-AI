@@ -5,7 +5,7 @@ import * as Toast from "@radix-ui/react-toast";
 import { useTranslations } from "next-intl";
 import { AiOutlineCheck } from "react-icons/ai";
 import { cn } from "@/lib";
-// import { version } from "../../../package.json";
+import pkg from "../../../package.json";
 
 const Announcement: React.FC = () => {
   const t = useTranslations("zLog");
@@ -13,12 +13,12 @@ const Announcement: React.FC = () => {
   const [open, setOpen] = React.useState(false);
 
   const onClick = () => {
-    // localStorage.setItem("announcement_version", version);
+    localStorage.setItem("announcement_version", pkg.version);
   };
 
   React.useEffect(() => {
-    // const announcement_version = localStorage.getItem("announcement_version");
-    // if (version !== announcement_version) setOpen(true);
+    const announcement_version = localStorage.getItem("announcement_version");
+    if (pkg.version !== announcement_version) setOpen(true);
   }, []);
 
   return (
@@ -32,12 +32,14 @@ const Announcement: React.FC = () => {
         <Toast.Title className="mb-[5px] font-medium text-lg">
           {t("title")}
         </Toast.Title>
-        <Toast.Description asChild className="mb-4">
-          <div className="text-sm flex flex-col gap-2">
-            <div>{t("text1")}</div>
-            <div>{t("text2")}</div>
-            <div>{t("text3")}</div>
-          </div>
+        <Toast.Description asChild className="mb-4 pl-4 text-sm">
+          <ul className="list-disc space-y-2 text-black/80 dark:text-white/80">
+            <li>{t("text1")}</li>
+            <li>{t("text2")}</li>
+            <li>{t("text3")}</li>
+            <li>{t("text4")}</li>
+            <li>{t("text5")}</li>
+          </ul>
         </Toast.Description>
         <Toast.Action asChild altText="Check">
           <button
