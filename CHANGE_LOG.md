@@ -2,13 +2,14 @@
 
 ## v0.4.2
 
-> 2023-05-24
+> 2023-05-25
 
 ### Add
 
 - Add a feature to count conversation fees and allow users to view the current amount of USD or tokens consumed during the conversation.
 - Improve Token and session introduction
 - Access the Help and Feedback Platform at support.qq.com
+- Added the ability to switch between using Enter and Command+Enter (Mac)/Ctrl+Enter (Windows) for inputting information.
 
 ### Changed
 

@@ -48,7 +48,10 @@
     "enter-message": "请输入会话内容",
     "re-generate": "重新生成",
     "stop-generate": "停止生成",
-    "type-message": "请输入聊天内容（Enter发送）",
+    "type-message": "请输入聊天内容",
+    "type-message-commandEnter": "请输入聊天内容（Command + Enter发送，可在设置中心修改）",
+    "type-message-ctrlEnter": "请输入聊天内容（Ctrl + Enter发送，可在设置中心修改）",
+    "type-message-enter": "请输入聊天内容（Enter发送，可在设置中心修改）",
     "undo": "撤销"
   },
   "common": {
@@ -93,6 +96,7 @@
     "reset-data": "重置数据",
     "reset-data-tip": "你确认重置所有数据？（包括聊天数据和设置数据）",
     "resource-name": "资源名称",
+    "send-message": "发送消息",
     "set-api-key": "请配置 API Key",
     "set-api-proxy": "请配置 API 代理地址",
     "set-resource-name": "请配置资源名称",

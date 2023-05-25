@@ -2,7 +2,8 @@ import * as React from "react";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { AiOutlineSend, AiOutlineLoading } from "react-icons/ai";
-import { useChat } from "@/hooks";
+import { useChat, useConfig } from "@/hooks";
+import { isMobile, getPlatform } from "@/lib";
 
 export interface TextAreaProps {
   className?: string | undefined;
@@ -23,14 +24,14 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
 
     const t = useTranslations("chat");
     const { loadingResponseFinish } = useChat();
+    const [config] = useConfig();
 
     // data
     const [isFocus, setIsFocus] = React.useState<boolean>(false);
+    const [placeholder, setPlaceholder] = React.useState<string>("");
 
     // ref
     const inputRef = React.useRef<any>(null);
-
-    const placeholder = t("type-message");
 
     const onInput = () => {
       inputRef.current.style.height = "auto";
@@ -43,9 +44,44 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     };
 
     const onKeyDown = (e: any) => {
-      if (e.keyCode === 13 && !e.shiftKey) {
-        e.preventDefault();
-        onSubmit();
+      const isMobileDevice = isMobile();
+      const { sendMessageType } = config;
+      const platform = getPlatform();
+
+      if (isMobileDevice) {
+        if (sendMessageType === "Enter") {
+          if (e.keyCode === 13) {
+            e.preventDefault();
+            onSubmit();
+          }
+        }
+      } else {
+        // We need to differentiate between Windows and Mac.
+        if (sendMessageType === "Enter") {
+          if (platform === "mac") {
+            if (e.keyCode === 13 && !e.shiftKey) {
+              e.preventDefault();
+              onSubmit();
+            }
+          } else if (platform === "windows") {
+            if ((e.keyCode === 13 || e.keyCode === 10) && !e.shiftKey) {
+              e.preventDefault();
+              onSubmit();
+            }
+          }
+        } else if (sendMessageType === "CommandEnter") {
+          if (platform === "mac") {
+            if (e.keyCode === 13 && e.metaKey) {
+              e.preventDefault();
+              onSubmit();
+            }
+          } else if (platform === "windows") {
+            if ((e.keyCode === 13 || e.keyCode === 10) && e.ctrlKey) {
+              e.preventDefault();
+              onSubmit();
+            }
+          }
+        }
       }
     };
 
@@ -61,6 +97,21 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
         onInput();
       },
     }));
+
+    React.useEffect(() => {
+      const isMobileDevice = isMobile();
+      const platform = getPlatform();
+      if (isMobileDevice) return setPlaceholder(t("type-message"));
+      if (config.sendMessageType === "CommandEnter") {
+        if (platform === "windows") {
+          setPlaceholder(t("type-message-ctrlEnter"));
+        } else if (platform === "mac") {
+          setPlaceholder(t("type-message-commandEnter"));
+        }
+      } else if (config.sendMessageType === "Enter") {
+        setPlaceholder(t("type-message-enter"));
+      }
+    }, [config.sendMessageType]);
 
     return (
       <div

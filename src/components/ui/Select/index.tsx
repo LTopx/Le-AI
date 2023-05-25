@@ -14,7 +14,7 @@ type OptionsChildren = {
 };
 
 type Options = {
-  label: string;
+  label: React.ReactNode;
   value: any;
   children?: OptionsChildren[];
 };

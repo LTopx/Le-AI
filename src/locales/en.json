@@ -48,7 +48,10 @@
     "enter-message": "Please enter a message",
     "re-generate": "Regenerate response",
     "stop-generate": "Stop Generating",
-    "type-message": "Type a message...",
+    "type-message": "Type message here...",
+    "type-message-commandEnter": "Type message here... (send with Command + Enter, can be modified in Settings)",
+    "type-message-ctrlEnter": "Type message here... (send with Ctrl + Enter, can be modified in Settings)",
+    "type-message-enter": "Type message here... (send with Enter, can be modified in Settings)",
     "undo": "undo"
   },
   "common": {
@@ -93,6 +96,7 @@
     "reset-data": "Reset Data",
     "reset-data-tip": "Are you sure you want to reset all data? (Including chat and settings data)",
     "resource-name": "Resource Name",
+    "send-message": "Send messages",
     "set-api-key": "Configure API Key",
     "set-api-proxy": "Configure API Proxy",
     "set-resource-name": "Configure Resource Name",
