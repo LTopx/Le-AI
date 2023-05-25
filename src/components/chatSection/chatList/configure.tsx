@@ -22,9 +22,8 @@ const Configure: React.FC = () => {
   const [isShow, setIsShow] = React.useState(true);
 
   const { findChannel, options } = React.useMemo(() => {
-    const findChannel = channel.list.find(
-      (item) => item.channel_id === channel.activeId
-    );
+    const { list, activeId } = channel;
+    const findChannel = list.find((item) => item.channel_id === activeId);
     const options =
       LLM.find((item) => item.value === findChannel?.channel_model.type)
         ?.models || [];

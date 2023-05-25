@@ -33,5 +33,11 @@ export async function POST(request: Request) {
     where: { id: userId },
   });
 
+  // update recently use
+  await prisma.user.update({
+    data: { recentlyUse: new Date() },
+    where: { id: userId },
+  });
+
   return NextResponse.json({ error: 0 }, { status: 200 });
 }

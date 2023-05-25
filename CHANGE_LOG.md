@@ -4,16 +4,23 @@
 
 > 2023-05-25
 
+### Fixed
+
+- Fix the bug of frequent database queries in session callback
+
 ### Add
 
 - Add a feature to count conversation fees and allow users to view the current amount of USD or tokens consumed during the conversation.
 - Improve Token and session introduction
 - Access the Help and Feedback Platform at support.qq.com
 - Added the ability to switch between using Enter and Command+Enter (Mac)/Ctrl+Enter (Windows) for inputting information.
+- Display the current application version in the menu
+- Click on the session title to modify the current session configuration
 
 ### Changed
 
 - Optimize the copy and delete UI of the conversation list to simplify the operation steps.
+- Adjust the login credential validity period to 3 days
 
 ## v0.4.1
 

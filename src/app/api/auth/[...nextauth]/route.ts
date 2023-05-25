@@ -35,6 +35,28 @@ export const authOptions: NextAuthOptions = {
   ],
   secret: process.env.EMAIL_SECRET,
   callbacks: {
+    async jwt({ token, trigger }) {
+      const id = token.sub || token.id;
+
+      if (trigger === "update") {
+        const databaseUser = await prisma.user.findUnique({
+          where: { id: id as string },
+        });
+        return {
+          id,
+          name: databaseUser?.name,
+          email: databaseUser?.email,
+          image: databaseUser?.image,
+        };
+      }
+
+      return {
+        id,
+        name: token.name,
+        email: token.email,
+        image: token.picture || token.image,
+      };
+    },
     async session({ session, token }: any) {
       if (token) {
         session.user.id = token.id;
@@ -42,34 +64,8 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email;
         session.user.image = token.image;
       }
+      // through to web browser
       return session;
-    },
-    async jwt({ token, user }) {
-      const databaseUser = await prisma.user.findFirst({
-        where: { email: token?.email },
-      });
-
-      // If there is no representation, it means that it is a new user
-      if (!databaseUser) {
-        return {
-          id: user?.id || token?.id || "",
-          name: token.name,
-          email: token.email,
-          image: token.image,
-        };
-      } else {
-        await prisma.user.update({
-          data: { recentlyUse: new Date() },
-          where: { id: databaseUser.id },
-        });
-      }
-
-      return {
-        id: databaseUser.id,
-        name: databaseUser.name,
-        email: databaseUser.email,
-        image: databaseUser.image,
-      };
     },
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
@@ -81,7 +77,9 @@ export const authOptions: NextAuthOptions = {
   },
   session: {
     strategy: "jwt",
-    maxAge: 7 * 24 * 60 * 60, // 30 days
+    // 1. If the user does not act within the validity period, the session will expire and they must log in again.
+    // 2. All actions that trigger the useSession behavior in the interface will refresh this validity period
+    maxAge: 3 * 24 * 60 * 60, // 3 days
   },
   pages: {
     error: "/authError",

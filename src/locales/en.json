@@ -74,7 +74,8 @@
     "to-top": "Pin to top"
   },
   "nav": {
-    "rename-conversation": "Rename Conversation"
+    "conversation-setting": "Conversation Setting",
+    "title": "Title"
   },
   "prompt": {
     "get-title": "What would be a short and relevant title for this chat? You must strictly answer with only the title, no other text is allowed.",

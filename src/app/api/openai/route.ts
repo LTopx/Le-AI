@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { LLM } from "@/utils/constant";
 import { isUndefined } from "@/lib";
+import { prisma } from "@/lib/prisma";
 
 // export const runtime = "edge";
 
@@ -78,6 +79,11 @@ export async function POST(request: Request) {
         max_tokens: isUndefined(max_tokens) ? 2000 : max_tokens,
         messages,
       }),
+    });
+
+    await prisma.user.update({
+      data: { recentlyUse: new Date() },
+      where: { id: session?.user.id },
     });
 
     return new Response(response.body);

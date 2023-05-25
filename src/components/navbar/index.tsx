@@ -4,12 +4,12 @@ import { useTranslations } from "next-intl";
 import { AiOutlineMenuUnfold, AiOutlineEdit } from "react-icons/ai";
 import { useChannel, useOpenAI, useMobileMenu } from "@/hooks";
 import Avatar from "@/components/auth/avatar";
-import ChangeTitle from "./changeTitle";
+import ConversationSetting from "./conversationSetting";
 import Token from "./token";
 import { LLM } from "@/utils/constant";
 
 const Navbar: React.FC = () => {
-  const changeTitleRef = React.useRef<any>(null);
+  const conversationSettingRef = React.useRef<any>(null);
   const tokenRef = React.useRef<any>(null);
   const tMenu = useTranslations("menu");
   const tSetting = useTranslations("setting");
@@ -26,15 +26,9 @@ const Navbar: React.FC = () => {
 
   const onOpenMenu = () => setMobileMenuVisible(true);
 
-  const onChangeTitle = () => {
-    if (
-      !openai.openai.apiKey &&
-      !openai.azure.apiKey &&
-      !openai.env.OPENAI_API_KEY &&
-      !openai.env.AZURE_API_KEY
-    )
-      return;
-    changeTitleRef.current?.init();
+  const onConversationSetting = () => {
+    if (!apiKey) return;
+    conversationSettingRef.current?.init();
   };
 
   const onCheckToken = () => tokenRef.current?.init();
@@ -75,7 +69,7 @@ const Navbar: React.FC = () => {
         </div>
         <div className="max-w-[60%] relative h-full">
           <div
-            onClick={onChangeTitle}
+            onClick={onConversationSetting}
             className={cn(
               "group font-semibold cursor-pointer relative transition-colors text-ellipsis whitespace-nowrap overflow-hidden",
               { "pr-6": !!apiKey, "pl-6": !!renderIcon() },
@@ -128,7 +122,7 @@ const Navbar: React.FC = () => {
 
         <Avatar />
       </div>
-      <ChangeTitle ref={changeTitleRef} />
+      <ConversationSetting ref={conversationSettingRef} />
       <Token ref={tokenRef} />
     </>
   );

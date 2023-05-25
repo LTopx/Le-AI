@@ -24,6 +24,7 @@ import Dropdown from "@/components/ui/Dropdown";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
 import { LLM } from "@/utils/constant";
 import MenuIcon from "./icon";
+import pkg from "../../../package.json";
 
 export const lans: IDropdownItems[] = [
   {
@@ -155,10 +156,15 @@ const Menu: React.FC = () => {
         "dark:bg-slate-800"
       )}
     >
-      <div className="flex font-extrabold h-12 text-transparent pb-2 text-2xl items-center">
-        <span className="bg-clip-text bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
+      <div className="flex gap-2 font-extrabold h-12 text-transparent pb-2 text-2xl items-center">
+        <span className="bg-clip-text leading-none bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
           L - GPT
         </span>
+        <div className="h-6 flex items-end">
+          <span className="text-neutral-300 text-sm font-medium">
+            v{pkg.version}
+          </span>
+        </div>
       </div>
       <Button
         className="mb-2"

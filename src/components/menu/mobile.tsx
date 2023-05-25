@@ -26,6 +26,7 @@ import {
 import { LLM } from "@/utils/constant";
 import MenuIcon from "./icon";
 import { lans } from "./index";
+import pkg from "../../../package.json";
 
 const MobileMenu: React.FC = () => {
   const { theme, setTheme } = useTheme();
@@ -121,10 +122,15 @@ const MobileMenu: React.FC = () => {
       className="md:hidden"
       overlayClassName="md:hidden"
       title={
-        <div className="font-extrabold text-transparent text-xl">
-          <span className="bg-clip-text bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
+        <div className="font-extrabold text-transparent text-xl flex gap-2">
+          <span className="bg-clip-text leading-none bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
             L - GPT
           </span>
+          <div className="h-6 flex items-end">
+            <span className="text-neutral-300 text-sm font-medium">
+              v{pkg.version}
+            </span>
+          </div>
         </div>
       }
       width="78%"

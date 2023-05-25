@@ -74,7 +74,8 @@
     "to-top": "置顶"
   },
   "nav": {
-    "rename-conversation": "重命名对话"
+    "conversation-setting": "会话设置",
+    "title": "标题"
   },
   "prompt": {
     "get-title": "这个聊天的简短而相关的标题是什么？您必须严格回答只有标题，不允许任何其他文本。",

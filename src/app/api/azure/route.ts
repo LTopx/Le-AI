@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { LLM } from "@/utils/constant";
 import { isUndefined } from "@/lib";
+import { prisma } from "@/lib/prisma";
 
 // export const runtime = "edge";
 
@@ -121,6 +122,11 @@ export async function POST(request: Request) {
     const { readable, writable } = new TransformStream();
 
     stream(response.body as ReadableStream, writable);
+
+    await prisma.user.update({
+      data: { recentlyUse: new Date() },
+      where: { id: session?.user.id },
+    });
 
     return new Response(readable, response);
   } catch (error: any) {
