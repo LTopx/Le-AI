@@ -14,7 +14,7 @@ const Login: React.FC = () => {
       >
         <Logo />
       </div>
-      <div className="flex flex-col justify-center items-center flex-1">
+      <div className="flex flex-col items-center pt-[20%] md:p-[10%] flex-1 relative">
         <AuthForm />
       </div>
     </div>

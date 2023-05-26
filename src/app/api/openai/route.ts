@@ -81,10 +81,12 @@ export async function POST(request: Request) {
       }),
     });
 
-    await prisma.user.update({
-      data: { recentlyUse: new Date() },
-      where: { id: session?.user.id },
-    });
+    if (session) {
+      await prisma.user.update({
+        data: { recentlyUse: new Date() },
+        where: { id: session?.user.id },
+      });
+    }
 
     return new Response(response.body);
   } catch (error) {

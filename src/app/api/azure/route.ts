@@ -123,10 +123,12 @@ export async function POST(request: Request) {
 
     stream(response.body as ReadableStream, writable);
 
-    await prisma.user.update({
-      data: { recentlyUse: new Date() },
-      where: { id: session?.user.id },
-    });
+    if (session) {
+      await prisma.user.update({
+        data: { recentlyUse: new Date() },
+        where: { id: session?.user.id },
+      });
+    }
 
     return new Response(readable, response);
   } catch (error: any) {

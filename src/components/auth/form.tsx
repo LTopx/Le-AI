@@ -14,12 +14,14 @@ const AuthForm: React.FC = () => {
   const router = useRouter();
   const inputRef = React.useRef<any>(null);
   const [email, setEmail] = React.useState<string>("");
-  const [loading, setLoading] = React.useState(false);
+  const [loadingEmial, setLoadingEmail] = React.useState(false);
+  const [loadingGithub, setLoadingGithub] = React.useState(false);
+  const [loadingGoogle, setLoadingGoogle] = React.useState(false);
 
   const t = useTranslations("auth");
 
   const onLogin = async () => {
-    if (loading) return;
+    if (loadingEmial) return;
 
     if (!email?.trim()) {
       toast.error(t("input-email"), { id: "email" });
@@ -35,7 +37,7 @@ const AuthForm: React.FC = () => {
       return;
     }
     try {
-      setLoading(true);
+      setLoadingEmail(true);
       const res: any = await signIn("email", {
         email,
         redirect: false,
@@ -46,67 +48,72 @@ const AuthForm: React.FC = () => {
       toast.success(t("auth-success"));
       router.push(res.url);
     } catch (error) {
-      setLoading(false);
+      setLoadingEmail(false);
       console.log(error, "login failed");
       toast.error(t("auth-failed"));
     }
   };
 
   const onGithubLogin = async () => {
-    setLoading(true);
+    setLoadingGithub(true);
     await signIn("github", { callbackUrl: "/" });
   };
 
   const onGoogleLogin = async () => {
-    setLoading(true);
+    setLoadingGoogle(true);
     await signIn("google", { callbackUrl: "/" });
   };
 
   return (
     <>
-      <div className="text-3xl font-bold mb-10">{t("title")}</div>
-      <div className="w-[20rem] max-w-[calc(100vw-3rem)]">
-        <Input
-          ref={inputRef}
-          className="w-full"
-          size="large"
-          placeholder={t("input-email")}
-          allowClear
-          value={email}
-          onChange={setEmail}
-          onEnter={onLogin}
-        />
-        <Button
-          className="w-full mt-2 mb-4"
-          size="base"
-          type="primary"
-          loading={loading}
-          onClick={onLogin}
-        >
-          {t("button-text")}
-        </Button>
-        <div className="w-full h-[1px] bg-neutral-200 mb-4" />
-        <div className="flex flex-col gap-2">
+      <div className="shadow-[0_24px_48px_rgba(0,0,0,0.16)] py-7 px-8 md:py-12 md:px-10 rounded-xl max-w-[calc(100vw-2rem)]">
+        <div className="text-2xl font-bold mb-10">{t("title")}</div>
+        <div className="w-[20rem] max-w-[calc(100vw-8rem)]">
+          <Input
+            ref={inputRef}
+            className="w-full"
+            size="large"
+            placeholder={t("input-email")}
+            allowClear
+            value={email}
+            onChange={setEmail}
+            onEnter={onLogin}
+          />
           <Button
+            className="w-full mt-2 mb-4"
             size="base"
-            block
-            loading={loading}
-            leftIcon={<AiFillGithub />}
-            onClick={onGithubLogin}
+            type="primary"
+            loading={loadingEmial}
+            onClick={onLogin}
           >
-            Continue with Github
+            {t("button-text")}
           </Button>
-          <Button
-            size="base"
-            block
-            loading={loading}
-            leftIcon={<FcGoogle />}
-            onClick={onGoogleLogin}
-          >
-            Continue with Google
-          </Button>
+          <div className="w-full h-[1px] bg-neutral-200 mb-4" />
+          <div className="flex flex-col gap-2">
+            <Button
+              size="base"
+              block
+              loading={loadingGithub}
+              leftIcon={<AiFillGithub />}
+              onClick={onGithubLogin}
+            >
+              Continue with Github
+            </Button>
+            <Button
+              size="base"
+              block
+              loading={loadingGoogle}
+              leftIcon={<FcGoogle />}
+              onClick={onGoogleLogin}
+            >
+              Continue with Google
+            </Button>
+          </div>
         </div>
       </div>
+      {(loadingEmial || loadingGithub || loadingGoogle) && (
+        <div className="absolute left-0 top-0 w-full h-full bg-white opacity-40 z-10" />
+      )}
     </>
   );
 };

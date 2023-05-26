@@ -2,6 +2,18 @@
 
 ## v0.4.2
 
+> 2023-05-26
+
+### Fixed
+
+- Fixed the issue where unauthenticated users could not have a normal conversation even after configuring the API key.
+
+### Changed
+
+- Optimize login page UI
+
+## v0.4.2
+
 > 2023-05-25
 
 ### Fixed
