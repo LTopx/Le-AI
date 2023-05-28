@@ -7,16 +7,19 @@ interface LocaleLayoutProps {
   params: { locale: string };
 }
 
+async function getMessages(locale: string) {
+  try {
+    return (await import(`../../locales/${locale}.json`)).default;
+  } catch (error) {
+    notFound();
+  }
+}
+
 export default async function LocaleLayout({
   children,
   params: { locale },
 }: LocaleLayoutProps) {
-  let messages;
-  try {
-    messages = (await import(`../../locales/${locale}.json`)).default;
-  } catch (error) {
-    notFound();
-  }
+  const messages = await getMessages(locale);
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
