@@ -2,13 +2,13 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { LLM } from "@/utils/constant";
 import { isUndefined } from "@/lib";
 import { prisma } from "@/lib/prisma";
 
 // export const runtime = "edge";
 
-const apiVersion = "2023-03-15-preview";
+// const apiVersion = "2023-03-15-preview";
+const apiVersion = "2023-05-15";
 
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -86,14 +86,6 @@ export async function POST(request: Request) {
 
   const resourceName =
     name || process.env.NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME;
-
-  const findModel = LLM.find((item) => {
-    return item.models.find((val) => val.value === model);
-  });
-
-  if (!findModel) {
-    return NextResponse.json({ error: 10003 }, { status: 500 });
-  }
 
   const fetchURL = `https://${resourceName}.openai.azure.com/openai/deployments/${model}/chat/completions?api-version=${apiVersion}`;
 

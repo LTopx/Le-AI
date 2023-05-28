@@ -2,7 +2,6 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { LLM } from "@/utils/constant";
 import { isUndefined } from "@/lib";
 import { prisma } from "@/lib/prisma";
 
@@ -46,14 +45,6 @@ export async function POST(request: Request) {
     prompt,
     chat_list,
   } = await request.json();
-
-  const findModel = LLM.find((item) => {
-    return item.models.find((val) => val.value === model);
-  });
-
-  if (!findModel) {
-    return NextResponse.json({ error: 10003 }, { status: 500 });
-  }
 
   const ENV_API_PROXY = getEnvProxyUrl();
 

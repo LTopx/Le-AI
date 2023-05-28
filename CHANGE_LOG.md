@@ -1,16 +1,22 @@
 # L-GPT Change Log
 
-## v0.4.2
+## v0.4.3
 
-> 2023-05-26
+> 2023-05-28
 
 ### Fixed
 
 - Fixed the issue where unauthenticated users could not have a normal conversation even after configuring the API key.
+- Fix the text color issue for Select placeholder and the logic issue for disabled.
 
 ### Changed
 
 - Optimize login page UI
+- Optimize the display effect of the user avatar when loading user information.
+- Upgrade the default Azure OpenAI Service API version from 2023-03-15-preview to 2023-05-15.
+- Refactor the calculation logic for session consumption, now supporting display of current session content consumption and total session consumption.
+- Optimize UI effects of Select/Input/Modal/Slider/Button and other components
+- Refactor the API Key configuration interface and move it to a separate page for configuration. It is now possible to configure Azure OpenAI Service-related information in a more user-friendly way.
 
 ## v0.4.2
 

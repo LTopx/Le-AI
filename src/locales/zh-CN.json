@@ -87,27 +87,45 @@
     "10003": "语言模型参数错误"
   },
   "setting": {
+    "api-key-error": "无效的 API 密钥。请确保您的 API 密钥配置正确。",
     "api-proxy": "API 代理地址",
+    "check": "校验",
+    "check-api-key-warning": "您需要先填写API Key,才能检查它的有效性",
+    "configuration": "点击配置",
+    "confirm-delete": "确认删除",
+    "create-new-deployment": "新建部署",
+    "deployment-name": "部署名",
+    "deployments": "部署",
     "deterministic": "准确",
+    "edit-deployment": "编辑部署",
+    "enter-deployment-name": "请输入部署名",
     "export-import": "导出 / 导入",
+    "get-apiKey": "点击此处获取API Key",
     "import-success": "数据导入成功!",
+    "llm-configuration": "大语言模型配置",
     "max-tokens": "单次回复限制",
+    "max-tokens-tip": "设置每个模型响应的令牌数量限制。这些令牌在提示(包括系统消息、示例、消息历史记录和用户查询)和模型响应之间共享。一个令牌大约是典型英文文本的 4 个字符。",
+    "name": "名称",
     "neutral": "适中",
     "random": "随机",
     "reset-data": "重置数据",
     "reset-data-tip": "你确认重置所有数据？（包括聊天数据和设置数据）",
     "resource-name": "资源名称",
+    "select-model": "请选择 Model",
     "send-message": "发送消息",
     "set-api-key": "请配置 API Key",
     "set-api-proxy": "请配置 API 代理地址",
     "set-resource-name": "请配置资源名称",
     "set-temperature": "请配置随机性",
+    "sure-delete-deployment": "你确认删除该部署？",
     "temperature": "随机性",
     "temperature-tip": "较高的数值会使输出更随机，而较低的数值会使输出更加聚焦和确定性更强。",
     "title": "L-GPT 设置"
   },
   "token": {
     "conversation-cost": "会话成本",
+    "current-cost": "当前会话内容",
+    "current-total-cost": "当前会话总消耗",
     "how-token-work": "Token 如何工作?",
     "how-token-work-1": "是根据当前会话内容的总长度，按照各个语言模型的规则计算得出。",
     "how-token-work-2": "当会话内容达到一定长度时，您将无法再向会话中添加任何消息。这是各个语言模型自身的会话内容上下文限制。",
@@ -130,11 +148,11 @@
     "welcome": "欢迎来到"
   },
   "zLog": {
-    "title": "v0.4.2版本火热更新🔥🔥",
-    "text1": "新增显示会话token计费，支持自定义头像",
-    "text2": "新增支持切换 Enter 和 Command+Enter (Mac)/Ctrl+Enter (Windows) 输入信息的方式",
-    "text3": "新增支持点击会话标题修改当前会话配置",
-    "text4": "UI交互细节调整",
-    "text5": "大量Bug修复"
+    "title": "v0.4.3版本更新日志 🔥🔥",
+    "text1": "修复未登录用户配置 api key 依旧无法正常对话的问题",
+    "text2": "升级默认的 Azure OpenAI Service API Version 从 2023-03-15-preview 到 2023-05-15",
+    "text3": "重构会话消耗的计算逻辑，现在支持展示当前会话内容消耗以及当前会话总消耗",
+    "text4": "重构 API Key 配置界面，将其移动到单独的界面进行配置。现在能更友好的配置Azure OpenAI Service相关信息",
+    "text5": "其他细节优化和 bug 修复"
   }
 }

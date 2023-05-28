@@ -3,8 +3,7 @@ import { useTranslations } from "next-intl";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
 import Select from "@/components/ui/Select";
-import { useChannel } from "@/hooks";
-import { LLM } from "@/utils/constant";
+import { useChannel, useLLM } from "@/hooks";
 
 interface IConversationSettings {
   name: string;
@@ -27,7 +26,9 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
   const tPrompt = useTranslations("prompt");
 
   const [channel, setChannel] = useChannel();
+  const { openai, azure } = useLLM();
   const [open, setOpen] = React.useState(false);
+  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
   const [modelOptions, setModelOptions] = React.useState<any[]>([]);
   const [formData, setFormData] = React.useState<IConversationSettings>({
     name: "",
@@ -42,7 +43,7 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
       const newData = JSON.parse(JSON.stringify(data)) as IConversationSettings;
       newData.model_type = value;
       newData.model_value =
-        LLM.find((val) => val.value === value)?.models[0].value || "";
+        LLMOptions.find((val) => val.value === value)?.models[0].value || "";
       return newData;
     });
     getModelOptions(value);
@@ -65,7 +66,8 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
   };
 
   const getModelOptions = (type: string) => {
-    const options = LLM.find((item) => item.value === type)?.models || [];
+    const options =
+      LLMOptions.find((item) => item.value === type)?.models || [];
     setModelOptions(options);
   };
 
@@ -111,7 +113,7 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
         <Select
           className="w-full"
           size="large"
-          options={LLM}
+          options={LLMOptions}
           value={formData.model_type}
           renderLabel={renderLabel}
           onChange={onChangeModelType}
@@ -130,7 +132,7 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
           </div>
         </div>
       </div>
-      <div className="h-[0.5px] bg-neutral-400 my-2" />
+      <div className="h-[0.5px] bg-neutral-200 my-2" />
       <div className="flex items-center">
         <div className="text-sm text-black/90 dark:text-white/90  w-20">
           {t("title")}

@@ -8,7 +8,13 @@ import { AiOutlineRedo, AiOutlineClear } from "react-icons/ai";
 import { BsStop } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
-import { useChannel, useOpenAI, useStreamDecoder, useChat } from "@/hooks";
+import {
+  useChannel,
+  useOpenAI,
+  useStreamDecoder,
+  useChat,
+  useLLM,
+} from "@/hooks";
 import Confirm from "@/components/ui/Confirm";
 import Button from "@/components/ui/Button";
 import Textarea from "@/components/ui/Textarea";
@@ -22,6 +28,7 @@ const ChatFooter: React.FC = () => {
   // data
   const [newOpenAI] = useOpenAI();
   const [channel, setChannel] = useChannel();
+  const { openai, azure } = useLLM();
   const {
     loadingResponseStart,
     loadingResponseFinish,
@@ -31,6 +38,7 @@ const ChatFooter: React.FC = () => {
     updateAbort,
   } = useChat();
   const [inputValue, setInputValue] = React.useState<string>("");
+  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
 
   // ref
   const inputRef = React.useRef<any>(null);
@@ -91,6 +99,15 @@ const ChatFooter: React.FC = () => {
         duration: 2000,
       });
     }
+    // check model params
+    const modelName = findChannel?.channel_model.name;
+    const findModel = LLMOptions.find((item) => {
+      return item.models.find((val) => val.value === modelName);
+    });
+    if (!findModel) {
+      return toast.error(tRes("10003"), { id: "empty-model", duration: 4000 });
+    }
+
     setInputValue("");
     inputRef.current?.reset();
     let chat_list: ChatItem[] = [];
@@ -117,8 +134,14 @@ const ChatFooter: React.FC = () => {
   };
 
   // calc current conversation token
-  const calcToken = (message_list: ChatItem[], model: string) => {
-    let calcModel = model === "lgpt-35-turbo" ? "gpt-3.5-turbo" : model;
+  const calcToken = (
+    message_list: ChatItem[],
+    model: string,
+    isFunctional?: boolean
+  ) => {
+    let calcModel = model;
+    const findAzureModel = azure.models.find((item) => item.value === model);
+    if (findAzureModel) calcModel = findAzureModel.label;
 
     const tokenInfo = new GPTTokens({
       model: calcModel as supportModelType,
@@ -135,12 +158,30 @@ const ChatFooter: React.FC = () => {
       const findChannel = list.find((item) => item.channel_id === activeId);
       if (!findChannel) return channel;
       // Compatibility handling
-      if (!findChannel.channel_tokens) findChannel.channel_tokens = 0;
-      if (!findChannel.channel_usd) findChannel.channel_usd = 0;
-      findChannel.channel_tokens += usedTokens;
-      findChannel.channel_usd += usedUSD;
-      findChannel.channel_tokens = parseInt(findChannel.channel_tokens as any);
-      findChannel.channel_usd = Number(findChannel.channel_usd.toFixed(5));
+      if (!findChannel.channel_cost) {
+        findChannel.channel_cost = {
+          tokens: 0,
+          usd: 0,
+          function_tokens: 0,
+          function_usd: 0,
+          total_tokens: 0,
+          total_usd: 0,
+        };
+      }
+
+      if (isFunctional) {
+        findChannel.channel_cost.function_tokens += usedTokens;
+        const function_usd = findChannel.channel_cost.function_usd + usedUSD;
+        findChannel.channel_cost.function_usd = Number(function_usd.toFixed(5));
+      } else {
+        findChannel.channel_cost.tokens = usedTokens;
+        findChannel.channel_cost.usd = Number(usedUSD.toFixed(5));
+      }
+      let total_tokens = findChannel.channel_cost.total_tokens + usedTokens;
+      let total_usd = findChannel.channel_cost.total_usd + usedUSD;
+      findChannel.channel_cost.total_tokens = parseInt(total_tokens as any);
+      findChannel.channel_cost.total_usd = Number(total_usd.toFixed(5));
+
       return channel;
     });
   };
@@ -193,7 +234,7 @@ const ChatFooter: React.FC = () => {
       }));
 
       fetch(fetchUrl, {
-        method: "post",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: modelConfig.apiKey,
@@ -226,8 +267,6 @@ const ChatFooter: React.FC = () => {
                 );
               } else if (streamRes.error === 10002) {
                 errorMessage = tRes("10002");
-              } else if (streamRes.error === 10003) {
-                errorMessage = tRes("10003");
               } else {
                 errorMessage = response.statusText || tCommon("service-error");
               }
@@ -324,7 +363,7 @@ const ChatFooter: React.FC = () => {
     params.chat_list = chat_list;
 
     fetch(fetchUrl, {
-      method: "post",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: modelConfig.apiKey,
@@ -346,7 +385,7 @@ const ChatFooter: React.FC = () => {
           toast.error(tCommon("service-error"));
         }
       );
-      calcToken(params.chat_list, params.model);
+      calcToken(chat_list as ChatItem[], params.model, true);
     });
   };
 
@@ -359,8 +398,14 @@ const ChatFooter: React.FC = () => {
       findChannel.chat_list = [];
       findChannel.channel_name = "";
       findChannel.channel_prompt = "";
-      findChannel.channel_tokens = 0;
-      findChannel.channel_usd = 0;
+      findChannel.channel_cost = {
+        tokens: 0,
+        usd: 0,
+        function_tokens: 0,
+        function_usd: 0,
+        total_tokens: 0,
+        total_usd: 0,
+      };
       return channel;
     });
   };

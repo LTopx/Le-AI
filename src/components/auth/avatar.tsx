@@ -20,6 +20,7 @@ const Avatar: React.FC = () => {
   const t = useTranslations("auth");
 
   const user = session.data?.user;
+  const status = session.status;
 
   const getMenus = (session: Session | null): IDropdownItems[] => {
     let baseMenus = [
@@ -81,7 +82,11 @@ const Avatar: React.FC = () => {
       className="min-w-[8rem]"
       align="end"
       trigger={
-        user ? (
+        status === "loading" ? (
+          <div className="absolute right-3 h-14 flex items-center">
+            <Button loading type="primary" />
+          </div>
+        ) : user ? (
           <div className="absolute right-3 h-14 w-11 flex justify-end items-center cursor-pointer">
             {user.image ? (
               <Image

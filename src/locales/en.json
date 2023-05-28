@@ -87,27 +87,45 @@
     "10003": "Language model parameter error"
   },
   "setting": {
+    "api-key-error": "Invalid API key. Please make sure your API key is still working properly.",
     "api-proxy": "API Proxy",
+    "check": "Check",
+    "check-api-key-warning": "You need to fill in the API Key first to check its validity.",
+    "configuration": "Configuration",
+    "confirm-delete": "Confirm delete",
+    "create-new-deployment": "Create new deployment",
+    "deployment-name": "Deployment name",
+    "deployments": "Deployments",
     "deterministic": "Deterministic",
+    "edit-deployment": "Edit deployment",
+    "enter-deployment-name": "Enter Deployment name",
     "export-import": "Export / Import",
+    "get-apiKey": "Get API Key here",
     "import-success": "Data imported successfully!",
+    "llm-configuration": "LLM Configuration",
     "max-tokens": "Max Tokens",
+    "max-tokens-tip": "Set token limits for each model response. These tokens are shared between prompts (including system messages, examples, message history, and user queries) and model responses. One token is roughly equivalent to 4 characters of typical English text.",
+    "name": "Name",
     "neutral": "Neutral",
     "random": "Random",
     "reset-data": "Reset Data",
     "reset-data-tip": "Are you sure you want to reset all data? (Including chat and settings data)",
     "resource-name": "Resource Name",
+    "select-model": "Select a Model",
     "send-message": "Send messages",
     "set-api-key": "Configure API Key",
     "set-api-proxy": "Configure API Proxy",
     "set-resource-name": "Configure Resource Name",
     "set-temperature": "Configure Temperature",
+    "sure-delete-deployment": "Are you sure you want to delete this deployment?",
     "temperature": "Temperature",
     "temperature-tip": "Higher values will make the output more random, while lower values will make the output more focused and more deterministic.",
     "title": "L-GPT Setting"
   },
   "token": {
     "conversation-cost": "Conversation cost",
+    "current-cost": "Current context",
+    "current-total-cost": "Current context total cost",
     "how-token-work": "How does Token work?",
     "how-token-work-1": "It is calculated according to the rules of each language model based on the total length of the current session content.",
     "how-token-work-2": "When the conversation reaches a certain length, you will no longer be able to add any more messages to the conversation. This is a contextual limit on the conversation content of each language model.",
@@ -130,11 +148,11 @@
     "welcome": "Welcome to"
   },
   "zLog": {
-    "title": "Hot update for version v0.4.2 🔥🔥",
-    "text1": "Added display session token billing, supporting custom avatars",
-    "text2": "Added support for switching between Enter and Command+Enter (Mac)/Ctrl+Enter (Windows) input methods",
-    "text3": "Added support for clicking on session title to modify current session configuration",
-    "text4": "UI/UX adjustments",
-    "text5": "Numerous bug fixes"
+    "title": "v0.4.3 Change Log 🔥🔥",
+    "text1": "Fixed the issue where unauthenticated users could not have a normal conversation even after configuring the API key",
+    "text2": "Upgrade the default Azure OpenAI Service API version from 2023-03-15-preview to 2023-05-15.",
+    "text3": "Refactor the calculation logic for session consumption, now supporting display of current session content consumption and total session consumption.",
+    "text4": "Refactor the API Key configuration interface and move it to a separate page for configuration. It is now possible to configure Azure OpenAI Service-related information in a more user-friendly way.",
+    "text5": "Other details optimization and bug fixing"
   }
 }

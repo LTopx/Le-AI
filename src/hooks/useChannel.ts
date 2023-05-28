@@ -1,7 +1,6 @@
 import * as React from "react";
 import { create } from "zustand";
 import { v4 as uuidv4 } from "uuid";
-import { LLM } from "@/utils/constant";
 
 interface ChannelModel {
   type: string;
@@ -14,9 +13,23 @@ export type ChannelIcon =
   | "FaBook"
   | "MdMovieEdit";
 
+export interface ChannelCost {
+  // Single session cost for storing current content
+  tokens: number;
+  usd: number;
+
+  // Functional Consumption. Including get title.
+  function_tokens: number;
+  function_usd: number;
+
+  // Overall consumption of storage for the current session content
+  total_tokens: number;
+  total_usd: number;
+}
+
 export interface ChatItem {
   id: string;
-  /** gpt role */
+  /** gpt Role */
   role: "user" | "assistant" | "system";
   time: string;
   content: string;
@@ -28,12 +41,11 @@ export interface ChannelListItem {
   channel_name: string;
   channel_model: ChannelModel;
   channel_prompt: string;
-  channel_tokens: number;
-  channel_usd: number;
+  channel_cost: ChannelCost;
   chat_list: ChatItem[];
 }
 
-type State = {
+type UseChannelState = {
   /** active channel id */
   activeId: string;
 
@@ -41,15 +53,17 @@ type State = {
   list: ChannelListItem[];
 };
 
-type SaveChannel = State | ((prev: State) => State);
+type SaveChannel =
+  | UseChannelState
+  | ((prev: UseChannelState) => UseChannelState);
 
-type Action = {
+type UseChannelAction = {
   update: (args: SaveChannel) => void;
 };
 
-type UseChannelReturn = [State, Action["update"]];
+type UseChannelReturn = [UseChannelState, UseChannelAction["update"]];
 
-const useStore = create<State & Action>((set) => ({
+const useStore = create<UseChannelState & UseChannelAction>((set) => ({
   activeId: "",
   list: [],
   update: async (args: SaveChannel) => {
@@ -81,12 +95,18 @@ export const initChannelList: ChannelListItem[] = [
     channel_icon: "RiChatSmile2Line",
     channel_name: "",
     channel_model: {
-      type: LLM[0].value,
-      name: LLM[0].models[0].value,
+      type: "openai",
+      name: "gpt-3.5-turbo",
     },
     channel_prompt: "",
-    channel_tokens: 0,
-    channel_usd: 0,
+    channel_cost: {
+      tokens: 0,
+      usd: 0,
+      function_tokens: 0,
+      function_usd: 0,
+      total_tokens: 0,
+      total_usd: 0,
+    },
     chat_list: [],
   },
 ];
@@ -103,13 +123,21 @@ const getInitChannelList = () => {
           if (!item.channel_model) {
             item.channel_icon = "RiChatSmile2Line";
             item.channel_model = {
-              type: LLM[0].value,
-              name: LLM[0].models[0].value,
+              type: "openai",
+              name: "gpt-3.5-turbo",
             };
             item.channel_prompt = "";
           }
-          if (!item.channel_tokens) item.channel_tokens = 0;
-          if (!item.channel_usd) item.channel_usd = 0;
+          if (!item.channel_cost) {
+            item.channel_cost = {
+              tokens: 0,
+              usd: 0,
+              function_tokens: 0,
+              function_usd: 0,
+              total_tokens: 0,
+              total_usd: 0,
+            };
+          }
           return item;
         }
       );

@@ -11,17 +11,20 @@ import Item from "./item";
 type OptionsChildren = {
   label: string;
   value: any;
+  disabled?: boolean;
 };
 
 type Options = {
   label: React.ReactNode;
   value: any;
+  disabled?: boolean;
   children?: OptionsChildren[];
 };
 
 interface LSelectProps extends React.HTMLAttributes<HTMLElement> {
   contentClassName?: string;
   defaultValue?: any;
+  disabled?: boolean;
   options: Options[];
   loading?: boolean;
   value?: any;
@@ -33,6 +36,7 @@ interface LSelectProps extends React.HTMLAttributes<HTMLElement> {
 const LSelect: React.FC<LSelectProps> = ({
   className,
   contentClassName,
+  disabled,
   placeholder,
   options,
   loading,
@@ -63,6 +67,7 @@ const LSelect: React.FC<LSelectProps> = ({
   return (
     <Select.Root
       open={isOpen}
+      disabled={disabled}
       value={value}
       defaultValue={defaultValue}
       onValueChange={onChange}
@@ -79,6 +84,11 @@ const LSelect: React.FC<LSelectProps> = ({
             { "h-9": size === "large" },
             { "bg-white border-sky-500": isOpen },
             { "dark:bg-transparent": isOpen },
+            { "text-gray-400": !value },
+            {
+              "cursor-not-allowed text-gray-400/80 hover:bg-gray-200/70 dark:hover:bg-neutral-700/90":
+                !!disabled,
+            },
             className
           )
         )}
@@ -101,7 +111,7 @@ const LSelect: React.FC<LSelectProps> = ({
           position="popper"
           sideOffset={4}
           className={clsx(
-            "z-[1999] py-1 rounded border shadow-md",
+            "z-[1999] py-1 rounded-md border shadow-md",
             "bg-white",
             "dark:bg-neutral-700 dark:border-neutral-600",
             "data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut",
@@ -117,13 +127,17 @@ const LSelect: React.FC<LSelectProps> = ({
                       {item.label}
                     </Select.Label>
                     {item.children.map((child) => (
-                      <Item key={child.value} value={child.value}>
+                      <Item
+                        key={child.value}
+                        value={child.value}
+                        disabled={child.disabled}
+                      >
                         {renderLabel ? renderLabel(child) : child.label}
                       </Item>
                     ))}
                   </>
                 ) : (
-                  <Item value={item.value}>
+                  <Item value={item.value} disabled={item.disabled}>
                     {renderLabel ? renderLabel(item) : item.label}
                   </Item>
                 )}

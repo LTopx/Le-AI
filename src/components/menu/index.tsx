@@ -14,7 +14,7 @@ import { RiFeedbackLine } from "react-icons/ri";
 import { useDateFormat } from "l-hooks";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
-import { useSetting, useChannel, initChannelList } from "@/hooks";
+import { useSetting, useChannel, initChannelList, useLLM } from "@/hooks";
 import type { ChannelListItem } from "@/hooks";
 import Button from "@/components/ui/Button";
 import Confirm from "@/components/ui/Confirm";
@@ -22,7 +22,6 @@ import ContextMenu from "@/components/ui/ContextMenu";
 import type { ContextMenuOption } from "@/components/ui/ContextMenu";
 import Dropdown from "@/components/ui/Dropdown";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
-import { LLM } from "@/utils/constant";
 import MenuIcon from "./icon";
 import pkg from "../../../package.json";
 
@@ -45,7 +44,9 @@ const Menu: React.FC = () => {
   const { format } = useDateFormat();
   const [, setVisible] = useSetting();
   const [channel, setChannel] = useChannel();
+  const { openai, azure } = useLLM();
 
+  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
   const [nowTheme, setNowTheme] = React.useState<"dark" | "light">("light");
 
   const params = useParams();
@@ -74,12 +75,18 @@ const Menu: React.FC = () => {
         channel_icon: "RiChatSmile2Line",
         channel_name: "",
         channel_model: {
-          type: LLM[0].value,
-          name: LLM[0].models[0].value,
+          type: LLMOptions[0].value,
+          name: LLMOptions[0].models[0].value,
         },
         channel_prompt: "",
-        channel_tokens: 0,
-        channel_usd: 0,
+        channel_cost: {
+          tokens: 0,
+          usd: 0,
+          function_tokens: 0,
+          function_usd: 0,
+          total_tokens: 0,
+          total_usd: 0,
+        },
         chat_list: [],
       });
       channel.activeId = channel_id;

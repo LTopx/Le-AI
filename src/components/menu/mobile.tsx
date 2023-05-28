@@ -22,8 +22,8 @@ import {
   initChannelList,
   useMobileMenu,
   useSetting,
+  useLLM,
 } from "@/hooks";
-import { LLM } from "@/utils/constant";
 import MenuIcon from "./icon";
 import { lans } from "./index";
 import pkg from "../../../package.json";
@@ -33,9 +33,11 @@ const MobileMenu: React.FC = () => {
   const t = useTranslations("menu");
   const { format } = useDateFormat();
   const [channel, setChannel] = useChannel();
+  const { openai, azure } = useLLM();
   const [mobileMenuVisible, setMobileMenuVisible] = useMobileMenu();
   const [, setSettingVisible] = useSetting();
 
+  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
   const [nowTheme, setNowTheme] = React.useState<any>("");
 
   const params = useParams();
@@ -53,12 +55,18 @@ const MobileMenu: React.FC = () => {
         channel_icon: "RiChatSmile2Line",
         channel_name: "",
         channel_model: {
-          type: LLM[0].value,
-          name: LLM[0].models[0].value,
+          type: LLMOptions[0].value,
+          name: LLMOptions[0].models[0].value,
         },
         channel_prompt: "",
-        channel_tokens: 0,
-        channel_usd: 0,
+        channel_cost: {
+          tokens: 0,
+          usd: 0,
+          function_tokens: 0,
+          function_usd: 0,
+          total_tokens: 0,
+          total_usd: 0,
+        },
         chat_list: [],
       });
       channel.activeId = channel_id;

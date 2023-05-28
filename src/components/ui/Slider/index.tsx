@@ -33,7 +33,7 @@ const LSlider: React.FC<LSliderProps> = ({
   return (
     <div
       className={clsx(
-        "px-3 cursor-pointer rounded transition-colors",
+        "px-3 cursor-pointer rounded-md transition-colors",
         "bg-gray-200/70 hover:bg-gray-200",
         "dark:bg-neutral-700/90 dark:hover:bg-zinc-600",
         className

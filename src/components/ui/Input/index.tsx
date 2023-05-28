@@ -110,7 +110,7 @@ const Input = React.forwardRef<any, InputProps>(
       <div
         className={twMerge(
           cn(
-            "border group border-transparent w-full inline-flex items-center rounded overflow-hidden transition-colors text-sm px-3",
+            "border group border-transparent w-full inline-flex items-center rounded-md overflow-hidden transition-colors text-sm px-3",
             "bg-gray-200/70 hover:bg-gray-200",
             "dark:bg-neutral-700/90 dark:hover:bg-zinc-600",
             { "py-1": size === "default" },

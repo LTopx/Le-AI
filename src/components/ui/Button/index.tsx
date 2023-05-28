@@ -40,7 +40,7 @@ const Button = React.forwardRef<any, ButtonProps>(
       <button
         onClick={onBtnClick}
         className={cn(
-          "transition-all duration-100 ease-linear rounded-md font-medium flex items-center justify-center gap-2 tracking-wide",
+          "border transition-all duration-100 ease-linear rounded-md font-medium flex items-center justify-center gap-2 tracking-wide",
           { "h-6 text-xs px-2": size === "xs" },
           { "h-8 text-sm px-3": size === "sm" },
           { "h-10 text-base px-4": size === "base" },
@@ -48,41 +48,41 @@ const Button = React.forwardRef<any, ButtonProps>(
           { "w-full": block },
           // default
           {
-            "bg-gray-100 hover:bg-gray-200 active:bg-gray-300 text-slate-600/80":
+            "border-gray-100 bg-gray-100 hover:border-gray-200 hover:bg-gray-200 active:border-gray-300 active:bg-gray-300 text-slate-600/80":
               type === "default",
           },
           {
-            "dark:bg-slate-700 dark:hover:bg-slate-600/80 dark:active:bg-slate-600/60 dark:text-white/70":
+            "dark:border-slate-700 dark:bg-slate-700 dark:hover:border-slate-600/80 dark:hover:bg-slate-600/80 dark:active:border-slate-600/60 dark:active:bg-slate-600/60 dark:text-white/70":
               type === "default",
           },
 
           // primary
           {
-            "bg-sky-400 hover:bg-sky-500 active:bg-sky-600 text-white":
+            "border-sky-400 bg-sky-400 hover:border-sky-500 hover:bg-sky-500 active:border-sky-600 active:bg-sky-600 text-white":
               type === "primary",
           },
           {
-            "bg-sky-400/80 hover:bg-sky-400/80 active:bg-sky-400/80":
+            "border-sky-400/80 bg-sky-400/80 hover:border-sky-400/80 hover:bg-sky-400/80 active:border-sky-400/80 active:bg-sky-400/80":
               type === "primary" && loading,
           },
           {
-            "dark:bg-sky-400/90 dark:hover:bg-sky-500/90 dark:active:bg-sky-600/90":
+            "dark:border-sky-400/90 dark:bg-sky-400/90 dark:hover:border-sky-500/90 dark:hover:bg-sky-500/90 dark:active:border-sky-600/90 dark:active:bg-sky-600/90":
               type === "primary",
           },
 
           // danger
           {
-            "bg-rose-400 hover:bg-red-500 active:bg-rose-600 text-white":
+            "border-rose-400 bg-rose-400 hover:border-red-500 hover:bg-red-500 active:border-rose-600 active:bg-rose-600 text-white":
               type === "danger",
           },
           {
-            "dark:bg-rose-400/90 dark:hover:bg-rose-500/90 dark:active:bg-rose-600/90":
+            "dark:border-rose-400/90 dark:bg-rose-400/90 dark:hover:border-rose-500/90 dark:hover:bg-rose-500/90 dark:active:border-rose-600/90 dark:active:bg-rose-600/90":
               type === "danger",
           },
 
           // outline
           {
-            "border border-sky-400 text-sky-400 bg-white/80 backdrop-blur-sm hover:bg-sky-100/80 active:bg-sky-200/60":
+            "border-sky-400 text-sky-400 bg-white/80 backdrop-blur-sm hover:bg-sky-100/80 active:bg-sky-200/60":
               type === "outline",
           },
           {

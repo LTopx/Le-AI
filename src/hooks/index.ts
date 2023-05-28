@@ -6,3 +6,4 @@ export * from "./useOpenAI";
 export * from "./useRevoke";
 export * from "./useSetting";
 export * from "./useStream";
+export * from "./useLLM";

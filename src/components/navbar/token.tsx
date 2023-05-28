@@ -3,13 +3,22 @@ import * as Accordion from "@radix-ui/react-accordion";
 import { useTranslations } from "next-intl";
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
+import Divider from "@/components/ui/Divider";
 import { cn } from "@/lib";
 import { AiFillCaretDown } from "react-icons/ai";
+import type { ChannelCost } from "@/hooks";
+
+interface TokenProps {
+  cost: ChannelCost | undefined;
+}
 
 const AccordionItem = React.forwardRef(
   ({ children, className, ...props }: any, forwardedRef) => (
     <Accordion.Item
-      className={cn("overflow-hidden border-b", className)}
+      className={cn(
+        "overflow-hidden border-b border-neutral-300 dark:border-neutral-300/50",
+        className
+      )}
       {...props}
       ref={forwardedRef}
     >
@@ -58,19 +67,13 @@ const AccordionContent = React.forwardRef(
 );
 AccordionContent.displayName = "AccordionContent";
 
-const Token = React.forwardRef((_, forwardedRef) => {
+const Token = React.forwardRef<any, TokenProps>(({ cost }, forwardedRef) => {
   const t = useTranslations("token");
   const tCommon = useTranslations("common");
 
   const [open, setOpen] = React.useState(false);
 
-  const onClose = () => {
-    setOpen(false);
-  };
-
-  const onOk = () => {
-    setOpen(false);
-  };
+  const onClose = () => setOpen(false);
 
   React.useImperativeHandle(forwardedRef, () => ({
     init() {
@@ -78,21 +81,37 @@ const Token = React.forwardRef((_, forwardedRef) => {
     },
   }));
 
+  if (!cost?.total_usd) return null;
+
   return (
     <Modal
       title={t("conversation-cost")}
       maskClosable={false}
       open={open}
       onClose={onClose}
-      onOk={onOk}
       footer={
         <div className="flex justify-end gap-2">
-          <Button type="primary" onClick={onOk}>
+          <Button type="primary" onClick={onClose}>
             {tCommon("ok")}
           </Button>
         </div>
       }
     >
+      <div className="flex flex-col my-3 px-5 gap-3">
+        <div>
+          <div className="font-medium">{t("current-cost")}</div>
+          <div className="text-sm">
+            ${cost.usd} / {cost.tokens} Tokens
+          </div>
+        </div>
+        <div>
+          <div className="font-medium">{t("current-total-cost")}</div>
+          <div className="text-sm">
+            ${cost.total_usd} / {cost.total_tokens} Tokens
+          </div>
+        </div>
+      </div>
+      <Divider />
       <Accordion.Root type="single" collapsible>
         <AccordionItem value="item-1">
           <AccordionTrigger>{t("what-is-token")}</AccordionTrigger>

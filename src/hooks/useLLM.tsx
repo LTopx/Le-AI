@@ -1,4 +1,33 @@
+import * as React from "react";
+import { create } from "zustand";
 import { SiMicrosoftazure } from "react-icons/si";
+
+export interface Model {
+  label: string;
+  value: string;
+}
+
+interface ILLM {
+  label: string;
+  value: string;
+  ico: React.ReactNode;
+  models: Model[];
+}
+
+interface LLMState {
+  openai: ILLM;
+  azure: ILLM;
+}
+
+interface LLMAction {
+  updateAzure: (value: Model[]) => void;
+}
+
+interface UseLLMReturn {
+  openai: ILLM;
+  azure: ILLM;
+  updateAzure: LLMAction["updateAzure"];
+}
 
 const GptSvg = () => (
   <svg
@@ -13,43 +42,50 @@ const GptSvg = () => (
   </svg>
 );
 
-export const LLM = [
-  {
+const useStore = create<LLMState & LLMAction>((set) => ({
+  openai: {
     label: "OpenAI",
     value: "openai",
     ico: <GptSvg />,
     models: [
-      {
-        label: "gpt-3.5",
-        value: "gpt-3.5-turbo",
-      },
-      {
-        label: "gpt-4",
-        value: "gpt-4",
-      },
-      {
-        label: "gpt-4-32K",
-        value: "gpt-4-32K",
-      },
+      { label: "gpt-3.5-turbo", value: "gpt-3.5-turbo" },
+      { label: "gpt-4", value: "gpt-4" },
+      { label: "gpt-4-32k", value: "gpt-4-32k" },
     ],
   },
-  {
+  azure: {
     label: "Azure OpenAI",
     value: "azure",
     ico: <SiMicrosoftazure size={16} />,
     models: [
-      {
-        label: "gpt-3.5",
-        value: "lgpt-35-turbo",
-      },
-      {
-        label: "gpt-4",
-        value: "gpt-4",
-      },
-      {
-        label: "gpt-4-32K",
-        value: "gpt-4-32K",
-      },
+      // system default
+      { label: "gpt-3.5-turbo", value: "lgpt-35-turbo" },
+      { label: "gpt-4", value: "gpt-4" },
+      { label: "gpt-4-32k", value: "gpt-4-32k" },
     ],
   },
-];
+  updateAzure: (models: Model[]) => {
+    localStorage.setItem("azureModels", JSON.stringify(models));
+    set((state) => ({ azure: { ...state.azure, models } }));
+  },
+}));
+
+export const useLLM = (): UseLLMReturn => {
+  const { openai, azure } = useStore();
+
+  const updateAzure = useStore((state) => state.updateAzure);
+
+  React.useEffect(() => {
+    try {
+      const localAzureModels = localStorage.getItem("azureModels");
+      if (localAzureModels)
+        updateAzure(
+          JSON.parse(localAzureModels).sort((x: any, y: any) =>
+            x.label.localeCompare(y.label)
+          )
+        );
+    } catch {}
+  }, []);
+
+  return { openai, azure, updateAzure };
+};

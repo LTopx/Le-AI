@@ -2,9 +2,8 @@ import * as React from "react";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useChannel } from "@/hooks";
+import { useChannel, useLLM } from "@/hooks";
 import Select from "@/components/ui/Select";
-import { LLM } from "@/utils/constant";
 import { PROMPT_DEFAULT } from "@/prompt";
 import type { Prompt } from "@/prompt";
 
@@ -17,15 +16,18 @@ const renderLabel = (item: any) => {
   );
 };
 
-const Configure: React.FC = () => {
+const Configure = React.memo(() => {
   const [channel, setChannel] = useChannel();
+  const { openai, azure } = useLLM();
   const [isShow, setIsShow] = React.useState(true);
+
+  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
 
   const { findChannel, options } = React.useMemo(() => {
     const { list, activeId } = channel;
     const findChannel = list.find((item) => item.channel_id === activeId);
     const options =
-      LLM.find((item) => item.value === findChannel?.channel_model.type)
+      LLMOptions.find((item) => item.value === findChannel?.channel_model.type)
         ?.models || [];
 
     return { findChannel, options };
@@ -40,7 +42,7 @@ const Configure: React.FC = () => {
       if (!nowChannel) return channel;
       nowChannel.channel_model.type = value;
       nowChannel.channel_model.name =
-        LLM.find((val) => val.value === value)?.models[0].value || "";
+        LLMOptions.find((val) => val.value === value)?.models[0].value || "";
       return channel;
     });
   };
@@ -102,7 +104,7 @@ const Configure: React.FC = () => {
               <Select
                 className="w-full"
                 size="large"
-                options={LLM}
+                options={LLMOptions}
                 renderLabel={renderLabel}
                 value={findChannel?.channel_model.type}
                 onChange={onChangeType}
@@ -189,6 +191,8 @@ const Configure: React.FC = () => {
       )} */}
     </div>
   );
-};
+});
+
+Configure.displayName = "Configure";
 
 export default Configure;

@@ -2,11 +2,10 @@ import * as React from "react";
 import { cn } from "@/lib";
 import { useTranslations } from "next-intl";
 import { AiOutlineMenuUnfold, AiOutlineEdit } from "react-icons/ai";
-import { useChannel, useOpenAI, useMobileMenu } from "@/hooks";
+import { useChannel, useOpenAI, useMobileMenu, useLLM } from "@/hooks";
 import Avatar from "@/components/auth/avatar";
 import ConversationSetting from "./conversationSetting";
 import Token from "./token";
-import { LLM } from "@/utils/constant";
 
 const Navbar: React.FC = () => {
   const conversationSettingRef = React.useRef<any>(null);
@@ -14,15 +13,17 @@ const Navbar: React.FC = () => {
   const tMenu = useTranslations("menu");
   const tSetting = useTranslations("setting");
   const [channel] = useChannel();
-  const [openai] = useOpenAI();
+  const { openai, azure } = useLLM();
+  const [openAI] = useOpenAI();
 
   const [, setMobileMenuVisible] = useMobileMenu();
+  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
 
   const apiKey =
-    openai.openai.apiKey ||
-    openai.azure.apiKey ||
-    openai.env.OPENAI_API_KEY ||
-    openai.env.AZURE_API_KEY;
+    openAI.openai.apiKey ||
+    openAI.azure.apiKey ||
+    openAI.env.OPENAI_API_KEY ||
+    openAI.env.AZURE_API_KEY;
 
   const onOpenMenu = () => setMobileMenuVisible(true);
 
@@ -37,8 +38,10 @@ const Navbar: React.FC = () => {
     (item) => item.channel_id === channel.activeId
   );
 
+  const activeCost = activeChannel?.channel_cost;
+
   const renderIcon = () => {
-    const icon = LLM.find(
+    const icon = LLMOptions.find(
       (item) => item.value === activeChannel?.channel_model.type
     )?.ico;
 
@@ -76,8 +79,8 @@ const Navbar: React.FC = () => {
               "text-slate-700 hover:text-slate-900",
               "dark:text-slate-400 dark:hover:text-slate-300",
               {
-                "top-2": !!activeChannel?.channel_usd,
-                "top-[50%] translate-y-[-50%]": !activeChannel?.channel_usd,
+                "top-2": !!activeCost?.total_usd,
+                "top-[50%] translate-y-[-50%]": !activeCost?.total_usd,
               }
             )}
           >
@@ -102,7 +105,7 @@ const Navbar: React.FC = () => {
               />
             )}
           </div>
-          {!!activeChannel?.channel_usd && (
+          {!!activeCost?.total_usd && (
             <div
               onClick={onCheckToken}
               className={cn(
@@ -112,9 +115,9 @@ const Navbar: React.FC = () => {
               )}
             >
               <div className="cursor-pointer select-none whitespace-nowrap">
-                <span>${activeChannel.channel_usd}</span>
+                <span>${activeCost.usd}</span>
                 <span> / </span>
-                <span>{`${activeChannel.channel_tokens} Tokens`}</span>
+                <span>{`${activeCost.tokens} Tokens`}</span>
               </div>
             </div>
           )}
@@ -123,7 +126,7 @@ const Navbar: React.FC = () => {
         <Avatar />
       </div>
       <ConversationSetting ref={conversationSettingRef} />
-      <Token ref={tokenRef} />
+      <Token ref={tokenRef} cost={activeCost} />
     </>
   );
 };

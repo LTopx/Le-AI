@@ -96,7 +96,7 @@ const Modal = React.forwardRef<any, ModalProps>(
               >
                 {title || "Title"}
               </Dialog.Title>
-              <div className="mt-2 mb-4">{children}</div>
+              <div className="my-4">{children}</div>
               {footer !== undefined ? (
                 footer
               ) : (

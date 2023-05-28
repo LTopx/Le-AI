@@ -1,33 +1,25 @@
 import * as React from "react";
-import { cn } from "@/lib";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { TbTrashXFilled } from "react-icons/tb";
 import { BiExport, BiImport } from "react-icons/bi";
 import { saveAs } from "file-saver";
 import { useDateFormat } from "l-hooks";
 import toast from "react-hot-toast";
+import { cn } from "@/lib";
 import Modal from "@/components/ui/Modal";
 import Select from "@/components/ui/Select";
 import Button from "@/components/ui/Button";
 import Confirm from "@/components/ui/Confirm";
-import { LLM, sendMessageTypes } from "@/utils/constant";
+import { sendMessageTypes } from "@/utils/constant";
 import { getPlatform } from "@/lib";
 import type { Platform } from "@/lib";
 import { useChannel, useOpenAI, useSetting, useConfig } from "@/hooks";
 import type { IConfigStoreState } from "@/hooks";
-import OpenAI from "./openai";
-import Azure from "./azure";
-
-const renderLabel = (item: any) => {
-  return (
-    <div className="flex items-center gap-2">
-      {item.ico}
-      {item.label}
-    </div>
-  );
-};
 
 const Setting: React.FC = () => {
+  const router = useRouter();
+
   const [channel, setChannel] = useChannel();
   const [openai, setOpenAI] = useOpenAI();
   const [visible, setVisible] = useSetting();
@@ -35,12 +27,17 @@ const Setting: React.FC = () => {
   const { format } = useDateFormat();
 
   const fileRef = React.useRef<any>(null);
-  const [model, setModel] = React.useState<string>("");
   const [plat, setPlat] = React.useState<Platform>("windows");
+  const [loading, setLoading] = React.useState(false);
 
   const t = useTranslations("setting");
 
   const onClose = () => setVisible(false);
+
+  const onSettingApiKey = () => {
+    setLoading(true);
+    router.push("/configure-key");
+  };
 
   const handleResetData = () => {
     localStorage.clear();
@@ -101,11 +98,11 @@ const Setting: React.FC = () => {
   };
 
   React.useEffect(() => {
-    if (visible && !model) setModel(LLM[0].value);
-  }, [visible]);
-
-  React.useEffect(() => {
     setPlat(getPlatform());
+
+    return () => {
+      onClose();
+    };
   }, []);
 
   return (
@@ -117,18 +114,22 @@ const Setting: React.FC = () => {
         open={visible}
         onClose={onClose}
       >
-        <div className="px-1">
-          <Select
-            className="w-full"
-            size="large"
-            options={LLM}
-            value={model}
-            renderLabel={renderLabel}
-            onChange={setModel}
-          />
+        <div
+          className={cn(
+            "flex items-center justify-between py-2 px-1 border-b",
+            "border-slate-100 dark:border-neutral-500/60"
+          )}
+        >
+          <div className="text-sm">API Key</div>
+          <Button
+            className="w-44"
+            type="primary"
+            loading={loading}
+            onClick={onSettingApiKey}
+          >
+            {t("configuration")}
+          </Button>
         </div>
-        {model === LLM[0].value && <OpenAI />}
-        {model === LLM[1].value && <Azure />}
         <div
           className={cn(
             "flex items-center justify-between py-2 px-1 border-b",
