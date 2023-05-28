@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "devt": "next dev --turbo",
-    "build": "prisma generate && prisma migrate deploy && next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "db-generate": "prisma generate",
@@ -42,7 +42,7 @@
     "js-tiktoken": "1.0.6",
     "l-hooks": "0.4.5",
     "math-random": "2.0.1",
-    "next": "13.4.4",
+    "next": "13.4.3",
     "next-auth": "4.22.1",
     "next-intl": "2.14.6",
     "next-themes": "0.2.1",

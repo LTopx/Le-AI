@@ -10,7 +10,7 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "L-GPT",
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <Script src="/disableSafariScalable.js" />
-      <body className={inter.className}>
+      <body>
         <Providers>{children}</Providers>
         <Toaster
           toastOptions={{
