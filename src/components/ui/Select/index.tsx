@@ -56,7 +56,7 @@ const LSelect: React.FC<LSelectProps> = ({
     } else {
       setTimeout(() => {
         setIsOpen(false);
-      });
+      }, 100);
     }
   };
 

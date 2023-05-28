@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib";
 import { useLLM } from "@/hooks";
 import Select from "@/components/ui/Select";
+import Divider from "@/components/ui/Divider";
 import OpenAI from "@/components/apiKeySetting/openai";
 import Azure from "@/components/apiKeySetting/azure";
 
@@ -23,6 +24,8 @@ const ApiKey: React.FC = () => {
 
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
   const [model, setModel] = React.useState<string>("");
+
+  const findLLM = LLMOptions.find((item) => item.value === model);
 
   React.useEffect(() => {
     setModel(LLMOptions[0].value);
@@ -48,6 +51,12 @@ const ApiKey: React.FC = () => {
             renderLabel={renderLabel}
             onChange={setModel}
           />
+        </div>
+        <div className="py-2 mb-4 relative">
+          <Divider />
+          <div className="bg-white p-2 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+            {findLLM?.ico_big}
+          </div>
         </div>
         {model === LLMOptions[0].value && <OpenAI />}
         {model === LLMOptions[1].value && <Azure />}

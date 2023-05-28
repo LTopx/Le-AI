@@ -40,7 +40,7 @@ const Azure: React.FC = () => {
     const azureModels: any[] = [
       {
         label: "gpt-3.5",
-        value: "gpt-3.5",
+        value: "gpt-3.5-turbo",
       },
       {
         label: "gpt-4",
