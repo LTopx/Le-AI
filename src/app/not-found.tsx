@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-intl/client";
 import Button from "@/components/ui/Button";
 
 export default function NotFound() {

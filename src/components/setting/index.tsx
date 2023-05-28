@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
 import { TbTrashXFilled } from "react-icons/tb";
 import { BiExport, BiImport } from "react-icons/bi";

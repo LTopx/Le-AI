@@ -7,9 +7,6 @@ import { prisma } from "@/lib/prisma";
 
 // export const runtime = "edge";
 
-// const apiVersion = "2023-03-15-preview";
-const apiVersion = "2023-05-15";
-
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
@@ -56,8 +53,8 @@ export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const headersList = headers();
   const headerApiKey = headersList.get("Authorization");
-  const NEXT_PUBLIC_AZURE_OPENAI_API_KEY =
-    process.env.NEXT_PUBLIC_AZURE_OPENAI_API_KEY;
+  const ENV_API_KEY = process.env.NEXT_PUBLIC_AZURE_OPENAI_API_KEY;
+  const ENV_API_VERSION = process.env.NEXT_AZURE_OPENAI_API_VERSION;
 
   /**
    * If not logged in, only the locally configured API Key can be used.
@@ -69,25 +66,23 @@ export async function POST(request: Request) {
   // first use local
   // then use env configuration
   // or empty
-  const Authorization = headerApiKey || NEXT_PUBLIC_AZURE_OPENAI_API_KEY || "";
+  const Authorization = headerApiKey || ENV_API_KEY || "";
 
   if (!Authorization) {
     return NextResponse.json({ error: 10002 }, { status: 500 });
   }
 
-  const {
-    model,
-    temperature,
-    max_tokens,
-    prompt,
-    resourceName: name,
-    chat_list,
-  } = await request.json();
+  if (!ENV_API_VERSION) {
+    return NextResponse.json({ error: 10004 }, { status: 500 });
+  }
 
-  const resourceName =
-    name || process.env.NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME;
+  const { model, temperature, max_tokens, prompt, resourceName, chat_list } =
+    await request.json();
 
-  const fetchURL = `https://${resourceName}.openai.azure.com/openai/deployments/${model}/chat/completions?api-version=${apiVersion}`;
+  const RESOURCE_NAME =
+    resourceName || process.env.NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME;
+
+  const fetchURL = `https://${RESOURCE_NAME}.openai.azure.com/openai/deployments/${model}/chat/completions?api-version=${ENV_API_VERSION}`;
 
   const messages = [...chat_list];
 

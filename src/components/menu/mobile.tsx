@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useDateFormat } from "l-hooks";

@@ -17,3 +17,7 @@
 - NEXT_PUBLIC_AZURE_OPENAI_API_KEY
 
 <img src="./public/screenshots/azure/api-key.png" width="640">
+
+- NEXT_AZURE_OPENAI_API_VERSION
+
+Azure OpenAI Service API Version

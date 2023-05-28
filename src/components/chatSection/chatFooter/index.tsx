@@ -1,7 +1,7 @@
 import * as React from "react";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-intl/client";
 import { v4 as uuidv4 } from "uuid";
 import type { ChatItem } from "@/hooks/useChannel";
 import { AiOutlineRedo, AiOutlineClear } from "react-icons/ai";
@@ -267,6 +267,8 @@ const ChatFooter: React.FC = () => {
                 );
               } else if (streamRes.error === 10002) {
                 errorMessage = tRes("10002");
+              } else if (streamRes.error === 10004) {
+                errorMessage = tRes("10004");
               } else {
                 errorMessage = response.statusText || tCommon("service-error");
               }

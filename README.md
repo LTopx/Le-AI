@@ -6,6 +6,8 @@ L-GPT is an open-source project that helps you improve your learning, work, and 
 
 Welcome to：[Telegram](https://t.me/+7fLJJoGV_bJhYTk1)
 
+<img src="./public/screenshots/tg.jpeg" width="200">
+
 ## Preview
 
 <img src="./public/screenshots/screenshot-pc.png">
@@ -56,6 +58,9 @@ NEXT_PUBLIC_AZURE_OPENAI_API_KEY=
 # Set Your Azure OpenAI API resource name.
 NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME=
 
+# Azure OpenAI Service API Version
+NEXT_AZURE_OPENAI_API_VERSION=
+
 # set your own sentry dsn. if empty here, it will not report error to sentry
 NEXT_PUBLIC_SENTRY_DSN=
 
@@ -80,7 +85,7 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 ```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY&env=NEXT_PUBLIC_AZURE_OPENAI_API_KEY&env=NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME&env=NEXT_PUBLIC_SENTRY_DSN&env=DATABASE_URL&env=EMAIL_SERVER_HOST&env=EMAIL_SERVER_PORT&env=EMAIL_SERVER_USER&env=EMAIL_SERVER_PASSWORD&env=EMAIL_FROM&env=EMAIL_SECRET&env=GITHUB_ID&env=GITHUB_SECRET&env=GOOGLE_CLIENT_ID&env=GOOGLE_CLIENT_SECRET)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY&env=NEXT_PUBLIC_AZURE_OPENAI_API_KEY&env=NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME&env=NEXT_AZURE_OPENAI_API_VERSION&env=NEXT_PUBLIC_SENTRY_DSN&env=DATABASE_URL&env=EMAIL_SERVER_HOST&env=EMAIL_SERVER_PORT&env=EMAIL_SERVER_USER&env=EMAIL_SERVER_PASSWORD&env=EMAIL_FROM&env=EMAIL_SECRET&env=GITHUB_ID&env=GITHUB_SECRET&env=GOOGLE_CLIENT_ID&env=GOOGLE_CLIENT_SECRET)
 
 ## Running Local
 
@@ -130,6 +135,7 @@ You can configure the following environment variables.
 | `NEXT_PUBLIC_OPENAI_API_PROXY`           | your OpenAI API proxy server                                    | false    | `https://api.openai.com` |
 | `NEXT_PUBLIC_AZURE_OPENAI_API_KEY`       | your Azure OpenAI API Key. [View Example](./azure.md)           | false    |                          |
 | `NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME` | your Azure OpenAI API resource name. [View Example](./azure.md) | false    |                          |
+| `NEXT_AZURE_OPENAI_API_VERSION`          | your Azure OpenAI API Version. [View Example](./azure.md)       | true     | 2023-05-15               |
 | `NEXT_PUBLIC_SENTRY_DSN`                 | your sentry dsn. If empty, it will not report error to sentry   | false    |                          |
 | `DATABASE_URL`                           | postgresql database address                                     | true     |                          |
 | `EMAIL_SERVER_HOST`                      | next-auth email server host                                     | true     |                          |

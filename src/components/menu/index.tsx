@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import {
@@ -148,7 +149,7 @@ const Menu: React.FC = () => {
 
   const onLocaleChange = (value: string) => {
     if (value === locale) return;
-    router.push(value);
+    router.replace(value);
   };
 
   React.useEffect(() => {

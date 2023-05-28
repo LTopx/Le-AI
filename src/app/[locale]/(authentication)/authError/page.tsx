@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib";
 import Logo from "@/components/logo";

@@ -8,6 +8,7 @@
 
 - Fixed the issue where unauthenticated users could not have a normal conversation even after configuring the API key.
 - Fix the text color issue for Select placeholder and the logic issue for disabled.
+- Fixed the issue of losing the locale path when routing. Replaced next/navigation/useRouter with next-intl/client/useRouter.
 
 ### Changed
 

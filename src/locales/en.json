@@ -84,7 +84,8 @@
   "responseErr": {
     "10001": "Please log in or configure your API Key.",
     "10002": "API Key missing, please check configuration or contact the developer",
-    "10003": "Language model parameter error"
+    "10003": "Language model parameter error",
+    "10004": "Please configure Azure API Version first"
   },
   "setting": {
     "api-key-error": "Invalid API key. Please make sure your API key is still working properly.",

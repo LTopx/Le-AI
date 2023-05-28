@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-intl/client";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";

@@ -8,6 +8,7 @@
 
 - 修复未登录用户配置 api key 依旧无法正常对话的问题
 - 修复 Select placeholder 的文本颜色问题以及 disabled 的逻辑问题
+- 修复路由跳转丢失 locale path 的问题。替换 next/navigation/useRouter 为 next-intl/client/useRouter
 
 ### Changed
 

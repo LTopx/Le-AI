@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { cn } from "@/lib";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
 
 interface MenuItemProps {

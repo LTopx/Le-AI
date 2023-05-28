@@ -4,6 +4,8 @@ L-GPT 是一款开源项目，通过提供不同的 AI 模型来帮助你提高�
 
 欢迎加入：[TG 群](https://t.me/+7fLJJoGV_bJhYTk1)
 
+<img src="./public/screenshots/tg.jpeg" width="200">
+
 ## 预览
 
 <img src="./public/screenshots/screenshot-pc.png">
@@ -54,6 +56,9 @@ NEXT_PUBLIC_AZURE_OPENAI_API_KEY=
 # 配置你的 Azure OpenAI 资源名称.
 NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME=
 
+# Azure OpenAI Service API 版本号
+NEXT_AZURE_OPENAI_API_VERSION=
+
 # 配置你的 sentry dsn地址。如果为空, 将不会将错误报告到 sentry
 NEXT_PUBLIC_SENTRY_DSN=
 
@@ -78,7 +83,7 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 ```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY&env=NEXT_PUBLIC_AZURE_OPENAI_API_KEY&env=NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME&env=NEXT_PUBLIC_SENTRY_DSN&env=DATABASE_URL&env=EMAIL_SERVER_HOST&env=EMAIL_SERVER_PORT&env=EMAIL_SERVER_USER&env=EMAIL_SERVER_PASSWORD&env=EMAIL_FROM&env=EMAIL_SECRET&env=GITHUB_ID&env=GITHUB_SECRET&env=GOOGLE_CLIENT_ID&env=GOOGLE_CLIENT_SECRET)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY&env=NEXT_PUBLIC_AZURE_OPENAI_API_KEY&env=NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME&env=NEXT_AZURE_OPENAI_API_VERSION&env=NEXT_PUBLIC_SENTRY_DSN&env=DATABASE_URL&env=EMAIL_SERVER_HOST&env=EMAIL_SERVER_PORT&env=EMAIL_SERVER_USER&env=EMAIL_SERVER_PASSWORD&env=EMAIL_FROM&env=EMAIL_SECRET&env=GITHUB_ID&env=GITHUB_SECRET&env=GOOGLE_CLIENT_ID&env=GOOGLE_CLIENT_SECRET)
 
 ## 本地运行
 
@@ -122,24 +127,25 @@ pnpm build && pnpm start
 
 你可以配置以下环境变量。
 
-| 环境变量                                 | 描述                                                              | 是否必须配置 | 默认值                   |
-| ---------------------------------------- | ----------------------------------------------------------------- | ------------ | ------------------------ |
-| `NEXT_PUBLIC_OPENAI_API_KEY`             | 你个人的 OpenAI API key                                           | 否           |                          |
-| `NEXT_PUBLIC_OPENAI_API_PROXY`           | 你个人的 OpenAI API 代理地址                                      | 否           | `https://api.openai.com` |
-| `NEXT_PUBLIC_AZURE_OPENAI_API_KEY`       | 你个人的 Azure OpenAI API key。[查看示例](./azure_CN.md)          | 否           |                          |
-| `NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME` | 你个人的 Azure OpenAI API 服务资源名称。[查看示例](./azure_CN.md) | 否           |                          |
-| `NEXT_PUBLIC_SENTRY_DSN`                 | 你的 sentry dsn 地址。如果为空, 将不会将错误报告到 sentry         | 否           |                          |
-| `DATABASE_URL`                           | postgresql 数据库连接地址                                         | true         |                          |
-| `EMAIL_SERVER_HOST`                      | next-auth email server host                                       | true         |                          |
-| `EMAIL_SERVER_PORT`                      | next-auth email server port                                       | true         |                          |
-| `EMAIL_SERVER_USER`                      | next-auth email server user                                       | true         |                          |
-| `EMAIL_SERVER_PASSWORD`                  | next-auth email server password                                   | true         |                          |
-| `EMAIL_FROM`                             | next-auth email from                                              | false        |                          |
-| `EMAIL_SECRET`                           | next-auth email secret                                            | true         |                          |
-| `GITHUB_ID`                              | next-auth github id                                               | true         |                          |
-| `GITHUB_SECRET`                          | next-auth github secret                                           | true         |                          |
-| `GOOGLE_CLIENT_ID`                       | next-auth google client id                                        | true         |                          |
-| `GOOGLE_CLIENT_SECRET`                   | next-auth google client secret                                    | true         |                          |
+| 环境变量                                 | 描述                                                      | 是否必须配置 | 默认值                   |
+| ---------------------------------------- | --------------------------------------------------------- | ------------ | ------------------------ |
+| `NEXT_PUBLIC_OPENAI_API_KEY`             | OpenAI API key                                            | 否           |                          |
+| `NEXT_PUBLIC_OPENAI_API_PROXY`           | OpenAI API 代理地址                                       | 否           | `https://api.openai.com` |
+| `NEXT_PUBLIC_AZURE_OPENAI_API_KEY`       | Azure OpenAI API key。[查看示例](./azure_CN.md)           | 否           |                          |
+| `NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME` | Azure OpenAI API 服务资源名称。[查看示例](./azure_CN.md)  | 否           |                          |
+| `NEXT_AZURE_OPENAI_API_VERSION`          | Azure OpenAI API 服务版本号。[查看示例](./azure_CN.md)    | 是           | 2023-05-15               |
+| `NEXT_PUBLIC_SENTRY_DSN`                 | 你的 Sentry DSN 地址。如果为空, 将不会将错误报告到 Sentry | 否           |                          |
+| `DATABASE_URL`                           | postgresql 数据库连接地址                                 | 是           |                          |
+| `EMAIL_SERVER_HOST`                      | next-auth email server host                               | 是           |                          |
+| `EMAIL_SERVER_PORT`                      | next-auth email server port                               | 是           |                          |
+| `EMAIL_SERVER_USER`                      | next-auth email server user                               | 是           |                          |
+| `EMAIL_SERVER_PASSWORD`                  | next-auth email server password                           | 是           |                          |
+| `EMAIL_FROM`                             | next-auth email from                                      | 否           |                          |
+| `EMAIL_SECRET`                           | next-auth email secret                                    | 是           |                          |
+| `GITHUB_ID`                              | next-auth github id                                       | 是           |                          |
+| `GITHUB_SECRET`                          | next-auth github secret                                   | 是           |                          |
+| `GOOGLE_CLIENT_ID`                       | next-auth google client id                                | 是           |                          |
+| `GOOGLE_CLIENT_SECRET`                   | next-auth google client secret                            | 是           |                          |
 
 ## 联系方式
 
