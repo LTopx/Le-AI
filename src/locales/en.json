@@ -40,19 +40,19 @@
   "chat": {
     "canceled": "Canceled",
     "clear-current-conversation": "Are you sure to clear the current conversation?",
-    "content-deleted": "Content deleted.",
     "copy": "Copy",
     "copied": "Copied",
     "copy-code": "Copy Code",
     "delete": "Delete",
+    "delete-chat": "Delete conversation content",
+    "delete-chat-tip": "Are you sure you want to delete this content?",
     "enter-message": "Please enter a message",
     "re-generate": "Regenerate",
     "stop-generate": "Stop Generating",
     "type-message": "Type message here...",
     "type-message-commandEnter": "Type message here... (send with Command + Enter, can be modified in Settings)",
     "type-message-ctrlEnter": "Type message here... (send with Ctrl + Enter, can be modified in Settings)",
-    "type-message-enter": "Type message here... (send with Enter, can be modified in Settings)",
-    "undo": "undo"
+    "type-message-enter": "Type message here... (send with Enter, can be modified in Settings)"
   },
   "common": {
     "cancel": "Cancel",

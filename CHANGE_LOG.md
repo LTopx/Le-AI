@@ -13,6 +13,7 @@
 - Move all Prisma variable definitions to .env.local
 - Standardize the global logo style
 - Multiple detailed optimizations
+- Optimize the token consumption calculation logic for more extreme cases.
 
 ## v0.4.3
 

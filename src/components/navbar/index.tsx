@@ -79,8 +79,8 @@ const Navbar: React.FC = () => {
               "text-slate-700 hover:text-slate-900",
               "dark:text-slate-400 dark:hover:text-slate-300",
               {
-                "top-2": !!activeCost?.total_usd,
-                "top-[50%] translate-y-[-50%]": !activeCost?.total_usd,
+                "top-2": !!activeCost?.tokens,
+                "top-[50%] translate-y-[-50%]": !activeCost?.tokens,
               }
             )}
           >
@@ -105,7 +105,7 @@ const Navbar: React.FC = () => {
               />
             )}
           </div>
-          {!!activeCost?.total_usd && (
+          {!!activeCost?.tokens && (
             <div
               onClick={onCheckToken}
               className={cn(

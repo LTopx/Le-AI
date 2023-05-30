@@ -69,16 +69,18 @@ const ChatFooter: React.FC = () => {
     (item) => item.channel_id === channel.activeId
   );
 
-  // stop generate or regenerate
   const onGenerate = () => {
+    // stop generate
     if (loadingResponseFinish) {
       toast.error(t("canceled"));
       chatAbort?.abort();
       updateStart(false);
       updateFinish(false);
+      calcToken();
       return;
     }
 
+    // regenerate
     const findChannel = channel.list.find(
       (item) => item.channel_id === channel.activeId
     );
@@ -142,25 +144,7 @@ const ChatFooter: React.FC = () => {
   };
 
   // calc current conversation token
-  const calcToken = (
-    message_list: ChatItem[],
-    model: string,
-    isFunctional?: boolean
-  ) => {
-    let calcModel = model;
-    const findAzureModel = azure.models.find((item) => item.value === model);
-    if (findAzureModel) calcModel = findAzureModel.label;
-
-    const tokenInfo = new GPTTokens({
-      model: calcModel as supportModelType,
-      messages: message_list.map((item) => ({
-        role: item.role,
-        content: item.content,
-      })),
-    });
-
-    const { usedTokens, usedUSD } = tokenInfo;
-
+  const calcToken = (isFunctional?: boolean) => {
     setChannel((channel) => {
       const { list, activeId } = channel;
       const findChannel = list.find((item) => item.channel_id === activeId);
@@ -176,6 +160,22 @@ const ChatFooter: React.FC = () => {
           total_usd: 0,
         };
       }
+
+      let calcModel = findChannel.channel_model.name;
+      const findAzureModel = azure.models.find(
+        (item) => item.value === calcModel
+      );
+      if (findAzureModel) calcModel = findAzureModel.label;
+
+      const tokenInfo = new GPTTokens({
+        model: calcModel as supportModelType,
+        messages: findChannel.chat_list.map((item) => ({
+          role: item.role,
+          content: item.content,
+        })),
+      });
+
+      const { usedTokens, usedUSD } = tokenInfo;
 
       if (isFunctional) {
         findChannel.channel_cost.function_tokens += usedTokens;
@@ -324,7 +324,7 @@ const ChatFooter: React.FC = () => {
           );
           updateFinish(false);
           // calc current conversation token
-          calcToken(channel_chat_list, params.model);
+          calcToken();
 
           // get gpt title
           if (!channel_name) getChannelNameByGPT(channel_id, channel_chat_list);
@@ -395,7 +395,7 @@ const ChatFooter: React.FC = () => {
           toast.error(tCommon("service-error"));
         }
       );
-      calcToken(chat_list as ChatItem[], params.model, true);
+      calcToken(true);
     });
   };
 
@@ -473,6 +473,7 @@ const ChatFooter: React.FC = () => {
       chatAbort?.abort();
       updateStart(false);
       updateFinish(false);
+      calcToken();
       return;
     }
     setInputValue("");
@@ -507,7 +508,7 @@ const ChatFooter: React.FC = () => {
             </Button>
             <Button
               type="outline"
-              leftIcon={<AiOutlineShareAlt />}
+              leftIcon={<AiOutlineShareAlt size={18} />}
               loading={loadingShare}
               onClick={handleShare}
             />

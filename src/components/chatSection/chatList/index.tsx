@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useDateFormat } from "l-hooks";
 import CopyIcon from "@/components/copyIcon";
 import ChatContent from "@/components/chatContent";
+import Confirm from "@/components/ui/Confirm";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
 import {
   AiOutlineLoading,
@@ -12,14 +13,17 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import { cn } from "@/lib";
-import { useChannel, useRevoke, useChat } from "@/hooks";
+import { GPTTokens } from "@/lib/gpt-tokens";
+import type { supportModelType } from "@/lib/gpt-tokens";
+import { useChannel, useChat, useLLM } from "@/hooks";
 import type { ChatItem } from "@/hooks";
 import Configure from "./configure";
 
 const ChatList: React.FC = () => {
   const session = useSession();
-  const t = useTranslations("chat");
   const { format } = useDateFormat();
+  const { azure } = useLLM();
+  const t = useTranslations("chat");
 
   const user = session.data?.user;
 
@@ -32,12 +36,6 @@ const ChatList: React.FC = () => {
 
   const chatList = findChannel?.chat_list || [];
 
-  const { set } = useRevoke({
-    revoke: (value) => onRevoke(value),
-    tip: t("content-deleted") as string,
-    btn: t("undo") as string,
-  });
-
   const scrollToBottom = useScrollToBottom();
 
   const onDelete = (item: ChatItem) => {
@@ -46,17 +44,29 @@ const ChatList: React.FC = () => {
       const { list, activeId } = channel;
       const findChannel = list.find((item) => item.channel_id === activeId);
       if (!findChannel) return channel;
-      const findChatIndex = findChannel.chat_list.findIndex(
-        (item) => item.id === id
-      );
-      set("chatItem", {
-        id: activeId,
-        index: findChatIndex,
-        content: findChannel.chat_list[findChatIndex],
-      });
       findChannel.chat_list = findChannel.chat_list.filter(
         (item) => item.id !== id
       );
+
+      let calcModel = findChannel.channel_model.name;
+      const findAzureModel = azure.models.find(
+        (item) => item.value === calcModel
+      );
+      if (findAzureModel) calcModel = findAzureModel.label;
+
+      const tokenInfo = new GPTTokens({
+        model: calcModel as supportModelType,
+        messages: findChannel.chat_list.map((item) => ({
+          role: item.role,
+          content: item.content,
+        })),
+      });
+      // Only updates the tokens required to process the entire content of the current session,
+      // without affecting the tokens that have already been consumed,
+      // and therefore does not affect the value of total_tokens.
+      findChannel.channel_cost.tokens = tokenInfo.usedTokens;
+      findChannel.channel_cost.usd = Number(tokenInfo.usedUSD.toFixed(5));
+
       return channel;
     });
   };
@@ -120,10 +130,18 @@ const ChatList: React.FC = () => {
                     className="transition-colors hover:text-black/90 dark:hover:text-sky-400/90"
                     content={item.content}
                   />
-                  <AiOutlineDelete
-                    className="cursor-pointer transition-colors hover:text-black/90 dark:hover:text-sky-400/90"
-                    onClick={() => onDelete(item)}
-                    size={19}
+                  <Confirm
+                    title={t("delete-chat")}
+                    content={t("delete-chat-tip")}
+                    trigger={
+                      <div>
+                        <AiOutlineDelete
+                          className="cursor-pointer transition-colors hover:text-black/90 dark:hover:text-sky-400/90"
+                          size={19}
+                        />
+                      </div>
+                    }
+                    onOk={() => onDelete(item)}
                   />
                 </div>
               </div>
