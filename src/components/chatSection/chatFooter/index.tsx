@@ -1,10 +1,13 @@
 import * as React from "react";
-import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
 import { v4 as uuidv4 } from "uuid";
 import type { ChatItem } from "@/hooks/useChannel";
-import { AiOutlineRedo, AiOutlineClear } from "react-icons/ai";
+import {
+  AiOutlineRedo,
+  AiOutlineClear,
+  AiOutlineShareAlt,
+} from "react-icons/ai";
 import { BsStop } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
@@ -19,10 +22,12 @@ import Confirm from "@/components/ui/Confirm";
 import Button from "@/components/ui/Button";
 import Textarea from "@/components/ui/Textarea";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
-import { isMobile, getReadableStream } from "@/lib";
+import { isMobile, getReadableStream, cn } from "@/lib";
 import { PROMPT_BASE } from "@/prompt";
 import { GPTTokens } from "@/lib/gpt-tokens";
 import type { supportModelType } from "@/lib/gpt-tokens";
+import type { IShare } from "@/app/api/share/create/route";
+import Action from "@/components/share/action";
 
 const ChatFooter: React.FC = () => {
   // data
@@ -39,13 +44,16 @@ const ChatFooter: React.FC = () => {
   } = useChat();
   const [inputValue, setInputValue] = React.useState<string>("");
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
+  const [loadingShare, setLoadingShare] = React.useState(false);
 
   // ref
   const inputRef = React.useRef<any>(null);
+  const actionRef = React.useRef<any>(null);
 
   const router = useRouter();
 
   const t = useTranslations("chat");
+  const tShare = useTranslations("share");
   const tMenu = useTranslations("menu");
   const tPrompt = useTranslations("prompt");
   const tCommon = useTranslations("common");
@@ -412,6 +420,52 @@ const ChatFooter: React.FC = () => {
     });
   };
 
+  // share functions
+  const handleShare = () => {
+    if (!findChannel) return;
+
+    const findModels =
+      LLMOptions.find((e) => e.value === findChannel.channel_model.type)
+        ?.models || [];
+
+    const findType = findModels.find(
+      (e) => e.value === findChannel.channel_model.name
+    )?.label;
+
+    if (!findType) {
+      return toast.error(tShare("model-error"), { id: "model-error" });
+    }
+
+    const params: IShare = {
+      channel_model: {
+        supplier: findChannel.channel_model.type,
+        type: findType,
+      },
+      channel_name: findChannel.channel_name,
+      channel_prompt: findChannel.channel_prompt,
+      chat_content: findChannel.chat_list,
+    };
+
+    setLoadingShare(true);
+    fetch("/api/share/create", {
+      method: "POST",
+      body: JSON.stringify(params),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.error || !res.data?.id) {
+          return toast.error(res.msg || tCommon("service-error"), {
+            id: "share-error",
+          });
+        }
+        toast.success(tShare("share-success"), { id: "share-success" });
+        actionRef.current?.init(res.data.id);
+      })
+      .finally(() => {
+        setLoadingShare(false);
+      });
+  };
+
   React.useEffect(() => {
     // Cancel response immediately when switching channels if data is being requested or generated.
     if (loadingResponseStart || loadingResponseFinish) {
@@ -427,59 +481,68 @@ const ChatFooter: React.FC = () => {
   }, [channel.activeId]);
 
   return (
-    <div
-      className={clsx(
-        "bg-gradient-to-b from-transparent w-full px-5 pb-5 bottom-0 left-0 absolute",
-        "via-gray-100 to-gray-100",
-        "dark:via-neutral-900 dark:to-neutral-900"
-      )}
-    >
-      {!!findChannel?.chat_list?.length && (
-        <div className="flex py-3 justify-center items-center">
-          <Button
-            size="sm"
-            type="outline"
-            onClick={generate}
-            leftIcon={
-              loadingResponseFinish ? (
-                <BsStop size={20} />
-              ) : (
-                <AiOutlineRedo size={20} />
-              )
-            }
-          >
-            {loadingResponseFinish ? t("stop-generate") : t("re-generate")}
-          </Button>
-        </div>
-      )}
+    <>
+      <div
+        className={cn(
+          "bg-gradient-to-b from-transparent w-full px-5 pb-5 bottom-0 left-0 absolute",
+          "via-gray-100 to-gray-100",
+          "dark:via-neutral-900 dark:to-neutral-900"
+        )}
+      >
+        {!!findChannel?.chat_list?.length && (
+          <div className="flex py-2 justify-center items-center gap-2">
+            <Button
+              size="sm"
+              type="outline"
+              onClick={generate}
+              leftIcon={
+                loadingResponseFinish ? (
+                  <BsStop size={20} />
+                ) : (
+                  <AiOutlineRedo size={20} />
+                )
+              }
+            >
+              {loadingResponseFinish ? t("stop-generate") : t("re-generate")}
+            </Button>
+            <Button
+              type="outline"
+              leftIcon={<AiOutlineShareAlt />}
+              loading={loadingShare}
+              onClick={handleShare}
+            />
+          </div>
+        )}
 
-      <div className="flex">
-        <div className="flex items-end">
-          <Confirm
-            title={tMenu("clear-all-conversation")}
-            content={t("clear-current-conversation")}
-            trigger={
-              <div
-                className={clsx(
-                  "w-8 h-[2.75rem] flex items-center cursor-pointer transition-colors",
-                  "text-black/90 hover:text-sky-400",
-                  "dark:text-white/90 dark:hover:text-sky-400/90"
-                )}
-              >
-                <AiOutlineClear size={24} />
-              </div>
-            }
-            onOk={clearNowConversation}
+        <div className="flex">
+          <div className="flex items-end">
+            <Confirm
+              title={tMenu("clear-all-conversation")}
+              content={t("clear-current-conversation")}
+              trigger={
+                <div
+                  className={cn(
+                    "w-8 h-[2.75rem] flex items-center cursor-pointer transition-colors",
+                    "text-black/90 hover:text-sky-400",
+                    "dark:text-white/90 dark:hover:text-sky-400/90"
+                  )}
+                >
+                  <AiOutlineClear size={24} />
+                </div>
+              }
+              onOk={clearNowConversation}
+            />
+          </div>
+          <Textarea
+            ref={inputRef}
+            value={inputValue}
+            onChange={setInputValue}
+            onSubmit={sendMessage}
           />
         </div>
-        <Textarea
-          ref={inputRef}
-          value={inputValue}
-          onChange={setInputValue}
-          onSubmit={sendMessage}
-        />
       </div>
-    </div>
+      <Action ref={actionRef} />
+    </>
   );
 };
 

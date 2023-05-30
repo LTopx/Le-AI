@@ -1,5 +1,19 @@
 # L-GPT Change Log
 
+## v0.5.0
+
+> 2023-05-30
+
+### Add
+
+- Added conversation sharing function
+
+### Changed
+
+- Move all Prisma variable definitions to .env.local
+- Standardize the global logo style
+- Multiple detailed optimizations
+
 ## v0.4.3
 
 > 2023-05-28

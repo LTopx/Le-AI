@@ -37,6 +37,15 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model VerificationToken {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -48,13 +57,19 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime? @updatedAt
   recentlyUse   DateTime?
+  share         Share[]
 }
 
-model VerificationToken {
-  id         String   @id @default(cuid())
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
+model Share {
+  id             String    @id @default(cuid())
+  channel_model  Json
+  channel_name   String?
+  channel_prompt String?
+  chat_content   Json[]
+  anonymous      Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
+  userId         String?
+  userName       String?
+  user           User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

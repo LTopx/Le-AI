@@ -18,6 +18,7 @@ import Drawer from "@/components/ui/Drawer";
 import Confirm from "@/components/ui/Confirm";
 import Button from "@/components/ui/Button";
 import Dropdown from "@/components/ui/Dropdown";
+import Logo from "@/components/logo";
 import {
   useChannel,
   initChannelList,
@@ -131,15 +132,8 @@ const MobileMenu: React.FC = () => {
       className="md:hidden"
       overlayClassName="md:hidden"
       title={
-        <div className="font-extrabold text-transparent text-xl flex gap-2">
-          <span className="bg-clip-text leading-none bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
-            L - GPT
-          </span>
-          <div className="h-6 flex items-end">
-            <span className="text-neutral-300 text-sm font-medium">
-              v{pkg.version}
-            </span>
-          </div>
+        <div className="h-full flex items-center pl-2">
+          <Logo disabled />
         </div>
       }
       width="78%"
@@ -255,7 +249,7 @@ const MobileMenu: React.FC = () => {
               "dark:hover:bg-slate-700/70 dark:text-white/90",
               "text-rose-700 dark:text-rose-500"
             )}
-            href="https://support.qq.com/products/594669"
+            href="https://t.me/+7fLJJoGV_bJhYTk1"
             target="_blank"
           >
             <RiFeedbackLine size={16} /> {t("feedback")}

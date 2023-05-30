@@ -1,8 +1,10 @@
+"use client";
+
 import * as React from "react";
 import { cn } from "@/lib";
 import { AiOutlineLoading } from "react-icons/ai";
 
-type ButtonType = "default" | "primary" | "danger" | "outline";
+type ButtonType = "default" | "primary" | "success" | "danger" | "outline";
 
 type ButtonSize = "xs" | "sm" | "base" | "lg";
 
@@ -78,6 +80,16 @@ const Button = React.forwardRef<any, ButtonProps>(
           {
             "dark:border-rose-400/90 dark:bg-rose-400/90 dark:hover:border-rose-500/90 dark:hover:bg-rose-500/90 dark:active:border-rose-600/90 dark:active:bg-rose-600/90":
               type === "danger",
+          },
+
+          // success
+          {
+            "border-green-400 bg-green-400 hover:border-green-500 hover:bg-green-500 active:border-green-600 active:bg-green-600 text-white":
+              type === "success",
+          },
+          {
+            "dark:border-green-400/90 dark:bg-green-400/90 dark:hover:border-green-500/90 dark:hover:bg-green-500/90 dark:active:border-green-600/90 dark:active:bg-green-600/90":
+              type === "success",
           },
 
           // outline

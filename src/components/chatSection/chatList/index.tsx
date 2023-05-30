@@ -6,8 +6,11 @@ import { useDateFormat } from "l-hooks";
 import CopyIcon from "@/components/copyIcon";
 import ChatContent from "@/components/chatContent";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
-import { AiOutlineLoading, AiOutlineDelete } from "react-icons/ai";
-import { FaUserAlt } from "react-icons/fa";
+import {
+  AiOutlineLoading,
+  AiOutlineDelete,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { cn } from "@/lib";
 import { useChannel, useRevoke, useChat } from "@/hooks";
 import type { ChatItem } from "@/hooks";
@@ -104,7 +107,7 @@ const ChatList: React.FC = () => {
                       height={32}
                     />
                   ) : (
-                    <FaUserAlt className="text-white dark:text-neutral-600" />
+                    <AiOutlineUser className="text-white dark:text-neutral-600" />
                   )}
                 </div>
               )}

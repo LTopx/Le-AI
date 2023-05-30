@@ -29,6 +29,7 @@ Welcome to：[Telegram](https://t.me/+7fLJJoGV_bJhYTk1)
 - [x] Introduce prompt words and prompt word templates
 - [x] Chat record import and export
 - [x] Account System
+- [x] Support conversation sharing
 - [ ] Support for customizing the prompt repository
 - [ ] Support GPT-4 and Claude
 - [ ] Compress context to save chat tokens

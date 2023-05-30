@@ -1,6 +1,6 @@
 {
   "name": "l-gpt",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,9 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db-generate": "prisma generate",
-    "db-pull": "prisma db pull",
-    "db-push": "prisma db push"
+    "db-gn": "prisma generate",
+    "db-pull": "dotenv -e .env.local -- npx prisma db pull",
+    "db-push": "dotenv -e .env.local -- npx prisma db push"
   },
   "dependencies": {
     "@emotion/css": "11.11.0",
@@ -30,6 +30,7 @@
     "@types/node": "20.2.5",
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
+    "@upstash/redis": "^1.20.6",
     "@vercel/analytics": "1.0.1",
     "ahooks": "3.7.7",
     "autoprefixer": "10.4.14",
@@ -46,7 +47,7 @@
     "next-auth": "4.22.1",
     "next-intl": "2.14.6",
     "next-themes": "0.2.1",
-    "nodemailer": "6.9.2",
+    "nodemailer": "6.9.3",
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -69,6 +70,7 @@
     "@types/math-random": "1.0.0",
     "@types/react-syntax-highlighter": "15.5.7",
     "@types/uuid": "9.0.1",
+    "dotenv-cli": "7.2.1",
     "prisma": "4.14.1"
   }
 }

@@ -87,6 +87,27 @@
     "10003": "语言模型参数错误",
     "10004": "请先配置Azure API Version"
   },
+  "share": {
+    "back-home": "返回首页",
+    "continue-conversation": "继续此对话",
+    "copy-link": "复制链接",
+    "create-conversation": "会话创建中…",
+    "from": "分享来自",
+    "not-exist": "分享内容不存在或已过期。您可以点击右上角按钮返回首页开始新的聊天",
+    "model-error": "会话模型参数错误",
+    "page-views": "总浏览量",
+    "share-anonymously": "匿名分享",
+    "share-created": "您已经成功创建当前会话的分享链接",
+    "share-delete-tip": "所有未操作的分享链接将在7日被后自动清除",
+    "share-link": "分享对话链接",
+    "share-link-copy-success": "会话分享链接复制成功",
+    "share-logged-user-tip": "已经登录的用户分享会话链接后可在个人中心查看和管理自己的分享链接",
+    "share-remove": "删除分享",
+    "share-remove-success": "会话分享删除成功",
+    "share-success": "会话分享成功",
+    "share-to-twitter": "分享到 Twitter",
+    "share-update-success": "会话分享更新成功"
+  },
   "setting": {
     "api-key-error": "无效的 API 密钥。请确保您的 API 密钥配置正确。",
     "api-proxy": "API 代理地址",
@@ -149,11 +170,9 @@
     "welcome": "欢迎来到"
   },
   "zLog": {
-    "title": "v0.4.3版本更新日志 🔥🔥",
-    "text1": "修复未登录用户配置 api key 依旧无法正常对话的问题",
-    "text2": "升级默认的 Azure OpenAI Service API Version 从 2023-03-15-preview 到 2023-05-15",
-    "text3": "重构会话消耗的计算逻辑，现在支持展示当前会话内容消耗以及当前会话总消耗",
-    "text4": "重构 API Key 配置界面，将其移动到单独的界面进行配置。现在能更友好的配置Azure OpenAI Service相关信息",
-    "text5": "其他细节优化和 bug 修复"
+    "title": "v0.5.0版本更新啦 🔥🔥",
+    "text1": "🎉🎉 本次更新不花里胡哨，主要就是更新了会话分享功能。现在能够分享你当前会话给你的朋友和伙伴了",
+    "text2": "统一全局 Logo 样式",
+    "text3": "其他UI细节优化和 bug 修复"
   }
 }

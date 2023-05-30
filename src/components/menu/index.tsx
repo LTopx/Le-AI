@@ -23,8 +23,8 @@ import ContextMenu from "@/components/ui/ContextMenu";
 import type { ContextMenuOption } from "@/components/ui/ContextMenu";
 import Dropdown from "@/components/ui/Dropdown";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
+import Logo from "@/components/logo";
 import MenuIcon from "./icon";
-import pkg from "../../../package.json";
 
 export const lans: IDropdownItems[] = [
   {
@@ -159,20 +159,13 @@ const Menu: React.FC = () => {
   return (
     <div
       className={cn(
-        "p-2 hidden md:block md:w-[17.5rem] transition-colors select-none",
+        "px-2 pb-2 hidden md:block md:w-[17.5rem] transition-colors select-none",
         "bg-white",
         "dark:bg-slate-800"
       )}
     >
-      <div className="flex gap-2 font-extrabold h-12 text-transparent pb-2 text-2xl items-center">
-        <span className="bg-clip-text leading-none bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
-          L - GPT
-        </span>
-        <div className="h-6 flex items-end">
-          <span className="text-neutral-300 text-sm font-medium">
-            v{pkg.version}
-          </span>
-        </div>
+      <div className="h-14 pl-4 flex items-center">
+        <Logo disabled />
       </div>
       <Button
         className="mb-2"
@@ -280,7 +273,7 @@ const Menu: React.FC = () => {
             "dark:hover:bg-slate-700/70",
             "text-rose-700 dark:text-rose-500"
           )}
-          href="https://support.qq.com/products/594669"
+          href="https://t.me/+7fLJJoGV_bJhYTk1"
           target="_blank"
         >
           <RiFeedbackLine size={16} /> {t("feedback")}

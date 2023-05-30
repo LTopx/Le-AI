@@ -37,8 +37,6 @@ const Announcement: React.FC = () => {
             <li>{t("text1")}</li>
             <li>{t("text2")}</li>
             <li>{t("text3")}</li>
-            <li>{t("text4")}</li>
-            <li>{t("text5")}</li>
           </ul>
         </Toast.Description>
         <Toast.Action asChild altText="Check">

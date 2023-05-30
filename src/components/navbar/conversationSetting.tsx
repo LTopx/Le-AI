@@ -2,6 +2,7 @@ import * as React from "react";
 import { useTranslations } from "next-intl";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
+import Divider from "@/components/ui/Divider";
 import Select from "@/components/ui/Select";
 import { useChannel, useLLM } from "@/hooks";
 
@@ -132,7 +133,7 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
           </div>
         </div>
       </div>
-      <div className="h-[0.5px] bg-neutral-200 my-2" />
+      <Divider />
       <div className="flex items-center">
         <div className="text-sm text-black/90 dark:text-white/90  w-20">
           {t("title")}
