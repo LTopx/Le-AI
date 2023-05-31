@@ -17,22 +17,22 @@ const Announcement: React.FC = () => {
   };
 
   React.useEffect(() => {
-    const announcement_version = localStorage.getItem("announcement_version");
-    if (pkg.version !== announcement_version) setOpen(true);
+    // const announcement_version = localStorage.getItem("announcement_version");
+    // if (pkg.version !== announcement_version) setOpen(true);
   }, []);
 
   return (
     <Toast.Provider swipeDirection="right" swipeThreshold={5000}>
       <Toast.Root
-        className="bg-white rounded-md shadow-md border p-[15px] data-[state=open]:animate-slideIn data-[state=closed]:animate-hide"
+        className="bg-white border rounded-md shadow-md p-[15px] data-[state=open]:animate-slideIn data-[state=closed]:animate-hide"
         open={open}
         onOpenChange={setOpen}
         duration={9999999}
       >
-        <Toast.Title className="mb-[5px] font-medium text-lg">
+        <Toast.Title className="font-medium text-lg mb-[5px]">
           {t("title")}
         </Toast.Title>
-        <Toast.Description asChild className="mb-4 pl-4 text-sm">
+        <Toast.Description asChild className="text-sm mb-4 pl-4">
           <ul className="list-disc space-y-2 text-black/80 dark:text-white/80">
             <li>{t("text1")}</li>
             <li>{t("text2")}</li>
@@ -52,7 +52,7 @@ const Announcement: React.FC = () => {
         </Toast.Action>
       </Toast.Root>
 
-      <Toast.Viewport className="[--viewport-padding:_25px] fixed bottom-0 right-0 flex flex-col p-[var(--viewport-padding)] gap-[10px] w-[390px] max-w-[100vw] m-0 list-none z-[2147483647] outline-none" />
+      <Toast.Viewport className="flex flex-col list-none outline-none p-[var(--viewport-padding)] m-0 max-w-[100vw] right-0 bottom-0 w-[390px] z-[2147483647] gap-[10px] fixed [--viewport-padding:_25px]" />
     </Toast.Provider>
   );
 };

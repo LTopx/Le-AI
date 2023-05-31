@@ -11,11 +11,7 @@ export const runtime = "edge";
 
 // Image metadata
 export const alt = "LGPT Share";
-export const size = {
-  width: 1200,
-  height: 630,
-};
-
+export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 type Props = {
@@ -44,16 +40,21 @@ export default async function Image({ params }: Props) {
     (
       <div
         style={{
-          background: "white",
-          width: "100%",
-          height: "100%",
           display: "flex",
           flexDirection: "column",
+          width: "100%",
+          height: "100%",
           alignItems: "center",
           justifyContent: "center",
+          backgroundColor: "white",
+          fontSize: 28,
+          fontFamily: 'Inter, "Material Icons"',
         }}
       >
-        <div style={{ fontSize: 60, fontWeight: "bold", marginBottom: 50 }}>
+        <div
+          lang="zh-CN"
+          style={{ fontSize: 60, fontWeight: "bold", marginBottom: 50 }}
+        >
           {title}
         </div>
         <div
@@ -100,6 +101,7 @@ export default async function Image({ params }: Props) {
               </div>
               <div style={{ display: "flex", flex: 1 }}>
                 <div
+                  lang="zh-CN"
                   style={{
                     display: "flex",
                     maxWidth: "80%",

@@ -6,6 +6,10 @@ L-GPT 是一款开源项目，通过提供不同的 AI 模型来帮助你提高�
 
 <img src="./public/screenshots/tg.jpeg" width="200">
 
+## 通知
+
+这一周暂时停止新功能开发，只进行基本维护和 bug 修复。待老夫把相关文档项目补充齐全，继续进行后续功能迭代
+
 ## 预览
 
 <img src="./public/screenshots/screenshot-pc.png">

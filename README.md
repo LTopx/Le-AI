@@ -8,6 +8,10 @@ Welcome to：[Telegram](https://t.me/+7fLJJoGV_bJhYTk1)
 
 <img src="./public/screenshots/tg.jpeg" width="200">
 
+## Attention
+
+For this week, we will temporarily stop developing new features and focus on basic maintenance and bug fixes. Once I have completed the relevant documentation, we will continue with the next round of feature iterations.
+
 ## Preview
 
 <img src="./public/screenshots/screenshot-pc.png">

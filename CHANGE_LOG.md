@@ -11,6 +11,7 @@
 ### Fixed
 
 - Fix the display issues of the API Key configuration page in Chinese and dark mode.
+- Adding lang attribute resolves the problem of garbled preview images.
 
 ### Changed
 
