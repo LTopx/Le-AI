@@ -10,6 +10,7 @@ import {
 } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { FiUserMinus } from "react-icons/fi";
+import { RxOpenInNewWindow } from "react-icons/rx";
 import { cn } from "@/lib";
 import Modal from "@/components/ui/Modal";
 import Dropdown from "@/components/ui/Dropdown";
@@ -47,30 +48,37 @@ const Action = React.forwardRef((_, forwardedRef) => {
 
   const onClose = () => setOpen(false);
 
-  const onCopyLink = () => {
-    copy(shareLink);
-    toast.success(t("share-link-copy-success"), { id: "copy-success" });
+  const onLink = (type: "copy" | "open") => {
+    if (type === "copy") {
+      copy(shareLink);
+      toast.success(t("share-link-copy-success"), { id: "copy-success" });
+    } else {
+      window.open(shareLink);
+    }
   };
 
   const onSelect = async (value: string) => {
     if (value === "delete") {
-      setLoadingAction(true);
-      const res = await fetch("/api/share/delete", {
-        method: "DELETE",
-        body: JSON.stringify({ id: shareId.current }),
-      }).then((res) => res.json());
-      setLoadingAction(false);
-      if (res.error) {
-        return toast.error(tCommon("service-error"), { id: "delete-error" });
+      try {
+        setLoadingAction(true);
+        const res = await fetch("/api/share/delete", {
+          method: "POST",
+          body: JSON.stringify({ id: shareId.current }),
+        }).then((res) => res.json());
+        if (res.error) {
+          return toast.error(tCommon("service-error"), { id: "delete-error" });
+        }
+        toast.success(t("share-remove-success"), { id: "delete-success" });
+        onClose();
+      } finally {
+        setLoadingAction(false);
       }
-      toast.success(t("share-remove-success"), { id: "delete-success" });
-      onClose();
     } else if (value === "twitter") {
       window.open(`https://twitter.com/share?url=${shareLink}`);
     } else if (value === "anonymous") {
       setLoadingAction(true);
-      const res = await fetch("/api/share/update", {
-        method: "POST",
+      const res = await fetch("/api/share", {
+        method: "PUT",
         body: JSON.stringify({ id: shareId.current, anonymous: 1 }),
       }).then((res) => res.json());
       setLoadingAction(false);
@@ -107,13 +115,22 @@ const Action = React.forwardRef((_, forwardedRef) => {
         <div>❌❌ {t("share-delete-tip")}</div>
       </div>
       <div className="flex justify-between">
-        <Button
-          type="success"
-          leftIcon={<AiOutlineLink />}
-          onClick={onCopyLink}
-        >
-          {t("copy-link")}
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            type="success"
+            leftIcon={<AiOutlineLink />}
+            onClick={() => onLink("copy")}
+          >
+            {t("copy-link")}
+          </Button>
+          <Button
+            type="primary"
+            leftIcon={<RxOpenInNewWindow />}
+            onClick={() => onLink("open")}
+          >
+            {t("open")}
+          </Button>
+        </div>
         {loadingAction ? (
           <button
             className={cn(

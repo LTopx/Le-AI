@@ -4,6 +4,10 @@
 
 > 2023-05-31
 
+### Add
+
+- Add a scheduled service to clear useless conversation shares older than 7 days.
+
 ### Fixed
 
 - Fix the display issues of the API Key configuration page in Chinese and dark mode.
@@ -11,6 +15,7 @@
 ### Changed
 
 - Adjust default display content when sharing a conversation without a title
+- Combine share API routes
 
 ## v0.5.0
 

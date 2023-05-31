@@ -26,7 +26,7 @@ import { isMobile, getReadableStream, cn } from "@/lib";
 import { PROMPT_BASE } from "@/prompt";
 import { GPTTokens } from "@/lib/gpt-tokens";
 import type { supportModelType } from "@/lib/gpt-tokens";
-import type { IShare } from "@/app/api/share/create/route";
+import type { IShare } from "@/app/api/share/route";
 import Action from "@/components/share/action";
 
 const ChatFooter: React.FC = () => {
@@ -447,7 +447,7 @@ const ChatFooter: React.FC = () => {
     };
 
     setLoadingShare(true);
-    fetch("/api/share/create", {
+    fetch("/api/share", {
       method: "POST",
       body: JSON.stringify(params),
     })
@@ -511,7 +511,9 @@ const ChatFooter: React.FC = () => {
               leftIcon={<AiOutlineShareAlt size={18} />}
               loading={loadingShare}
               onClick={handleShare}
-            />
+            >
+              {tShare("share")}
+            </Button>
           </div>
         )}
 

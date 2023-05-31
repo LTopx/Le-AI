@@ -15,7 +15,7 @@
   "dependencies": {
     "@emotion/css": "11.11.0",
     "@next-auth/prisma-adapter": "1.0.6",
-    "@prisma/client": "4.14.1",
+    "@prisma/client": "4.15.0",
     "@radix-ui/react-accordion": "1.1.2",
     "@radix-ui/react-alert-dialog": "1.0.4",
     "@radix-ui/react-context-menu": "2.1.4",
@@ -71,6 +71,6 @@
     "@types/react-syntax-highlighter": "15.5.7",
     "@types/uuid": "9.0.1",
     "dotenv-cli": "7.2.1",
-    "prisma": "4.14.1"
+    "prisma": "4.15.0"
   }
 }
