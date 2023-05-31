@@ -12,9 +12,6 @@ interface Props {
 }
 
 const Content: React.FC<Props> = ({ data }) => {
-  if (data.role === "user")
-    return <div className="break-all">{data.content}</div>;
-
   return (
     <MemoizedReactMarkdown
       className="prose !max-w-[85ch] dark:prose-invert"

@@ -106,7 +106,8 @@
     "share-remove-success": "会话分享删除成功",
     "share-success": "会话分享成功",
     "share-to-twitter": "分享到 Twitter",
-    "share-update-success": "会话分享更新成功"
+    "share-update-success": "会话分享更新成功",
+    "untitled": "未命名"
   },
   "setting": {
     "api-key-error": "无效的 API 密钥。请确保您的 API 密钥配置正确。",

@@ -106,7 +106,8 @@
     "share-remove-success": "Conversation sharing deleted successfully",
     "share-success": "Conversation shared successfully",
     "share-to-twitter": "Share to Twitter",
-    "share-update-success": "Conversation sharing updated successfully"
+    "share-update-success": "Conversation sharing updated successfully",
+    "untitled": "Untitled"
   },
   "setting": {
     "api-key-error": "Invalid API key. Please make sure your API key is still working properly.",

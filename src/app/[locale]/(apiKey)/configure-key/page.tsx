@@ -54,7 +54,7 @@ const ApiKey: React.FC = () => {
         </div>
         <div className="py-2 mb-4 relative">
           <Divider />
-          <div className="bg-white p-2 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+          <div className="bg-white dark:bg-[#121212] p-2 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
             {findLLM?.ico_big}
           </div>
         </div>

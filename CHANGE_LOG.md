@@ -1,5 +1,17 @@
 # L-GPT Change Log
 
+## v0.5.1
+
+> 2023-05-31
+
+### Fixed
+
+- Fix the display issues of the API Key configuration page in Chinese and dark mode.
+
+### Changed
+
+- Adjust default display content when sharing a conversation without a title
+
 ## v0.5.0
 
 > 2023-05-30

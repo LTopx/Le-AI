@@ -71,17 +71,6 @@ const ChatList: React.FC = () => {
     });
   };
 
-  const onRevoke = (value: any[]) => {
-    const { id, index, content } = value[0].value;
-    setChannel((channel) => {
-      const { list } = channel;
-      const findChannel = list.find((item) => item.channel_id === id);
-      if (!findChannel) return channel;
-      findChannel.chat_list.splice(index, 0, content);
-      return channel;
-    });
-  };
-
   React.useEffect(() => {
     scrollToBottom();
   }, [channel.activeId]);

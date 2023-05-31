@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/share/cron",
+      "schedule": "* * * * *"
+    }
+  ]
+}

@@ -13,6 +13,7 @@ import ChatContent from "@/components/chatContent";
 import BasicInfo from "@/components/share/basicInfo";
 import NotFound from "@/components/share/notFound";
 import Continue from "@/components/share/continue";
+import Title from "@/components/share/title";
 
 type Props = {
   params: { id: string };
@@ -89,7 +90,7 @@ export default async function Share({ params }: any) {
       <div className="pb-16">
         <div className="flex flex-col mb-8 gap-2">
           <div className="flex font-semibold text-2xl items-center">
-            {content.channel_name}
+            <Title name={content.channel_name} />
           </div>
           <div className="text-sm">
             <BasicInfo

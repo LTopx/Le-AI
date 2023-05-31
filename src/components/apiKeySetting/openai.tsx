@@ -79,6 +79,7 @@ const OpenAI: React.FC = () => {
         </div>
         <div className="flex gap-2">
           <Input
+            className="flex-1"
             type="password"
             allowClear
             placeholder={t("set-api-key") as string}
@@ -86,6 +87,7 @@ const OpenAI: React.FC = () => {
             onChange={(value) => onChange(value, "apiKey")}
           />
           <Button
+            className="w-22 md:w-28"
             type="primary"
             leftIcon={<AiOutlineCheck />}
             loading={loadingCheck}
