@@ -2,11 +2,12 @@
 
 ## v0.5.1
 
-> 2023-05-31
+> 2023-06-02
 
 ### Add
 
 - Add a scheduled service to clear useless conversation shares older than 7 days.
+- Adding a link to the [L-GPT documentation](https://docs.ltopx.com) for navigation.
 
 ### Fixed
 

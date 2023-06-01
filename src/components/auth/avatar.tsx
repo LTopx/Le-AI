@@ -74,7 +74,7 @@ const Avatar: React.FC = () => {
       if (pathname.includes("/account")) return;
       router.push("/account");
     } else if (item === "documentation") {
-      console.log("文档");
+      window.open("https://docs.ltopx.com");
     }
   };
 
@@ -84,11 +84,11 @@ const Avatar: React.FC = () => {
       align="end"
       trigger={
         status === "loading" ? (
-          <div className="absolute right-3 h-14 flex items-center">
+          <div className="flex h-14 right-3 absolute items-center">
             <Button loading type="primary" />
           </div>
         ) : user ? (
-          <div className="absolute right-3 h-14 w-11 flex justify-end items-center cursor-pointer">
+          <div className="cursor-pointer flex h-14 right-3 w-11 absolute justify-end items-center">
             {user.image ? (
               <Image
                 className="rounded-full"
@@ -98,20 +98,20 @@ const Avatar: React.FC = () => {
                 height={32}
               />
             ) : (
-              <div className="bg-sky-400 rounded-full w-8 h-8 flex justify-center items-center">
+              <div className="rounded-full flex bg-sky-400 h-8 w-8 justify-center items-center">
                 <AiOutlineUser className="text-white" size={20} />
               </div>
             )}
           </div>
         ) : (
-          <div className="absolute right-3 h-14 flex items-center">
+          <div className="flex h-14 right-3 absolute items-center">
             <Button type="primary">{t("log-in")}</Button>
           </div>
         )
       }
       content={
         user ? (
-          <div className="border-b pb-1 px-2">
+          <div className="border-b px-2 pb-1">
             <div className="font-medium text-sm">
               {user.name || "(Nickname)"}
             </div>
