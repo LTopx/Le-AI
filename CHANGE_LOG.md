@@ -16,6 +16,7 @@
 ### Changed
 
 - Continue to optimize the interface error message for API requests. Now, it is possible to correctly see error messages for session text that is too long.
+- Optimize the email style sent during login verification
 
 ## v0.5.1
 
