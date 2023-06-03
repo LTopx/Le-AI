@@ -1,5 +1,14 @@
 # L-GPT Change Log
 
+## v0.5.2
+
+> 2023-06-03
+
+### Fixed
+
+- Fixed the issue of packaging errors when upgrading to next 13.4.4
+- Attempted to fix the issue of not-found pages not working
+
 ## v0.5.1
 
 > 2023-06-02
