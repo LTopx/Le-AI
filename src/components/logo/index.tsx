@@ -25,6 +25,12 @@ const Logo: React.FC<LogoProps> = ({
     router.push("/");
   };
 
+  const onCheckChangeLog = () => {
+    window.open(
+      `https://docs.ltopx.com/change-log#v${pkg.version.replace(/\./g, "")}`
+    );
+  };
+
   return (
     <div
       className={cn(
@@ -43,7 +49,10 @@ const Logo: React.FC<LogoProps> = ({
         {!!share && <span className="bg-clip-text bg-share-ico">Share</span>}
       </div>
       {!!version && (
-        <span className="text-xs font-semibold py-1.5 px-3 bg-slate-400/10 rounded-full">
+        <span
+          className="text-xs cursor-pointer font-semibold py-1.5 px-3 bg-slate-400/10 rounded-full"
+          onClick={onCheckChangeLog}
+        >
           v{pkg.version}
         </span>
       )}

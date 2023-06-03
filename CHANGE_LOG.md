@@ -9,6 +9,14 @@
 - Fixed the issue of packaging errors when upgrading to next 13.4.4
 - Attempted to fix the issue of not-found pages not working
 
+### Add
+
+- Added various guide links to navigate to document projects
+
+### Changed
+
+- Continue to optimize the interface error message for API requests. Now, it is possible to correctly see error messages for session text that is too long.
+
 ## v0.5.1
 
 > 2023-06-02

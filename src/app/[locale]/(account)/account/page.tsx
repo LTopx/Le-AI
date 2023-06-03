@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { Input, Button } from "@/components/ui";
-import { getReadableStream } from "@/lib";
 
 interface UserInfo {
   name: string;
@@ -49,17 +48,14 @@ const Account: React.FC = () => {
     })
       .then(async (response) => {
         if (!response.ok) {
-          const stream = await getReadableStream(response.body);
-          const streamRes: any = JSON.parse(stream as string);
-          toast.error(streamRes.msg || tCommon("service-error"), {
+          const res = await response.json();
+          return toast.error(res.msg || tCommon("service-error"), {
             id: "service-error",
           });
-          return;
         }
-        const stream = await getReadableStream(response.body);
-        const streamRes: any = JSON.parse(stream as string);
-        if (streamRes.error) {
-          return toast.error(streamRes.msg || tCommon("service-error"), {
+        const res = await response.json();
+        if (res.error) {
+          return toast.error(res.msg || tCommon("service-error"), {
             id: "service-error",
           });
         }

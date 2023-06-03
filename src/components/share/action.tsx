@@ -113,6 +113,15 @@ const Action = React.forwardRef((_, forwardedRef) => {
         <div>🎉🎉 {t("share-created")}</div>
         <div>{t("share-logged-user-tip")}</div>
         <div>❌❌ {t("share-delete-tip")}</div>
+        <div>
+          <a
+            href="https://docs.ltopx.com/token"
+            target="_blank"
+            className="text-sm text-sky-500 hover:text-sky-400 transition-colors mx-0.5"
+          >
+            {t("learn-more")}
+          </a>
+        </div>
       </div>
       <div className="flex justify-between">
         <div className="flex gap-2">

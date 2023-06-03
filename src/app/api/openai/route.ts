@@ -79,6 +79,10 @@ export async function POST(request: Request) {
       });
     }
 
+    if (response.status !== 200) {
+      return new Response(response.body, { status: 500 });
+    }
+
     return new Response(response.body);
   } catch (error) {
     console.log(error, "openai error");

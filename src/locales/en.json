@@ -85,7 +85,9 @@
     "10001": "Please log in or configure your API Key.",
     "10002": "API Key missing, please check configuration or contact the developer",
     "10003": "Language model parameter error",
-    "10004": "Please configure Azure API Version first"
+    "10004": "Please configure Azure API Version first",
+    "context_length_exceeded": "Session content is too long. Delete some or create a new session.",
+    "learn-more": "Learn More"
   },
   "share": {
     "back-home": "Back Home",
@@ -93,8 +95,9 @@
     "copy-link": "Copy Link",
     "create-conversation": "Creating conversation...",
     "from": "Shared from",
-    "not-exist": "Shared content does not exist or has expired, you can click on the button on the upper right corner to return to the homepage and start a new chat.",
+    "learn-more": "Learn more about share",
     "model-error": "Conversation model parameter error",
+    "not-exist": "Shared content does not exist or has expired, you can click on the button on the upper right corner to return to the homepage and start a new chat.",
     "open": "Open",
     "page-views": "Pageviews",
     "share": "Share",
@@ -117,6 +120,7 @@
     "check": "Check",
     "check-api-key-warning": "You need to fill in the API Key first to check its validity.",
     "configuration": "Configuration",
+    "configuration-learn-more": "Any questions? Click to learn more.",
     "confirm-delete": "Confirm delete",
     "create-new-deployment": "Create new deployment",
     "deployment-name": "Deployment name",
@@ -162,6 +166,7 @@
     "how-to-cost-2-2": ".",
     "how-to-cost-3": "Each language model has its own pricing, and the corresponding official website has a detailed description of the pricing.",
     "know-more": "Click here to learn more about OpenAI models, tokens, and context limits.",
+    "learn-more": "Learn more about Token",
     "token-desc": "Tokens are the basic unit that LLM models use to compute the length of a text. They are groups of characters, which sometimes align with words, but not always. In particular, it depends on the number of characters and includes punctuation signs or emojis.",
     "what-is-token": "What is a Token?"
   },

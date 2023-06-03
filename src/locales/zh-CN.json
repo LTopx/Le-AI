@@ -85,7 +85,9 @@
     "10001": "请先登录或自行配置API Key",
     "10002": "API Key缺失，请检查配置或联系开发人员",
     "10003": "语言模型参数错误",
-    "10004": "请先配置Azure API Version"
+    "10004": "请先配置Azure API Version",
+    "context_length_exceeded": "会话内容过长，请删减或新建另一个会话继续使用。",
+    "learn-more": "了解更多"
   },
   "share": {
     "back-home": "返回首页",
@@ -93,8 +95,9 @@
     "copy-link": "复制链接",
     "create-conversation": "会话创建中…",
     "from": "分享来自",
-    "not-exist": "分享内容不存在或已过期。您可以点击右上角按钮返回首页开始新的聊天",
+    "learn-more": "了解更多关于会话分享的内容",
     "model-error": "会话模型参数错误",
+    "not-exist": "分享内容不存在或已过期。您可以点击右上角按钮返回首页开始新的聊天",
     "open": "打开",
     "page-views": "总浏览量",
     "share": "分享",
@@ -117,6 +120,7 @@
     "check": "校验",
     "check-api-key-warning": "您需要先填写API Key,才能检查它的有效性",
     "configuration": "点击配置",
+    "configuration-learn-more": "如果你对配置有疑问，点击查看详细说明文档",
     "confirm-delete": "确认删除",
     "create-new-deployment": "新建部署",
     "deployment-name": "部署名",
@@ -162,6 +166,7 @@
     "how-to-cost-2-2": "计算而来。",
     "how-to-cost-3": "不同的语言模型都有自己的定价，对应官网都有关于定价的详细描述。",
     "know-more": "点此了解更多关于OpenAI模型、Token和上下文限制相关的信息。",
+    "learn-more": "了解更多关于Token的内容",
     "token-desc": "Token 是LLM模型用于计算文本长度的基本单位。它们是字符组，有时与单词对齐，但不总是。特别是，它取决于字符数，包括标点符号或表情符号。",
     "what-is-token": "什么是 Token?"
   },

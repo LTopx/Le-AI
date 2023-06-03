@@ -22,7 +22,7 @@ import Confirm from "@/components/ui/Confirm";
 import Button from "@/components/ui/Button";
 import Textarea from "@/components/ui/Textarea";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
-import { isMobile, getReadableStream, cn } from "@/lib";
+import { isMobile, cn } from "@/lib";
 import { PROMPT_BASE } from "@/prompt";
 import { GPTTokens } from "@/lib/gpt-tokens";
 import type { supportModelType } from "@/lib/gpt-tokens";
@@ -143,6 +143,10 @@ const ChatFooter: React.FC = () => {
     toast.dismiss();
   };
 
+  const handleCheckExceeded = () => {
+    window.open("https://docs.ltopx.com/conversation-limits");
+  };
+
   // calc current conversation token
   const calcToken = (isFunctional?: boolean) => {
     setChannel((channel) => {
@@ -253,36 +257,43 @@ const ChatFooter: React.FC = () => {
         .then(async (response) => {
           updateStart(false);
           if (!response.ok || !response.body) {
+            const res = await response.json();
             updateFinish(false);
-            if (!response.ok) {
-              const stream = await getReadableStream(response.body);
-              const streamRes: any = JSON.parse(stream as string);
-
-              let errorMessage = "";
-
-              if (streamRes.error === 10001) {
-                errorMessage = tRes("10001");
-                return toast(
-                  (t) => (
-                    <div className="flex items-center gap-2">
-                      {errorMessage}
-                      <Button type="primary" onClick={handleLogin}>
-                        {tAuth("log-in")}
-                      </Button>
-                    </div>
-                  ),
-                  { duration: 4000 }
-                );
-              } else if (streamRes.error === 10002) {
-                errorMessage = tRes("10002");
-              } else if (streamRes.error === 10004) {
-                errorMessage = tRes("10004");
-              } else {
-                errorMessage = response.statusText || tCommon("service-error");
-              }
-
-              toast.error(errorMessage, { duration: 4000 });
+            let errorMessage = "error";
+            if (res.error === 10001) {
+              return toast(
+                () => (
+                  <div className="flex items-center gap-4">
+                    {tRes("10001")}
+                    <Button type="primary" onClick={handleLogin}>
+                      {tAuth("log-in")}
+                    </Button>
+                  </div>
+                ),
+                { duration: 5000 }
+              );
+            } else if (res.error === 10002) {
+              errorMessage = tRes("10002");
+            } else if (res.error === 10004) {
+              errorMessage = tRes("10004");
+            } else if (res.error.code === "context_length_exceeded") {
+              return toast(
+                () => (
+                  <div className="flex items-center gap-4">
+                    {tRes("context_length_exceeded")}
+                    <Button type="primary" onClick={handleCheckExceeded}>
+                      {tRes("learn-more")}
+                    </Button>
+                  </div>
+                ),
+                { duration: 5000 }
+              );
+            } else {
+              errorMessage = response.statusText || tCommon("service-error");
             }
+
+            toast.error(errorMessage, { duration: 4000 });
+
             return;
           }
           let channel_id = "";

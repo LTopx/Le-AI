@@ -39,8 +39,17 @@ const ApiKey: React.FC = () => {
           "border dark:border-neutral-600"
         )}
       >
-        <div className="flex justify-center mb-2 text-lg font-semibold">
+        <div className="flex justify-center text-lg font-semibold">
           {t("llm-configuration")}
+        </div>
+        <div className="my-2 flex justify-center">
+          <a
+            href="https://docs.ltopx.com/api-key-configure"
+            target="_blank"
+            className="text-sm text-sky-500 hover:text-sky-400 transition-colors mx-0.5"
+          >
+            {t("configuration-learn-more")}
+          </a>
         </div>
         <div className="mb-6">
           <Select

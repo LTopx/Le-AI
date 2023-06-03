@@ -61,7 +61,7 @@ const AccordionContent = React.forwardRef(
       {...props}
       ref={forwardedRef}
     >
-      <div className="py-2 pl-9 pr-5 overflow-y-auto max-h-80">{children}</div>
+      <div className="py-2 pl-9 pr-5 overflow-y-auto max-h-60">{children}</div>
     </Accordion.Content>
   )
 );
@@ -109,6 +109,15 @@ const Token = React.forwardRef<any, TokenProps>(({ cost }, forwardedRef) => {
           <div className="text-sm">
             ${cost.total_usd} / {cost.total_tokens} Tokens
           </div>
+        </div>
+        <div>
+          <a
+            href="https://docs.ltopx.com/token"
+            target="_blank"
+            className="text-sm text-sky-500 hover:text-sky-400 transition-colors mx-0.5"
+          >
+            {t("learn-more")}
+          </a>
         </div>
       </div>
       <Divider />

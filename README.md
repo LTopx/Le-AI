@@ -2,6 +2,8 @@
 
 English / [简体中文](./README_CN.md)
 
+Help Documentation https://docs.ltopx.com
+
 L-GPT is an open-source project that integrates various large language models' open APIs to provide users with highly aggregated and helpful AI services. It not only supports basic conversation functions but will also support more features such as text-to-speech, speech input, file parsing, plugins, etc. in the future. It can improve learning, work, and life efficiency in many ways. [Demo](https://gpt.ltopx.com)
 
 Welcome to：[Telegram](https://t.me/+7fLJJoGV_bJhYTk1)
