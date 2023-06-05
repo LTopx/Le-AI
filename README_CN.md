@@ -8,10 +8,6 @@ L-GPT 是一款开源项目。其能力是通过整合各个大语言模型的�
 
 <img src="./public/screenshots/tg.jpeg" width="200">
 
-## 通知
-
-这一周暂时停止新功能开发，只进行基本维护和 bug 修复。待老夫把相关文档项目补充齐全，继续进行后续功能迭代
-
 ## 预览
 
 <img src="./public/screenshots/screenshot-pc.png">
