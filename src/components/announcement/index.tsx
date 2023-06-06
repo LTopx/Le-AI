@@ -17,8 +17,8 @@ const Announcement: React.FC = () => {
   };
 
   React.useEffect(() => {
-    // const announcement_version = localStorage.getItem("announcement_version");
-    // if (pkg.version !== announcement_version) setOpen(true);
+    const announcement_version = localStorage.getItem("announcement_version");
+    if (pkg.version !== announcement_version) setOpen(true);
   }, []);
 
   return (
@@ -37,6 +37,7 @@ const Announcement: React.FC = () => {
             <li>{t("text1")}</li>
             <li>{t("text2")}</li>
             <li>{t("text3")}</li>
+            <li>{t("text4")}</li>
           </ul>
         </Toast.Description>
         <Toast.Action asChild altText="Check">

@@ -178,9 +178,10 @@
     "welcome": "Welcome to"
   },
   "zLog": {
-    "title": "v0.4.3 Change Log 🔥🔥",
-    "text1": "🎉🎉 This update is not flashy, mainly updating the conversation sharing function. Now you can share your current conversation with your friends and partners.",
-    "text2": "Unified global logo style",
-    "text3": "Other UI refinement and bug fixes"
+    "title": "v0.5.3 Announcement 🔥🔥",
+    "text1": "Recently, the update of the web version has been slow, and the main effort has been focused on developing the first version of the client.",
+    "text2": "Currently, the overall progress of the first version of the client is about 60%, and the initial version can already conduct sessions normally.",
+    "text3": "The first version of the client is expected to be completed by the end of June, and the open source code will be released simultaneously. Please stay tuned.",
+    "text4": "We will immediately continue to resume the development of the web version."
   }
 }
