@@ -2,10 +2,9 @@
 
 import * as React from "react";
 import * as Select from "@radix-ui/react-select";
-import clsx from "clsx";
-import { twMerge } from "tailwind-merge";
 import { BsChevronDown } from "react-icons/bs";
 import { AiOutlineLoading } from "react-icons/ai";
+import { cn } from "@/lib";
 import Item from "./item";
 
 type OptionsChildren = {
@@ -75,22 +74,20 @@ const LSelect: React.FC<LSelectProps> = ({
     >
       <Select.Trigger
         ref={triggerRef}
-        className={twMerge(
-          clsx(
-            "px-3  transition-colors rounded inline-flex text-sm items-center justify-between border border-transparent",
-            "bg-gray-200/70 hover:bg-gray-200",
-            "dark:bg-neutral-700/90 dark:hover:bg-zinc-600",
-            { "h-8": size === "default" },
-            { "h-9": size === "large" },
-            { "bg-white border-sky-500": isOpen },
-            { "dark:bg-transparent": isOpen },
-            { "text-gray-400": !value },
-            {
-              "cursor-not-allowed text-gray-400/80 hover:bg-gray-200/70 dark:hover:bg-neutral-700/90":
-                !!disabled,
-            },
-            className
-          )
+        className={cn(
+          "px-3  transition-colors rounded inline-flex text-sm items-center justify-between border border-transparent",
+          "bg-gray-200/70 hover:bg-gray-200",
+          "dark:bg-neutral-700/90 dark:hover:bg-zinc-600",
+          { "h-8": size === "default" },
+          { "h-9": size === "large" },
+          { "bg-white border-sky-500": isOpen },
+          { "dark:bg-transparent": isOpen },
+          { "text-gray-400": !value },
+          {
+            "cursor-not-allowed text-gray-400/80 hover:bg-gray-200/70 dark:hover:bg-neutral-700/90":
+              !!disabled,
+          },
+          className
         )}
       >
         <Select.Value placeholder={placeholder} />
@@ -98,10 +95,7 @@ const LSelect: React.FC<LSelectProps> = ({
           {loading ? (
             <AiOutlineLoading size={14} className="animate-spin" />
           ) : (
-            <BsChevronDown
-              size={12}
-              className={clsx({ "rotate-180": isOpen })}
-            />
+            <BsChevronDown size={12} className={cn({ "rotate-180": isOpen })} />
           )}
         </Select.Icon>
       </Select.Trigger>
@@ -110,7 +104,7 @@ const LSelect: React.FC<LSelectProps> = ({
         <Select.Content
           position="popper"
           sideOffset={4}
-          className={clsx(
+          className={cn(
             "z-[1999] py-1 rounded-md border shadow-md",
             "bg-white",
             "dark:bg-neutral-700 dark:border-neutral-600",

@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { twMerge } from "tailwind-merge";
 import { AiOutlineClose } from "react-icons/ai";
 import { isUndefined, cn } from "@/lib";
 
@@ -108,26 +107,24 @@ const Input = React.forwardRef<any, InputProps>(
 
     return (
       <div
-        className={twMerge(
-          cn(
-            "border group border-transparent w-full inline-flex items-center rounded-md overflow-hidden transition-colors text-sm px-3",
-            "bg-gray-200/70 hover:bg-gray-200",
-            "dark:bg-neutral-700/90 dark:hover:bg-zinc-600",
-            { "py-1": size === "default" },
-            { "py-1.5": size === "large" },
-            {
-              "border-sky-500 bg-white hover:bg-white": isFocus,
-            },
-            {
-              "dark:border-sky-400 dark:bg-transparent dark:hover:bg-transparent":
-                isFocus,
-            },
-            {
-              "cursor-not-allowed hover:bg-gray-200/70 dark:hover:bg-neutral-700/90":
-                disabled,
-            },
-            className
-          )
+        className={cn(
+          "border group border-transparent w-full inline-flex items-center rounded-md overflow-hidden transition-colors text-sm px-3",
+          "bg-gray-200/70 hover:bg-gray-200",
+          "dark:bg-neutral-700/90 dark:hover:bg-zinc-600",
+          { "py-1": size === "default" },
+          { "py-1.5": size === "large" },
+          {
+            "border-sky-500 bg-white hover:bg-white": isFocus,
+          },
+          {
+            "dark:border-sky-400 dark:bg-transparent dark:hover:bg-transparent":
+              isFocus,
+          },
+          {
+            "cursor-not-allowed hover:bg-gray-200/70 dark:hover:bg-neutral-700/90":
+              disabled,
+          },
+          className
         )}
       >
         <input

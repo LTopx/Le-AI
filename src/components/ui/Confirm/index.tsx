@@ -2,9 +2,9 @@
 
 import * as React from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { AiFillExclamationCircle } from "react-icons/ai";
+import { cn } from "@/lib";
 import Button from "@/components/ui/Button";
 
 interface ConfirmProps {
@@ -50,7 +50,7 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
         <AlertDialog.Trigger asChild>{trigger}</AlertDialog.Trigger>
         <AlertDialog.Portal>
           <AlertDialog.Overlay
-            className={clsx(
+            className={cn(
               "bg-gray-900/40 backdrop-blur-sm fixed inset-0 z-[1500]",
               "data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut"
             )}
@@ -58,7 +58,7 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
           />
           <div className="fixed top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[1500]">
             <AlertDialog.Content
-              className={clsx(
+              className={cn(
                 "p-6 shadow rounded-md max-w-[calc(100vw-2rem)]",
                 "data-[state=open]:animate-fadeUp data-[state=closed]:animate-fadeOut",
                 "bg-white",
@@ -66,7 +66,7 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
               )}
             >
               <AlertDialog.Title
-                className={clsx(
+                className={cn(
                   "flex items-center gap-1.5 text-lg font-medium leading-6 w-[25rem]",
                   "text-gray-900",
                   "dark:text-white/90"
@@ -76,7 +76,7 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
                 {title || "Title"}
               </AlertDialog.Title>
               <AlertDialog.Description
-                className={clsx(
+                className={cn(
                   "text-sm mt-2 mb-4",
                   "text-gray-500",
                   "dark:text-gray-400"

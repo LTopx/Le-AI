@@ -1,6 +1,6 @@
 "use client";
 
-import clsx from "clsx";
+import { cn } from "@/lib";
 import ChatSection from "@/components/chatSection";
 import Menu from "@/components/menu";
 import MobileMenu from "@/components/menu/mobile";
@@ -16,7 +16,7 @@ export default function Home() {
       <MobileMenu />
       <Setting />
       <section
-        className={clsx(
+        className={cn(
           "transition-colors h-full w-full relative md:w-[calc(100vw-17.5rem)]",
           "bg-gray-100/60 dark:bg-neutral-900"
         )}

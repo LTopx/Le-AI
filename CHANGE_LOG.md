@@ -1,5 +1,18 @@
 # L-GPT Change Log
 
+## v0.5.3
+
+> 2023-06-06
+
+### Add
+
+- Added interfaces written specifically for the client, currently supporting only passing one's own key to implement dialogue.
+- Add cross-origin support to the API to facilitate cross-domain calls from the client.
+
+### Changed
+
+- Optimize the implementation of UI components
+
 ## v0.5.2
 
 > 2023-06-03

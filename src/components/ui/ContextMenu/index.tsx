@@ -2,8 +2,7 @@
 
 import * as React from "react";
 import * as ContextMenu from "@radix-ui/react-context-menu";
-import clsx from "clsx";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib";
 
 export interface ContextMenuOption {
   label: string;
@@ -27,12 +26,10 @@ const LContextMenu: React.FC<ContextMenuProps> = ({
       <ContextMenu.Trigger asChild>{children}</ContextMenu.Trigger>
       <ContextMenu.Portal>
         <ContextMenu.Content
-          className={twMerge(
-            clsx(
-              "w-32 rounded-md border overflow-hidden shadow-lg p-1",
-              "bg-white",
-              "dark:bg-slate-700"
-            )
+          className={cn(
+            "w-32 rounded-md border overflow-hidden shadow-lg p-1",
+            "bg-white",
+            "dark:bg-slate-700"
           )}
         >
           {options.map((item) => (
@@ -42,7 +39,7 @@ const LContextMenu: React.FC<ContextMenuProps> = ({
               onSelect={() => onSelect?.(item)}
             >
               <div
-                className={clsx(
+                className={cn(
                   "outline-none rounded-md pl-2 text-sm transition-colors h-8 flex items-center gap-2 cursor-pointer",
                   "text-black/80 hover:bg-neutral-200",
                   "dark:text-white/70 dark:hover:bg-slate-600/80"

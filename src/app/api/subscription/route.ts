@@ -30,7 +30,14 @@ export async function GET(request: Request) {
   if (!model || !key) {
     return NextResponse.json(
       { error: -1, msg: "params error" },
-      { status: 500 }
+      {
+        status: 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+      }
     );
   }
 
@@ -48,7 +55,17 @@ export async function GET(request: Request) {
       headers: { Authorization: `Bearer ${key}` },
     }).then(async (res) => res.json());
     if (res1.error) {
-      return NextResponse.json({ error: -1, msg: res1.error }, { status: 500 });
+      return NextResponse.json(
+        { error: -1, msg: res1.error },
+        {
+          status: 500,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          },
+        }
+      );
     } else {
       const res2 = await fetch(fetchURL2, {
         headers: { Authorization: `Bearer ${key}` },
@@ -56,16 +73,40 @@ export async function GET(request: Request) {
       if (res2.error) {
         return NextResponse.json(
           { error: -1, msg: res1.error },
-          { status: 500 }
+          {
+            status: 500,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+              "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            },
+          }
         );
       } else {
         return NextResponse.json(
           { error: 0, data: { ...res1, total_usage: res2.total_usage / 100 } },
-          { status: 200 }
+          {
+            status: 200,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+              "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            },
+          }
         );
       }
     }
   } catch (error: any) {
-    return NextResponse.json({ error: -1, msg: "error" }, { status: 500 });
+    return NextResponse.json(
+      { error: -1, msg: "error" },
+      {
+        status: 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+      }
+    );
   }
 }

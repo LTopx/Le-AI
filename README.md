@@ -16,6 +16,17 @@ Welcome to：[Telegram](https://t.me/+7fLJJoGV_bJhYTk1)
 
 <img src="./public/screenshots/screenshot-m.png">
 
+## Attention
+
+Recently, there have been fewer updates on the web end, mainly focused on developing the first version of the client. Currently, the UI interface has been basically ported, and it supports using your own API Key for sessions.
+
+In the future, functions will be implemented on the web end first and then synchronized to the client, so the client's functions will lag behind the web end.
+
+- Not yet supported: login, registration, sharing sessions, multi-language, etc.
+- Currently, only your own API Key can be configured for sessions because login is not yet supported.
+- The client project will be open source soon, so stay tuned.
+- The first stable version of the complete client functionality is expected to be released at the end of June.
+
 ## Features
 
 - Deploy for free on Vercel
