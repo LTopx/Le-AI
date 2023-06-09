@@ -25,10 +25,10 @@ import {
   useMobileMenu,
   useSetting,
   useLLM,
+  BASE_PROMPT,
 } from "@/hooks";
 import MenuIcon from "./icon";
 import { lans } from "./index";
-import pkg from "../../../package.json";
 
 const MobileMenu: React.FC = () => {
   const { theme, setTheme } = useTheme();
@@ -60,7 +60,7 @@ const MobileMenu: React.FC = () => {
           type: LLMOptions[0].value,
           name: LLMOptions[0].models[0].value,
         },
-        channel_prompt: "",
+        channel_prompt: BASE_PROMPT,
         channel_cost: {
           tokens: 0,
           usd: 0,

@@ -8,6 +8,10 @@
 
 - 新增 Prompt Market
 
+### Fixed
+
+- 修复移动端菜单新增会话时没有代入默认 prompt 的问题
+
 ### Changed
 
 - 优化用户名缺失时的显示效果

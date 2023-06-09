@@ -8,6 +8,10 @@
 
 - Add Prompt Market
 
+### Fixed
+
+- Fixed the issue on mobile where the default prompt was not being included when creating a new session in the menu.
+
 ### Changed
 
 - Optimized the display effect when the username is missing.
