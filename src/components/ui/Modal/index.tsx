@@ -9,6 +9,8 @@ interface ModalProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
   /** The Drawer is open or not */
   open?: boolean;
 
+  rootClassName?: string;
+
   /** Width of the Drawer, default is 520px */
   width?: number | string;
 
@@ -35,6 +37,7 @@ const Modal = React.forwardRef<any, ModalProps>(
   (
     {
       children,
+      rootClassName,
       className,
       open,
       width = "32.5rem",
@@ -74,7 +77,12 @@ const Modal = React.forwardRef<any, ModalProps>(
               "data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut"
             )}
           />
-          <div className="fixed top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[1500]">
+          <div
+            className={cn(
+              "fixed top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[1500]",
+              rootClassName
+            )}
+          >
             <Dialog.Content
               className={cn(
                 "p-6 shadow rounded-md max-w-[calc(100vw-2rem)] relative outline-none",

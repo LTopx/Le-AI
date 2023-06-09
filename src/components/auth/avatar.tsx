@@ -10,6 +10,8 @@ import Image from "next/image";
 import { AiOutlineUser } from "react-icons/ai";
 import { BiUser, BiLogOut, BiLogIn } from "react-icons/bi";
 import { HiOutlineDocumentText } from "react-icons/hi";
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
+import { usePromptOpen } from "@/hooks";
 import Dropdown from "@/components/ui/Dropdown";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
 import Button from "@/components/ui/Button";
@@ -18,6 +20,7 @@ const Avatar: React.FC = () => {
   const session = useSession();
   const router = useRouter();
   const pathname = usePathname();
+  const [, setOpen] = usePromptOpen();
   const t = useTranslations("auth");
 
   const user = session.data?.user;
@@ -29,6 +32,11 @@ const Avatar: React.FC = () => {
         label: t("documentation"),
         value: "documentation",
         icon: <HiOutlineDocumentText />,
+      },
+      {
+        label: t("prompt-market"),
+        value: "prompt-market",
+        icon: <AiOutlineAppstoreAdd />,
       },
       { type: "seperate", value: "seperate_1" },
     ];
@@ -75,6 +83,8 @@ const Avatar: React.FC = () => {
       router.push("/account");
     } else if (item === "documentation") {
       window.open("https://docs.ltopx.com");
+    } else if (item === "prompt-market") {
+      setOpen(true);
     }
   };
 
@@ -113,7 +123,7 @@ const Avatar: React.FC = () => {
         user ? (
           <div className="border-b px-2 pb-1">
             <div className="font-medium text-sm">
-              {user.name || "(Nickname)"}
+              {user.name || user.email?.split("@")[0]}
             </div>
             <div className="text-xs">{user.email}</div>
           </div>

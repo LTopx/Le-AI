@@ -73,3 +73,22 @@ model Share {
   userName       String?
   user           User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model Prompt {
+  id           String    @id @default(cuid())
+  title        String
+  icon         String
+  desc         String
+  content      Json
+  creator      String
+  creatorName  String?
+  creatorEmail String?
+  // 0: Pending review, 1: Approved, 2: Rejected
+  status       Int       @default(0)
+  like         Int       @default(0)
+  usageCount   Int       @default(0)
+  // market/custom/awesome-chatgpt-prompts...
+  type         String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
+}

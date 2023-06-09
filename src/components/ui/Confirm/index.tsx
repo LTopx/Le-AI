@@ -8,6 +8,8 @@ import { cn } from "@/lib";
 import Button from "@/components/ui/Button";
 
 interface ConfirmProps {
+  type?: "danger" | "primary";
+
   /** The AlertDialog's title */
   title?: React.ReactNode;
 
@@ -29,7 +31,15 @@ interface ConfirmProps {
 
 const Confirm = React.forwardRef<any, ConfirmProps>(
   (
-    { title, icon, content, maskClosable = true, onOk, trigger },
+    {
+      type = "danger",
+      title,
+      icon,
+      content,
+      maskClosable = true,
+      onOk,
+      trigger,
+    },
     forwardedRef
   ) => {
     const t = useTranslations("common");
@@ -81,8 +91,9 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
                   "text-gray-500",
                   "dark:text-gray-400"
                 )}
+                asChild
               >
-                {content}
+                <div>{content}</div>
               </AlertDialog.Description>
               <div className="flex justify-end gap-2">
                 <AlertDialog.Cancel asChild>
@@ -94,7 +105,7 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
                   </Button>
                 </AlertDialog.Cancel>
                 <AlertDialog.Action asChild>
-                  <Button type="danger" onClick={onClickOk}>
+                  <Button type={type} onClick={onClickOk}>
                     {t("ok")}
                   </Button>
                 </AlertDialog.Action>

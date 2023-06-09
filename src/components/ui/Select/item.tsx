@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Select from "@radix-ui/react-select";
-import clsx from "clsx";
+import { cn } from "@/lib";
 
 interface SelectItemProps extends React.PropsWithChildren {
   className?: string | undefined;
@@ -13,7 +13,7 @@ const SelectItem = React.forwardRef<any, SelectItemProps>(
     const { disabled } = props;
     return (
       <Select.Item
-        className={clsx(
+        className={cn(
           "h-9 cursor-pointer px-3 flex items-center text-sm outline-none transition-colors",
           "text-black/80 hover:bg-gray-100 data-[state=checked]:bg-gray-100 data-[state=checked]:font-medium",
           "dark:text-white/90 dark:hover:bg-neutral-600 dark:data-[state=checked]:bg-neutral-600",

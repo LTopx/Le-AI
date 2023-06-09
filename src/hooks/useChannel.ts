@@ -1,6 +1,7 @@
 import * as React from "react";
 import { create } from "zustand";
 import { v4 as uuidv4 } from "uuid";
+import { BASE_PROMPT } from "./usePrompt";
 
 interface ChannelModel {
   type: string;
@@ -11,7 +12,11 @@ export type ChannelIcon =
   | "RiChatSmile2Line"
   | "HiOutlineTranslate"
   | "FaBook"
-  | "MdMovieEdit";
+  | "MdMovieEdit"
+  | "AiFillAlert"
+  | "BsVectorPen"
+  | "TbSailboat"
+  | "BsCodeSlash";
 
 export interface ChannelCost {
   // Single session cost for storing current content
@@ -98,7 +103,7 @@ export const initChannelList: ChannelListItem[] = [
       type: "openai",
       name: "gpt-3.5-turbo",
     },
-    channel_prompt: "",
+    channel_prompt: BASE_PROMPT,
     channel_cost: {
       tokens: 0,
       usd: 0,
@@ -137,6 +142,9 @@ const getInitChannelList = () => {
               total_tokens: 0,
               total_usd: 0,
             };
+          }
+          if (!item.channel_prompt) {
+            item.channel_prompt = BASE_PROMPT;
           }
           return item;
         }

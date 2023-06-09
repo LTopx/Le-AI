@@ -29,6 +29,7 @@
     "input-valid-email": "请输入正确的邮箱",
     "log-in": "登录",
     "log-out": "退出登录",
+    "prompt-market": "Prompt 集市",
     "return-to-home-page": "返回首页",
     "sign-in": "登录",
     "sign-in-link": "一个登录链接已经发送到您的电子邮件地址。",
@@ -55,10 +56,13 @@
     "type-message-enter": "请输入聊天内容（Enter发送，可在设置中心修改）"
   },
   "common": {
+    "add": "新 增",
     "cancel": "取 消",
+    "create": "新 增",
     "ok": "确 定",
     "please-enter": "请输入",
-    "service-error": "服务开小差啦，请稍后再试"
+    "service-error": "服务开小差啦，请稍后再试",
+    "tip": "提示"
   },
   "menu": {
     "clear-all-conversation": "清空会话",
@@ -78,8 +82,41 @@
     "title": "标题"
   },
   "prompt": {
+    "add-prompt": "新增 Prompt",
+    "apply": "应用",
+    "choose-prompt-icon": "选择 Prompt Icon",
+    "confirm-use": "确认使用该prompt？",
+    "content": "Prompt 内容",
+    "custom": "自定义",
+    "delete": "删除",
+    "delete-prompt": "删除 Prompt",
+    "desc": "Prompt 描述",
+    "edit": "编辑",
+    "edit-prompt": "编辑 Prompt",
+    "enter-content": "请至少输入一种语言的Prompt Content",
+    "enter-desc": "请输入Prompt Description",
+    "enter-title": "请输入Prompt Title",
+    "enter-to-search": "搜索",
     "get-title": "这个聊天的简短而相关的标题是什么？您必须严格回答只有标题，不允许任何其他文本。",
-    "model": "语言模型"
+    "market": "集市",
+    "model": "语言模型",
+    "no-data": "暂无数据",
+    "prompt-market": "Prompt 集市",
+    "release": "发布",
+    "release-prompt": "发布 Prompt",
+    "release-success": "发布成功",
+    "revoke": "撤销",
+    "revoke-release": "确认撤销发布？",
+    "revoke-success": "撤销成功",
+    "rule-tip": "知晓上述约定后，您是否准备继续发布您的prompt？",
+    "rule-title": "发布您的prompt到Prompt Market需要遵守以下约定：",
+    "rule-1": "在您发布prompt后，您的prompt将变为待审核状态。在审核通过后，会同步到Prompt Market中。",
+    "rule-2": "每位用户最多只能提交5个待审核的prompt。待审核通过后，您可以继续提交新的prompt。",
+    "rule-3": "一旦您提交的prompt审核失败，维护人员有权直接删除该prompt。",
+    "start-conversation": "开始会话",
+    "sure-delete": "确认删除",
+    "title": "Prompt 标题",
+    "under-review": "待审核"
   },
   "responseErr": {
     "10001": "请先登录或自行配置API Key",

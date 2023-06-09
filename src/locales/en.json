@@ -29,6 +29,7 @@
     "input-valid-email": "Please enter a valid email address",
     "log-in": "Login",
     "log-out": "Log Out",
+    "prompt-market": "Prompt Market",
     "return-to-home-page": "Return to home page",
     "sign-in": "Sign in",
     "sign-in-link": "A sign in link has been sent to your email address.",
@@ -55,10 +56,13 @@
     "type-message-enter": "Type message here... (send with Enter, can be modified in Settings)"
   },
   "common": {
+    "add": "Add",
     "cancel": "Cancel",
+    "create": "Create",
     "ok": "OK",
     "please-enter": "Please enter",
-    "service-error": "Service is having a hiccup, please try again later"
+    "service-error": "Service is having a hiccup, please try again later",
+    "tip": "Tip"
   },
   "menu": {
     "clear-all-conversation": "Clear Conversation",
@@ -78,8 +82,41 @@
     "title": "Title"
   },
   "prompt": {
+    "add-prompt": "Add Prompt",
+    "apply": "Apply",
+    "choose-prompt-icon": "Choose Prompt Icon",
+    "confirm-use": "Confirm using this prompt?",
+    "content": "Prompt Content",
+    "custom": "Custom",
+    "delete": "Delete",
+    "delete-prompt": "Delete Prompt",
+    "desc": "Prompt Description",
+    "edit": "Edit",
+    "edit-prompt": "Edit Prompt",
+    "enter-content": "Please enter the Prompt Content.",
+    "enter-desc": "Please enter the Prompt Description.",
+    "enter-title": "Please enter the Prompt Title.",
+    "enter-to-search": "Enter to search",
     "get-title": "What would be a short and relevant title for this chat? You must strictly answer with only the title, no other text is allowed.",
-    "model": "Model"
+    "market": "Market",
+    "model": "Model",
+    "no-data": "No Data",
+    "prompt-market": "Prompt Market",
+    "release": "Release",
+    "release-prompt": "Release Prompt",
+    "release-success": "Release successfully",
+    "revoke": "Revoke",
+    "revoke-release": "Confirm to revoke the release?",
+    "revoke-success": "Revoke successfully",
+    "rule-tip": "Do you acknowledge and agree to the above terms in order to continue publishing your prompts?",
+    "rule-title": "Agreement for Publishing Prompts on Prompt Market:",
+    "rule-1": "After you publish your prompt, it will become pending for review. Once it is approved, it will be synchronized to Prompt Market.",
+    "rule-2": "Each user can only submit a maximum of 5 pending prompts. After they are approved, you can continue to submit new prompts.",
+    "rule-3": "If your submitted prompt fails to pass the review, the maintenance personnel have the right to delete it directly.",
+    "start-conversation": "Start Conversation",
+    "sure-delete": "Are you sure you want to delete",
+    "title": "Prompt Title",
+    "under-review": "Under review"
   },
   "responseErr": {
     "10001": "Please log in or configure your API Key.",

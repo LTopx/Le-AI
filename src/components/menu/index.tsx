@@ -15,7 +15,13 @@ import { RiFeedbackLine } from "react-icons/ri";
 import { useDateFormat } from "l-hooks";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
-import { useSetting, useChannel, initChannelList, useLLM } from "@/hooks";
+import {
+  useSetting,
+  useChannel,
+  initChannelList,
+  useLLM,
+  BASE_PROMPT,
+} from "@/hooks";
 import type { ChannelListItem } from "@/hooks";
 import Button from "@/components/ui/Button";
 import Confirm from "@/components/ui/Confirm";
@@ -79,7 +85,7 @@ const Menu: React.FC = () => {
           type: LLMOptions[0].value,
           name: LLMOptions[0].models[0].value,
         },
-        channel_prompt: "",
+        channel_prompt: BASE_PROMPT,
         channel_cost: {
           tokens: 0,
           usd: 0,

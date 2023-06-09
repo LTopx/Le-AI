@@ -17,17 +17,17 @@ import {
   useStreamDecoder,
   useChat,
   useLLM,
+  BASE_PROMPT,
 } from "@/hooks";
 import Confirm from "@/components/ui/Confirm";
 import Button from "@/components/ui/Button";
-import Textarea from "@/components/ui/Textarea";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
 import { isMobile, cn } from "@/lib";
-import { PROMPT_BASE } from "@/prompt";
 import { GPTTokens } from "@/lib/gpt-tokens";
 import type { supportModelType } from "@/lib/gpt-tokens";
 import type { IShare } from "@/app/api/share/route";
 import Action from "@/components/share/action";
+import Inputarea from "./inputArea";
 
 const ChatFooter: React.FC = () => {
   // data
@@ -202,13 +202,13 @@ const ChatFooter: React.FC = () => {
     (chat_list: ChatItem[]) => {
       const modelType: any = findChannel?.channel_model.type;
       const modelConfig = (newOpenAI as any)[modelType];
-      const prompt = findChannel?.channel_prompt || PROMPT_BASE;
+      const prompt = findChannel?.channel_prompt || BASE_PROMPT;
       if (!findChannel?.channel_prompt) {
         setChannel((channel) => {
           const { list, activeId } = channel;
           const findCh = list.find((item) => item.channel_id === activeId);
           if (!findCh) return channel;
-          findCh.channel_prompt = PROMPT_BASE;
+          findCh.channel_prompt = BASE_PROMPT;
           return channel;
         });
       }
@@ -263,7 +263,7 @@ const ChatFooter: React.FC = () => {
             if (res.error === 10001) {
               return toast(
                 () => (
-                  <div className="flex items-center gap-4">
+                  <div className="flex gap-4 items-center">
                     {tRes("10001")}
                     <Button type="primary" onClick={handleLogin}>
                       {tAuth("log-in")}
@@ -279,7 +279,7 @@ const ChatFooter: React.FC = () => {
             } else if (res.error.code === "context_length_exceeded") {
               return toast(
                 () => (
-                  <div className="flex items-center gap-4">
+                  <div className="flex gap-4 items-center">
                     {tRes("context_length_exceeded")}
                     <Button type="primary" onClick={handleCheckExceeded}>
                       {tRes("learn-more")}
@@ -418,7 +418,7 @@ const ChatFooter: React.FC = () => {
       findChannel.channel_icon = "RiChatSmile2Line";
       findChannel.chat_list = [];
       findChannel.channel_name = "";
-      findChannel.channel_prompt = "";
+      findChannel.channel_prompt = BASE_PROMPT;
       findChannel.channel_cost = {
         tokens: 0,
         usd: 0,
@@ -502,8 +502,9 @@ const ChatFooter: React.FC = () => {
         )}
       >
         {!!findChannel?.chat_list?.length && (
-          <div className="flex py-2 justify-center items-center gap-2">
+          <div className="flex py-2 gap-2 justify-center items-center">
             <Button
+              className="group"
               size="sm"
               type="outline"
               onClick={generate}
@@ -511,7 +512,7 @@ const ChatFooter: React.FC = () => {
                 loadingResponseFinish ? (
                   <BsStop size={20} />
                 ) : (
-                  <AiOutlineRedo size={20} />
+                  <AiOutlineRedo size={20} className="group:hover:bg-[red]" />
                 )
               }
             >
@@ -547,7 +548,7 @@ const ChatFooter: React.FC = () => {
               onOk={clearNowConversation}
             />
           </div>
-          <Textarea
+          <Inputarea
             ref={inputRef}
             value={inputValue}
             onChange={setInputValue}

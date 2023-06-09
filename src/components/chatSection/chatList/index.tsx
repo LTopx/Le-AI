@@ -77,7 +77,7 @@ const ChatList: React.FC = () => {
 
   return (
     <>
-      {!chatList.length && !findChannel?.channel_prompt && <Configure />}
+      {!chatList.length && <Configure />}
       <div className="flex flex-col mt-5 gap-5 ">
         {chatList.map((item, index) => (
           <div

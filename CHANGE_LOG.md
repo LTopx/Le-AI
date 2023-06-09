@@ -1,5 +1,18 @@
 # L-GPT Change Log
 
+## v0.6.0
+
+> 2023-06-10
+
+### Add
+
+- Add Prompt Market
+
+### Changed
+
+- Optimized the display effect when the username is missing.
+- Numerous other minor optimizations.
+
 ## v0.5.3
 
 > 2023-06-06

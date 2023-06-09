@@ -7,6 +7,7 @@ import MobileMenu from "@/components/menu/mobile";
 import Navbar from "@/components/navbar";
 import Setting from "@/components/setting";
 import Welcome from "@/components/welcome";
+import PromptMark from "@/components/prompt/market";
 import "@/utils/plugin/polyfill-client";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <Menu />
       <MobileMenu />
       <Setting />
+      <PromptMark />
       <section
         className={cn(
           "transition-colors h-full w-full relative md:w-[calc(100vw-17.5rem)]",

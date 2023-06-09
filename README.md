@@ -43,7 +43,7 @@ In the future, functions will be implemented on the web end first and then synch
 - [x] Chat record import and export
 - [x] Account System
 - [x] Support conversation sharing
-- [ ] Support for customizing the prompt repository
+- [x] Support for customizing the prompt repository
 - [ ] Support GPT-4 and Claude
 - [ ] Compress context to save chat tokens
 - [ ] Desktop version development

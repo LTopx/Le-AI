@@ -19,6 +19,10 @@ interface IDropdownMenuProps
 
   align?: "start" | "center" | "end";
 
+  alignOffset?: number;
+
+  sideOffset?: number;
+
   /** support selection */
   selectable?: boolean;
 
@@ -37,6 +41,8 @@ const LDropdownMenu = React.forwardRef<any, IDropdownMenuProps>(
       className,
       trigger,
       align = "center",
+      alignOffset,
+      sideOffset,
       selectable = false,
       content,
       options,
@@ -51,6 +57,8 @@ const LDropdownMenu = React.forwardRef<any, IDropdownMenuProps>(
         <DropdownMenu.Portal>
           <DropdownMenu.Content
             align={align}
+            alignOffset={alignOffset}
+            sideOffset={sideOffset}
             className={cn(
               "z-[2000] bg-white border rounded-lg p-1",
               "data-[side=top]:animate-fadeInUp data-[side=bottom]:animate-fadeInDown data-[state=closed]:animate-fadeOut",
