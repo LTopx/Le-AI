@@ -1,5 +1,3 @@
-"use client";
-
 import { createTransport } from "nodemailer";
 import { render } from "@react-email/render";
 import Email from "@/components/email";
