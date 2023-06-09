@@ -215,10 +215,10 @@
     "welcome": "Welcome to"
   },
   "zLog": {
-    "title": "v0.5.3 Announcement 🔥🔥",
-    "text1": "Recently, the update of the web version has been slow, and the main effort has been focused on developing the first version of the client.",
-    "text2": "Currently, the overall progress of the first version of the client is about 60%, and the initial version can already conduct sessions normally.",
-    "text3": "The first version of the client is expected to be completed by the end of June, and the open source code will be released simultaneously. Please stay tuned.",
-    "text4": "We will immediately continue to resume the development of the web version."
+    "title": "v0.6.0 Prompt Market is coming 🔥🔥",
+    "text1": "Now you can use prompt more conveniently to create higher quality and efficient conversations.",
+    "text2": "You can also create your own prompts and publish them to the Prompt market for all other L-GPT users to use.",
+    "text3": "Still a large number of detailed optimization updates",
+    "text4": "Overall productivity continues to improve"
   }
 }
