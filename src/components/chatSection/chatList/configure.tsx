@@ -1,10 +1,16 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { BsArrowRepeat } from "react-icons/bs";
+import { AiOutlineRedo } from "react-icons/ai";
 import { RiTranslate } from "react-icons/ri";
 import { cn } from "@/lib";
-import { useChannel, useLLM, usePromptOpen, usePromptRecent } from "@/hooks";
+import {
+  useChannel,
+  useLLM,
+  usePromptOpen,
+  usePromptRecent,
+  BASE_PROMPT,
+} from "@/hooks";
 import type { ChannelIcon, IPrompt } from "@/hooks";
 import Select from "@/components/ui/Select";
 import Modal from "@/components/ui/Modal";
@@ -70,6 +76,19 @@ const Configure = React.memo(() => {
   };
 
   const onOpenPrompt = () => setOpen(true);
+
+  const onResetPrompt = (e: any) => {
+    e.stopPropagation();
+    setChannel((channel) => {
+      const { list, activeId } = channel;
+      const findCh = list.find((item) => item.channel_id === activeId);
+      if (!findCh) return channel;
+      findCh.channel_icon = "RiChatSmile2Line";
+      findCh.channel_name = info?.title || "";
+      findCh.channel_prompt = BASE_PROMPT;
+      return channel;
+    });
+  };
 
   const onClose = () => setOpenModal(false);
 
@@ -190,13 +209,14 @@ const Configure = React.memo(() => {
                   )}
                   Prompt
                 </div>
-                <div className="text-neutral-800 dark:text-neutral-100 text-sm line-clamp-6 hover:line-clamp-none">
+                <div className="text-neutral-800 dark:text-neutral-100 text-sm line-clamp-6 hover:line-clamp-none hover:max-h-[calc(50vh)] hover:overflow-y-auto">
                   {findChannel?.channel_prompt}
                 </div>
               </div>
-              <BsArrowRepeat
+              <AiOutlineRedo
                 size={20}
-                className="absolute right-2 top-2 text-sky-400"
+                className="absolute right-3 top-3 text-sky-400"
+                onClick={onResetPrompt}
               />
             </div>
           </motion.div>

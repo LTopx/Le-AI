@@ -83,6 +83,10 @@ export async function POST(request: Request) {
       return new Response(response.body, { status: 500 });
     }
 
+    // new Response(response.body).json().then((res) => {
+    //   console.log(res, "res啊啊啊");
+    // });
+
     return new Response(response.body);
   } catch (error) {
     console.log(error, "openai error");

@@ -7,10 +7,12 @@
 ### Add
 
 - Add Prompt Market
+- Restore "prompt" to default function button on the homepage
 
 ### Fixed
 
 - Fixed the issue on mobile where the default prompt was not being included when creating a new session in the menu.
+- Fix the display issue of the homepage prompt when it is too long
 
 ### Changed
 

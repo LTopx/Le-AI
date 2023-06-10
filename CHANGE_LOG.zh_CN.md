@@ -7,10 +7,12 @@
 ### Add
 
 - 新增 Prompt Market
+- 新增首页还原 prompt 为默认的功能按钮
 
 ### Fixed
 
 - 修复移动端菜单新增会话时没有代入默认 prompt 的问题
+- 修复首页 prompt 超长时的显示问题
 
 ### Changed
 
