@@ -39,22 +39,16 @@ dependencies:
     specifier: 1.1.2
     version: 1.1.2(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-tabs':
-    specifier: ^1.0.4
+    specifier: 1.0.4
     version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-toast':
     specifier: 1.1.4
     version: 1.1.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
-  '@react-email/button':
-    specifier: ^0.0.8
-    version: 0.0.8
   '@react-email/components':
-    specifier: ^0.0.6
+    specifier: 0.0.6
     version: 0.0.6
-  '@react-email/html':
-    specifier: ^0.0.4
-    version: 0.0.4
   '@react-email/render':
-    specifier: ^0.0.7
+    specifier: 0.0.7
     version: 0.0.7
   '@sentry/nextjs':
     specifier: 7.54.0
@@ -63,8 +57,8 @@ dependencies:
     specifier: 8.0.1
     version: 8.0.1
   '@types/node':
-    specifier: 20.2.5
-    version: 20.2.5
+    specifier: 20.2.6
+    version: 20.2.6
   '@types/react':
     specifier: 18.2.9
     version: 18.2.9
@@ -3288,13 +3282,13 @@ packages:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: false
 
-  /@types/node@20.2.5:
-    resolution: {integrity: sha512-JJulVEQXmiY9Px5axXHeYGLSjhkZEnD+MDPDGbCbIAbMslkKwmygtZFy1X6s/075Yo94sf8GuSlFfPzysQrWZQ==}
+  /@types/node@20.2.6:
+    resolution: {integrity: sha512-GQBWUtGoefMEOx/vu+emHEHU5aw6JdDoEtZhoBrHFPZbA/YNRFfN996XbBASEWdvmLSLyv9FKYppYGyZjCaq/g==}
 
   /@types/nodemailer@6.4.8:
     resolution: {integrity: sha512-oVsJSCkqViCn8/pEu2hfjwVO+Gb3e+eTWjg3PcjeFKRItfKpKwHphQqbYmPQrlMk+op7pNNWPbsJIEthpFN/OQ==}
     dependencies:
-      '@types/node': 20.2.5
+      '@types/node': 20.2.6
     dev: true
 
   /@types/parse-json@4.0.0:

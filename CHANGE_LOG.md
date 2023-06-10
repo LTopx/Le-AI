@@ -16,6 +16,7 @@
 
 - Optimized the display effect when the username is missing.
 - Numerous other minor optimizations.
+- Optimize UI details for prompt and Prompt Market
 
 ## v0.5.3
 

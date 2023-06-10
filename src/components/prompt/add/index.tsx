@@ -142,7 +142,7 @@ const Add = React.forwardRef((_, forwardedRef) => {
       onClose={onClose}
       onOk={onOk}
     >
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4">
         <div>
           <div className="text-sm mb-1">{t("title")}</div>
           <div className="flex gap-2 items-center">

@@ -130,22 +130,22 @@ const PromptMarket: React.FC = () => {
         footer={null}
       >
         <Tabs.Root value={type} onValueChange={onChangeTab}>
-          <div className="flex mb-2 justify-between items-center">
+          <div className="flex gap-4 mb-2 justify-between items-center">
             <Tabs.List
               className={cn(
-                "rounded-md flex text-sm w-auto p-1 text-[hsl(215.4,16.3%,56.9%)]",
+                "flex-1 flex rounded-md text-sm w-auto p-1 text-[hsl(215.4,16.3%,56.9%)]",
                 "bg-neutral-200/70 dark:bg-slate-900"
               )}
             >
               <Tabs.Trigger
                 value="market"
                 className={cn(
-                  "rounded-md py-1.5 px-3 transition-colors",
+                  "rounded-md py-1.5 px-3 transition-colors flex-1",
                   "data-[state=active]:bg-white data-[state=active]:text-neutral-950",
                   "dark:data-[state=active]:bg-slate-700 dark:data-[state=active]:text-[hsl(213,31%,91%)]"
                 )}
               >
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center justify-center">
                   <LuStore size={16} />
                   <span className="hidden lg:block">{t("market")}</span>
                 </div>
@@ -153,12 +153,12 @@ const PromptMarket: React.FC = () => {
               <Tabs.Trigger
                 value="awesome-chatgpt-prompts"
                 className={cn(
-                  "rounded-md py-1.5 px-3 transition-colors",
+                  "rounded-md py-1.5 px-3 transition-colors flex-1",
                   "data-[state=active]:bg-white data-[state=active]:text-neutral-950",
                   "dark:data-[state=active]:bg-slate-700 dark:data-[state=active]:text-[hsl(213,31%,91%)]"
                 )}
               >
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center justify-center">
                   <MdOutlineAutoAwesome size={16} />
                   <span className="hidden lg:block">
                     Awesome ChatGPT Prompts
@@ -170,12 +170,12 @@ const PromptMarket: React.FC = () => {
                   <Tabs.Trigger
                     value="custom"
                     className={cn(
-                      "rounded-md py-1.5 px-3 transition-colors",
+                      "rounded-md py-1.5 px-3 transition-colors flex-1",
                       "data-[state=active]:bg-white data-[state=active]:text-neutral-950",
                       "dark:data-[state=active]:bg-slate-700 dark:data-[state=active]:text-[hsl(213,31%,91%)]"
                     )}
                   >
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-center justify-center">
                       <BiCustomize size={16} />
                       <span className="hidden lg:block">{t("custom")}</span>
                     </div>
@@ -183,12 +183,12 @@ const PromptMarket: React.FC = () => {
                   <Tabs.Trigger
                     value="review"
                     className={cn(
-                      "rounded-md py-1.5 px-3 transition-colors",
+                      "rounded-md py-1.5 px-3 transition-colors flex-1",
                       "data-[state=active]:bg-white data-[state=active]:text-neutral-950",
                       "dark:data-[state=active]:bg-slate-700 dark:data-[state=active]:text-[hsl(213,31%,91%)]"
                     )}
                   >
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-center justify-center">
                       <SiCodereview size={16} />
                       <span className="hidden lg:block">
                         {t("under-review")}
@@ -198,13 +198,13 @@ const PromptMarket: React.FC = () => {
                 </>
               )}
             </Tabs.List>
-            <div className="flex gap-2">
-              {type === "custom" && (
+            {type === "custom" && (
+              <div className="flex gap-2">
                 <Button type="primary" onClick={onAdd}>
                   {tCommon("add")}
                 </Button>
-              )}
-            </div>
+              </div>
+            )}
           </div>
           <Tabs.Content
             value="market"

@@ -10,7 +10,7 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
-import { HiLightBulb, HiOutlineTranslate } from "react-icons/hi";
+import { HiOutlineTranslate } from "react-icons/hi";
 import { RiFeedbackLine } from "react-icons/ri";
 import { useDateFormat } from "l-hooks";
 import { v4 as uuidv4 } from "uuid";
@@ -150,8 +150,6 @@ const Menu: React.FC = () => {
   };
 
   const onToggleTheme = () => setTheme(nowTheme === "light" ? "dark" : "light");
-
-  const onOpenPrompt = () => alert("Prompt Manage ToDo...");
 
   const onLocaleChange = (value: string) => {
     if (value === locale) return;
@@ -313,18 +311,6 @@ const Menu: React.FC = () => {
             >
               <AiFillGithub size={20} />
             </a>
-          </div>
-          <div className="flex flex-1 justify-center">
-            <div
-              onClick={onOpenPrompt}
-              className={cn(
-                "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
-                "hover:bg-gray-200/60",
-                "dark:hover:bg-slate-700/70"
-              )}
-            >
-              <HiLightBulb size={20} />
-            </div>
           </div>
           <Dropdown
             selectable

@@ -126,7 +126,7 @@ const Configure = React.memo(() => {
 
   return (
     <>
-      <div className="flex flex-col h-full w-full pt-16 pb-24 top-0 left-0 gap-8 absolute">
+      <div className="flex flex-col h-full w-full pt-16 pb-24 top-0 left-0 gap-6 absolute">
         {isShow && (
           <motion.div
             className="flex flex-col items-center justify-center"
@@ -190,7 +190,7 @@ const Configure = React.memo(() => {
                   )}
                   Prompt
                 </div>
-                <div className="text-neutral-800 dark:text-neutral-100 text-sm line-clamp-3">
+                <div className="text-neutral-800 dark:text-neutral-100 text-sm line-clamp-6 hover:line-clamp-none">
                   {findChannel?.channel_prompt}
                 </div>
               </div>
@@ -198,6 +198,27 @@ const Configure = React.memo(() => {
                 size={20}
                 className="absolute right-2 top-2 text-sky-400"
               />
+            </div>
+          </motion.div>
+        )}
+
+        {isShow && recentPrompt.length && (
+          <motion.div
+            className="flex justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="bg-neutral-300 w-48 h-[1px] relative">
+              <span
+                className={cn(
+                  "absolute text-sm px-3 left-[50%] translate-x-[-50%] translate-y-[-50%] select-none whitespace-nowrap",
+                  "bg-[#f8f8fa] dark:bg-[#181818]",
+                  "text-gray-500 dark:text-gray-300"
+                )}
+              >
+                {t("recently-used")}
+              </span>
             </div>
           </motion.div>
         )}
