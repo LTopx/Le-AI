@@ -202,7 +202,7 @@ const Configure = React.memo(() => {
           </motion.div>
         )}
 
-        {isShow && recentPrompt.length && (
+        {!!(isShow && recentPrompt.length) && (
           <motion.div
             className="flex justify-center"
             initial={{ opacity: 0 }}
