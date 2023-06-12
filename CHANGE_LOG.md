@@ -1,5 +1,17 @@
 # L-GPT Change Log
 
+## v0.6.1
+
+> 2023-06-11
+
+### Add
+
+- Added backend capability to calculate token consumption
+
+### Changed
+
+- Optimized the front-end logic for calculating tokens, now able to correctly calculate all token consumption.
+
 ## v0.6.0
 
 > 2023-06-10

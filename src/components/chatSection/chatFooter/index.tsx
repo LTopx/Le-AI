@@ -22,9 +22,7 @@ import {
 import Confirm from "@/components/ui/Confirm";
 import Button from "@/components/ui/Button";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
-import { isMobile, cn } from "@/lib";
-import { GPTTokens } from "@/lib/gpt-tokens";
-import type { supportModelType } from "@/lib/gpt-tokens";
+import { isMobile, cn, calcTokens } from "@/lib";
 import type { IShare } from "@/app/api/share/route";
 import Action from "@/components/share/action";
 import Inputarea from "./inputArea";
@@ -76,7 +74,53 @@ const ChatFooter: React.FC = () => {
       chatAbort?.abort();
       updateStart(false);
       updateFinish(false);
-      calcToken();
+
+      setChannel((channel) => {
+        const { list, activeId } = channel;
+        const findCh = list.find((item) => item.channel_id === activeId);
+        if (!findCh) return channel;
+
+        if (!findCh.channel_cost) {
+          findCh.channel_cost = {
+            tokens: 0,
+            usd: 0,
+            function_tokens: 0,
+            function_usd: 0,
+            total_tokens: 0,
+            total_usd: 0,
+          };
+        }
+
+        const findLLM: any = LLMOptions.find(
+          (item) => item.value === findCh?.channel_model.type
+        );
+
+        const findModelLabel = findLLM.models.find(
+          (item: any) => item.value === findCh?.channel_model.name
+        );
+
+        const { usedTokens, usedUSD } = calcTokens(
+          [
+            { role: "system", content: findCh.channel_prompt },
+            ...findCh.chat_list.map((item) => ({
+              role: item.role,
+              content: item.content,
+            })),
+          ],
+          findModelLabel.label
+        );
+
+        findCh.channel_cost.tokens = usedTokens;
+        findCh.channel_cost.usd = Number(usedUSD.toFixed(5));
+
+        const total_tokens: any = findCh.channel_cost.total_tokens + usedTokens;
+        const total_usd = findCh.channel_cost.total_usd + usedUSD;
+        findCh.channel_cost.total_tokens = parseInt(total_tokens);
+        findCh.channel_cost.total_usd = Number(total_usd.toFixed(5));
+
+        return channel;
+      });
+
       return;
     }
 
@@ -147,57 +191,6 @@ const ChatFooter: React.FC = () => {
     window.open("https://docs.ltopx.com/conversation-limits");
   };
 
-  // calc current conversation token
-  const calcToken = (isFunctional?: boolean) => {
-    setChannel((channel) => {
-      const { list, activeId } = channel;
-      const findChannel = list.find((item) => item.channel_id === activeId);
-      if (!findChannel) return channel;
-      // Compatibility handling
-      if (!findChannel.channel_cost) {
-        findChannel.channel_cost = {
-          tokens: 0,
-          usd: 0,
-          function_tokens: 0,
-          function_usd: 0,
-          total_tokens: 0,
-          total_usd: 0,
-        };
-      }
-
-      let calcModel = findChannel.channel_model.name;
-      const findAzureModel = azure.models.find(
-        (item) => item.value === calcModel
-      );
-      if (findAzureModel) calcModel = findAzureModel.label;
-
-      const tokenInfo = new GPTTokens({
-        model: calcModel as supportModelType,
-        messages: findChannel.chat_list.map((item) => ({
-          role: item.role,
-          content: item.content,
-        })),
-      });
-
-      const { usedTokens, usedUSD } = tokenInfo;
-
-      if (isFunctional) {
-        findChannel.channel_cost.function_tokens += usedTokens;
-        const function_usd = findChannel.channel_cost.function_usd + usedUSD;
-        findChannel.channel_cost.function_usd = Number(function_usd.toFixed(5));
-      } else {
-        findChannel.channel_cost.tokens = usedTokens;
-        findChannel.channel_cost.usd = Number(usedUSD.toFixed(5));
-      }
-      let total_tokens = findChannel.channel_cost.total_tokens + usedTokens;
-      let total_usd = findChannel.channel_cost.total_usd + usedUSD;
-      findChannel.channel_cost.total_tokens = parseInt(total_tokens as any);
-      findChannel.channel_cost.total_usd = Number(total_usd.toFixed(5));
-
-      return channel;
-    });
-  };
-
   const sendToGPT = React.useCallback(
     (chat_list: ChatItem[]) => {
       const modelType: any = findChannel?.channel_model.type;
@@ -221,23 +214,26 @@ const ChatFooter: React.FC = () => {
 
       const fetchUrl = `/api/${modelType}`;
 
-      let params: any = {};
+      const findLLM: any = LLMOptions.find(
+        (item) => item.value === findChannel?.channel_model.type
+      );
+
+      const findModelLabel = findLLM.models.find(
+        (item: any) => item.value === findChannel?.channel_model.name
+      );
+
+      let params: any = {
+        model: findChannel?.channel_model.name,
+        modelLabel: findModelLabel.label,
+        temperature: modelConfig.temperature,
+        max_tokens: modelConfig.max_tokens,
+        prompt,
+      };
+
       if (modelType === "openai") {
-        params = {
-          model: findChannel?.channel_model.name,
-          temperature: modelConfig.temperature,
-          max_tokens: modelConfig.max_tokens,
-          prompt,
-          proxy: modelConfig.proxy,
-        };
+        params.proxy = modelConfig.proxy;
       } else if (modelType === "azure") {
-        params = {
-          model: findChannel?.channel_model.name,
-          temperature: modelConfig.temperature,
-          max_tokens: modelConfig.max_tokens,
-          prompt,
-          resourceName: modelConfig.resourceName,
-        };
+        params.resourceName = modelConfig.resourceName;
       }
 
       params.chat_list = chat_list.map((item) => ({
@@ -335,9 +331,57 @@ const ChatFooter: React.FC = () => {
           );
           updateFinish(false);
           // calc current conversation token
-          calcToken();
 
-          // get gpt title
+          setChannel((channel) => {
+            const { list, activeId } = channel;
+            const findChannel = list.find(
+              (item) => item.channel_id === activeId
+            );
+            if (!findChannel) return channel;
+
+            if (!findChannel.channel_cost) {
+              findChannel.channel_cost = {
+                tokens: 0,
+                usd: 0,
+                function_tokens: 0,
+                function_usd: 0,
+                total_tokens: 0,
+                total_usd: 0,
+              };
+            }
+
+            const findLLM: any = LLMOptions.find(
+              (item) => item.value === findChannel?.channel_model.type
+            );
+
+            const findModelLabel = findLLM.models.find(
+              (item: any) => item.value === findChannel?.channel_model.name
+            );
+
+            const { usedTokens, usedUSD } = calcTokens(
+              [
+                { role: "system", content: findChannel.channel_prompt },
+                ...findChannel.chat_list.map((item) => ({
+                  role: item.role,
+                  content: item.content,
+                })),
+              ],
+              findModelLabel.label
+            );
+
+            findChannel.channel_cost.tokens = usedTokens;
+            findChannel.channel_cost.usd = Number(usedUSD.toFixed(5));
+
+            const total_tokens: any =
+              findChannel.channel_cost.total_tokens + usedTokens;
+            const total_usd = findChannel.channel_cost.total_usd + usedUSD;
+            findChannel.channel_cost.total_tokens = parseInt(total_tokens);
+            findChannel.channel_cost.total_usd = Number(total_usd.toFixed(5));
+
+            return channel;
+          });
+
+          // get conversation title
           if (!channel_name) getChannelNameByGPT(channel_id, channel_chat_list);
         })
         .catch((error) => {
@@ -364,21 +408,24 @@ const ChatFooter: React.FC = () => {
 
     const fetchUrl = `/api/${modelType}`;
 
-    let params: any = {};
+    const findLLM: any = LLMOptions.find(
+      (item) => item.value === findChannel?.channel_model.type
+    );
+
+    const findModelLabel = findLLM.models.find(
+      (item: any) => item.value === findChannel?.channel_model.name
+    );
+
+    let params: any = {
+      model: findChannel?.channel_model.name,
+      modelLabel: findModelLabel.label,
+      temperature: modelConfig.temperature,
+      max_tokens: modelConfig.max_tokens,
+    };
     if (modelType === "openai") {
-      params = {
-        model: findChannel?.channel_model.name,
-        temperature: modelConfig.temperature,
-        max_tokens: modelConfig.max_tokens,
-        proxy: modelConfig.proxy,
-      };
+      params.proxy = modelConfig.proxy;
     } else if (modelType === "azure") {
-      params = {
-        model: findChannel?.channel_model.name,
-        temperature: modelConfig.temperature,
-        max_tokens: modelConfig.max_tokens,
-        resourceName: modelConfig.resourceName,
-      };
+      params.resourceName = modelConfig.resourceName;
     }
 
     params.chat_list = chat_list;
@@ -406,7 +453,51 @@ const ChatFooter: React.FC = () => {
           toast.error(tCommon("service-error"));
         }
       );
-      calcToken(true);
+
+      setChannel((channel) => {
+        const { list, activeId } = channel;
+        const findChannel = list.find((item) => item.channel_id === activeId);
+        if (!findChannel) return channel;
+
+        if (!findChannel.channel_cost) {
+          findChannel.channel_cost = {
+            tokens: 0,
+            usd: 0,
+            function_tokens: 0,
+            function_usd: 0,
+            total_tokens: 0,
+            total_usd: 0,
+          };
+        }
+
+        const findLLM: any = LLMOptions.find(
+          (item) => item.value === findChannel?.channel_model.type
+        );
+
+        const findModelLabel = findLLM.models.find(
+          (item: any) => item.value === findChannel?.channel_model.name
+        );
+
+        const { usedTokens, usedUSD } = calcTokens(
+          [
+            ...chat_list,
+            { role: "assistant", content: findChannel.channel_name },
+          ],
+          findModelLabel.label
+        );
+
+        findChannel.channel_cost.function_tokens += usedTokens;
+        const function_usd = findChannel.channel_cost.function_usd + usedUSD;
+        findChannel.channel_cost.function_usd = Number(function_usd.toFixed(5));
+
+        const total_tokens: any =
+          findChannel.channel_cost.total_tokens + usedTokens;
+        const total_usd = findChannel.channel_cost.total_usd + usedUSD;
+        findChannel.channel_cost.total_tokens = parseInt(total_tokens);
+        findChannel.channel_cost.total_usd = Number(total_usd.toFixed(5));
+
+        return channel;
+      });
     });
   };
 
@@ -484,7 +575,53 @@ const ChatFooter: React.FC = () => {
       chatAbort?.abort();
       updateStart(false);
       updateFinish(false);
-      calcToken();
+
+      setChannel((channel) => {
+        const { list, activeId } = channel;
+        const findCh = list.find((item) => item.channel_id === activeId);
+        if (!findCh) return channel;
+
+        if (!findCh.channel_cost) {
+          findCh.channel_cost = {
+            tokens: 0,
+            usd: 0,
+            function_tokens: 0,
+            function_usd: 0,
+            total_tokens: 0,
+            total_usd: 0,
+          };
+        }
+
+        const findLLM: any = LLMOptions.find(
+          (item) => item.value === findCh?.channel_model.type
+        );
+
+        const findModelLabel = findLLM.models.find(
+          (item: any) => item.value === findCh?.channel_model.name
+        );
+
+        const { usedTokens, usedUSD } = calcTokens(
+          [
+            { role: "system", content: findCh.channel_prompt },
+            ...findCh.chat_list.map((item) => ({
+              role: item.role,
+              content: item.content,
+            })),
+          ],
+          findModelLabel.label
+        );
+
+        findCh.channel_cost.tokens = usedTokens;
+        findCh.channel_cost.usd = Number(usedUSD.toFixed(5));
+
+        const total_tokens: any = findCh.channel_cost.total_tokens + usedTokens;
+        const total_usd = findCh.channel_cost.total_usd + usedUSD;
+        findCh.channel_cost.total_tokens = parseInt(total_tokens);
+        findCh.channel_cost.total_usd = Number(total_usd.toFixed(5));
+
+        return channel;
+      });
+
       return;
     }
     setInputValue("");

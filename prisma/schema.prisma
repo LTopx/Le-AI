@@ -58,6 +58,9 @@ model User {
   updatedAt     DateTime? @updatedAt
   recentlyUse   DateTime?
   share         Share[]
+  costTokens    Int       @default(0)
+  costUSD       Float     @default(0)
+  Cost          Cost[]
 }
 
 model Share {
@@ -91,4 +94,13 @@ model Prompt {
   type         String
   createdAt    DateTime  @default(now())
   updatedAt    DateTime? @updatedAt
+}
+
+model Cost {
+  id         String   @id @default(cuid())
+  costTokens Int      @default(0)
+  costUSD    Float    @default(0)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
 }

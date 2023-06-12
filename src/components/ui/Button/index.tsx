@@ -33,9 +33,18 @@ const Button = React.forwardRef<any, ButtonProps>(
     },
     forwardedRef
   ) => {
-    const onBtnClick = (e: any) => {
-      if (loading) return;
-      onClick?.(e);
+    const onBtnClick = (
+      e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>
+    ) => {
+      if (loading) {
+        e.preventDefault();
+        return;
+      }
+      (
+        onClick as React.MouseEventHandler<
+          HTMLButtonElement | HTMLAnchorElement
+        >
+      )?.(e);
     };
 
     return (

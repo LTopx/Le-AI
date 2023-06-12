@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
+import { LResponseError } from "@/lib";
 
 // get prompt data
 export async function GET(request: Request) {
@@ -11,26 +12,15 @@ export async function GET(request: Request) {
 
   const type = searchParams.get("type") as string;
 
-  if (!type) {
-    return NextResponse.json(
-      { error: -1, msg: "type is required" },
-      { status: 500 }
-    );
-  }
+  if (!type) return LResponseError("type is required");
 
   if (!["market", "awesome-chatgpt-prompts", "review"].includes(type)) {
-    return NextResponse.json(
-      { error: -1, msg: "type is error" },
-      { status: 500 }
-    );
+    return LResponseError("type is error");
   }
 
   // If type is review, need login first
   if (type === "review" && !session) {
-    return NextResponse.json(
-      { error: -1, msg: "Please log in first" },
-      { status: 500 }
-    );
+    return LResponseError("Please log in first");
   }
 
   try {
@@ -54,7 +44,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 0, data: { list } }, { status: 200 });
   } catch (error) {
     console.log(error, "get prompt errot");
-    return NextResponse.json({ error: -1 }, { status: 500 });
+    return LResponseError();
   }
 }
 
@@ -65,12 +55,7 @@ export async function POST(request: Request) {
   /**
    * If not logged in, only the locally configured API Key can be used.
    */
-  if (!session) {
-    return NextResponse.json(
-      { error: -1, msg: "Please log in first" },
-      { status: 500 }
-    );
-  }
+  if (!session) return LResponseError("Please log in first");
 
   // Each user can only submit a maximum of 5 pending prompts.
   const count = await prisma.prompt.count({
@@ -78,40 +63,21 @@ export async function POST(request: Request) {
   });
 
   if (count >= 5) {
-    return NextResponse.json(
-      {
-        error: -1,
-        msg: "Each user can only submit a maximum of 5 pending prompts.",
-      },
-      { status: 500 }
+    return LResponseError(
+      "Each user can only submit a maximum of 5 pending prompts."
     );
   }
 
   const { title, icon, desc, content } = await request.json();
 
-  if (!title?.trim()) {
-    return NextResponse.json(
-      { error: -1, msg: "title cannot be empty" },
-      { status: 500 }
-    );
-  }
-  if (!icon?.trim()) {
-    return NextResponse.json(
-      { error: -1, msg: "icon cannot be empty" },
-      { status: 500 }
-    );
-  }
-  if (!desc?.trim()) {
-    return NextResponse.json(
-      { error: -1, msg: "desc cannot be empty" },
-      { status: 500 }
-    );
-  }
+  if (!title?.trim()) return LResponseError("title cannot be empty");
+
+  if (!icon?.trim()) return LResponseError("icon cannot be empty");
+
+  if (!desc?.trim()) return LResponseError("desc cannot be empty");
+
   if (!content.cn?.trim() && !content.en?.trim()) {
-    return NextResponse.json(
-      { error: -1, msg: "content cannot be empty" },
-      { status: 500 }
-    );
+    return LResponseError("content cannot be empty");
   }
 
   try {
@@ -136,6 +102,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 0 }, { status: 200 });
   } catch (error) {
     console.log(error, "add prompt error");
-    return NextResponse.json({ error: -1, msg: "error" }, { status: 500 });
+    return LResponseError();
   }
 }

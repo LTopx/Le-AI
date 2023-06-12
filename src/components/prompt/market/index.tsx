@@ -2,6 +2,7 @@ import * as React from "react";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import * as Tabs from "@radix-ui/react-tabs";
+import toast from "react-hot-toast";
 import { LuStore } from "react-icons/lu";
 import { AiOutlineDeploymentUnit } from "react-icons/ai";
 import { BiCustomize } from "react-icons/bi";
@@ -50,6 +51,8 @@ const PromptMarket: React.FC = () => {
     fetch(`/api/prompt?type=${type}`)
       .then((res) => res.json())
       .then((res) => {
+        if (res.error) return toast.error(res.msg, { id: "get-prompt-error" });
+
         if (type === "market") {
           setMarketList(res.data.list);
         }
