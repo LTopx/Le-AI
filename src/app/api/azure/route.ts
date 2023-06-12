@@ -73,26 +73,20 @@ const stream = async (
     const tokenInfo = new GPTTokens({ model, messages: final });
     const { usedTokens, usedUSD } = tokenInfo;
 
-    prisma.user
-      .findUnique({
+    const findUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (findUser) {
+      const costTokens = findUser.costTokens + usedTokens;
+      const costUSD = Number((findUser.costUSD + usedUSD).toFixed(5));
+      await prisma.user.update({
         where: { id: userId },
-      })
-      .then((findUser) => {
-        if (!findUser) return;
-
-        const costTokens = findUser.costTokens + usedTokens;
-        const costUSD = Number((findUser.costUSD + usedUSD).toFixed(5));
-
-        prisma.user
-          .update({
-            where: { id: userId },
-            data: {
-              costTokens,
-              costUSD,
-            },
-          })
-          .then();
+        data: {
+          costTokens,
+          costUSD,
+        },
       });
+    }
   }
 
   if (buffer) {

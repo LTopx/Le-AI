@@ -95,27 +95,6 @@ const stream = async (
         },
       });
     }
-
-    // prisma.user
-    //   .findUnique({
-    //     where: { id: userId },
-    //   })
-    //   .then((findUser) => {
-    //     if (!findUser) return;
-
-    //     const costTokens = findUser.costTokens + usedTokens;
-    //     const costUSD = Number((findUser.costUSD + usedUSD).toFixed(5));
-
-    //     prisma.user
-    //       .update({
-    //         where: { id: userId },
-    //         data: {
-    //           costTokens,
-    //           costUSD,
-    //         },
-    //       })
-    //       .then();
-    //   });
   }
 
   if (buffer) {

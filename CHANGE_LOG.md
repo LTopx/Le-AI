@@ -4,6 +4,10 @@
 
 > 2023-06-11
 
+### Fixed
+
+- Change the backend token calculation to asynchronous, otherwise it will cause inaccurate calculations.
+
 ### Add
 
 - Added backend capability to calculate token consumption
