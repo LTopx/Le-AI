@@ -50,7 +50,7 @@ const Logo: React.FC<LogoProps> = ({
       </div>
       {!!version && (
         <span
-          className="text-xs cursor-pointer font-semibold py-1.5 px-3 bg-slate-400/10 rounded-full"
+          className="text-xs cursor-pointer font-semibold py-1.5 px-3 bg-slate-400/10 rounded-full tabular-nums"
           onClick={onCheckChangeLog}
         >
           v{pkg.version}

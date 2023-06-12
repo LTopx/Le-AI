@@ -88,6 +88,10 @@ const Avatar: React.FC = () => {
     }
   };
 
+  React.useEffect(() => {
+    console.log(1234);
+  }, []);
+
   return (
     <Dropdown
       className="min-w-[8rem]"
