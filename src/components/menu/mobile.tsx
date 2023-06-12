@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
@@ -28,9 +29,11 @@ import {
   BASE_PROMPT,
 } from "@/hooks";
 import MenuIcon from "./icon";
+import Tokens from "@/components/tokens";
 import { lans } from "./index";
 
 const MobileMenu: React.FC = () => {
+  const session = useSession();
   const { theme, setTheme } = useTheme();
   const t = useTranslations("menu");
   const { format } = useDateFormat();
@@ -138,7 +141,7 @@ const MobileMenu: React.FC = () => {
       open={mobileMenuVisible}
       onClose={onClose}
     >
-      <div className="p-2 h-[calc(100%-3.5rem)] flex flex-col">
+      <div className="p-2 flex flex-col h-[calc(100%-3.5rem)]">
         <Button
           className="mb-2"
           type="primary"
@@ -223,7 +226,12 @@ const MobileMenu: React.FC = () => {
             </div>
           ))}
         </div>
-        <div className="h-[9rem] flex flex-col border-t gap-1 pt-1">
+        <div
+          className={cn("flex flex-col border-t gap-1 pt-1", {
+            "h-[12rem]": session.data,
+            "h-[9rem]": !session.data,
+          })}
+        >
           <Confirm
             title={t("clear-all-conversation")}
             content={t("clear-conversation")}
@@ -252,6 +260,7 @@ const MobileMenu: React.FC = () => {
           >
             <RiFeedbackLine size={16} /> {t("feedback")}
           </a>
+          {!!session.data && <Tokens type="mobile" />}
           <div className="h-11 items-center justify-center flex">
             <div className="flex-1 flex justify-center">
               <div

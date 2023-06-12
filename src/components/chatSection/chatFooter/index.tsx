@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
+import { useSession } from "next-auth/react";
 import { v4 as uuidv4 } from "uuid";
 import type { ChatItem } from "@/hooks/useChannel";
 import {
@@ -16,6 +17,7 @@ import {
   useOpenAI,
   useStreamDecoder,
   useChat,
+  useTokens,
   useLLM,
   BASE_PROMPT,
 } from "@/hooks";
@@ -29,8 +31,10 @@ import Inputarea from "./inputArea";
 
 const ChatFooter: React.FC = () => {
   // data
+  const session = useSession();
   const [newOpenAI] = useOpenAI();
   const [channel, setChannel] = useChannel();
+  const [, setTokens] = useTokens();
   const { openai, azure } = useLLM();
   const {
     loadingResponseStart,
@@ -120,6 +124,8 @@ const ChatFooter: React.FC = () => {
 
         return channel;
       });
+
+      if (session.data) setTokens();
 
       return;
     }
@@ -381,6 +387,8 @@ const ChatFooter: React.FC = () => {
             return channel;
           });
 
+          if (session.data) setTokens();
+
           // get conversation title
           if (!channel_name) getChannelNameByGPT(channel_id, channel_chat_list);
         })
@@ -498,6 +506,8 @@ const ChatFooter: React.FC = () => {
 
         return channel;
       });
+
+      if (session.data) setTokens();
     });
   };
 
@@ -621,6 +631,8 @@ const ChatFooter: React.FC = () => {
 
         return channel;
       });
+
+      if (session.data) setTokens();
 
       return;
     }

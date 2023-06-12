@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
+import { LResponseError } from "@/lib";
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
   const session = await getServerSession(authOptions);
 
   // check session
@@ -40,4 +41,28 @@ export async function POST(request: Request) {
   });
 
   return NextResponse.json({ error: 0 }, { status: 200 });
+}
+
+export async function GET(request: Request) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) return LResponseError("Please log in first");
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: session?.user.id },
+    });
+
+    if (!user) return LResponseError("User does not exist");
+
+    const response = {
+      costTokens: user.costTokens,
+      costUSD: user.costUSD,
+    };
+
+    return NextResponse.json({ error: 0, data: response }, { status: 200 });
+  } catch (error) {
+    console.log(error, "get user error");
+    return NextResponse.json({ error: -1, msg: "error" }, { status: 500 });
+  }
 }

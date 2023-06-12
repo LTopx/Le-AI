@@ -2,7 +2,7 @@
 
 ## v0.6.1
 
-> 2023-06-11
+> 2023-06-13
 
 ### Fixed
 
@@ -11,6 +11,7 @@
 ### Add
 
 - Added backend capability to calculate token consumption
+- Display the total amount of tokens currently consumed at the menu.
 
 ### Changed
 

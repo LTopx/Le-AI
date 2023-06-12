@@ -42,8 +42,8 @@ const Account: React.FC = () => {
     };
 
     setLoading(true);
-    fetch("/api/user/update", {
-      method: "POST",
+    fetch("/api/user", {
+      method: "PUT",
       body: JSON.stringify(params),
     })
       .then(async (response) => {

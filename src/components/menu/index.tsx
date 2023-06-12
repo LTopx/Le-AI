@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
@@ -30,6 +31,7 @@ import type { ContextMenuOption } from "@/components/ui/ContextMenu";
 import Dropdown from "@/components/ui/Dropdown";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
 import Logo from "@/components/logo";
+import Tokens from "@/components/tokens";
 import MenuIcon from "./icon";
 
 export const lans: IDropdownItems[] = [
@@ -46,6 +48,7 @@ export const lans: IDropdownItems[] = [
 ];
 
 const Menu: React.FC = () => {
+  const session = useSession();
   const { theme, setTheme } = useTheme();
   const t = useTranslations("menu");
   const { format } = useDateFormat();
@@ -180,7 +183,12 @@ const Menu: React.FC = () => {
       >
         {t("new-chat")}
       </Button>
-      <div className="h-[calc(100vh-16.75rem)] overflow-y-auto">
+      <div
+        className={cn("overflow-y-auto", {
+          "h-[calc(100vh-19.75rem)]": session.data,
+          "h-[calc(100vh-16.75rem)]": !session.data,
+        })}
+      >
         {channel.list.map((item) => (
           <ContextMenu
             key={item.channel_id}
@@ -255,7 +263,12 @@ const Menu: React.FC = () => {
           </ContextMenu>
         ))}
       </div>
-      <div className="border-t flex flex-col h-[9.25rem] pt-2 gap-1 dark:border-white/20">
+      <div
+        className={cn(
+          "border-t flex flex-col pt-2 gap-1 dark:border-white/20",
+          { "h-[12.25rem]": session.data, "h-[9.25rem]": !session.data }
+        )}
+      >
         <Confirm
           title={t("clear-all-conversation")}
           content={t("clear-conversation")}
@@ -282,6 +295,7 @@ const Menu: React.FC = () => {
         >
           <RiFeedbackLine size={16} /> {t("feedback")}
         </a>
+        {!!session.data && <Tokens type="pc" />}
         <div className="flex h-11 items-center justify-center">
           <div className="flex flex-1 justify-center">
             <div
