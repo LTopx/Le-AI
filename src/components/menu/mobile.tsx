@@ -1,8 +1,9 @@
+"use client";
+
 import * as React from "react";
 import { useSession } from "next-auth/react";
-import { useParams } from "next/navigation";
+import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next-intl/client";
-import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useDateFormat } from "l-hooks";
 import {
@@ -15,77 +16,42 @@ import { HiOutlineTranslate } from "react-icons/hi";
 import { RiFeedbackLine } from "react-icons/ri";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
-import Drawer from "@/components/ui/Drawer";
-import Confirm from "@/components/ui/Confirm";
-import Button from "@/components/ui/Button";
-import Dropdown from "@/components/ui/Dropdown";
-import Logo from "@/components/logo";
+import { Button, Confirm, Drawer, Dropdown } from "@/components/ui";
+import Logo from "@/components/site/logo";
 import {
   useChannel,
   initChannelList,
   useMobileMenu,
   useSetting,
-  useLLM,
-  BASE_PROMPT,
 } from "@/hooks";
+import { lans } from "./index";
 import MenuIcon from "./icon";
 import Tokens from "@/components/tokens";
-import { lans } from "./index";
 
-const MobileMenu: React.FC = () => {
+export default function MobileMenu() {
   const session = useSession();
+  const locale = useLocale();
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const t = useTranslations("menu");
   const { format } = useDateFormat();
   const [channel, setChannel] = useChannel();
-  const { openai, azure } = useLLM();
   const [mobileMenuVisible, setMobileMenuVisible] = useMobileMenu();
   const [, setSettingVisible] = useSetting();
 
-  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
   const [nowTheme, setNowTheme] = React.useState<any>("");
-
-  const params = useParams();
-  const router = useRouter();
-
-  const locale = params?.locale || "en";
 
   const onClose = () => setMobileMenuVisible(false);
 
   const onChannelAdd = () => {
     const channel_id = uuidv4();
+    const addItem = { ...initChannelList[0], channel_id };
     setChannel((channel) => {
-      channel.list.push({
-        channel_id,
-        channel_icon: "RiChatSmile2Line",
-        channel_name: "",
-        channel_model: {
-          type: LLMOptions[0].value,
-          name: LLMOptions[0].models[0].value,
-        },
-        channel_prompt: BASE_PROMPT,
-        channel_cost: {
-          tokens: 0,
-          usd: 0,
-          function_tokens: 0,
-          function_usd: 0,
-          total_tokens: 0,
-          total_usd: 0,
-        },
-        chat_list: [],
-      });
+      channel.list.push(addItem);
       channel.activeId = channel_id;
       return channel;
     });
-    onClose();
-  };
 
-  const onChannelChange = (id: string) => {
-    if (id === channel.activeId) return onClose();
-    setChannel((channel) => {
-      channel.activeId = id;
-      return channel;
-    });
     onClose();
   };
 
@@ -113,6 +79,15 @@ const MobileMenu: React.FC = () => {
         return channel;
       });
     }
+  };
+
+  const onChannelChange = (id: string) => {
+    if (id === channel.activeId) return onClose();
+    setChannel((channel) => {
+      channel.activeId = id;
+      return channel;
+    });
+    onClose();
   };
 
   const onToggleTheme = () => setTheme(nowTheme === "light" ? "dark" : "light");
@@ -327,6 +302,4 @@ const MobileMenu: React.FC = () => {
       </div>
     </Drawer>
   );
-};
-
-export default MobileMenu;
+}

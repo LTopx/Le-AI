@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const Team: React.FC = () => {
+export default function Team() {
   return (
     <div>
       <div className="text-2xl font-semibold">Teams</div>
@@ -11,6 +11,4 @@ const Team: React.FC = () => {
       <div>Todo...</div>
     </div>
   );
-};
-
-export default Team;
+}

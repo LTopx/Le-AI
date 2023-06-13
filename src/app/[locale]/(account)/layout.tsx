@@ -2,8 +2,8 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { cn } from "@/lib";
-import Logo from "@/components/logo";
-import Avatar from "@/components/auth/avatar";
+import Avatar from "@/components/site/avatar";
+import Logo from "@/components/site/logo";
 import Menu from "@/components/account/menu";
 
 export default async function AuthenticationLayout({

@@ -23,12 +23,15 @@
     "configuration": "Server error",
     "configuration-1": "There is a problem with the server configuration.",
     "configuration-2": "Check the server logs for more information.",
+    "continue-with-github": "Continue with Github",
+    "continue-with-google": "Continue with Google",
     "documentation": "Documentation",
     "error": "Error",
     "input-email": "Please enter your email",
     "input-valid-email": "Please enter a valid email address",
     "log-in": "Login",
     "log-out": "Log Out",
+    "or": "or",
     "prompt-market": "Prompt Market",
     "return-to-home-page": "Return to home page",
     "sign-in": "Sign in",
@@ -209,10 +212,7 @@
     "what-is-token": "What is a Token?"
   },
   "welcome": {
-    "apply-azure-key": "If you don't have an Azure OpenAI API Key, you can get one here:",
-    "apply-openai-key": "If you don't have an OpenAI API Key, you can get one here:",
     "desc": "L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
-    "set-openai-key": "Please click on the settings button in the lower left corner to configure your API Key.",
     "welcome": "Welcome to"
   },
   "zLog": {

@@ -1,13 +1,15 @@
+"use client";
+
 import * as React from "react";
-import { cn } from "@/lib";
 import { useTranslations } from "next-intl";
 import { AiOutlineMenuUnfold, AiOutlineEdit } from "react-icons/ai";
+import { cn } from "@/lib";
 import { useChannel, useOpenAI, useMobileMenu, useLLM } from "@/hooks";
-import Avatar from "@/components/auth/avatar";
+import Avatar from "@/components/site/avatar";
 import ConversationSetting from "./conversationSetting";
 import Token from "./token";
 
-const Navbar: React.FC = () => {
+export default function Navbar() {
   const conversationSettingRef = React.useRef<any>(null);
   const tokenRef = React.useRef<any>(null);
   const tMenu = useTranslations("menu");
@@ -129,6 +131,4 @@ const Navbar: React.FC = () => {
       <Token ref={tokenRef} cost={activeCost} />
     </>
   );
-};
-
-export default Navbar;
+}

@@ -17,6 +17,8 @@ interface IDropdownMenuProps
   /** A ReactNode that open the AlertDialog */
   trigger: React.ReactNode;
 
+  disabled?: boolean;
+
   align?: "start" | "center" | "end";
 
   alignOffset?: number;
@@ -40,6 +42,7 @@ const LDropdownMenu = React.forwardRef<any, IDropdownMenuProps>(
     {
       className,
       trigger,
+      disabled,
       align = "center",
       alignOffset,
       sideOffset,
@@ -51,8 +54,15 @@ const LDropdownMenu = React.forwardRef<any, IDropdownMenuProps>(
     },
     forwardedRef
   ) => {
+    const [open, setOpen] = React.useState(false);
+
+    const onOpenChange = (isOpen: boolean) => {
+      if (disabled) return setOpen(false);
+      setOpen(isOpen);
+    };
+
     return (
-      <DropdownMenu.Root>
+      <DropdownMenu.Root open={open} onOpenChange={onOpenChange}>
         <DropdownMenu.Trigger asChild>{trigger}</DropdownMenu.Trigger>
         <DropdownMenu.Portal>
           <DropdownMenu.Content

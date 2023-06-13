@@ -1,14 +1,17 @@
+"use client";
+
 import * as React from "react";
 import { useSession } from "next-auth/react";
-import { useParams } from "next/navigation";
+import { useTranslations, useLocale } from "next-intl";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next-intl/client";
-import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import {
   AiOutlineDelete,
   AiFillGithub,
   AiOutlineVerticalAlignTop,
   AiOutlineSetting,
+  AiOutlineLoading,
 } from "react-icons/ai";
 import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
 import { HiOutlineTranslate } from "react-icons/hi";
@@ -16,21 +19,12 @@ import { RiFeedbackLine } from "react-icons/ri";
 import { useDateFormat } from "l-hooks";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
-import {
-  useSetting,
-  useChannel,
-  initChannelList,
-  useLLM,
-  BASE_PROMPT,
-} from "@/hooks";
+import { useSetting, useChannel, initChannelList } from "@/hooks";
 import type { ChannelListItem } from "@/hooks";
-import Button from "@/components/ui/Button";
-import Confirm from "@/components/ui/Confirm";
-import ContextMenu from "@/components/ui/ContextMenu";
+import { Button, Confirm, ContextMenu, Dropdown } from "@/components/ui";
 import type { ContextMenuOption } from "@/components/ui/ContextMenu";
-import Dropdown from "@/components/ui/Dropdown";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
-import Logo from "@/components/logo";
+import Logo from "@/components/site/logo";
 import Tokens from "@/components/tokens";
 import MenuIcon from "./icon";
 
@@ -47,22 +41,21 @@ export const lans: IDropdownItems[] = [
   },
 ];
 
-const Menu: React.FC = () => {
+export default function Menu() {
   const session = useSession();
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const t = useTranslations("menu");
   const { format } = useDateFormat();
   const [, setVisible] = useSetting();
   const [channel, setChannel] = useChannel();
-  const { openai, azure } = useLLM();
-
-  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
   const [nowTheme, setNowTheme] = React.useState<"dark" | "light">("light");
+  const [loadingChangeLang, setLoadingChangeLang] = React.useState(false);
 
-  const params = useParams();
-  const router = useRouter();
-
-  const locale = params?.locale || "en";
+  // ref
+  const scrollRef = React.useRef<any>(null);
 
   const menuItems: ContextMenuOption[] = [
     {
@@ -79,29 +72,15 @@ const Menu: React.FC = () => {
 
   const onChannelAdd = () => {
     const channel_id = uuidv4();
+    const addItem = { ...initChannelList[0], channel_id };
     setChannel((channel) => {
-      channel.list.push({
-        channel_id,
-        channel_icon: "RiChatSmile2Line",
-        channel_name: "",
-        channel_model: {
-          type: LLMOptions[0].value,
-          name: LLMOptions[0].models[0].value,
-        },
-        channel_prompt: BASE_PROMPT,
-        channel_cost: {
-          tokens: 0,
-          usd: 0,
-          function_tokens: 0,
-          function_usd: 0,
-          total_tokens: 0,
-          total_usd: 0,
-        },
-        chat_list: [],
-      });
+      channel.list.push(addItem);
       channel.activeId = channel_id;
       return channel;
     });
+    setTimeout(() => {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }, 200);
   };
 
   const onChannelClear = () => {
@@ -144,7 +123,8 @@ const Menu: React.FC = () => {
         const { list } = channel;
         const findIndex = list.findIndex((e) => e.channel_id === v.channel_id);
         if (findIndex === -1) return channel;
-        [list[0], list[findIndex]] = [list[findIndex], list[0]];
+        const splice = list.splice(findIndex, 1);
+        list.unshift(splice[0]);
         return channel;
       });
     } else if (value === "delete") {
@@ -156,6 +136,7 @@ const Menu: React.FC = () => {
 
   const onLocaleChange = (value: string) => {
     if (value === locale) return;
+    setLoadingChangeLang(true);
     router.replace(value);
   };
 
@@ -163,12 +144,15 @@ const Menu: React.FC = () => {
     setNowTheme(theme === "dark" ? "dark" : "light");
   }, [theme]);
 
+  React.useEffect(() => {
+    if (loadingChangeLang) setLoadingChangeLang(false);
+  }, [pathname]);
+
   return (
     <div
       className={cn(
         "px-2 pb-2 hidden md:block md:w-[17.5rem] transition-colors select-none",
-        "bg-white",
-        "dark:bg-slate-800"
+        "bg-white dark:bg-slate-800"
       )}
     >
       <div className="h-14 pl-4 flex items-center">
@@ -184,7 +168,8 @@ const Menu: React.FC = () => {
         {t("new-chat")}
       </Button>
       <div
-        className={cn("overflow-y-auto", {
+        ref={scrollRef}
+        className={cn("overflow-y-auto scroll-smooth", {
           "h-[calc(100vh-19.75rem)]": session.data,
           "h-[calc(100vh-16.75rem)]": !session.data,
         })}
@@ -340,7 +325,11 @@ const Menu: React.FC = () => {
                     "dark:hover:bg-slate-700/70"
                   )}
                 >
-                  <HiOutlineTranslate size={20} />
+                  {loadingChangeLang ? (
+                    <AiOutlineLoading size={20} className="animate-spin" />
+                  ) : (
+                    <HiOutlineTranslate size={20} />
+                  )}
                 </div>
               </div>
             }
@@ -361,6 +350,4 @@ const Menu: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default Menu;
+}

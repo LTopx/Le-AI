@@ -23,12 +23,15 @@
     "configuration": "服务错误",
     "configuration-1": "服务器配置有误。",
     "configuration-2": "查看服务器日志获取更多信息。",
+    "continue-with-github": "使用 Github 登录",
+    "continue-with-google": "使用 Google 登录",
     "documentation": "文档",
     "error": "发生错误",
     "input-email": "请输入邮箱",
     "input-valid-email": "请输入正确的邮箱",
     "log-in": "登录",
     "log-out": "退出登录",
+    "or": "或者",
     "prompt-market": "Prompt 集市",
     "return-to-home-page": "返回首页",
     "sign-in": "登录",
@@ -209,10 +212,7 @@
     "what-is-token": "什么是 Token?"
   },
   "welcome": {
-    "apply-azure-key": "如果您没有 Azure OpenAI API Key, 可以点击此处申请:",
-    "apply-openai-key": "如果您没有 OpenAI API Key, 可以点击此处申请:",
     "desc": "L - GPT是一款开源项目，通过提供不同的AI模型来帮助你提高学习、工作、生活的效率。",
-    "set-openai-key": "请点击左下角设置按钮来配置您的API Key。",
     "welcome": "欢迎来到"
   },
   "zLog": {

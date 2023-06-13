@@ -2,11 +2,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import Announcement from "@/components/announcement";
 
-interface LocaleLayoutProps {
-  children: React.ReactNode;
-  params: { locale: string };
-}
-
 async function getMessages(locale: string) {
   try {
     return (await import(`../../locales/${locale}.json`)).default;
@@ -18,7 +13,10 @@ async function getMessages(locale: string) {
 export default async function LocaleLayout({
   children,
   params: { locale },
-}: LocaleLayoutProps) {
+}: {
+  children: React.ReactNode;
+  params: { locale: string };
+}) {
   const messages = await getMessages(locale);
 
   return (

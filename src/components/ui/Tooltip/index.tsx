@@ -9,7 +9,7 @@ interface LPopoverProps
   title?: React.ReactNode;
 }
 
-const LPopover: React.FC<LPopoverProps> = ({ children, title }) => {
+export default function LPopover({ children, title }: LPopoverProps) {
   return (
     <Popover.Root>
       <Popover.Trigger>{children}</Popover.Trigger>
@@ -31,6 +31,4 @@ const LPopover: React.FC<LPopoverProps> = ({ children, title }) => {
       </Popover.Portal>
     </Popover.Root>
   );
-};
-
-export default LPopover;
+}

@@ -1,31 +1,23 @@
 import * as React from "react";
 import { useTranslations } from "next-intl";
-import {
-  AiOutlineQuestionCircle,
-  AiOutlineCheck,
-  AiOutlinePlus,
-  AiOutlineDelete,
-} from "react-icons/ai";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
 import toast from "react-hot-toast";
 import { cn } from "@/lib";
-import Confirm from "@/components/ui/Confirm";
-import Input from "@/components/ui/Input";
-import Select from "@/components/ui/Select";
-import Button from "@/components/ui/Button";
-import Slider from "@/components/ui/Slider";
-import Tooltip from "@/components/ui/Tooltip";
-import Divider from "@/components/ui/Divider";
-import Modal from "@/components/ui/Modal";
 import { useOpenAI, useLLM } from "@/hooks";
-
-type CheckStatus = "" | "success" | "error";
+import {
+  Button,
+  Divider,
+  Input,
+  Modal,
+  Select,
+  Slider,
+  Tooltip,
+} from "@/components/ui";
 
 const Azure: React.FC = () => {
   const t = useTranslations("setting");
   const [openAI, setOpenAI] = useOpenAI();
   const { azure, updateAzure } = useLLM();
-  const [loadingCheck, setLoadingCheck] = React.useState(false);
-  const [checkStatus, setCheckStatus] = React.useState<CheckStatus>("");
 
   // Deployments data
   const [open, setOpen] = React.useState(false);
@@ -82,27 +74,22 @@ const Azure: React.FC = () => {
 
   // Deployments Function
   const onClose = () => setOpen(false);
-  const onAdd = () => {
-    setModelType("add");
-    setDeployment({ model: undefined, name: "" });
-    setOpen(true);
-  };
+
   const onEdit = (item: any) => {
     setModelType("edit");
     setDeployment({ model: item.label, name: item.value });
     setOpen(true);
   };
-  const onDelete = (item: any) => {
-    updateAzure(azure.models.filter((val) => val.label !== item.label));
-  };
+
   const onChangeDeployment = (value: any, type: "name" | "model") => {
     setDeployment((data) => {
-      const newData = { ...data };
+      const newData = JSON.parse(JSON.stringify(data));
       if (type === "name") newData.name = value;
       if (type === "model") newData.model = value;
       return newData;
     });
   };
+
   const submit = () => {
     if (!deployment.model) {
       return toast.error(t("select-model"), { id: "empty_model" });
@@ -130,8 +117,6 @@ const Azure: React.FC = () => {
     setOpen(false);
   };
 
-  const onCheck = () => {};
-
   return (
     <>
       <div className="flex flex-col gap-3">
@@ -154,14 +139,6 @@ const Azure: React.FC = () => {
               value={openAI.azure.apiKey}
               onChange={(value) => onChange(value, "apiKey")}
             />
-            {/* <Button
-              type="primary"
-              leftIcon={<AiOutlineCheck />}
-              loading={loadingCheck}
-              onClick={onCheck}
-            >
-              {t("check")}
-            </Button> */}
           </div>
         </div>
         <div>
@@ -208,23 +185,17 @@ const Azure: React.FC = () => {
           <Input
             type="number"
             min={1}
-            max={4000}
+            max={4097}
             step={1}
             placeholder={t("set-temperature") as string}
             value={openAI.azure.max_tokens}
             onChange={(value) => onChange(value, "max_tokens")}
           />
         </div>
-        <Divider />
+        <Divider className="my-2" />
         <div>
           <div className="mb-3 text-sm flex items-center justify-between">
             <div>{t("deployments")}</div>
-            {/* <Button
-              size="xs"
-              type="primary"
-              leftIcon={<AiOutlinePlus />}
-              onClick={onAdd}
-            /> */}
           </div>
           <div className="flex flex-col gap-2">
             {azure.models.map((item) => (
@@ -247,16 +218,6 @@ const Azure: React.FC = () => {
                   <Button size="xs" type="outline">
                     {item.label}
                   </Button>
-                  {/* <Confirm
-                    title={t("confirm-delete")}
-                    content={t("sure-delete-deployment")}
-                    trigger={
-                      <div onClick={(e) => e.stopPropagation()}>
-                        <AiOutlineDelete size={16} className="text-rose-500" />
-                      </div>
-                    }
-                    onOk={() => onDelete(item)}
-                  /> */}
                 </div>
               </div>
             ))}

@@ -1,5 +1,5 @@
 import createMiddleware from "next-intl/middleware";
-import { NextFetchEvent, NextMiddleware, NextRequest } from "next/server";
+// import { NextFetchEvent, NextMiddleware, NextRequest } from "next/server";
 
 export default createMiddleware({
   locales: ["en", "zh-CN"],

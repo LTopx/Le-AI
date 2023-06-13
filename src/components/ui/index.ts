@@ -2,6 +2,7 @@ import Button from "./Button";
 import Confirm from "./Confirm";
 import ContextMenu from "./ContextMenu";
 import type { ContextMenuOption } from "./ContextMenu";
+import Divider from "./Divider";
 import Drawer from "./Drawer";
 import Dropdown from "./Dropdown";
 import type { IDropdownItems } from "./Dropdown";
@@ -16,6 +17,7 @@ export {
   Button,
   Confirm,
   ContextMenu,
+  Divider,
   Drawer,
   Dropdown,
   Input,

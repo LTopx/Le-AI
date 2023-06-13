@@ -32,7 +32,7 @@ interface LSelectProps extends React.HTMLAttributes<HTMLElement> {
   size?: "default" | "large";
 }
 
-const LSelect: React.FC<LSelectProps> = ({
+export default function LSelect({
   className,
   contentClassName,
   disabled,
@@ -44,19 +44,17 @@ const LSelect: React.FC<LSelectProps> = ({
   size = "default",
   defaultValue,
   value,
-}) => {
+}: LSelectProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const triggerRef = React.useRef<any>(null);
   const [width, setWidth] = React.useState<number>(0);
 
+  const triggerRef = React.useRef<any>(null);
+
   const onOpenChange = (open: boolean) => {
-    if (open) {
-      setIsOpen(true);
-    } else {
-      setTimeout(() => {
-        setIsOpen(false);
-      }, 100);
-    }
+    if (open) return setIsOpen(true);
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 100);
   };
 
   React.useEffect(() => {
@@ -142,6 +140,4 @@ const LSelect: React.FC<LSelectProps> = ({
       </Select.Portal>
     </Select.Root>
   );
-};
-
-export default LSelect;
+}

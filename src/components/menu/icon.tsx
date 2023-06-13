@@ -8,12 +8,13 @@ import { MdMovieEdit } from "react-icons/md";
 import type { ChannelIcon } from "@/hooks";
 import { isUndefined } from "@/lib";
 
-interface IconProps {
+export default function MenuIcon({
+  name,
+  className,
+}: {
   name: ChannelIcon;
   className?: string;
-}
-
-const MenuIcon: React.FC<IconProps> = ({ name, className }) => {
+}) {
   const localClassName = "top-[50%] left-0 translate-y-[-50%] absolute";
 
   const props = {
@@ -38,6 +39,4 @@ const MenuIcon: React.FC<IconProps> = ({ name, className }) => {
   if (name === "AiFillAlert") return <AiFillAlert {...props} />;
 
   return null;
-};
-
-export default MenuIcon;
+}

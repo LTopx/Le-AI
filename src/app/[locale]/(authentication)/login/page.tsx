@@ -1,9 +1,8 @@
-import * as React from "react";
 import { cn } from "@/lib";
-import AuthForm from "@/components/auth/form";
-import Logo from "@/components/logo";
+import Logo from "@/components/site/logo";
+import AuthForm from "@/components/authForm";
 
-const Login: React.FC = () => {
+export default function Login() {
   return (
     <div className="flex flex-col fixed inset-0">
       <div
@@ -19,6 +18,4 @@ const Login: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default Login;
+}

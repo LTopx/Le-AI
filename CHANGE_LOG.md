@@ -7,6 +7,7 @@
 ### Fixed
 
 - Change the backend token calculation to asynchronous, otherwise it will cause inaccurate calculations.
+- Fixed the issue of incorrect calculation of sorting method for menu items on top.
 
 ### Add
 
@@ -16,6 +17,7 @@
 ### Changed
 
 - Optimized the front-end logic for calculating tokens, now able to correctly calculate all token consumption.
+- Significant code and interaction detail optimizations
 
 ## v0.6.0
 

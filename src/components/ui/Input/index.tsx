@@ -40,9 +40,11 @@ const Input = React.forwardRef<any, InputProps>(
     },
     forwardedRef
   ) => {
+    // ref
     const inputRef = React.useRef<any>(null);
     const forceUpdate = React.useRef(false);
 
+    // data
     const [isFocus, setIsFocus] = React.useState<boolean>(false);
 
     const onClear = () => {
@@ -78,8 +80,7 @@ const Input = React.forwardRef<any, InputProps>(
 
     const onChangeValue = (e: any) => {
       if (!isUndefined(min) || !isUndefined(max)) return;
-      const value = e.target.value;
-      onChange?.(value);
+      onChange?.(e.target.value);
     };
 
     const onMouseEnter = () => {
@@ -91,9 +92,7 @@ const Input = React.forwardRef<any, InputProps>(
     };
 
     const onKeyDown = (event: any) => {
-      if (event.keyCode === 13) {
-        onEnter?.(event.target.value);
-      }
+      if (event.keyCode === 13) onEnter?.(event.target.value);
     };
 
     React.useImperativeHandle(forwardedRef, () => ({

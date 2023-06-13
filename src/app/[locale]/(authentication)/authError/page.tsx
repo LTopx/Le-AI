@@ -2,11 +2,11 @@
 
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next-intl/client";
 import { cn } from "@/lib";
-import Logo from "@/components/logo";
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui";
+import Logo from "@/components/site/logo";
 
 const AuthError: React.FC = () => {
   const searchParams = useSearchParams();

@@ -1,13 +1,9 @@
 import * as React from "react";
-import { cn } from "@/lib";
 import { AiOutlinePieChart, AiOutlineLoading } from "react-icons/ai";
+import { cn } from "@/lib";
 import { useTokens } from "@/hooks";
 
-interface TokenProps {
-  type: "pc" | "mobile";
-}
-
-const Tokens: React.FC<TokenProps> = ({ type }) => {
+export default function Tokens({ type }: { type: "pc" | "mobile" }) {
   const [tokens, setTokens] = useTokens();
 
   const { costTokens, loading } = tokens;
@@ -35,6 +31,4 @@ const Tokens: React.FC<TokenProps> = ({ type }) => {
       </div>
     </div>
   );
-};
-
-export default Tokens;
+}

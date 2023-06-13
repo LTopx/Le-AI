@@ -2,32 +2,32 @@
 
 import * as React from "react";
 import { useSession, signOut } from "next-auth/react";
-import type { Session } from "next-auth";
-import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next-intl/client";
+import { useTranslations, useLocale } from "next-intl";
+import { useRouter, usePathname } from "next-intl/client";
 import Image from "next/image";
-import { AiOutlineUser } from "react-icons/ai";
 import { BiUser, BiLogOut, BiLogIn } from "react-icons/bi";
 import { HiOutlineDocumentText } from "react-icons/hi";
-import { AiOutlineAppstoreAdd } from "react-icons/ai";
+import { AiOutlineAppstoreAdd, AiOutlineUser } from "react-icons/ai";
 import { usePromptOpen } from "@/hooks";
 import Dropdown from "@/components/ui/Dropdown";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
 import Button from "@/components/ui/Button";
 
-const Avatar: React.FC = () => {
+export default function Avatar() {
   const session = useSession();
   const router = useRouter();
   const pathname = usePathname();
+  const locale = useLocale();
   const [, setOpen] = usePromptOpen();
+
+  const [loadingLogin, setLoadingLogin] = React.useState(false);
+
   const t = useTranslations("auth");
 
   const user = session.data?.user;
-  const status = session.status;
 
-  const getMenus = (session: Session | null): IDropdownItems[] => {
-    let baseMenus = [
+  const getMenus = React.useCallback((): IDropdownItems[] => {
+    let menus: IDropdownItems[] = [
       {
         label: t("documentation"),
         value: "documentation",
@@ -41,9 +41,11 @@ const Avatar: React.FC = () => {
       { type: "seperate", value: "seperate_1" },
     ];
 
-    if (session) {
-      baseMenus = [
-        ...baseMenus,
+    if (pathname !== "/") menus.splice(1, 1);
+
+    if (session.data) {
+      menus = [
+        ...menus,
         ...[
           {
             label: t("account-center"),
@@ -58,8 +60,8 @@ const Avatar: React.FC = () => {
         ],
       ];
     } else {
-      baseMenus = [
-        ...baseMenus,
+      menus = [
+        ...menus,
         ...[
           {
             label: t("log-in"),
@@ -70,11 +72,12 @@ const Avatar: React.FC = () => {
       ];
     }
 
-    return baseMenus;
-  };
+    return menus;
+  }, [session.data, pathname]);
 
-  const onSelect = async (item: any) => {
+  const onSelect = async (item: string) => {
     if (item === "login") {
+      setLoadingLogin(true);
       router.push("/login");
     } else if (item === "logout") {
       await signOut({ callbackUrl: "/" });
@@ -82,7 +85,11 @@ const Avatar: React.FC = () => {
       if (pathname.includes("/account")) return;
       router.push("/account");
     } else if (item === "documentation") {
-      window.open("https://docs.ltopx.com");
+      const url =
+        locale === "zh-CN"
+          ? "https://docs.ltopx.com/zh-CN"
+          : "https://docs.ltopx.com";
+      window.open(url);
     } else if (item === "prompt-market") {
       setOpen(true);
     }
@@ -92,8 +99,9 @@ const Avatar: React.FC = () => {
     <Dropdown
       className="min-w-[8rem]"
       align="end"
+      disabled={loadingLogin}
       trigger={
-        status === "loading" ? (
+        session.status === "loading" ? (
           <div className="flex h-14 right-3 absolute items-center">
             <Button loading type="primary" />
           </div>
@@ -115,7 +123,9 @@ const Avatar: React.FC = () => {
           </div>
         ) : (
           <div className="flex h-14 right-3 absolute items-center">
-            <Button type="primary">{t("log-in")}</Button>
+            <Button type="primary" loading={loadingLogin}>
+              {t("log-in")}
+            </Button>
           </div>
         )
       }
@@ -129,10 +139,8 @@ const Avatar: React.FC = () => {
           </div>
         ) : null
       }
-      options={getMenus(session.data)}
+      options={getMenus()}
       onSelect={onSelect}
     />
   );
-};
-
-export default Avatar;
+}

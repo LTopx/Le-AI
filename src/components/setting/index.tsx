@@ -1,23 +1,21 @@
+"use client";
+
 import * as React from "react";
-import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next-intl/client";
 import { TbTrashXFilled } from "react-icons/tb";
 import { BiExport, BiImport } from "react-icons/bi";
 import { saveAs } from "file-saver";
 import { useDateFormat } from "l-hooks";
 import toast from "react-hot-toast";
-import { cn } from "@/lib";
-import Modal from "@/components/ui/Modal";
-import Select from "@/components/ui/Select";
-import Button from "@/components/ui/Button";
-import Confirm from "@/components/ui/Confirm";
-import { sendMessageTypes } from "@/utils/constant";
-import { getPlatform } from "@/lib";
+import { cn, getPlatform } from "@/lib";
 import type { Platform } from "@/lib";
+import { sendMessageTypes } from "@/utils/constant";
 import { useChannel, useOpenAI, useSetting, useConfig } from "@/hooks";
 import type { IConfigStoreState } from "@/hooks";
+import { Button, Confirm, Modal, Select } from "@/components/ui";
 
-const Setting: React.FC = () => {
+export default function Setting() {
   const router = useRouter();
 
   const [channel, setChannel] = useChannel();
@@ -190,8 +188,4 @@ const Setting: React.FC = () => {
       />
     </>
   );
-};
-
-Setting.displayName = "Setting";
-
-export default Setting;
+}

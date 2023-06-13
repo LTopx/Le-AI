@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib";
-import Logo from "@/components/logo";
+import Logo from "@/components/site/logo";
 
 const AuthVerify: React.FC = () => {
   const t = useTranslations("auth");

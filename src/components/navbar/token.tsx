@@ -1,12 +1,10 @@
 import * as React from "react";
 import * as Accordion from "@radix-ui/react-accordion";
 import { useTranslations } from "next-intl";
-import Modal from "@/components/ui/Modal";
-import Button from "@/components/ui/Button";
-import Divider from "@/components/ui/Divider";
-import { cn } from "@/lib";
 import { AiFillCaretDown } from "react-icons/ai";
+import { cn } from "@/lib";
 import type { ChannelCost } from "@/hooks";
+import { Button, Divider, Modal } from "@/components/ui";
 
 interface TokenProps {
   cost: ChannelCost | undefined;

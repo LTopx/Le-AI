@@ -1,14 +1,14 @@
 import { cn } from "@/lib";
-import Logo from "@/components/logo";
-import Avatar from "@/components/auth/avatar";
+import Logo from "@/components/site/logo";
+import Avatar from "@/components/site/avatar";
 
-interface ApiKeyLayoutProps {
+export default async function ApiKeyLayout({
+  children,
+}: {
   children: React.ReactNode;
-}
-
-export default async function ApiKeyLayout({ children }: ApiKeyLayoutProps) {
+}) {
   return (
-    <div>
+    <>
       <div
         className={cn(
           "h-14 flex items-center justify-between px-6 border-b",
@@ -18,7 +18,7 @@ export default async function ApiKeyLayout({ children }: ApiKeyLayoutProps) {
         <Logo />
         <Avatar />
       </div>
-      <>{children}</>
-    </div>
+      {children}
+    </>
   );
 }

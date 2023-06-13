@@ -1,15 +1,16 @@
+"use client";
+
 import * as React from "react";
+import * as Tabs from "@radix-ui/react-tabs";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
-import * as Tabs from "@radix-ui/react-tabs";
 import toast from "react-hot-toast";
 import { LuStore } from "react-icons/lu";
 import { AiOutlineDeploymentUnit } from "react-icons/ai";
 import { BiCustomize } from "react-icons/bi";
 import { SiCodereview } from "react-icons/si";
 import { MdOutlineAutoAwesome } from "react-icons/md";
-import Modal from "@/components/ui/Modal";
-import Button from "@/components/ui/Button";
+import { Button, Modal } from "@/components/ui";
 import { usePromptOpen, usePrompt } from "@/hooks";
 import { Prompt } from "@prisma/client";
 import { cn } from "@/lib";
@@ -163,7 +164,7 @@ const PromptMarket: React.FC = () => {
               >
                 <div className="flex gap-2 items-center justify-center">
                   <MdOutlineAutoAwesome size={16} />
-                  <span className="hidden lg:block">
+                  <span className="hidden lg:block whitespace-nowrap">
                     Awesome ChatGPT Prompts
                   </span>
                 </div>

@@ -1,13 +1,11 @@
-"use client";
-
 import { cn } from "@/lib";
-import ChatSection from "@/components/chatSection";
 import Menu from "@/components/menu";
 import MobileMenu from "@/components/menu/mobile";
-import Navbar from "@/components/navbar";
 import Setting from "@/components/setting";
-import Welcome from "@/components/welcome";
 import PromptMark from "@/components/prompt/market";
+import Navbar from "@/components/navbar";
+import Welcome from "@/components/welcome";
+import ChatSection from "@/components/chatSection";
 import "@/utils/plugin/polyfill-client";
 
 export default function Home() {

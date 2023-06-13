@@ -19,14 +19,14 @@ interface LSliderProps
   onChange?: (value: number) => void;
 }
 
-const LSlider: React.FC<LSliderProps> = ({
+export default function LSlider({
   className,
   max = 100,
   step = 1,
   defaultValue,
   value,
   onChange,
-}) => {
+}: LSliderProps) {
   const onValueChange = (sliderValue: number[]) => onChange?.(sliderValue[0]);
 
   return (
@@ -70,6 +70,4 @@ const LSlider: React.FC<LSliderProps> = ({
       </Slider.Root>
     </div>
   );
-};
-
-export default LSlider;
+}

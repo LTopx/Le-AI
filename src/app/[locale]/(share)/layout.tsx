@@ -1,5 +1,5 @@
 import { cn } from "@/lib";
-import Logo from "@/components/logo";
+import Logo from "@/components/site/logo";
 import BackHome from "@/components/share/backHome";
 
 export default async function AuthenticationLayout({

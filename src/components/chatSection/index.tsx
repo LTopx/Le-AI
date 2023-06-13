@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { useOpenAI } from "@/hooks";
 import ScrollToBottoms from "@/components/scrollToBottoms";

@@ -1,16 +1,18 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
-import { useTranslations } from "next-intl";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
+import { cn } from "@/lib";
 import Button from "@/components/ui/Button";
+import Divider from "@/components/ui/Divider";
 import Input from "@/components/ui/Input";
 
-const AuthForm: React.FC = () => {
+export default function AuthForm() {
   const router = useRouter();
   const inputRef = React.useRef<any>(null);
   const [email, setEmail] = React.useState<string>("");
@@ -66,9 +68,16 @@ const AuthForm: React.FC = () => {
 
   return (
     <>
-      <div className="shadow-[0_24px_48px_rgba(0,0,0,0.16)] py-7 px-8 md:py-12 md:px-10 rounded-xl max-w-[calc(100vw-2rem)]">
+      <div
+        className={cn(
+          "py-7 px-8 md:py-12 md:px-10 rounded-xl max-w-[calc(100vw-2rem)]",
+          "border border-neutral-50 dark:border-neutral-700",
+          "shadow-[0_24px_48px_rgba(0,0,0,0.16)]",
+          "dark:shadow-[0_24px_48px_rgba(255,255,255,0.16)]"
+        )}
+      >
         <div className="text-2xl font-bold mb-10">{t("title")}</div>
-        <div className="w-[20rem] max-w-[calc(100vw-8rem)]">
+        <div className="w-[20rem] max-w-[calc(100vw-6rem)]">
           <Input
             ref={inputRef}
             className="w-full"
@@ -80,33 +89,34 @@ const AuthForm: React.FC = () => {
             onEnter={onLogin}
           />
           <Button
-            className="w-full mt-2 mb-4"
-            size="base"
+            className="w-full mt-2 mb-4 h-9"
             type="primary"
             loading={loadingEmial}
             onClick={onLogin}
           >
             {t("button-text")}
           </Button>
-          <div className="w-full h-[1px] bg-neutral-200 mb-4" />
+          <Divider className="my-7">
+            <span className="text-[13px]">{t("or")}</span>
+          </Divider>
           <div className="flex flex-col gap-2">
             <Button
-              size="base"
+              className="h-9"
               block
               loading={loadingGithub}
-              leftIcon={<AiFillGithub />}
+              leftIcon={<AiFillGithub size={16} />}
               onClick={onGithubLogin}
             >
-              Continue with Github
+              <span className="text-sm">{t("continue-with-github")}</span>
             </Button>
             <Button
-              size="base"
+              className="h-9"
               block
               loading={loadingGoogle}
-              leftIcon={<FcGoogle />}
+              leftIcon={<FcGoogle size={16} />}
               onClick={onGoogleLogin}
             >
-              Continue with Google
+              <span className="text-sm">{t("continue-with-google")}</span>
             </Button>
           </div>
         </div>
@@ -116,6 +126,4 @@ const AuthForm: React.FC = () => {
       )}
     </>
   );
-};
-
-export default AuthForm;
+}

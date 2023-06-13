@@ -33,7 +33,7 @@ In the future, functions will be implemented on the web end first and then synch
 - Responsive design and dark mode
 - Safe, all data based on local
 - Support i18n
-- Support [Azure OpenAI Service](./azure.md)
+- Support [Azure OpenAI Service](https://docs.ltopx.com/api-key-configure/azure)
 - Support configuration and use of custom prompt
 
 ## Next
@@ -143,25 +143,25 @@ pnpm build && pnpm start
 
 You can configure the following environment variables.
 
-| Environment Variable                     | Desc                                                            | Required | Default                  |
-| ---------------------------------------- | --------------------------------------------------------------- | -------- | ------------------------ |
-| `NEXT_PUBLIC_OPENAI_API_KEY`             | your OpenAI API Key                                             | false    |                          |
-| `NEXT_PUBLIC_OPENAI_API_PROXY`           | your OpenAI API proxy server                                    | false    | `https://api.openai.com` |
-| `NEXT_PUBLIC_AZURE_OPENAI_API_KEY`       | your Azure OpenAI API Key. [View Example](./azure.md)           | false    |                          |
-| `NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME` | your Azure OpenAI API resource name. [View Example](./azure.md) | false    |                          |
-| `NEXT_AZURE_OPENAI_API_VERSION`          | your Azure OpenAI API Version. [View Example](./azure.md)       | true     | 2023-05-15               |
-| `NEXT_PUBLIC_SENTRY_DSN`                 | your sentry dsn. If empty, it will not report error to sentry   | false    |                          |
-| `DATABASE_URL`                           | postgresql database address                                     | true     |                          |
-| `EMAIL_SERVER_HOST`                      | next-auth email server host                                     | true     |                          |
-| `EMAIL_SERVER_PORT`                      | next-auth email server port                                     | true     |                          |
-| `EMAIL_SERVER_USER`                      | next-auth email server user                                     | true     |                          |
-| `EMAIL_SERVER_PASSWORD`                  | next-auth email server password                                 | true     |                          |
-| `EMAIL_FROM`                             | next-auth email from                                            | false    |                          |
-| `EMAIL_SECRET`                           | next-auth email secret                                          | true     |                          |
-| `GITHUB_ID`                              | next-auth github id                                             | true     |                          |
-| `GITHUB_SECRET`                          | next-auth github secret                                         | true     |                          |
-| `GOOGLE_CLIENT_ID`                       | next-auth google client id                                      | true     |                          |
-| `GOOGLE_CLIENT_SECRET`                   | next-auth google client secret                                  | true     |                          |
+| Environment Variable                     | Desc                                                                                                | Required | Default                  |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------- | -------- | ------------------------ |
+| `NEXT_PUBLIC_OPENAI_API_KEY`             | your OpenAI API Key                                                                                 | false    |                          |
+| `NEXT_PUBLIC_OPENAI_API_PROXY`           | your OpenAI API proxy server                                                                        | false    | `https://api.openai.com` |
+| `NEXT_PUBLIC_AZURE_OPENAI_API_KEY`       | your Azure OpenAI API Key. [View Example](https://docs.ltopx.com/api-key-configure/azure)           | false    |                          |
+| `NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME` | your Azure OpenAI API resource name. [View Example](https://docs.ltopx.com/api-key-configure/azure) | false    |                          |
+| `NEXT_AZURE_OPENAI_API_VERSION`          | your Azure OpenAI API Version. [View Example](https://docs.ltopx.com/api-key-configure/azure)       | true     | 2023-05-15               |
+| `NEXT_PUBLIC_SENTRY_DSN`                 | your sentry dsn. If empty, it will not report error to sentry                                       | false    |                          |
+| `DATABASE_URL`                           | postgresql database address                                                                         | true     |                          |
+| `EMAIL_SERVER_HOST`                      | next-auth email server host                                                                         | true     |                          |
+| `EMAIL_SERVER_PORT`                      | next-auth email server port                                                                         | true     |                          |
+| `EMAIL_SERVER_USER`                      | next-auth email server user                                                                         | true     |                          |
+| `EMAIL_SERVER_PASSWORD`                  | next-auth email server password                                                                     | true     |                          |
+| `EMAIL_FROM`                             | next-auth email from                                                                                | false    |                          |
+| `EMAIL_SECRET`                           | next-auth email secret                                                                              | true     |                          |
+| `GITHUB_ID`                              | next-auth github id                                                                                 | true     |                          |
+| `GITHUB_SECRET`                          | next-auth github secret                                                                             | true     |                          |
+| `GOOGLE_CLIENT_ID`                       | next-auth google client id                                                                          | true     |                          |
+| `GOOGLE_CLIENT_SECRET`                   | next-auth google client secret                                                                      | true     |                          |
 
 ## Contact
 

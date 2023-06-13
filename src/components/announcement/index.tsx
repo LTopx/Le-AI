@@ -7,7 +7,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { cn } from "@/lib";
 import pkg from "../../../package.json";
 
-const Announcement: React.FC = () => {
+export default function Announcement() {
   const t = useTranslations("zLog");
 
   const [open, setOpen] = React.useState(false);
@@ -56,6 +56,4 @@ const Announcement: React.FC = () => {
       <Toast.Viewport className="flex flex-col list-none outline-none p-[var(--viewport-padding)] m-0 max-w-[100vw] right-0 bottom-0 w-[390px] z-[2147483647] gap-[10px] fixed [--viewport-padding:_25px]" />
     </Toast.Provider>
   );
-};
-
-export default Announcement;
+}

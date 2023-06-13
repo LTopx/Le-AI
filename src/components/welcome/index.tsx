@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { useTranslations } from "next-intl";
 import { useOpenAI } from "@/hooks";
@@ -27,27 +29,6 @@ const Welcome: React.FC = () => {
           </span>
         </div>
         <div className="text-lg mb-3">{t("desc")}</div>
-        <div className="mb-3 text-gray-500">{t("set-openai-key")}</div>
-        <div className="text-gray-500 mb-3">
-          {t("apply-openai-key")}
-          <a
-            className="text-blue-500 hover:underline ml-2"
-            href="https://platform.openai.com/account/api-keys"
-            target="_blank"
-          >
-            openai.com
-          </a>
-        </div>
-        <div className="text-gray-500">
-          {t("apply-azure-key")}
-          <a
-            className="text-blue-500 hover:underline ml-2"
-            href="https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUOFA5Qk1UWDRBMjg0WFhPMkIzTzhKQ1dWNyQlQCN0PWcu&culture=en-us&country=us"
-            target="_blank"
-          >
-            customervoice.microsoft.com
-          </a>
-        </div>
       </div>
     </div>
   );

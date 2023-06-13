@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { AiOutlineClose } from "react-icons/ai";
 import { useTranslations } from "next-intl";
+import { AiOutlineClose } from "react-icons/ai";
 import { cn } from "@/lib";
 import Button from "@/components/ui/Button";
 
@@ -60,12 +60,9 @@ const Modal = React.forwardRef<any, ModalProps>(
       if (!autoFocus) event.preventDefault();
     };
 
-    const onInteractOutside = (event: any) => {
-      if (maskClosable) {
-        onClose?.();
-      } else {
-        event.preventDefault();
-      }
+    const onInteractOutside = (event: Event) => {
+      if (maskClosable) return onClose?.();
+      event.preventDefault();
     };
 
     return (

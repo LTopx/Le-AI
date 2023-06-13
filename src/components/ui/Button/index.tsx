@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "@/lib";
 import { AiOutlineLoading } from "react-icons/ai";
+import { cn } from "@/lib";
 
 type ButtonType = "default" | "primary" | "success" | "danger" | "outline";
 

@@ -1,34 +1,30 @@
 "use client";
 
 import * as React from "react";
+import { useLocale } from "next-intl";
 import { useRouter } from "next-intl/client";
 import { cn } from "@/lib";
 import pkg from "../../../package.json";
 
-interface LogoProps {
-  disabled?: boolean;
-  share?: boolean;
-  version?: boolean;
-  size?: "default" | "large";
-}
-
-const Logo: React.FC<LogoProps> = ({
+export default function Logo({
   disabled = false,
   share = false,
   version = true,
   size = "default",
-}) => {
+}) {
   const router = useRouter();
+  const locale = useLocale();
 
   const onClick = () => {
     if (disabled) return;
     router.push("/");
   };
 
-  const onCheckChangeLog = () => {
-    window.open(
-      `https://docs.ltopx.com/change-log#v${pkg.version.replace(/\./g, "")}`
-    );
+  const onCheckLog = () => {
+    const version = pkg.version.replace(/\./g, "");
+    const localePath = locale === "zh-CN" ? "zh-CN/" : "";
+    const url = `https://docs.ltopx.com/${localePath}change-log#v${version}`;
+    window.open(url);
   };
 
   return (
@@ -51,13 +47,11 @@ const Logo: React.FC<LogoProps> = ({
       {!!version && (
         <span
           className="text-xs cursor-pointer font-semibold py-1.5 px-3 bg-slate-400/10 rounded-full tabular-nums"
-          onClick={onCheckChangeLog}
+          onClick={onCheckLog}
         >
           v{pkg.version}
         </span>
       )}
     </div>
   );
-};
-
-export default Logo;
+}

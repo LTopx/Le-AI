@@ -1,10 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "@/lib";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
+import { useRouter, usePathname } from "next-intl/client";
+import { cn } from "@/lib";
 
 interface MenuItemProps {
   label: string;
@@ -12,7 +11,7 @@ interface MenuItemProps {
   path: string;
 }
 
-const Menu: React.FC = () => {
+export default function Menu() {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations("account");
@@ -30,10 +29,8 @@ const Menu: React.FC = () => {
     },
   ];
 
-  const activePath = pathname.split("/").slice(-1)[0];
-
   const onClick = (item: MenuItemProps) => {
-    if (activePath === item.value) return;
+    if (pathname === item.path) return;
     router.push(item.path);
   };
 
@@ -48,8 +45,7 @@ const Menu: React.FC = () => {
             "text-black/70 hover:bg-neutral-200",
             "dark:text-white/60 dark:hover:bg-neutral-700",
             {
-              "text-black dark:text-white font-medium":
-                item.value === activePath,
+              "text-black dark:text-white font-medium": item.path === pathname,
             }
           )}
         >
@@ -58,6 +54,4 @@ const Menu: React.FC = () => {
       ))}
     </div>
   );
-};
-
-export default Menu;
+}

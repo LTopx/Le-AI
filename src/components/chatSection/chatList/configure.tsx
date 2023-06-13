@@ -12,10 +12,7 @@ import {
   BASE_PROMPT,
 } from "@/hooks";
 import type { ChannelIcon, IPrompt } from "@/hooks";
-import Select from "@/components/ui/Select";
-import Modal from "@/components/ui/Modal";
-import Divider from "@/components/ui/Divider";
-import Button from "@/components/ui/Button";
+import { Button, Divider, Modal, Select } from "@/components/ui";
 import Icon from "@/components/menu/icon";
 
 const renderLabel = (item: any) => {
@@ -145,7 +142,7 @@ const Configure = React.memo(() => {
 
   return (
     <>
-      <div className="flex flex-col h-full w-full pt-16 pb-24 top-0 left-0 gap-6 absolute">
+      <div className="flex flex-col h-full w-full pt-16 pb-24 top-0 gap-1 left-0 absolute">
         {isShow && (
           <motion.div
             className="flex flex-col items-center justify-center"
@@ -229,16 +226,10 @@ const Configure = React.memo(() => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="bg-neutral-300 w-48 h-[1px] relative">
-              <span
-                className={cn(
-                  "absolute text-sm px-3 left-[50%] translate-x-[-50%] translate-y-[-50%] select-none whitespace-nowrap",
-                  "bg-[#f8f8fa] dark:bg-[#181818]",
-                  "text-gray-500 dark:text-gray-300"
-                )}
-              >
-                {t("recently-used")}
-              </span>
+            <div className="w-80 max-w-[calc(100vw-2rem)]">
+              <Divider>
+                <span className="text-sm">{t("recently-used")}</span>
+              </Divider>
             </div>
           </motion.div>
         )}

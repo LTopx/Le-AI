@@ -1,20 +1,20 @@
 import * as React from "react";
-import { cn } from "@/lib";
 import { useTranslations } from "next-intl";
 import { AiOutlineQuestionCircle, AiOutlineCheck } from "react-icons/ai";
+import { toast } from "react-hot-toast";
+import { cn } from "@/lib";
+import { useOpenAI } from "@/hooks";
+import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Slider from "@/components/ui/Slider";
 import Tooltip from "@/components/ui/Tooltip";
-import Button from "@/components/ui/Button";
-import { useOpenAI } from "@/hooks";
-import { toast } from "react-hot-toast";
 
 type CheckStatus = "" | "success" | "error";
 
-const OpenAI: React.FC = () => {
+export default function OpenAI() {
   const t = useTranslations("setting");
   const [openAI, setOpenAI] = useOpenAI();
-  const [loadingCheck, setLoadingCheck] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [checkStatus, setCheckStatus] = React.useState<CheckStatus>("");
   const [apiKeyInfo, setApiKeyInfo] = React.useState<any>({});
 
@@ -46,7 +46,7 @@ const OpenAI: React.FC = () => {
     if (!openAI.openai.apiKey) {
       return toast.error(t("check-api-key-warning"), { id: "enter_key" });
     }
-    setLoadingCheck(true);
+    setLoading(true);
     fetch(
       `/api/subscription?model=openai&key=${openAI.openai.apiKey}&proxy=${openAI.openai.proxy}`
     )
@@ -60,7 +60,7 @@ const OpenAI: React.FC = () => {
         }
       })
       .finally(() => {
-        setLoadingCheck(false);
+        setLoading(false);
       });
   };
 
@@ -90,7 +90,7 @@ const OpenAI: React.FC = () => {
             className="w-22 md:w-28"
             type="primary"
             leftIcon={<AiOutlineCheck />}
-            loading={loadingCheck}
+            loading={loading}
             onClick={onCheck}
           >
             {t("check")}
@@ -167,6 +167,4 @@ const OpenAI: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default OpenAI;
+}

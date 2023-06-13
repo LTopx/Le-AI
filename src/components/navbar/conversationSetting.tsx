@@ -1,9 +1,6 @@
 import * as React from "react";
 import { useTranslations } from "next-intl";
-import Input from "@/components/ui/Input";
-import Modal from "@/components/ui/Modal";
-import Divider from "@/components/ui/Divider";
-import Select from "@/components/ui/Select";
+import { Divider, Input, Modal, Select } from "@/components/ui";
 import { useChannel, useLLM } from "@/hooks";
 
 interface IConversationSettings {

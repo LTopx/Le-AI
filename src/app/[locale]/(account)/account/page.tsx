@@ -12,7 +12,7 @@ interface UserInfo {
   image: string;
 }
 
-const Account: React.FC = () => {
+export default function Account() {
   const { data: session, update } = useSession();
   const t = useTranslations("account");
   const tCommon = useTranslations("common");
@@ -123,6 +123,4 @@ const Account: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default Account;
+}
