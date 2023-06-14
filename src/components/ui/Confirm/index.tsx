@@ -10,6 +10,8 @@ import Button from "@/components/ui/Button";
 interface ConfirmProps {
   type?: "danger" | "primary";
 
+  disabled?: boolean;
+
   /** The AlertDialog's title */
   title?: React.ReactNode;
 
@@ -33,6 +35,7 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
   (
     {
       type = "danger",
+      disabled,
       title,
       icon,
       content,
@@ -45,6 +48,11 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
     const t = useTranslations("common");
     const [open, setOpen] = React.useState(false);
 
+    const onOpenChange = (isOpen: boolean) => {
+      if (disabled) return setOpen(false);
+      setOpen(isOpen);
+    };
+
     const onClickOverlay = (event: any) => {
       event.stopPropagation();
       if (maskClosable) setOpen(false);
@@ -56,7 +64,7 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
     };
 
     return (
-      <AlertDialog.Root open={open} onOpenChange={setOpen}>
+      <AlertDialog.Root open={open} onOpenChange={onOpenChange}>
         <AlertDialog.Trigger asChild>{trigger}</AlertDialog.Trigger>
         <AlertDialog.Portal>
           <AlertDialog.Overlay

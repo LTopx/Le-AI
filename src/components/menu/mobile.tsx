@@ -26,7 +26,7 @@ import {
 } from "@/hooks";
 import { lans } from "./index";
 import MenuIcon from "./icon";
-import Tokens from "@/components/tokens";
+import Tokens from "@/components/site/tokens";
 
 export default function MobileMenu() {
   const session = useSession();

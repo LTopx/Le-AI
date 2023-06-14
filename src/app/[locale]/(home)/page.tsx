@@ -4,7 +4,7 @@ import MobileMenu from "@/components/menu/mobile";
 import Setting from "@/components/setting";
 import PromptMark from "@/components/prompt/market";
 import Navbar from "@/components/navbar";
-import Welcome from "@/components/welcome";
+import Welcome from "@/components/site/welcome";
 import ChatSection from "@/components/chatSection";
 import "@/utils/plugin/polyfill-client";
 

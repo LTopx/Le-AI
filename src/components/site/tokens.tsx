@@ -15,7 +15,7 @@ export default function Tokens({ type }: { type: "pc" | "mobile" }) {
   return (
     <div
       className={cn(
-        "h-11 text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors",
+        "h-11 text-sm cursor-pointer rounded-md flex items-center gap-2 px-2 transition-colors",
         "hover:bg-gray-200/60 dark:hover:bg-slate-700/70",
         { "rounded-md text-black/90 dark:text-white/90": type === "mobile" }
       )}

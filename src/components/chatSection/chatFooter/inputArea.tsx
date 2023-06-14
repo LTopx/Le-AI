@@ -1,11 +1,12 @@
 import * as React from "react";
 import { useTranslations } from "next-intl";
 import { AiOutlineSend, AiOutlineLoading } from "react-icons/ai";
-import { useChat, useConfig } from "@/hooks";
+import { useConfig } from "@/hooks";
 import { isMobile, getPlatform, cn } from "@/lib";
 
 export interface ChatInputProps {
   className?: string | undefined;
+  loading?: boolean;
   onChange: (value: any) => void;
   onSubmit: () => void;
   value: any;
@@ -19,10 +20,9 @@ export interface ChatInputRef {
 
 const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
   (props, forwardedRef) => {
-    const { className, value, onChange, onSubmit } = props;
+    const { className, loading, value, onChange, onSubmit } = props;
 
     const t = useTranslations("chat");
-    const { loadingResponseFinish } = useChat();
     const [config] = useConfig();
 
     // data
@@ -135,7 +135,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
           onBlur={() => setIsFocus(false)}
           onKeyDown={onKeyDown}
         />
-        {loadingResponseFinish ? (
+        {!!loading ? (
           <div
             className={cn(
               "rounded-md cursor-pointer flex h-7 transition-colors right-2.5 bottom-2 w-7 absolute justify-center items-center",

@@ -2,29 +2,38 @@
 
 import * as React from "react";
 import * as Toast from "@radix-ui/react-toast";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { AiOutlineCheck } from "react-icons/ai";
 import { cn } from "@/lib";
 import pkg from "../../../package.json";
 
 export default function Announcement() {
+  const locale = useLocale();
   const t = useTranslations("zLog");
 
   const [open, setOpen] = React.useState(false);
+
+  const url =
+    locale === "zh-CN"
+      ? "https://docs.ltopx.com/zh-CN/change-log"
+      : "https://docs.ltopx.com/change-log";
 
   const onClick = () => {
     localStorage.setItem("announcement_version", pkg.version);
   };
 
   React.useEffect(() => {
-    // const announcement_version = localStorage.getItem("announcement_version");
-    // if (pkg.version !== announcement_version) setOpen(true);
+    const announcement_version = localStorage.getItem("announcement_version");
+    if (pkg.version !== announcement_version) setOpen(true);
   }, []);
 
   return (
     <Toast.Provider swipeDirection="right" swipeThreshold={5000}>
       <Toast.Root
-        className="bg-white border rounded-md shadow-md p-[15px] data-[state=open]:animate-slideIn data-[state=closed]:animate-hide"
+        className={cn(
+          "bg-white border rounded-md shadow-md p-[15px] data-[state=open]:animate-slideIn data-[state=closed]:animate-hide",
+          "dark:bg-neutral-800 dark:border-neutral-500"
+        )}
         open={open}
         onOpenChange={setOpen}
         duration={9999999}
@@ -32,13 +41,28 @@ export default function Announcement() {
         <Toast.Title className="font-medium text-lg mb-[5px]">
           {t("title")}
         </Toast.Title>
-        <Toast.Description asChild className="text-sm mb-4 pl-4">
-          <ul className="list-disc space-y-2 text-black/80 dark:text-white/80">
-            <li>{t("text1")}</li>
-            <li>{t("text2")}</li>
-            <li>{t("text3")}</li>
-            <li>{t("text4")}</li>
-          </ul>
+        <Toast.Description asChild className="text-sm mb-4">
+          <div className="pl-4">
+            <ul
+              className={cn(
+                "list-disc space-y-2 text-black/80 dark:text-white/80 marker:text-sky-400"
+              )}
+            >
+              <li>{t("text1")}</li>
+              <li>{t("text2")}</li>
+              <li>{t("text3")}</li>
+              <li>{t("text4")}</li>
+            </ul>
+            <div className="mt-3 mb-4">
+              <a
+                href={url}
+                target="_blank"
+                className="text-sky-400 cursor-pointer transition-colors hover:underline hover:text-sky-500"
+              >
+                {t("full-log")}
+              </a>
+            </div>
+          </div>
         </Toast.Description>
         <Toast.Action asChild altText="Check">
           <button

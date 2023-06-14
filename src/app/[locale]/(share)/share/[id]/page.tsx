@@ -8,7 +8,7 @@ import type { Share } from "@prisma/client";
 import { AiOutlineUser } from "react-icons/ai";
 import { SiMicrosoftazure } from "react-icons/si";
 import Button from "@/components/ui/Button";
-import CopyIcon from "@/components/copyIcon";
+import CopyIcon from "@/components/site/copyIcon";
 import ChatContent from "@/components/chatContent";
 import BasicInfo from "@/components/share/basicInfo";
 import NotFound from "@/components/share/notFound";

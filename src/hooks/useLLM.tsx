@@ -51,8 +51,10 @@ const useStore = create<LLMState & LLMAction>((set) => ({
     ico_big: <GptSvg size={32} />,
     models: [
       { label: "gpt-3.5-turbo", value: "gpt-3.5-turbo" },
-      { label: "gpt-4", value: "gpt-4" },
-      { label: "gpt-4-32k", value: "gpt-4-32k" },
+      { label: "gpt-3.5-turbo-0613", value: "gpt-3.5-turbo-0613" },
+      { label: "gpt-3.5-turbo-16k", value: "gpt-3.5-turbo-16k" },
+      { label: "gpt-4", value: "gpt-4", disabled: true },
+      { label: "gpt-4-32k", value: "gpt-4-32k", disabled: true },
     ],
   },
   azure: {
@@ -63,8 +65,8 @@ const useStore = create<LLMState & LLMAction>((set) => ({
     models: [
       // system default
       { label: "gpt-3.5-turbo", value: "lgpt-35-turbo" },
-      { label: "gpt-4", value: "gpt-4" },
-      { label: "gpt-4-32k", value: "gpt-4-32k" },
+      { label: "gpt-4", value: "gpt-4", disabled: true },
+      { label: "gpt-4-32k", value: "gpt-4-32k", disabled: true },
     ],
   },
   updateAzure: (models: Model[]) => {

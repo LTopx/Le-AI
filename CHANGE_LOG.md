@@ -2,7 +2,7 @@
 
 ## v0.6.1
 
-> 2023-06-13
+> 2023-06-14
 
 ### Fixed
 
@@ -13,6 +13,8 @@
 
 - Added backend capability to calculate token consumption
 - Display the total amount of tokens currently consumed at the menu.
+- Added support for multiple simultaneous conversations, switching sessions will not break the connection of the current session.
+- Added support for the newly updated model from OpenAI: gpt-3.5-turbo-0613/gpt-3.5-turbo-16k
 
 ### Changed
 

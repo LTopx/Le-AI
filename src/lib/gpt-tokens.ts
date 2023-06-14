@@ -1,5 +1,5 @@
-import Decimal from "decimal.js";
 import { Tiktoken, getEncoding, encodingForModel } from "js-tiktoken";
+import Decimal from "decimal.js";
 
 /**
  * This is a port of the Python code from
@@ -11,6 +11,8 @@ import { Tiktoken, getEncoding, encodingForModel } from "js-tiktoken";
 export type supportModelType =
   | "gpt-3.5-turbo"
   | "gpt-3.5-turbo-0301"
+  | "gpt-3.5-turbo-0613"
+  | "gpt-3.5-turbo-16k"
   | "gpt-4"
   | "gpt-4-0314"
   | "gpt-4-32k"
@@ -29,9 +31,23 @@ interface Options {
   model: supportModelType;
   messages: MessageItem[];
   debug?: boolean;
+  plus?: boolean;
 }
 
 export class GPTTokens {
+  constructor(options: Options) {
+    const { debug = false, model, messages, plus = false } = options;
+
+    if (!this.supportModels.includes(model))
+      throw new Error("Model not supported.");
+
+    this.debug = debug;
+    this.model = model;
+    this.plus = plus;
+    this.messages = messages;
+  }
+
+  public readonly plus!: boolean;
   public readonly model!: supportModelType;
   public readonly messages!: MessageItem[];
   private readonly debug!: boolean;
@@ -40,6 +56,20 @@ export class GPTTokens {
   // gpt-3.5-turbo
   // $0.002 / 1K tokens
   public readonly gpt3_5_turboTokenUnit = new Decimal(0.002)
+    .div(1000)
+    .toNumber();
+
+  // https://openai.com/pricing/
+  // gpt-3.5-turbo-16k
+  // Prompt: $0.003 / 1K tokens
+  public readonly gpt3_5_turbo_16kPromptTokenUnit = new Decimal(0.003)
+    .div(1000)
+    .toNumber();
+
+  // https://openai.com/pricing/
+  // gpt-3.5-turbo-16k
+  // Prompt: $0.004 / 1K tokens
+  public readonly gpt3_5_turbo_16kCompletionTokenUnit = new Decimal(0.004)
     .div(1000)
     .toNumber();
 
@@ -54,7 +84,9 @@ export class GPTTokens {
   // https://openai.com/pricing/
   // gpt-4-8k
   // Completion: $0.06 / 1K tokens
-  // public readonly gpt4_8kCompletionTokenUnit = new Decimal(0.06).div(1000).toNumber()
+  public readonly gpt4_8kCompletionTokenUnit = new Decimal(0.06)
+    .div(1000)
+    .toNumber();
 
   // https://openai.com/pricing/
   // gpt-4-32k
@@ -66,27 +98,42 @@ export class GPTTokens {
   // https://openai.com/pricing/
   // gpt-4-32k
   // Completion: $0.12 / 1K tokens
-  // public readonly gpt4_32kCompletionTokenUnit = new Decimal(0.12).div(1000).toNumber()
+  public readonly gpt4_32kCompletionTokenUnit = new Decimal(0.12)
+    .div(1000)
+    .toNumber();
 
   // The models supported
   public readonly supportModels: supportModelType[] = [
     "gpt-3.5-turbo",
     "gpt-3.5-turbo-0301",
+    "gpt-3.5-turbo-0613",
+    "gpt-3.5-turbo-16k",
     "gpt-4",
     "gpt-4-0314",
     "gpt-4-32k",
     "gpt-4-32k-0314",
   ];
 
-  constructor(options: Options) {
-    const { debug = false, model, messages } = options;
+  private get modelType(): "gpt-3.5-turbo" | "gpt-4" | "gpt-4-32k" {
+    if (
+      [
+        "gpt-3.5-turbo",
+        "gpt-3.5-turbo-0301",
+        "gpt-3.5-turbo-0613",
+        "gpt-3.5-turbo-16k",
+      ].includes(this.model)
+    )
+      return "gpt-3.5-turbo";
 
-    if (!this.supportModels.includes(model))
-      throw new Error("Model not supported.");
+    if (["gpt-4", "gpt-4-0314"].includes(this.model)) {
+      return "gpt-4";
+    }
 
-    this.debug = debug;
-    this.model = model;
-    this.messages = messages;
+    if (["gpt-4-32k", "gpt-4-32k-0314"].includes(this.model)) {
+      return "gpt-4-32k";
+    }
+
+    throw new Error("Model not supported.");
   }
 
   // Used Tokens
@@ -96,55 +143,67 @@ export class GPTTokens {
 
   // Used USD
   public get usedUSD(): number {
-    if (["gpt-3.5-turbo", "gpt-3.5-turbo-0301"].includes(this.model))
-      return new Decimal(this.usedTokens)
+    let price = 0;
+
+    if (
+      ["gpt-3.5-turbo", "gpt-3.5-turbo-0301", "gpt-3.5-turbo-0613"].includes(
+        this.model
+      )
+    )
+      price = new Decimal(this.usedTokens)
         .mul(this.gpt3_5_turboTokenUnit)
         .toNumber();
 
-    if (["gpt-4", "gpt-4-0314"].includes(this.model)) {
-      // Does not distinguish between Prompt and Completion for the time being
-      //
-      // const promptUSD = new Decimal(this.promptUsedTokens)
-      //     .mul(this.gpt4_8kPromptTokenUnit)
-      // const completionUSD = new Decimal(this.completionUsedTokens)
-      //     .mul(this.gpt4_8kCompletionTokenUnit)
-      //
-      // return promptUSD.add(completionUSD).toNumber()
+    if (["gpt-3.5-turbo-16k"].includes(this.model)) {
+      const promptUSD = new Decimal(this.promptUsedTokens).mul(
+        this.gpt3_5_turbo_16kPromptTokenUnit
+      );
+      const completionUSD = new Decimal(this.completionUsedTokens).mul(
+        this.gpt3_5_turbo_16kCompletionTokenUnit
+      );
 
-      return new Decimal(this.usedTokens)
-        .mul(new Decimal(this.gpt4_8kPromptTokenUnit))
-        .toNumber();
+      price = promptUSD.add(completionUSD).toNumber();
+    }
+
+    if (["gpt-4", "gpt-4-0314"].includes(this.model)) {
+      const promptUSD = new Decimal(this.promptUsedTokens).mul(
+        this.gpt4_8kPromptTokenUnit
+      );
+      const completionUSD = new Decimal(this.completionUsedTokens).mul(
+        this.gpt4_8kCompletionTokenUnit
+      );
+
+      price = promptUSD.add(completionUSD).toNumber();
     }
 
     if (["gpt-4-32k", "gpt-4-32k-0314"].includes(this.model)) {
-      // Does not distinguish between Prompt and Completion for the time being
-      //
-      // const promptUSD     = new Decimal(this.promptUsedTokens)
-      //     .mul(this.gpt4_32kPromptTokenUnit)
-      // const completionUSD = new Decimal(this.completionUsedTokens)
-      //     .mul(this.gpt4_32kCompletionTokenUnit)
-      //
-      // return promptUSD.add(completionUSD).toNumber()
+      const promptUSD = new Decimal(this.promptUsedTokens).mul(
+        this.gpt4_32kPromptTokenUnit
+      );
+      const completionUSD = new Decimal(this.completionUsedTokens).mul(
+        this.gpt4_32kCompletionTokenUnit
+      );
 
-      return new Decimal(this.usedTokens)
-        .mul(new Decimal(this.gpt4_32kPromptTokenUnit))
-        .toNumber();
+      price = promptUSD.add(completionUSD).toNumber();
     }
 
-    throw new Error("Model not supported.");
+    if (this.plus && this.modelType === "gpt-3.5-turbo")
+      price = new Decimal(price).mul(0.75).toNumber();
+
+    return price;
   }
 
-  // private get promptUsedTokens (): number {
-  //     const messages = this.messages.filter(item => item.role !== 'assistant')
-  //
-  //     return this.num_tokens_from_messages(messages, this.model)
-  // }
-  //
-  // private get completionUsedTokens (): number {
-  //     const messages = this.messages.filter(item => item.role === 'assistant')
-  //
-  //     return this.num_tokens_from_messages(messages, this.model) - 3
-  // }
+  private get promptUsedTokens(): number {
+    const messages = this.messages.filter((item) => item.role !== "assistant");
+
+    return this.num_tokens_from_messages(messages, this.model);
+  }
+
+  private get completionUsedTokens(): number {
+    const messages = this.messages.filter((item) => item.role === "assistant");
+
+    return this.num_tokens_from_messages(messages, this.model);
+  }
 
   /**
    * Print a warning message.
@@ -168,65 +227,39 @@ export class GPTTokens {
     messages: MessageItem[],
     model: supportModelType
   ): number {
-    if (model === "gpt-3.5-turbo") {
-      this.warning(
-        "gpt-3.5-turbo may change over time. Returning num tokens assuming gpt-3.5-turbo-0301."
-      );
-
-      return this.num_tokens_from_messages(messages, "gpt-3.5-turbo-0301");
-    }
-
-    if (model === "gpt-4") {
-      /**
-       * https://help.openai.com/en/articles/7127966-what-is-the-difference-between-the-gpt-4-models
-       *
-       * Secondly, gpt-4 will refer to our most up-to-date model (and gpt-4-32k for the latest 32k-context model).
-       * If you're interested in using a previous snapshot of the model, you can refer to the specific date in the model name, such as gpt-4-0314 or gpt-4-32k-0314.
-       * The March 14th snapshot will be available until June 14th.
-       */
-      this.warning(
-        "gpt-4 may change over time. Returning num tokens assuming gpt-4-0314."
-      );
-
-      return this.num_tokens_from_messages(messages, "gpt-4-0314");
-    }
-
-    if (model === "gpt-4-32k") {
-      /**
-       * https://help.openai.com/en/articles/7127966-what-is-the-difference-between-the-gpt-4-models
-       *
-       * Secondly, gpt-4 will refer to our most up-to-date model (and gpt-4-32k for the latest 32k-context model).
-       * If you're interested in using a previous snapshot of the model, you can refer to the specific date in the model name, such as gpt-4-0314 or gpt-4-32k-0314.
-       * The March 14th snapshot will be available until June 14th.
-       */
-      this.warning(
-        "gpt-4-32k may change over time. Returning num tokens assuming gpt-4-32k-0314."
-      );
-
-      return this.num_tokens_from_messages(messages, "gpt-4-32k-0314");
-    }
-
     let encoding!: Tiktoken;
     let tokens_per_message!: number;
     let tokens_per_name!: number;
     let num_tokens = 0;
 
-    try {
-      encoding = encodingForModel(model);
-    } catch (e) {
-      this.warning("model not found. Using cl100k_base encoding.");
-
-      encoding = getEncoding("cl100k_base");
-    }
-
-    if (model === "gpt-3.5-turbo-0301") {
+    if (
+      [
+        "gpt-3.5-turbo",
+        "gpt-3.5-turbo-0301",
+        "gpt-3.5-turbo-0613",
+        "gpt-3.5-turbo-16k",
+      ].includes(model)
+    ) {
       tokens_per_message = 4;
       tokens_per_name = -1;
     }
 
-    if (["gpt-4-0314", "gpt-4-32k-0314"].includes(model)) {
+    if (["gpt-4", "gpt-4-0314"].includes(model)) {
       tokens_per_message = 3;
       tokens_per_name = 1;
+    }
+
+    if (["gpt-4-32k", "gpt-4-32k-0314"].includes(model)) {
+      tokens_per_message = 3;
+      tokens_per_name = 1;
+    }
+
+    try {
+      encoding = encodingForModel(this.modelType);
+    } catch (e) {
+      this.warning("model not found. Using cl100k_base encoding.");
+
+      encoding = getEncoding("cl100k_base");
     }
 
     // Python 2 Typescript by gpt-4
@@ -240,6 +273,9 @@ export class GPTTokens {
         }
       }
     }
+
+    // Supplementary
+    // encoding.free();
 
     return num_tokens + 3;
   }

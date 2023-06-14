@@ -47,6 +47,8 @@ export interface ChannelListItem {
   channel_model: ChannelModel;
   channel_prompt: string;
   channel_cost: ChannelCost;
+  channel_loading_connect: boolean;
+  channel_loading: boolean;
   chat_list: ChatItem[];
 }
 
@@ -112,6 +114,8 @@ export const initChannelList: ChannelListItem[] = [
       total_tokens: 0,
       total_usd: 0,
     },
+    channel_loading_connect: false,
+    channel_loading: false,
     chat_list: [],
   },
 ];
@@ -122,7 +126,6 @@ const getInitChannelList = () => {
   try {
     const localChannelList = localStorage.getItem("channelList");
     if (localChannelList && JSON.parse(localChannelList).length) {
-      // Compatibility with old data
       channelList = JSON.parse(localChannelList).map(
         (item: ChannelListItem) => {
           if (!item.channel_model) {
@@ -146,6 +149,8 @@ const getInitChannelList = () => {
           if (!item.channel_prompt) {
             item.channel_prompt = BASE_PROMPT;
           }
+          item.channel_loading_connect = false;
+          item.channel_loading = false;
           return item;
         }
       );

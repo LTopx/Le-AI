@@ -49,6 +49,26 @@ const Configure = React.memo(() => {
   }, [channel]);
 
   const t = useTranslations("prompt");
+  const tCommon = useTranslations("common");
+
+  const renderModelLabel = (item: any) => {
+    return (
+      <div className="flex gap-4 items-center">
+        <span>{item.label}</span>
+        {!!item.disabled && (
+          <span
+            className={cn(
+              "select-none rounded-md text-xs py-0.5 px-2 border",
+              "border-yellow-100 bg-yellow-100 text-yellow-500",
+              "dark:border-yellow-400/80 dark:bg-yellow-400/80 dark:text-white"
+            )}
+          >
+            {tCommon("applying")}
+          </span>
+        )}
+      </div>
+    );
+  };
 
   const onChangeType = (value: string) => {
     setChannel((channel) => {
@@ -182,6 +202,7 @@ const Configure = React.memo(() => {
                     <Select
                       className="w-full"
                       options={options}
+                      renderLabel={renderModelLabel}
                       value={findChannel?.channel_model.name}
                       onChange={onChangeModel}
                     />

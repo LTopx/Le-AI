@@ -43,7 +43,7 @@ export async function PUT(request: Request) {
   return NextResponse.json({ error: 0 }, { status: 200 });
 }
 
-export async function GET(request: Request) {
+export async function GET() {
   const session = await getServerSession(authOptions);
 
   if (!session) return LResponseError("Please log in first");
@@ -54,6 +54,11 @@ export async function GET(request: Request) {
     });
 
     if (!user) return LResponseError("User does not exist");
+
+    await prisma.user.update({
+      data: { recentlyUse: new Date() },
+      where: { id: session?.user.id },
+    });
 
     const response = {
       costTokens: user.costTokens,

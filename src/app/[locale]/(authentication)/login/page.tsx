@@ -1,6 +1,6 @@
 import { cn } from "@/lib";
 import Logo from "@/components/site/logo";
-import AuthForm from "@/components/authForm";
+import AuthForm from "@/components/site/authForm";
 
 export default function Login() {
   return (

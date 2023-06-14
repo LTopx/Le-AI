@@ -1,6 +1,6 @@
 import { RiChatSmile2Line } from "react-icons/ri";
 import { HiOutlineTranslate } from "react-icons/hi";
-import { AiFillAlert } from "react-icons/ai";
+import { AiFillAlert, AiOutlineLoading } from "react-icons/ai";
 import { FaBook } from "react-icons/fa";
 import { TbSailboat } from "react-icons/tb";
 import { BsVectorPen, BsCodeSlash } from "react-icons/bs";
@@ -11,9 +11,11 @@ import { isUndefined } from "@/lib";
 export default function MenuIcon({
   name,
   className,
+  loading = false,
 }: {
   name: ChannelIcon;
   className?: string;
+  loading?: boolean;
 }) {
   const localClassName = "top-[50%] left-0 translate-y-[-50%] absolute";
 
@@ -21,6 +23,14 @@ export default function MenuIcon({
     size: 16,
     className: isUndefined(className) ? localClassName : className,
   };
+
+  if (loading) {
+    return (
+      <div className="top-[50%] left-0 translate-y-[-50%] absolute">
+        <AiOutlineLoading size={16} className="animate-spin" />
+      </div>
+    );
+  }
 
   if (name === "RiChatSmile2Line") return <RiChatSmile2Line {...props} />;
 

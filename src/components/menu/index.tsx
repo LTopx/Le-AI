@@ -25,7 +25,7 @@ import { Button, Confirm, ContextMenu, Dropdown } from "@/components/ui";
 import type { ContextMenuOption } from "@/components/ui/ContextMenu";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
 import Logo from "@/components/site/logo";
-import Tokens from "@/components/tokens";
+import Tokens from "@/components/site/tokens";
 import MenuIcon from "./icon";
 
 export const lans: IDropdownItems[] = [
@@ -199,7 +199,10 @@ export default function Menu() {
                 )}
               >
                 <div className="text-sm text-ellipsis max-w-[26ch] pl-5 transition-colors relative overflow-hidden whitespace-nowrap">
-                  <MenuIcon name={item.channel_icon} />
+                  <MenuIcon
+                    name={item.channel_icon}
+                    loading={item.channel_loading}
+                  />
                   <span className="font-medium">
                     {item.channel_name || t("new-conversation")}
                   </span>

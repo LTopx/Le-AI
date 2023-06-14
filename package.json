@@ -28,7 +28,7 @@
     "@radix-ui/react-toast": "1.1.4",
     "@react-email/components": "0.0.6",
     "@react-email/render": "0.0.7",
-    "@sentry/nextjs": "7.54.0",
+    "@sentry/nextjs": "7.55.1",
     "@svgr/webpack": "8.0.1",
     "@types/node": "20.3.1",
     "@types/react": "18.2.12",

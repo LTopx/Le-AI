@@ -2,8 +2,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { isUndefined } from "@/lib";
-import { GPTTokens } from "@/lib/gpt-tokens";
+import { isUndefined, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/gpt-tokens";
 import { prisma } from "@/lib/prisma";
 
@@ -70,8 +69,7 @@ const stream = async (
   if (userId) {
     const final = [...messages, { role: "assistant", content: resultContent }];
 
-    const tokenInfo = new GPTTokens({ model, messages: final });
-    const { usedTokens, usedUSD } = tokenInfo;
+    const { usedTokens, usedUSD } = calcTokens(final, model);
 
     const findUser = await prisma.user.findUnique({
       where: { id: userId },
@@ -170,13 +168,6 @@ export async function POST(request: Request) {
       modelLabel,
       session?.user.id
     );
-
-    if (session) {
-      await prisma.user.update({
-        data: { recentlyUse: new Date() },
-        where: { id: session?.user.id },
-      });
-    }
 
     return new Response(readable, response);
   } catch (error: any) {

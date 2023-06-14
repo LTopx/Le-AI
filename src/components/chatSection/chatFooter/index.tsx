@@ -8,6 +8,7 @@ import {
   AiOutlineRedo,
   AiOutlineClear,
   AiOutlineShareAlt,
+  AiOutlineLoading,
 } from "react-icons/ai";
 import { BsStop } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
@@ -16,13 +17,12 @@ import {
   useChannel,
   useOpenAI,
   useStreamDecoder,
-  useChat,
   useTokens,
   useLLM,
   BASE_PROMPT,
+  ChannelListItem,
 } from "@/hooks";
-import Confirm from "@/components/ui/Confirm";
-import Button from "@/components/ui/Button";
+import { Button, Confirm } from "@/components/ui";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
 import { isMobile, cn, calcTokens } from "@/lib";
 import type { IShare } from "@/app/api/share/route";
@@ -32,18 +32,11 @@ import Inputarea from "./inputArea";
 const ChatFooter: React.FC = () => {
   // data
   const session = useSession();
+  const router = useRouter();
   const [newOpenAI] = useOpenAI();
   const [channel, setChannel] = useChannel();
   const [, setTokens] = useTokens();
   const { openai, azure } = useLLM();
-  const {
-    loadingResponseStart,
-    loadingResponseFinish,
-    abort: chatAbort,
-    updateStart,
-    updateFinish,
-    updateAbort,
-  } = useChat();
   const [inputValue, setInputValue] = React.useState<string>("");
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
   const [loadingShare, setLoadingShare] = React.useState(false);
@@ -51,8 +44,6 @@ const ChatFooter: React.FC = () => {
   // ref
   const inputRef = React.useRef<any>(null);
   const actionRef = React.useRef<any>(null);
-
-  const router = useRouter();
 
   const t = useTranslations("chat");
   const tShare = useTranslations("share");
@@ -67,17 +58,32 @@ const ChatFooter: React.FC = () => {
   const { run: sendMessage } = useDebounceFn(() => send(), { wait: 200 });
   const { run: generate } = useDebounceFn(() => onGenerate(), { wait: 200 });
 
+  const abortStore = React.useRef<any>({});
+
   const findChannel = channel.list.find(
     (item) => item.channel_id === channel.activeId
   );
+  const loadingChannel = !!findChannel?.channel_loading;
+
+  const handleLogin = () => {
+    router.push("/login");
+    toast.dismiss();
+  };
+
+  const handleCheckExceeded = () => {
+    window.open("https://docs.ltopx.com/conversation-limits");
+  };
 
   const onGenerate = () => {
     // stop generate
-    if (loadingResponseFinish) {
+    if (loadingChannel) {
       toast.error(t("canceled"));
-      chatAbort?.abort();
-      updateStart(false);
-      updateFinish(false);
+
+      // abort fetch
+      const channel_id = findChannel.channel_id;
+      if (!abortStore.current[channel_id]) return;
+      abortStore.current[channel_id].abort();
+      delete abortStore.current[channel_id];
 
       setChannel((channel) => {
         const { list, activeId } = channel;
@@ -122,6 +128,9 @@ const ChatFooter: React.FC = () => {
         findCh.channel_cost.total_tokens = parseInt(total_tokens);
         findCh.channel_cost.total_usd = Number(total_usd.toFixed(5));
 
+        findCh.channel_loading_connect = false;
+        findCh.channel_loading = false;
+
         return channel;
       });
 
@@ -131,9 +140,6 @@ const ChatFooter: React.FC = () => {
     }
 
     // regenerate
-    const findChannel = channel.list.find(
-      (item) => item.channel_id === channel.activeId
-    );
     if (!findChannel?.chat_list.length) return;
     if (findChannel.chat_list.at(-1)?.role !== "assistant") return;
     const findLastIndex = findChannel.chat_list.findLastIndex(
@@ -143,16 +149,16 @@ const ChatFooter: React.FC = () => {
     const sliceList = findChannel.chat_list.slice(0, findLastIndex);
     setChannel((channel) => {
       const { list, activeId } = channel;
-      const findChannel = list.find((item) => item.channel_id === activeId);
-      if (!findChannel) return channel;
-      findChannel.chat_list = sliceList;
+      const findCh = list.find((item) => item.channel_id === activeId);
+      if (!findCh) return channel;
+      findCh.chat_list = sliceList;
       return channel;
     });
-    sendToGPT(sliceList);
+    sendToGPT(sliceList, findChannel?.channel_id as string);
   };
 
   const send = async () => {
-    if (loadingResponseFinish) return;
+    if (loadingChannel) return;
     if (!inputValue?.trim()) {
       return toast.error(t("enter-message"), {
         id: "empty-message",
@@ -173,63 +179,60 @@ const ChatFooter: React.FC = () => {
     let chat_list: ChatItem[] = [];
     setChannel((channel) => {
       const { list, activeId } = channel;
-      const findChannel = list.find((item) => item.channel_id === activeId);
-      if (!findChannel) return channel;
-      findChannel.chat_list.push({
+      const findCh = list.find((item) => item.channel_id === activeId);
+      if (!findCh) return channel;
+      findCh.chat_list.push({
         id: uuidv4(),
         role: "user",
         time: String(+new Date()),
         content: inputValue,
       });
-      chat_list = findChannel.chat_list;
+      chat_list = findCh.chat_list;
       return channel;
     });
-    sendToGPT(chat_list);
+    if (!chat_list.length) return;
+    sendToGPT(chat_list, findChannel?.channel_id as string);
     scrollToBottom();
   };
 
-  const handleLogin = () => {
-    router.push("/login");
-    toast.dismiss();
-  };
-
-  const handleCheckExceeded = () => {
-    window.open("https://docs.ltopx.com/conversation-limits");
-  };
-
   const sendToGPT = React.useCallback(
-    (chat_list: ChatItem[]) => {
-      const modelType: any = findChannel?.channel_model.type;
-      const modelConfig = (newOpenAI as any)[modelType];
-      const prompt = findChannel?.channel_prompt || BASE_PROMPT;
-      if (!findChannel?.channel_prompt) {
-        setChannel((channel) => {
-          const { list, activeId } = channel;
-          const findCh = list.find((item) => item.channel_id === activeId);
-          if (!findCh) return channel;
-          findCh.channel_prompt = BASE_PROMPT;
-          return channel;
-        });
-      }
+    (chat_list: ChatItem[], channel_id: string) => {
+      let modelType: any;
+      let modelConfig: any;
+      let prompt: any;
+      let findCh: ChannelListItem | undefined;
 
-      updateStart(true);
-      updateFinish(true);
+      setChannel((channel) => {
+        const { list } = channel;
+        findCh = list.find((item) => item.channel_id === channel_id);
+        if (!findCh) return channel;
+
+        modelType = findCh?.channel_model.type;
+        modelConfig = (newOpenAI as any)[modelType];
+        prompt = findCh?.channel_prompt || BASE_PROMPT;
+        if (!findCh?.channel_prompt) findCh.channel_prompt = BASE_PROMPT;
+        findCh.channel_loading_connect = true;
+        findCh.channel_loading = true;
+        return channel;
+      });
+
+      if (!findCh) return;
 
       const controller = new AbortController();
-      updateAbort(controller);
+      abortStore.current[channel_id] = controller;
 
       const fetchUrl = `/api/${modelType}`;
 
       const findLLM: any = LLMOptions.find(
-        (item) => item.value === findChannel?.channel_model.type
+        (item) => item.value === findCh?.channel_model.type
       );
 
       const findModelLabel = findLLM.models.find(
-        (item: any) => item.value === findChannel?.channel_model.name
+        (item: any) => item.value === findCh?.channel_model.name
       );
 
       let params: any = {
-        model: findChannel?.channel_model.name,
+        model: findCh?.channel_model.name,
         modelLabel: findModelLabel.label,
         temperature: modelConfig.temperature,
         max_tokens: modelConfig.max_tokens,
@@ -257,12 +260,30 @@ const ChatFooter: React.FC = () => {
         body: JSON.stringify(params),
       })
         .then(async (response) => {
-          updateStart(false);
+          // loading connect end
+          setChannel((channel) => {
+            const { list } = channel;
+            const findCh = list.find((item) => item.channel_id === channel_id);
+            if (!findCh) return channel;
+            findCh.channel_loading_connect = false;
+            return channel;
+          });
+
           if (!response.ok || !response.body) {
-            const res = await response.json();
-            updateFinish(false);
+            const errRes = await response.json();
+
+            setChannel((channel) => {
+              const { list } = channel;
+              const findCh = list.find(
+                (item) => item.channel_id === channel_id
+              );
+              if (!findCh) return channel;
+              findCh.channel_loading = false;
+              return channel;
+            });
+
             let errorMessage = "error";
-            if (res.error === 10001) {
+            if (errRes.error === 10001) {
               return toast(
                 () => (
                   <div className="flex gap-4 items-center">
@@ -274,11 +295,11 @@ const ChatFooter: React.FC = () => {
                 ),
                 { duration: 5000 }
               );
-            } else if (res.error === 10002) {
+            } else if (errRes.error === 10002) {
               errorMessage = tRes("10002");
-            } else if (res.error === 10004) {
+            } else if (errRes.error === 10004) {
               errorMessage = tRes("10004");
-            } else if (res.error.code === "context_length_exceeded") {
+            } else if (errRes.error.code === "context_length_exceeded") {
               return toast(
                 () => (
                   <div className="flex gap-4 items-center">
@@ -295,26 +316,22 @@ const ChatFooter: React.FC = () => {
             }
 
             toast.error(errorMessage, { duration: 4000 });
-
             return;
           }
-          let channel_id = "";
-          let channel_name = "";
-          let channel_chat_list: ChatItem[] = [];
 
           await decoder(
             response.body.getReader(),
             (content: string) => {
               setChannel((channel) => {
-                const { list, activeId } = channel;
-                const findChannel = list.find(
-                  (item) => item.channel_id === activeId
+                const { list } = channel;
+                const findCh = list.find(
+                  (item) => item.channel_id === channel_id
                 );
-                if (!findChannel) return channel;
-                const lastItem = findChannel.chat_list.at(-1);
+                if (!findCh) return channel;
+                const lastItem = findCh.chat_list.at(-1);
                 if (!lastItem) return channel;
                 if (lastItem.role === "user") {
-                  findChannel.chat_list.push({
+                  findCh.chat_list.push({
                     id: uuidv4(),
                     role: "assistant",
                     time: String(+new Date()),
@@ -323,30 +340,25 @@ const ChatFooter: React.FC = () => {
                 } else {
                   lastItem.content += content;
                 }
-                channel_name = findChannel.channel_name;
-                channel_id = findChannel.channel_id;
-                channel_chat_list = findChannel.chat_list;
                 return channel;
               });
             },
             (error: any) => {
               toast.error(error?.code || tCommon("service-error"));
-              updateStart(false);
-              updateFinish(false);
             }
           );
-          updateFinish(false);
+
           // calc current conversation token
-
           setChannel((channel) => {
-            const { list, activeId } = channel;
-            const findChannel = list.find(
-              (item) => item.channel_id === activeId
-            );
-            if (!findChannel) return channel;
+            const { list } = channel;
+            findCh = list.find((item) => item.channel_id === channel_id);
+            if (!findCh) return channel;
 
-            if (!findChannel.channel_cost) {
-              findChannel.channel_cost = {
+            // end channel loading
+            findCh.channel_loading = false;
+
+            if (!findCh.channel_cost) {
+              findCh.channel_cost = {
                 tokens: 0,
                 usd: 0,
                 function_tokens: 0,
@@ -356,18 +368,10 @@ const ChatFooter: React.FC = () => {
               };
             }
 
-            const findLLM: any = LLMOptions.find(
-              (item) => item.value === findChannel?.channel_model.type
-            );
-
-            const findModelLabel = findLLM.models.find(
-              (item: any) => item.value === findChannel?.channel_model.name
-            );
-
             const { usedTokens, usedUSD } = calcTokens(
               [
-                { role: "system", content: findChannel.channel_prompt },
-                ...findChannel.chat_list.map((item) => ({
+                { role: "system", content: findCh.channel_prompt },
+                ...findCh.chat_list.map((item) => ({
                   role: item.role,
                   content: item.content,
                 })),
@@ -375,85 +379,85 @@ const ChatFooter: React.FC = () => {
               findModelLabel.label
             );
 
-            findChannel.channel_cost.tokens = usedTokens;
-            findChannel.channel_cost.usd = Number(usedUSD.toFixed(5));
+            findCh.channel_cost.tokens = usedTokens;
+            findCh.channel_cost.usd = Number(usedUSD.toFixed(5));
 
             const total_tokens: any =
-              findChannel.channel_cost.total_tokens + usedTokens;
-            const total_usd = findChannel.channel_cost.total_usd + usedUSD;
-            findChannel.channel_cost.total_tokens = parseInt(total_tokens);
-            findChannel.channel_cost.total_usd = Number(total_usd.toFixed(5));
+              findCh.channel_cost.total_tokens + usedTokens;
+            const total_usd = findCh.channel_cost.total_usd + usedUSD;
+            findCh.channel_cost.total_tokens = parseInt(total_tokens);
+            findCh.channel_cost.total_usd = Number(total_usd.toFixed(5));
+
+            // get conversation title
+            if (!findCh.channel_name) {
+              const newParams = { ...params, chat_list: findCh.chat_list };
+              getChannelNameByGPT(
+                channel_id,
+                newParams,
+                fetchUrl,
+                modelConfig.apiKey,
+                findModelLabel
+              );
+            }
 
             return channel;
           });
 
           if (session.data) setTokens();
-
-          // get conversation title
-          if (!channel_name) getChannelNameByGPT(channel_id, channel_chat_list);
         })
         .catch((error) => {
-          console.log(error, "error");
-          updateStart(false);
-          updateFinish(false);
+          console.log(error, "sendGPT error");
+          setChannel((channel) => {
+            const { list } = channel;
+            const findCh = list.find((item) => item.channel_id === channel_id);
+            if (!findCh) return channel;
+            findCh.channel_loading_connect = false;
+            findCh.channel_loading = false;
+            return channel;
+          });
         });
     },
     [channel]
   );
 
-  const getChannelNameByGPT = (id: string, list: ChatItem[]) => {
-    const chat_list = list.map((item) => ({
-      role: item.role,
-      content: item.content,
-    }));
-    chat_list.push({
+  const getChannelNameByGPT = (
+    channel_id: string,
+    params: any,
+    fetchUrl: string,
+    Authorization: string,
+    findModelLabel: any
+  ) => {
+    const newParams = JSON.parse(JSON.stringify(params));
+    newParams.chat_list.push({
       role: "system",
       content: tPrompt("get-title"),
     });
 
-    const modelType: any = findChannel?.channel_model.type;
-    const modelConfig = (newOpenAI as any)[modelType];
+    newParams.chat_list = newParams.chat_list.map((item: any) => ({
+      role: item.role,
+      content: item.content,
+    }));
 
-    const fetchUrl = `/api/${modelType}`;
-
-    const findLLM: any = LLMOptions.find(
-      (item) => item.value === findChannel?.channel_model.type
-    );
-
-    const findModelLabel = findLLM.models.find(
-      (item: any) => item.value === findChannel?.channel_model.name
-    );
-
-    let params: any = {
-      model: findChannel?.channel_model.name,
-      modelLabel: findModelLabel.label,
-      temperature: modelConfig.temperature,
-      max_tokens: modelConfig.max_tokens,
-    };
-    if (modelType === "openai") {
-      params.proxy = modelConfig.proxy;
-    } else if (modelType === "azure") {
-      params.resourceName = modelConfig.resourceName;
-    }
-
-    params.chat_list = chat_list;
+    delete newParams.prompt;
 
     fetch(fetchUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: modelConfig.apiKey,
+        Authorization,
       },
-      body: JSON.stringify(params),
+      body: JSON.stringify(newParams),
     }).then(async (response) => {
       if (!response.ok || !response.body) return;
       await decoder(
         response.body.getReader(),
         (content: string) => {
           setChannel((channel) => {
-            const findChannel = channel.list.find((e) => e.channel_id === id);
-            if (!findChannel) return channel;
-            findChannel.channel_name += content;
+            const findCh = channel.list.find(
+              (e) => e.channel_id === channel_id
+            );
+            if (!findCh) return channel;
+            findCh.channel_name += content;
             return channel;
           });
         },
@@ -463,46 +467,25 @@ const ChatFooter: React.FC = () => {
       );
 
       setChannel((channel) => {
-        const { list, activeId } = channel;
-        const findChannel = list.find((item) => item.channel_id === activeId);
-        if (!findChannel) return channel;
-
-        if (!findChannel.channel_cost) {
-          findChannel.channel_cost = {
-            tokens: 0,
-            usd: 0,
-            function_tokens: 0,
-            function_usd: 0,
-            total_tokens: 0,
-            total_usd: 0,
-          };
-        }
-
-        const findLLM: any = LLMOptions.find(
-          (item) => item.value === findChannel?.channel_model.type
-        );
-
-        const findModelLabel = findLLM.models.find(
-          (item: any) => item.value === findChannel?.channel_model.name
-        );
+        const findCh = channel.list.find((e) => e.channel_id === channel_id);
+        if (!findCh) return channel;
 
         const { usedTokens, usedUSD } = calcTokens(
           [
-            ...chat_list,
-            { role: "assistant", content: findChannel.channel_name },
+            ...newParams.chat_list,
+            { role: "assistant", content: findCh.channel_name },
           ],
           findModelLabel.label
         );
 
-        findChannel.channel_cost.function_tokens += usedTokens;
-        const function_usd = findChannel.channel_cost.function_usd + usedUSD;
-        findChannel.channel_cost.function_usd = Number(function_usd.toFixed(5));
+        findCh.channel_cost.function_tokens += usedTokens;
+        const function_usd = findCh.channel_cost.function_usd + usedUSD;
+        findCh.channel_cost.function_usd = Number(function_usd.toFixed(5));
 
-        const total_tokens: any =
-          findChannel.channel_cost.total_tokens + usedTokens;
-        const total_usd = findChannel.channel_cost.total_usd + usedUSD;
-        findChannel.channel_cost.total_tokens = parseInt(total_tokens);
-        findChannel.channel_cost.total_usd = Number(total_usd.toFixed(5));
+        const total_tokens: any = findCh.channel_cost.total_tokens + usedTokens;
+        const total_usd = findCh.channel_cost.total_usd + usedUSD;
+        findCh.channel_cost.total_tokens = parseInt(total_tokens);
+        findCh.channel_cost.total_usd = Number(total_usd.toFixed(5));
 
         return channel;
       });
@@ -514,13 +497,13 @@ const ChatFooter: React.FC = () => {
   const clearNowConversation = () => {
     setChannel((channel) => {
       const { activeId, list } = channel;
-      const findChannel = list.find((item) => item.channel_id === activeId);
-      if (!findChannel) return channel;
-      findChannel.channel_icon = "RiChatSmile2Line";
-      findChannel.chat_list = [];
-      findChannel.channel_name = "";
-      findChannel.channel_prompt = BASE_PROMPT;
-      findChannel.channel_cost = {
+      const findCh = list.find((item) => item.channel_id === activeId);
+      if (!findCh) return channel;
+      findCh.channel_icon = "RiChatSmile2Line";
+      findCh.chat_list = [];
+      findCh.channel_name = "";
+      findCh.channel_prompt = BASE_PROMPT;
+      findCh.channel_cost = {
         tokens: 0,
         usd: 0,
         function_tokens: 0,
@@ -528,6 +511,8 @@ const ChatFooter: React.FC = () => {
         total_tokens: 0,
         total_usd: 0,
       };
+      findCh.channel_loading_connect = false;
+      findCh.channel_loading = false;
       return channel;
     });
   };
@@ -579,63 +564,6 @@ const ChatFooter: React.FC = () => {
   };
 
   React.useEffect(() => {
-    // Cancel response immediately when switching channels if data is being requested or generated.
-    if (loadingResponseStart || loadingResponseFinish) {
-      toast.error(t("canceled"));
-      chatAbort?.abort();
-      updateStart(false);
-      updateFinish(false);
-
-      setChannel((channel) => {
-        const { list, activeId } = channel;
-        const findCh = list.find((item) => item.channel_id === activeId);
-        if (!findCh) return channel;
-
-        if (!findCh.channel_cost) {
-          findCh.channel_cost = {
-            tokens: 0,
-            usd: 0,
-            function_tokens: 0,
-            function_usd: 0,
-            total_tokens: 0,
-            total_usd: 0,
-          };
-        }
-
-        const findLLM: any = LLMOptions.find(
-          (item) => item.value === findCh?.channel_model.type
-        );
-
-        const findModelLabel = findLLM.models.find(
-          (item: any) => item.value === findCh?.channel_model.name
-        );
-
-        const { usedTokens, usedUSD } = calcTokens(
-          [
-            { role: "system", content: findCh.channel_prompt },
-            ...findCh.chat_list.map((item) => ({
-              role: item.role,
-              content: item.content,
-            })),
-          ],
-          findModelLabel.label
-        );
-
-        findCh.channel_cost.tokens = usedTokens;
-        findCh.channel_cost.usd = Number(usedUSD.toFixed(5));
-
-        const total_tokens: any = findCh.channel_cost.total_tokens + usedTokens;
-        const total_usd = findCh.channel_cost.total_usd + usedUSD;
-        findCh.channel_cost.total_tokens = parseInt(total_tokens);
-        findCh.channel_cost.total_usd = Number(total_usd.toFixed(5));
-
-        return channel;
-      });
-
-      if (session.data) setTokens();
-
-      return;
-    }
     setInputValue("");
     inputRef.current?.reset();
     if (!isMobile()) inputRef.current?.focus();
@@ -658,14 +586,14 @@ const ChatFooter: React.FC = () => {
               type="outline"
               onClick={generate}
               leftIcon={
-                loadingResponseFinish ? (
+                loadingChannel ? (
                   <BsStop size={20} />
                 ) : (
                   <AiOutlineRedo size={20} className="group:hover:bg-[red]" />
                 )
               }
             >
-              {loadingResponseFinish ? t("stop-generate") : t("re-generate")}
+              {loadingChannel ? t("stop-generate") : t("re-generate")}
             </Button>
             <Button
               type="outline"
@@ -681,6 +609,7 @@ const ChatFooter: React.FC = () => {
         <div className="flex">
           <div className="flex items-end">
             <Confirm
+              disabled={loadingChannel}
               title={tMenu("clear-all-conversation")}
               content={t("clear-current-conversation")}
               trigger={
@@ -691,7 +620,11 @@ const ChatFooter: React.FC = () => {
                     "dark:text-white/90 dark:hover:text-sky-400/90"
                   )}
                 >
-                  <AiOutlineClear size={24} />
+                  {loadingChannel ? (
+                    <AiOutlineLoading className="animate-spin" size={24} />
+                  ) : (
+                    <AiOutlineClear size={24} />
+                  )}
                 </div>
               }
               onOk={clearNowConversation}
@@ -700,6 +633,7 @@ const ChatFooter: React.FC = () => {
           <Inputarea
             ref={inputRef}
             value={inputValue}
+            loading={loadingChannel}
             onChange={setInputValue}
             onSubmit={sendMessage}
           />

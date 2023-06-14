@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useDateFormat } from "l-hooks";
-import CopyIcon from "@/components/copyIcon";
+import CopyIcon from "@/components/site/copyIcon";
 import ChatContent from "@/components/chatContent";
 import Confirm from "@/components/ui/Confirm";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
@@ -12,10 +12,9 @@ import {
   AiOutlineDelete,
   AiOutlineUser,
 } from "react-icons/ai";
-import { cn } from "@/lib";
-import { GPTTokens } from "@/lib/gpt-tokens";
+import { cn, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/gpt-tokens";
-import { useChannel, useChat, useLLM } from "@/hooks";
+import { useChannel, useLLM } from "@/hooks";
 import type { ChatItem } from "@/hooks";
 import Configure from "./configure";
 
@@ -28,7 +27,6 @@ const ChatList: React.FC = () => {
   const user = session.data?.user;
 
   const [channel, setChannel] = useChannel();
-  const { loadingResponseStart } = useChat();
 
   const findChannel = channel.list.find(
     (item) => item.channel_id === channel.activeId
@@ -54,18 +52,21 @@ const ChatList: React.FC = () => {
       );
       if (findAzureModel) calcModel = findAzureModel.label;
 
-      const tokenInfo = new GPTTokens({
-        model: calcModel as supportModelType,
-        messages: findChannel.chat_list.map((item) => ({
-          role: item.role,
-          content: item.content,
-        })),
-      });
+      const messages = findChannel.chat_list.map((item) => ({
+        role: item.role,
+        content: item.content,
+      }));
+
+      const { usedTokens, usedUSD } = calcTokens(
+        messages,
+        calcModel as supportModelType
+      );
+
       // Only updates the tokens required to process the entire content of the current session,
       // without affecting the tokens that have already been consumed,
       // and therefore does not affect the value of total_tokens.
-      findChannel.channel_cost.tokens = tokenInfo.usedTokens;
-      findChannel.channel_cost.usd = Number(tokenInfo.usedUSD.toFixed(5));
+      findChannel.channel_cost.tokens = usedTokens;
+      findChannel.channel_cost.usd = Number(usedUSD.toFixed(5));
 
       return channel;
     });
@@ -149,7 +150,7 @@ const ChatList: React.FC = () => {
             </div>
           </div>
         ))}
-        {loadingResponseStart && (
+        {!!findChannel?.channel_loading_connect && (
           <AiOutlineLoading
             size={24}
             className="animate-spin text-sky-400 ml-11 dark:text-sky-400/90"

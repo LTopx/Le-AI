@@ -1,6 +1,6 @@
 import { createTransport } from "nodemailer";
 import { render } from "@react-email/render";
-import Email from "@/components/email";
+import Email from "@/components/site/email";
 import { SendVerificationRequestParams } from "next-auth/providers";
 
 export async function sendVerificationRequest(
