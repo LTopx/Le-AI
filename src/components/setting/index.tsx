@@ -8,10 +8,17 @@ import { BiExport, BiImport } from "react-icons/bi";
 import { saveAs } from "file-saver";
 import { useDateFormat } from "l-hooks";
 import toast from "react-hot-toast";
+import { v4 as uuidv4 } from "uuid";
 import { cn, getPlatform } from "@/lib";
 import type { Platform } from "@/lib";
 import { sendMessageTypes } from "@/utils/constant";
-import { useChannel, useOpenAI, useSetting, useConfig } from "@/hooks";
+import {
+  useChannel,
+  useOpenAI,
+  useSetting,
+  useConfig,
+  usePrompt,
+} from "@/hooks";
 import type { IConfigStoreState } from "@/hooks";
 import { Button, Confirm, Modal, Select } from "@/components/ui";
 
@@ -21,6 +28,7 @@ export default function Setting() {
   const [channel, setChannel] = useChannel();
   const [openai, setOpenAI] = useOpenAI();
   const [visible, setVisible] = useSetting();
+  const [prompts, setPrompts] = usePrompt();
   const [config, setConfig] = useConfig();
   const { format } = useDateFormat();
 
@@ -49,8 +57,12 @@ export default function Setting() {
         azure: openai.azure,
       },
       messages: channel,
-      // Todo...
-      prompts: [],
+      prompts: prompts.map((item) => ({
+        title: item.title,
+        icon: item.icon,
+        desc: item.desc,
+        content: item.content,
+      })),
     };
 
     const blob = new Blob([JSON.stringify(exportData, null, 2)], {
@@ -79,6 +91,25 @@ export default function Setting() {
             return data;
           });
         }
+
+        if (json.prompts?.length) {
+          setPrompts((prompt) => {
+            prompt.list = [
+              ...prompt.list,
+              ...json.prompts.map((item: any) => ({
+                id: uuidv4(),
+                title: item.title,
+                icon: item.icon,
+                desc: item.desc,
+                content: item.content,
+              })),
+            ];
+
+            return prompt;
+          });
+        }
+
+        setVisible(false);
         toast.success(t("import-success"));
       } catch {}
     };

@@ -15,6 +15,7 @@
 - Display the total amount of tokens currently consumed at the menu.
 - Added support for multiple simultaneous conversations, switching sessions will not break the connection of the current session.
 - Added support for the newly updated model from OpenAI: gpt-3.5-turbo-0613/gpt-3.5-turbo-16k
+- Added support for importing and exporting local prompts in the settings pop-up.
 
 ### Changed
 
