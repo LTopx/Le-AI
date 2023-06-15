@@ -1,5 +1,13 @@
 # L-GPT Change Log
 
+## v0.6.2
+
+> 2023-06-15
+
+### Fixed
+
+- Fix the issue where the page displays incorrectly when clicking Cancel during Github login [#2](https://github.com/Peek-A-Booo/L-GPT/issues/2)
+
 ## v0.6.1
 
 > 2023-06-14
