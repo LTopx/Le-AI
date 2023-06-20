@@ -93,7 +93,9 @@ export async function POST(request: Request) {
         license_type = "premium";
         add_tokens = 500000;
       } else if (variants_name.includes("Free")) {
-        license_type = "free";
+        if (user.license_type !== "premium" && user.license_type !== "team") {
+          license_type = "free";
+        }
         add_tokens = 10000;
         freeTrialed = 1;
       }

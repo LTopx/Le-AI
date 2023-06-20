@@ -19,6 +19,8 @@ import {
   useStreamDecoder,
   useUserInfo,
   useLLM,
+  usePremium,
+  useRecharge,
   BASE_PROMPT,
   ChannelListItem,
 } from "@/hooks";
@@ -35,7 +37,9 @@ const ChatFooter: React.FC = () => {
   const router = useRouter();
   const [newOpenAI] = useOpenAI();
   const [channel, setChannel] = useChannel();
-  const [, setTokens] = useUserInfo();
+  const [userInfo, setTokens] = useUserInfo();
+  const [, setPremiumOpen] = usePremium();
+  const [, setRechargeOpen] = useRecharge();
   const { openai, azure } = useLLM();
   const [inputValue, setInputValue] = React.useState<string>("");
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
@@ -52,6 +56,8 @@ const ChatFooter: React.FC = () => {
   const tCommon = useTranslations("common");
   const tRes = useTranslations("responseErr");
   const tAuth = useTranslations("auth");
+  const tRecharge = useTranslations("recharge");
+  const tPremium = useTranslations("premium");
   const scrollToBottom = useScrollToBottom();
   const { decoder } = useStreamDecoder();
 
@@ -72,6 +78,17 @@ const ChatFooter: React.FC = () => {
 
   const handleCheckExceeded = () => {
     window.open("https://docs.ltopx.com/conversation-limits");
+  };
+
+  const handleRecharge = () => {
+    toast.dismiss();
+    if (!userInfo.license_type) {
+      // 开始免费试用
+      setPremiumOpen(true);
+    } else {
+      // 打开充值token界面
+      setRechargeOpen(true);
+    }
   };
 
   const onGenerate = () => {
@@ -300,6 +317,20 @@ const ChatFooter: React.FC = () => {
               errorMessage = tRes("10002");
             } else if (errRes.error === 10004) {
               errorMessage = tRes("10004");
+            } else if (errRes.error === 10005) {
+              return toast(
+                () => (
+                  <div className="flex gap-4 items-center">
+                    {tRes("10005")}
+                    <Button type="primary" onClick={handleRecharge}>
+                      {userInfo.license_type
+                        ? tRecharge("recharge")
+                        : tPremium("free-trial")}
+                    </Button>
+                  </div>
+                ),
+                { duration: 5000 }
+              );
             } else if (errRes.error.code === "context_length_exceeded") {
               return toast(
                 () => (

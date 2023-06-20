@@ -135,7 +135,7 @@ export default function Navbar() {
           )}
         </div>
 
-        <div className="absolute right-14 hidden md:block">
+        <div className="absolute right-16 hidden md:block">
           <Button type="outline" onClick={onOpenPremium}>
             <AiFillGift size={20} className="text-orange-400" />
           </Button>

@@ -151,7 +151,7 @@ export async function POST(request: Request) {
 
     const { costTokens, availableTokens } = user;
     if (costTokens >= availableTokens) {
-      return LResponseError("Insufficient token balance");
+      return NextResponse.json({ error: 10005 }, { status: 500 });
     }
   }
 

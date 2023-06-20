@@ -178,6 +178,7 @@
     "10002": "API Key missing, please check configuration or contact the developer",
     "10003": "Language model parameter error",
     "10004": "Please configure Azure API Version first",
+    "10005": "Insufficient token balance",
     "context_length_exceeded": "Session content is too long. Delete some or create a new session.",
     "learn-more": "Learn More"
   },

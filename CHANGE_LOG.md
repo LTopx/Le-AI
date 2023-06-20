@@ -7,12 +7,14 @@
 ### Fixed
 
 - Fixed the problem of polyfill not working, ensuring that it is loaded on the client
+- Fixed the issue where the permissions of advanced users changed incorrectly when they were on a free trial.
 
 ### Add
 
 - Added Premium feature to support author's future development
 - Added support for Token recharge to unlock more session quotas
 - Added activation guide
+- Guidance when there is insufficient Token for adding: Start Free Trial or Recharge Token
 
 ## v0.6.2
 
