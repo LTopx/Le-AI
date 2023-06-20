@@ -89,6 +89,7 @@
   "premium": {
     "activate": "点击激活",
     "activate-license": "激活许可证",
+    "bought-success": "成功购买 许可证 之后前往系统左下角设置按钮处即可进行激活",
     "buy": "购买",
     "buy-for-you": "点击购买",
     "coming-soon": "即将推出",

@@ -12,6 +12,7 @@
 
 - Added Premium feature to support author's future development
 - Added support for Token recharge to unlock more session quotas
+- Added activation guide
 
 ## v0.6.2
 

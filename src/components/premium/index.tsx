@@ -265,7 +265,8 @@ const Premium: React.FC = () => {
         onLogin={onLogin}
         onPay={onPay}
       />
-      <div className="mt-2">
+      <div className="my-2 text-orange-400 text-sm">{t("bought-success")}</div>
+      <div>
         <Link
           className="text-sm"
           target="_blank"

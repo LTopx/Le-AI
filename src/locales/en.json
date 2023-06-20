@@ -89,6 +89,7 @@
   "premium": {
     "activate": "Activate",
     "activate-license": "Activate License",
+    "bought-success": "Activate the License Key in the settings at the lower left corner of the system after purchase.",
     "buy": "Buy",
     "buy-for-you": "Buy it for you",
     "coming-soon": "Coming soon",

@@ -2,10 +2,17 @@
 
 import * as React from "react";
 import { useTranslations } from "next-intl";
-import { AiOutlineMenuUnfold, AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineMenuUnfold, AiOutlineEdit, AiFillGift } from "react-icons/ai";
 import { cn } from "@/lib";
-import { useChannel, useOpenAI, useMobileMenu, useLLM } from "@/hooks";
+import {
+  useChannel,
+  useOpenAI,
+  useMobileMenu,
+  useLLM,
+  usePremium,
+} from "@/hooks";
 import Avatar from "@/components/site/avatar";
+import { Button } from "@/components/ui";
 import ConversationSetting from "./conversationSetting";
 import Token from "./token";
 
@@ -16,6 +23,7 @@ export default function Navbar() {
   const tSetting = useTranslations("setting");
   const [channel] = useChannel();
   const { openai, azure } = useLLM();
+  const [, setPremiumOpen] = usePremium();
   const [openAI] = useOpenAI();
 
   const [, setMobileMenuVisible] = useMobileMenu();
@@ -35,6 +43,8 @@ export default function Navbar() {
   };
 
   const onCheckToken = () => tokenRef.current?.init();
+
+  const onOpenPremium = () => setPremiumOpen(true);
 
   const activeChannel = channel.list.find(
     (item) => item.channel_id === channel.activeId
@@ -123,6 +133,12 @@ export default function Navbar() {
               </div>
             </div>
           )}
+        </div>
+
+        <div className="absolute right-14 hidden md:block">
+          <Button type="outline" onClick={onOpenPremium}>
+            <AiFillGift size={20} className="text-orange-400" />
+          </Button>
         </div>
 
         <Avatar />
