@@ -63,6 +63,9 @@ export async function GET() {
     const response = {
       costTokens: user.costTokens,
       costUSD: user.costUSD,
+      license_type: user.license_type,
+      freeTrialed: user.freeTrialed,
+      availableTokens: user.availableTokens,
     };
 
     return NextResponse.json({ error: 0, data: response }, { status: 200 });

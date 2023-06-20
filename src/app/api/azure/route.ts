@@ -2,9 +2,10 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { isUndefined, calcTokens } from "@/lib";
+import { isUndefined, calcTokens, LResponseError } from "@/lib";
 import type { supportModelType } from "@/lib/gpt-tokens";
 import { prisma } from "@/lib/prisma";
+import { PREMIUM_MODELS } from "@/hooks";
 
 // export const runtime = "edge";
 
@@ -18,7 +19,8 @@ const stream = async (
   writable: WritableStream,
   messages: any[],
   model: supportModelType,
-  userId?: string
+  userId?: string,
+  headerApiKey?: string | null
 ) => {
   const reader = readable.getReader();
   const writer = writable.getWriter();
@@ -66,7 +68,8 @@ const stream = async (
     buffer = lines[lines.length - 1];
   }
 
-  if (userId) {
+  // If use own key, no need to calculate tokens
+  if (userId && !headerApiKey) {
     const final = [...messages, { role: "assistant", content: resultContent }];
 
     const { usedTokens, usedUSD } = calcTokens(final, model);
@@ -102,11 +105,47 @@ export async function POST(request: Request) {
   const ENV_API_KEY = process.env.NEXT_PUBLIC_AZURE_OPENAI_API_KEY;
   const ENV_API_VERSION = process.env.NEXT_AZURE_OPENAI_API_VERSION;
 
+  const {
+    model,
+    modelLabel,
+    temperature,
+    max_tokens,
+    prompt,
+    resourceName,
+    chat_list,
+  } = await request.json();
+
   /**
    * If not logged in, only the locally configured API Key can be used.
    */
   if (!session && !headerApiKey) {
     return NextResponse.json({ error: 10001 }, { status: 500 });
+  }
+
+  // Logging in without your own key means using the author's key.
+  // At this point, you need to check the token balance of the current account first.
+  if (!headerApiKey) {
+    const user = await prisma.user.findUnique({
+      where: { id: session?.user.id },
+    });
+    if (!user) return LResponseError("User does not exist");
+
+    // audit user license
+    if (
+      user.license_type !== "premium" &&
+      user.license_type !== "team" &&
+      PREMIUM_MODELS.includes(modelLabel)
+    ) {
+      // 无权使用模型。需使用API Key或开通Premium License以获得使用权限。
+      return LResponseError(
+        "Use API Key or Premium License to get permission for model usage."
+      );
+    }
+
+    const { costTokens, availableTokens } = user;
+    if (costTokens >= availableTokens) {
+      return LResponseError("Insufficient token balance");
+    }
   }
 
   // first use local
@@ -121,16 +160,6 @@ export async function POST(request: Request) {
   if (!ENV_API_VERSION) {
     return NextResponse.json({ error: 10004 }, { status: 500 });
   }
-
-  const {
-    model,
-    modelLabel,
-    temperature,
-    max_tokens,
-    prompt,
-    resourceName,
-    chat_list,
-  } = await request.json();
 
   const RESOURCE_NAME =
     resourceName || process.env.NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME;
@@ -166,7 +195,8 @@ export async function POST(request: Request) {
       writable,
       messages,
       modelLabel,
-      session?.user.id
+      session?.user.id,
+      headerApiKey
     );
 
     return new Response(readable, response);

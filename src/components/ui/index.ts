@@ -7,6 +7,7 @@ import Drawer from "./Drawer";
 import Dropdown from "./Dropdown";
 import type { IDropdownItems } from "./Dropdown";
 import Input from "./Input";
+import Link from "./Link";
 import Modal from "./Modal";
 import Select from "./Select";
 import Slider from "./Slider";
@@ -21,6 +22,7 @@ export {
   Drawer,
   Dropdown,
   Input,
+  Link,
   Modal,
   Select,
   Slider,

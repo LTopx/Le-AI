@@ -16,7 +16,7 @@ import { cn, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/gpt-tokens";
 import { useChannel, useLLM } from "@/hooks";
 import type { ChatItem } from "@/hooks";
-import Configure from "./configure";
+import Configure from "../../chatConfigure";
 
 const ChatList: React.FC = () => {
   const session = useSession();

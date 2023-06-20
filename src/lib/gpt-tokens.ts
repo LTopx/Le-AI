@@ -7,39 +7,33 @@ import Decimal from "decimal.js";
  * https://notebooks.githubusercontent.com/view/ipynb?browser=edge&bypass_fastly=true&color_mode=dark&commit=d67c4181abe9dfd871d382930bb778b7014edc66&device=unknown_device&docs_host=https%3A%2F%2Fdocs.github.com&enc_url=68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f6f70656e61692f6f70656e61692d636f6f6b626f6f6b2f643637633431383161626539646664383731643338323933306262373738623730313465646336362f6578616d706c65732f486f775f746f5f636f756e745f746f6b656e735f776974685f74696b746f6b656e2e6970796e62&logged_in=true&nwo=openai%2Fopenai-cookbook&path=examples%2FHow_to_count_tokens_with_tiktoken.ipynb&platform=mac&repository_id=468576060&repository_type=Repository&version=114#6d8d98eb-e018-4e1f-8c9e-19b152a97aaf
  */
 
-// The models supported
 export type supportModelType =
   | "gpt-3.5-turbo"
   | "gpt-3.5-turbo-0301"
   | "gpt-3.5-turbo-0613"
   | "gpt-3.5-turbo-16k"
+  | "gpt-3.5-turbo-16k-0613"
   | "gpt-4"
   | "gpt-4-0314"
+  | "gpt-4-0613"
   | "gpt-4-32k"
-  | "gpt-4-32k-0314";
-
-// The role types supported
-type roleType = "system" | "user" | "assistant";
+  | "gpt-4-32k-0314"
+  | "gpt-4-32k-0613";
 
 interface MessageItem {
   name?: string;
-  role: roleType;
+  role: "system" | "user" | "assistant";
   content: string;
 }
 
-interface Options {
-  model: supportModelType;
-  messages: MessageItem[];
-  debug?: boolean;
-  plus?: boolean;
-}
-
 export class GPTTokens {
-  constructor(options: Options) {
+  constructor(options: {
+    model: supportModelType;
+    messages: MessageItem[];
+    debug?: boolean;
+    plus?: boolean;
+  }) {
     const { debug = false, model, messages, plus = false } = options;
-
-    if (!this.supportModels.includes(model))
-      throw new Error("Model not supported.");
 
     this.debug = debug;
     this.model = model;
@@ -47,9 +41,10 @@ export class GPTTokens {
     this.messages = messages;
   }
 
-  public readonly plus!: boolean;
-  public readonly model!: supportModelType;
-  public readonly messages!: MessageItem[];
+  public readonly plus;
+  public readonly model;
+  public readonly messages;
+
   private readonly debug!: boolean;
 
   // https://openai.com/pricing/
@@ -102,40 +97,6 @@ export class GPTTokens {
     .div(1000)
     .toNumber();
 
-  // The models supported
-  public readonly supportModels: supportModelType[] = [
-    "gpt-3.5-turbo",
-    "gpt-3.5-turbo-0301",
-    "gpt-3.5-turbo-0613",
-    "gpt-3.5-turbo-16k",
-    "gpt-4",
-    "gpt-4-0314",
-    "gpt-4-32k",
-    "gpt-4-32k-0314",
-  ];
-
-  private get modelType(): "gpt-3.5-turbo" | "gpt-4" | "gpt-4-32k" {
-    if (
-      [
-        "gpt-3.5-turbo",
-        "gpt-3.5-turbo-0301",
-        "gpt-3.5-turbo-0613",
-        "gpt-3.5-turbo-16k",
-      ].includes(this.model)
-    )
-      return "gpt-3.5-turbo";
-
-    if (["gpt-4", "gpt-4-0314"].includes(this.model)) {
-      return "gpt-4";
-    }
-
-    if (["gpt-4-32k", "gpt-4-32k-0314"].includes(this.model)) {
-      return "gpt-4-32k";
-    }
-
-    throw new Error("Model not supported.");
-  }
-
   // Used Tokens
   public get usedTokens(): number {
     return this.num_tokens_from_messages(this.messages, this.model);
@@ -154,7 +115,7 @@ export class GPTTokens {
         .mul(this.gpt3_5_turboTokenUnit)
         .toNumber();
 
-    if (["gpt-3.5-turbo-16k"].includes(this.model)) {
+    if (["gpt-3.5-turbo-16k", "gpt-3.5-turbo-16k-0613"].includes(this.model)) {
       const promptUSD = new Decimal(this.promptUsedTokens).mul(
         this.gpt3_5_turbo_16kPromptTokenUnit
       );
@@ -165,7 +126,7 @@ export class GPTTokens {
       price = promptUSD.add(completionUSD).toNumber();
     }
 
-    if (["gpt-4", "gpt-4-0314"].includes(this.model)) {
+    if (["gpt-4", "gpt-4-0314", "gpt-4-0613"].includes(this.model)) {
       const promptUSD = new Decimal(this.promptUsedTokens).mul(
         this.gpt4_8kPromptTokenUnit
       );
@@ -176,7 +137,9 @@ export class GPTTokens {
       price = promptUSD.add(completionUSD).toNumber();
     }
 
-    if (["gpt-4-32k", "gpt-4-32k-0314"].includes(this.model)) {
+    if (
+      ["gpt-4-32k", "gpt-4-32k-0314", "gpt-4-32k-0613"].includes(this.model)
+    ) {
       const promptUSD = new Decimal(this.promptUsedTokens).mul(
         this.gpt4_32kPromptTokenUnit
       );
@@ -187,8 +150,19 @@ export class GPTTokens {
       price = promptUSD.add(completionUSD).toNumber();
     }
 
-    if (this.plus && this.modelType === "gpt-3.5-turbo")
-      price = new Decimal(price).mul(0.75).toNumber();
+    if (this.plus) {
+      if (
+        [
+          "gpt-3.5-turbo",
+          "gpt-3.5-turbo-0301",
+          "gpt-3.5-turbo-0613",
+          "gpt-3.5-turbo-16k",
+          "gpt-3.5-turbo-16k-0613",
+        ].includes(this.model)
+      ) {
+        price = new Decimal(price).mul(0.75).toNumber();
+      }
+    }
 
     return price;
   }
@@ -231,6 +205,7 @@ export class GPTTokens {
     let tokens_per_message!: number;
     let tokens_per_name!: number;
     let num_tokens = 0;
+    let modelType!: "gpt-3.5-turbo" | "gpt-4";
 
     if (
       [
@@ -238,24 +213,31 @@ export class GPTTokens {
         "gpt-3.5-turbo-0301",
         "gpt-3.5-turbo-0613",
         "gpt-3.5-turbo-16k",
+        "gpt-3.5-turbo-16k-0613",
       ].includes(model)
     ) {
+      modelType = "gpt-3.5-turbo";
       tokens_per_message = 4;
       tokens_per_name = -1;
     }
 
-    if (["gpt-4", "gpt-4-0314"].includes(model)) {
-      tokens_per_message = 3;
-      tokens_per_name = 1;
-    }
-
-    if (["gpt-4-32k", "gpt-4-32k-0314"].includes(model)) {
+    if (
+      [
+        "gpt-4",
+        "gpt-4-0314",
+        "gpt-4-0613",
+        "gpt-4-32k",
+        "gpt-4-32k-0314",
+        "gpt-4-32k-0613",
+      ].includes(model)
+    ) {
+      modelType = "gpt-4";
       tokens_per_message = 3;
       tokens_per_name = 1;
     }
 
     try {
-      encoding = encodingForModel(this.modelType);
+      encoding = encodingForModel(modelType);
     } catch (e) {
       this.warning("model not found. Using cl100k_base encoding.");
 
@@ -275,7 +257,7 @@ export class GPTTokens {
     }
 
     // Supplementary
-    // encoding.free();
+    // encoding.free()
 
     return num_tokens + 3;
   }

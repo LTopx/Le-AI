@@ -1,5 +1,18 @@
 # L-GPT Change Log
 
+## v0.7.0
+
+> 2023-06-20
+
+### Fixed
+
+- Fixed the problem of polyfill not working, ensuring that it is loaded on the client
+
+### Add
+
+- Added Premium feature to support author's future development
+- Added support for Token recharge to unlock more session quotas
+
 ## v0.6.2
 
 > 2023-06-15
@@ -7,6 +20,10 @@
 ### Fixed
 
 - Fix the issue where the page displays incorrectly when clicking Cancel during Github login [#2](https://github.com/Peek-A-Booo/L-GPT/issues/2)
+
+### Add
+
+- Complete all the models that were added previously
 
 ## v0.6.1
 

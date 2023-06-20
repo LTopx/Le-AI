@@ -50,7 +50,7 @@ export default function Navbar() {
     if (!icon) return null;
 
     return (
-      <div className="absolute left-0 top-[50%] translate-y-[-50%]">{icon}</div>
+      <div className="top-[50%] left-0 translate-y-[-50%] absolute">{icon}</div>
     );
   };
 
@@ -72,7 +72,7 @@ export default function Navbar() {
         >
           <AiOutlineMenuUnfold size={22} />
         </div>
-        <div className="max-w-[60%] relative h-full">
+        <div className="h-full max-w-[60%] relative">
           <div
             onClick={onConversationSetting}
             className={cn(

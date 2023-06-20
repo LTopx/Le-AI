@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useTranslations } from "next-intl";
@@ -122,7 +120,7 @@ const PromptMarket: React.FC = () => {
       <Modal
         rootClassName="top-[50%]"
         title={
-          <div className="flex items-center gap-2">
+          <div className="flex gap-2 items-center">
             <AiOutlineDeploymentUnit size={18} />
             {t("prompt-market")}
           </div>
@@ -134,7 +132,7 @@ const PromptMarket: React.FC = () => {
         footer={null}
       >
         <Tabs.Root value={type} onValueChange={onChangeTab}>
-          <div className="flex gap-4 mb-2 justify-between items-center">
+          <div className="flex mb-2 gap-4 justify-between items-center">
             <Tabs.List
               className={cn(
                 "flex-1 flex rounded-md text-sm w-auto p-1 text-[hsl(215.4,16.3%,56.9%)]",
@@ -164,7 +162,7 @@ const PromptMarket: React.FC = () => {
               >
                 <div className="flex gap-2 items-center justify-center">
                   <MdOutlineAutoAwesome size={16} />
-                  <span className="hidden lg:block whitespace-nowrap">
+                  <span className="hidden whitespace-nowrap lg:block">
                     Awesome ChatGPT Prompts
                   </span>
                 </div>
@@ -274,7 +272,7 @@ const PromptMarket: React.FC = () => {
         open={deleteOpen}
         onClose={onDeletePromptClose}
         footer={
-          <div className="flex justify-end gap-2">
+          <div className="flex gap-2 justify-end">
             <Button onClick={onDeletePromptClose}>{tCommon("cancel")}</Button>
             <Button type="danger" onClick={onDeletePrompt}>
               {tCommon("ok")}

@@ -10,6 +10,7 @@ type ButtonSize = "xs" | "sm" | "base" | "lg";
 
 interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
   // Option to fit button width to its parent width
+  disabled?: boolean;
   block?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -22,6 +23,7 @@ const Button = React.forwardRef<any, ButtonProps>(
   (
     {
       children,
+      disabled,
       block,
       className,
       leftIcon,
@@ -36,7 +38,7 @@ const Button = React.forwardRef<any, ButtonProps>(
     const onBtnClick = (
       e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>
     ) => {
-      if (loading) {
+      if (loading || disabled) {
         e.preventDefault();
         return;
       }
@@ -79,6 +81,10 @@ const Button = React.forwardRef<any, ButtonProps>(
           {
             "dark:border-sky-400/90 dark:bg-sky-400/90 dark:hover:border-sky-500/90 dark:hover:bg-sky-500/90 dark:active:border-sky-600/90 dark:active:bg-sky-600/90":
               type === "primary",
+          },
+          {
+            "border-sky-500/10 bg-sky-500/50 dark:border-sky-500/10 dark:bg-sky-500/50 hover:border-sky-500/10 hover:bg-sky-500/50 dark:hover:border-sky-500/10 dark:hover:bg-sky-500/50 active:border-sky-500/10 active:bg-sky-500/50 dark:active:border-sky-500/10 dark:active:bg-sky-500/50 cursor-not-allowed":
+              type === "primary" && disabled,
           },
 
           // danger

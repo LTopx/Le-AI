@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { useSession } from "next-auth/react";
 import { useTranslations, useLocale } from "next-intl";
@@ -155,7 +153,7 @@ export default function Menu() {
         "bg-white dark:bg-slate-800"
       )}
     >
-      <div className="h-14 pl-4 flex items-center">
+      <div className="flex h-14 pl-4 items-center">
         <Logo disabled />
       </div>
       <Button
@@ -228,6 +226,14 @@ export default function Menu() {
                         )
                       : ""
                     : ""}
+                  {/* {item.chat_list.length
+                    ? item.chat_list.at(-1)?.time
+                      ? format(
+                          Number(item.chat_list.at(-1)?.time),
+                          "MM-DD HH:mm:ss"
+                        )
+                      : ""
+                    : ""} */}
                 </div>
               </div>
               <Confirm
@@ -267,7 +273,7 @@ export default function Menu() {
                 "dark:hover:bg-slate-700/70"
               )}
             >
-              <AiOutlineDelete size={16} /> {t("clear-all-conversation")}
+              <AiOutlineDelete size={18} /> {t("clear-all-conversation")}
             </div>
           }
           onOk={onChannelClear}
@@ -275,13 +281,12 @@ export default function Menu() {
         <a
           className={cn(
             "hover:bg-gray-200/60 h-11 rounded-lg transition-colors text-sm cursor-pointer flex items-center gap-2 px-2",
-            "dark:hover:bg-slate-700/70",
-            "text-rose-700 dark:text-rose-500"
+            "dark:hover:bg-slate-700/70"
           )}
           href="https://t.me/+7fLJJoGV_bJhYTk1"
           target="_blank"
         >
-          <RiFeedbackLine size={16} /> {t("feedback")}
+          <RiFeedbackLine size={18} /> {t("feedback")}
         </a>
         {!!session.data && <Tokens type="pc" />}
         <div className="flex h-11 items-center justify-center">

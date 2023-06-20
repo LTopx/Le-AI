@@ -5,6 +5,7 @@ import { SiMicrosoftazure } from "react-icons/si";
 export interface Model {
   label: string;
   value: string;
+  premium?: boolean;
 }
 
 interface ILLM {
@@ -43,6 +44,13 @@ const GptSvg = ({ size }: { size: number }) => (
   </svg>
 );
 
+export const PREMIUM_MODELS = [
+  "gpt-4",
+  "gpt-4-0613",
+  "gpt-4-32k",
+  "gpt-4-32k-0613",
+];
+
 const useStore = create<LLMState & LLMAction>((set) => ({
   openai: {
     label: "OpenAI",
@@ -53,8 +61,11 @@ const useStore = create<LLMState & LLMAction>((set) => ({
       { label: "gpt-3.5-turbo", value: "gpt-3.5-turbo" },
       { label: "gpt-3.5-turbo-0613", value: "gpt-3.5-turbo-0613" },
       { label: "gpt-3.5-turbo-16k", value: "gpt-3.5-turbo-16k" },
-      { label: "gpt-4", value: "gpt-4", disabled: true },
-      { label: "gpt-4-32k", value: "gpt-4-32k", disabled: true },
+      { label: "gpt-3.5-turbo-16k-0613", value: "gpt-3.5-turbo-16k-0613" },
+      { label: "gpt-4", value: "gpt-4", premium: true },
+      { label: "gpt-4-0613", value: "gpt-4-0613", premium: true },
+      { label: "gpt-4-32k", value: "gpt-4-32k", premium: true },
+      { label: "gpt-4-32k-0613", value: "gpt-4-32k-0613", premium: true },
     ],
   },
   azure: {
@@ -65,8 +76,8 @@ const useStore = create<LLMState & LLMAction>((set) => ({
     models: [
       // system default
       { label: "gpt-3.5-turbo", value: "lgpt-35-turbo" },
-      { label: "gpt-4", value: "gpt-4", disabled: true },
-      { label: "gpt-4-32k", value: "gpt-4-32k", disabled: true },
+      { label: "gpt-4", value: "gpt-4", premium: true },
+      { label: "gpt-4-32k", value: "gpt-4-32k", premium: true },
     ],
   },
   updateAzure: (models: Model[]) => {

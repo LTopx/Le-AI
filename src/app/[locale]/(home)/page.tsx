@@ -1,3 +1,7 @@
+"use client";
+
+require("@/utils/plugin/polyfill-client");
+
 import { cn } from "@/lib";
 import Menu from "@/components/menu";
 import MobileMenu from "@/components/menu/mobile";
@@ -6,7 +10,8 @@ import PromptMark from "@/components/prompt/market";
 import Navbar from "@/components/navbar";
 import Welcome from "@/components/site/welcome";
 import ChatSection from "@/components/chatSection";
-import "@/utils/plugin/polyfill-client";
+import Premium from "@/components/premium";
+import Recharge from "@/components/recharge";
 
 export default function Home() {
   return (
@@ -15,6 +20,8 @@ export default function Home() {
       <MobileMenu />
       <Setting />
       <PromptMark />
+      <Premium />
+      <Recharge />
       <section
         className={cn(
           "transition-colors h-full w-full relative md:w-[calc(100vw-17.5rem)]",

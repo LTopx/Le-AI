@@ -11,6 +11,12 @@ module.exports = {
       backgroundImage: {
         "share-ico":
           "linear-gradient(to right top,#d16ba5,#c777b9,#ba83ca,#aa8fd8,#9a9ae1,#8aa7ec,#79b3f4,#69bff8,#52cffe,#41dfff,#46eefa,#5ffbf1)",
+        "license-free":
+          "linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)",
+        "license-premium":
+          "linear-gradient(to right top, #fac234, #ffbe53, #ffbb6c, #ffbb84, #ffbc99, #ffb99c, #ffb6a0, #ffb4a4, #ffaa9a, #ff9f90, #ff9586, #fe8a7d)",
+        "license-team":
+          "linear-gradient(to right top, #3bc9b7, #3fccb5, #44ceb3, #49d1b1, #4fd3af, #55d5ad, #5ad7ab, #60d9a9, #66dba6, #6ddea3, #74e0a0, #7be29d)",
       },
       keyframes: {
         fadeIn: {

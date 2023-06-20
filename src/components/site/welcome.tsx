@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { useTranslations } from "next-intl";
 import { useOpenAI } from "@/hooks";
@@ -23,7 +21,7 @@ const Welcome: React.FC = () => {
     <div className="flex h-full justify-center items-center">
       <div className="flex flex-col w-80 md:w-auto">
         <div className="font-bold text-4xl">{t("welcome")}</div>
-        <div className="font-black text-4xl my-3 text-transparent">
+        <div className="font-black my-3 text-transparent text-4xl">
           <span className="bg-clip-text bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
             L - GPT
           </span>

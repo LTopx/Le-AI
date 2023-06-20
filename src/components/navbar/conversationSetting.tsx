@@ -2,6 +2,7 @@ import * as React from "react";
 import { useTranslations } from "next-intl";
 import { Divider, Input, Modal, Select } from "@/components/ui";
 import { useChannel, useLLM } from "@/hooks";
+import { cn } from "@/lib";
 
 interface IConversationSettings {
   name: string;
@@ -33,6 +34,25 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
     model_type: "",
     model_value: "",
   });
+
+  const renderModelLabel = (item: any) => {
+    return (
+      <div className="flex gap-4 items-center">
+        <span className="truncate">{item.label}</span>
+        {!!item.premium && (
+          <span
+            className={cn(
+              "select-none rounded text-xs py-0.5 px-2 border",
+              "border-amber-400 text-amber-400 bg-amber-50",
+              "dark:border-orange-500 dark:text-orange-500 dark:bg-orange-50/90"
+            )}
+          >
+            PREMIUM
+          </span>
+        )}
+      </div>
+    );
+  };
 
   const onClose = () => setOpen(false);
 
@@ -117,13 +137,14 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
           onChange={onChangeModelType}
         />
         <div className="flex items-center mt-2">
-          <div className="text-sm text-black/90 dark:text-white/90 w-20">
+          <div className="text-sm text-black/90 dark:text-white/90 w-16">
             {tPrompt("model")}
           </div>
           <div className="flex-1">
             <Select
               className="w-full"
               options={modelOptions}
+              renderLabel={renderModelLabel}
               value={formData.model_value}
               onChange={onChangeModelValue}
             />
@@ -132,7 +153,7 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
       </div>
       <Divider />
       <div className="flex items-center">
-        <div className="text-sm text-black/90 dark:text-white/90  w-20">
+        <div className="text-sm text-black/90 dark:text-white/90  w-16">
           {t("title")}
         </div>
         <Input

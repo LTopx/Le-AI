@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { useSession } from "next-auth/react";
 import { useTranslations, useLocale } from "next-intl";
@@ -108,7 +106,7 @@ export default function MobileMenu() {
       className="md:hidden"
       overlayClassName="md:hidden"
       title={
-        <div className="h-full flex items-center pl-2">
+        <div className="flex h-full pl-2 items-center">
           <Logo disabled />
         </div>
       }
@@ -116,7 +114,7 @@ export default function MobileMenu() {
       open={mobileMenuVisible}
       onClose={onClose}
     >
-      <div className="p-2 flex flex-col h-[calc(100%-3.5rem)]">
+      <div className="flex flex-col h-[calc(100%-3.5rem)] p-2">
         <Button
           className="mb-2"
           type="primary"
@@ -140,7 +138,7 @@ export default function MobileMenu() {
                 }
               )}
             >
-              <div className="flex justify-between items-center gap-2">
+              <div className="flex gap-2 justify-between items-center">
                 <div
                   className={cn(
                     "font-medium text-sm text-ellipsis pl-5 overflow-hidden whitespace-nowrap relative",
@@ -227,8 +225,7 @@ export default function MobileMenu() {
             className={cn(
               "h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors",
               "hover:bg-gray-200/60 text-black/90",
-              "dark:hover:bg-slate-700/70 dark:text-white/90",
-              "text-rose-700 dark:text-rose-500"
+              "dark:hover:bg-slate-700/70 dark:text-white/90"
             )}
             href="https://t.me/+7fLJJoGV_bJhYTk1"
             target="_blank"
@@ -236,8 +233,8 @@ export default function MobileMenu() {
             <RiFeedbackLine size={16} /> {t("feedback")}
           </a>
           {!!session.data && <Tokens type="mobile" />}
-          <div className="h-11 items-center justify-center flex">
-            <div className="flex-1 flex justify-center">
+          <div className="flex h-11 items-center justify-center">
+            <div className="flex flex-1 justify-center">
               <div
                 onClick={onToggleTheme}
                 className={cn(
@@ -253,7 +250,7 @@ export default function MobileMenu() {
                 )}
               </div>
             </div>
-            <div className="flex-1 flex justify-center">
+            <div className="flex flex-1 justify-center">
               <a
                 href="https://github.com/Peek-A-Booo/L-GPT"
                 target="_blank"
@@ -285,7 +282,7 @@ export default function MobileMenu() {
                 </div>
               }
             />
-            <div className="flex-1 flex justify-center">
+            <div className="flex flex-1 justify-center">
               <div
                 onClick={() => setSettingVisible(true)}
                 className={cn(

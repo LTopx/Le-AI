@@ -6,7 +6,7 @@ import { cn } from "@/lib";
 import { BsCheck2 } from "react-icons/bs";
 
 export interface IDropdownItems {
-  label?: string;
+  label?: React.ReactNode;
   value?: string;
   icon?: React.ReactNode;
   type?: string;

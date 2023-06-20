@@ -7,10 +7,14 @@ import { useRouter, usePathname } from "next-intl/client";
 import Image from "next/image";
 import { BiUser, BiLogOut, BiLogIn } from "react-icons/bi";
 import { HiOutlineDocumentText } from "react-icons/hi";
-import { AiOutlineAppstoreAdd, AiOutlineUser } from "react-icons/ai";
-import { usePromptOpen } from "@/hooks";
-import Dropdown from "@/components/ui/Dropdown";
-import type { IDropdownItems } from "@/components/ui/Dropdown";
+import { RiVipLine } from "react-icons/ri";
+import {
+  AiFillGift,
+  AiOutlineAppstoreAdd,
+  AiOutlineUser,
+} from "react-icons/ai";
+import { usePromptOpen, useUserInfo, usePremium } from "@/hooks";
+import Dropdown, { type IDropdownItems } from "@/components/ui/Dropdown";
 import Button from "@/components/ui/Button";
 
 export default function Avatar() {
@@ -18,13 +22,17 @@ export default function Avatar() {
   const router = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
+  const [userInfo, setUserInfo] = useUserInfo();
   const [, setOpen] = usePromptOpen();
+  const [, setPremiumOpen] = usePremium();
 
   const [loadingLogin, setLoadingLogin] = React.useState(false);
 
   const t = useTranslations("auth");
+  const tPremium = useTranslations("premium");
 
   const user = session.data?.user;
+  const license_type = userInfo.license_type;
 
   const getMenus = React.useCallback((): IDropdownItems[] => {
     let menus: IDropdownItems[] = [
@@ -33,19 +41,58 @@ export default function Avatar() {
         value: "documentation",
         icon: <HiOutlineDocumentText />,
       },
-      {
+    ];
+
+    if (pathname === "/") {
+      menus.push({
         label: t("prompt-market"),
         value: "prompt-market",
         icon: <AiOutlineAppstoreAdd />,
-      },
-      { type: "seperate", value: "seperate_1" },
-    ];
-
-    if (pathname !== "/") menus.splice(1, 1);
+      });
+    }
 
     if (session.data) {
+      if (license_type === "free") {
+        menus.unshift({
+          label: (
+            <span className="text-neutral-400">{tPremium("free-trial")}</span>
+          ),
+          value: "license",
+          icon: <RiVipLine />,
+        });
+      } else if (license_type === "premium") {
+        menus.unshift({
+          label: (
+            <span className="bg-clip-text bg-license-premium text-transparent">
+              {tPremium("premium")}
+            </span>
+          ),
+          value: "license",
+          icon: <RiVipLine />,
+        });
+      } else if (license_type === "team") {
+        menus.unshift({
+          label: (
+            <span className="bg-clip-text bg-license-team text-transparent">
+              {tPremium("team")}
+            </span>
+          ),
+          value: "license",
+          icon: <RiVipLine />,
+        });
+      }
+
+      if (pathname === "/") {
+        menus.push({
+          label: tPremium("more-license"),
+          value: "more-license",
+          icon: <AiFillGift />,
+        });
+      }
+
       menus = [
         ...menus,
+        { type: "seperate", value: "seperate_1" },
         ...[
           {
             label: t("account-center"),
@@ -62,6 +109,7 @@ export default function Avatar() {
     } else {
       menus = [
         ...menus,
+        { type: "seperate", value: "seperate_1" },
         ...[
           {
             label: t("log-in"),
@@ -73,7 +121,7 @@ export default function Avatar() {
     }
 
     return menus;
-  }, [session.data, pathname]);
+  }, [session.data, pathname, license_type]);
 
   const onSelect = async (item: string) => {
     if (item === "login") {
@@ -92,8 +140,15 @@ export default function Avatar() {
       window.open(url);
     } else if (item === "prompt-market") {
       setOpen(true);
+    } else if (item === "license" || item === "more-license") {
+      if (pathname !== "/") return;
+      setPremiumOpen(true);
     }
   };
+
+  React.useEffect(() => {
+    setUserInfo(0);
+  }, []);
 
   return (
     <Dropdown

@@ -10,10 +10,12 @@ import {
   usePromptOpen,
   usePromptRecent,
   BASE_PROMPT,
+  type ChannelIcon,
+  type IPrompt,
 } from "@/hooks";
-import type { ChannelIcon, IPrompt } from "@/hooks";
 import { Button, Divider, Modal, Select } from "@/components/ui";
 import Icon from "@/components/menu/icon";
+import PremiumBtn from "./premiumBtn";
 
 const renderLabel = (item: any) => {
   return (
@@ -49,21 +51,20 @@ const Configure = React.memo(() => {
   }, [channel]);
 
   const t = useTranslations("prompt");
-  const tCommon = useTranslations("common");
 
   const renderModelLabel = (item: any) => {
     return (
       <div className="flex gap-4 items-center">
         <span>{item.label}</span>
-        {!!item.disabled && (
+        {!!item.premium && (
           <span
             className={cn(
-              "select-none rounded-md text-xs py-0.5 px-2 border",
-              "border-yellow-100 bg-yellow-100 text-yellow-500",
-              "dark:border-yellow-400/80 dark:bg-yellow-400/80 dark:text-white"
+              "select-none rounded text-xs py-0.5 px-2 border",
+              "border-amber-400 text-amber-400 bg-amber-50",
+              "dark:border-orange-500 dark:text-orange-500 dark:bg-orange-50/90"
             )}
           >
-            {tCommon("applying")}
+            PREMIUM
           </span>
         )}
       </div>
@@ -240,18 +241,21 @@ const Configure = React.memo(() => {
           </motion.div>
         )}
 
-        {!!(isShow && recentPrompt.length) && (
+        {!!isShow && (
           <motion.div
-            className="flex justify-center"
+            className="flex flex-col justify-center items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="w-80 max-w-[calc(100vw-2rem)]">
-              <Divider>
-                <span className="text-sm">{t("recently-used")}</span>
-              </Divider>
-            </div>
+            <PremiumBtn />
+            {!!recentPrompt.length && (
+              <div className="w-80 max-w-[calc(100vw-2rem)]">
+                <Divider>
+                  <span className="text-sm">{t("recently-used")}</span>
+                </Divider>
+              </div>
+            )}
           </motion.div>
         )}
 

@@ -17,7 +17,7 @@ import {
   useChannel,
   useOpenAI,
   useStreamDecoder,
-  useTokens,
+  useUserInfo,
   useLLM,
   BASE_PROMPT,
   ChannelListItem,
@@ -35,7 +35,7 @@ const ChatFooter: React.FC = () => {
   const router = useRouter();
   const [newOpenAI] = useOpenAI();
   const [channel, setChannel] = useChannel();
-  const [, setTokens] = useTokens();
+  const [, setTokens] = useUserInfo();
   const { openai, azure } = useLLM();
   const [inputValue, setInputValue] = React.useState<string>("");
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
@@ -134,13 +134,14 @@ const ChatFooter: React.FC = () => {
         return channel;
       });
 
-      if (session.data) setTokens();
+      if (session.data) setTokens(3000);
 
       return;
     }
 
     // regenerate
     if (!findChannel?.chat_list.length) return;
+
     if (findChannel.chat_list.at(-1)?.role !== "assistant") return;
     const findLastIndex = findChannel.chat_list.findLastIndex(
       (item) => item.role === "assistant"
@@ -312,7 +313,8 @@ const ChatFooter: React.FC = () => {
                 { duration: 5000 }
               );
             } else {
-              errorMessage = response.statusText || tCommon("service-error");
+              errorMessage =
+                errRes.msg || response.statusText || tCommon("service-error");
             }
 
             toast.error(errorMessage, { duration: 4000 });
@@ -403,7 +405,7 @@ const ChatFooter: React.FC = () => {
             return channel;
           });
 
-          if (session.data) setTokens();
+          if (session.data) setTokens(3000);
         })
         .catch((error) => {
           console.log(error, "sendGPT error");
@@ -490,7 +492,7 @@ const ChatFooter: React.FC = () => {
         return channel;
       });
 
-      if (session.data) setTokens();
+      if (session.data) setTokens(3000);
     });
   };
 
