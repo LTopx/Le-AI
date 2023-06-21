@@ -47,24 +47,26 @@ model VerificationToken {
 }
 
 model User {
-  id              String    @id @default(cuid())
-  name            String?
-  email           String?   @unique
-  emailVerified   DateTime?
-  image           String?
-  sessions        Session[]
-  accounts        Account[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime? @updatedAt
-  recentlyUse     DateTime?
-  share           Share[]
-  costTokens      Int       @default(0)
-  costUSD         Float     @default(0)
-  Cost            Cost[]
-  availableTokens Int       @default(0)
-  freeTrialed     Int       @default(0)
-  license_type    String?
-  License         License[]
+  id                 String    @id @default(cuid())
+  name               String?
+  email              String?   @unique
+  emailVerified      DateTime?
+  image              String?
+  sessions           Session[]
+  accounts           Account[]
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime? @updatedAt
+  recentlyUse        DateTime?
+  share              Share[]
+  costTokens         Int       @default(0)
+  costUSD            Float     @default(0)
+  Cost               Cost[]
+  availableTokens    Int       @default(0)
+  license_type       String?
+  License            License[]
+  freeTrialed        Int       @default(0)
+  productHuntTrialed Int       @default(0)
+  twitterTrialed     Int       @default(0)
 }
 
 model License {

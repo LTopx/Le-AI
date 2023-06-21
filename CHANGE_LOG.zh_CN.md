@@ -2,7 +2,7 @@
 
 ## v0.7.0
 
-> 2023-06-20
+> 2023-06-21
 
 ### 修复
 
@@ -17,6 +17,7 @@
 - 新增 Token 不足时的引导：开始免费试用 or 充值 Token
 - 新增 Free trial 和 Premium 的 token 赠送数额说明
 - 新增定时任务每日核算 Token 消耗
+- 新增 Product Hunt/Twitter 平台活动码
 
 ### 调整
 

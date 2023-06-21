@@ -2,7 +2,7 @@
 
 ## v0.7.0
 
-> 2023-06-20
+> 2023-06-21
 
 ### Fixed
 
@@ -17,6 +17,7 @@
 - Guidance when there is insufficient Token for adding: Start Free Trial or Recharge Token
 - Added token allocation details for Free trial and Premium
 - Added daily scheduled task to calculate token consumption
+- Add promotion codes for Product Hunt/Twitter platforms
 
 ### Changed
 

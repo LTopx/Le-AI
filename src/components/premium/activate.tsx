@@ -60,6 +60,8 @@ const Activate = React.forwardRef((_, forwardedRef) => {
           toastInfo = t("tokens-recharged");
         } else if (res.data.type === "license") {
           toastInfo = t("license-key-activated");
+        } else if (res.data.type === "activity") {
+          toastInfo = t("gift-code-used-success");
         }
 
         toast.success(toastInfo, { id: "activated", duration: 5000 });

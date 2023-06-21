@@ -24,7 +24,7 @@ import {
   BASE_PROMPT,
   ChannelListItem,
 } from "@/hooks";
-import { Button, Confirm } from "@/components/ui";
+import { Button, Confirm, Link } from "@/components/ui";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
 import { isMobile, cn, calcTokens } from "@/lib";
 import type { IShare } from "@/app/api/share/route";
@@ -611,33 +611,42 @@ const ChatFooter: React.FC = () => {
           "dark:via-neutral-900 dark:to-neutral-900"
         )}
       >
-        {!!findChannel?.chat_list?.length && (
-          <div className="flex py-2 gap-2 justify-center items-center">
-            <Button
-              className="group"
-              size="sm"
-              type="outline"
-              onClick={generate}
-              leftIcon={
-                loadingChannel ? (
-                  <BsStop size={20} />
-                ) : (
-                  <AiOutlineRedo size={20} className="group:hover:bg-[red]" />
-                )
-              }
-            >
-              {loadingChannel ? t("stop-generate") : t("re-generate")}
-            </Button>
-            <Button
-              type="outline"
-              leftIcon={<AiOutlineShareAlt size={18} />}
-              loading={loadingShare}
-              onClick={handleShare}
-            >
-              {tShare("share")}
-            </Button>
-          </div>
-        )}
+        <div className="flex py-2 gap-3 justify-center items-center">
+          {!!findChannel?.chat_list?.length && (
+            <>
+              <Button
+                className="group"
+                size="sm"
+                type="outline"
+                onClick={generate}
+                leftIcon={
+                  loadingChannel ? (
+                    <BsStop size={20} />
+                  ) : (
+                    <AiOutlineRedo size={20} className="group:hover:bg-[red]" />
+                  )
+                }
+              >
+                {loadingChannel ? t("stop-generate") : t("re-generate")}
+              </Button>
+              <Button
+                type="outline"
+                leftIcon={<AiOutlineShareAlt size={18} />}
+                loading={loadingShare}
+                onClick={handleShare}
+              >
+                {tShare("share")}
+              </Button>
+            </>
+          )}
+          <Link
+            className="underline text-sm hidden md:block"
+            target="_blank"
+            href="https://docs.ltopx.com"
+          >
+            {tCommon("docs")}
+          </Link>
+        </div>
 
         <div className="flex">
           <div className="flex items-end">

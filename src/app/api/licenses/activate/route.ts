@@ -4,6 +4,19 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
 import { LResponseError } from "@/lib";
 
+const activityCode = [
+  {
+    code: "L-GPT-PH-CODE",
+    label: "productHuntTrialed",
+    value: 15000,
+  },
+  {
+    code: "L-GPT-TWITTER-CODE-2306",
+    label: "twitterTrialed",
+    value: 15000,
+  },
+];
+
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
 
@@ -16,6 +29,29 @@ export async function POST(request: Request) {
   if (!user) return LResponseError("User does not exist");
 
   const { license_key, instance_name } = await request.json();
+
+  const findActivity = activityCode.find((p) => p.code === license_key);
+
+  if (findActivity) {
+    if ((user as any)[findActivity.label]) {
+      return LResponseError("You have already used this license key.");
+    }
+
+    const updateData = {
+      availableTokens: user.availableTokens + findActivity.value,
+      [findActivity.label]: 1,
+    };
+
+    await prisma.user.update({
+      data: updateData,
+      where: { id: session?.user.id },
+    });
+
+    return NextResponse.json(
+      { error: 0, data: { type: "activity" } },
+      { status: 200 }
+    );
+  }
 
   try {
     const variants = await fetch("https://api.lemonsqueezy.com/v1/variants", {
@@ -130,9 +166,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 0, data: { type } }, { status: 200 });
   } catch (error) {
     console.log(error, "validate licenses error");
-    return NextResponse.json(
-      { error: -1, msg: "validate licenses error" },
-      { status: 500 }
-    );
+    return LResponseError("validate licenses error");
   }
 }
