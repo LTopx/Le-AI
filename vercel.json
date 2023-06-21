@@ -3,6 +3,10 @@
     {
       "path": "/api/share/cron",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/cost",
+      "schedule": "1 0 * * *"
     }
   ]
 }

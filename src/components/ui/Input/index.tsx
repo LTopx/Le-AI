@@ -41,32 +41,35 @@ const Input = React.forwardRef<any, InputProps>(
     forwardedRef
   ) => {
     // ref
-    const inputRef = React.useRef<any>(null);
+    const inputRef = React.useRef<HTMLInputElement>(null);
     const forceUpdate = React.useRef(false);
 
     // data
     const [isFocus, setIsFocus] = React.useState<boolean>(false);
 
     const onClear = () => {
+      if (!inputRef.current) return;
       forceUpdate.current = false;
       onChange?.("");
-      inputRef.current?.focus();
+      inputRef.current.focus();
       inputRef.current.value = "";
     };
 
     const onBlur = (event: any) => {
+      if (!inputRef.current) return;
+
       if (type === "number") {
         const value = Number(event.target.value);
         if (max && value > max) {
           onChange?.(max);
-          inputRef.current.value = max;
+          inputRef.current.valueAsNumber = max;
         } else if (min && value < min) {
           onChange?.(min);
-          inputRef.current.value = min;
+          inputRef.current.valueAsNumber = min;
         } else if (!isUndefined(step) && step > 0) {
           const stepValue = Math.round(value / step) * step;
           onChange?.(stepValue);
-          inputRef.current.value = stepValue;
+          inputRef.current.valueAsNumber = stepValue;
         } else {
           onChange?.(event.target.value);
         }

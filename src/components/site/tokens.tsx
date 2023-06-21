@@ -14,7 +14,7 @@ export default function Tokens({ type }: { type: "pc" | "mobile" }) {
   const [toggle, setToggle] = React.useState(false);
 
   const percent = React.useMemo(() => {
-    if (!availableTokens) return 0;
+    if (availableTokens <= 0) return 0;
 
     const left = ((availableTokens - costTokens) / availableTokens) * 100;
 
@@ -24,8 +24,6 @@ export default function Tokens({ type }: { type: "pc" | "mobile" }) {
   const onRecharge = (e: any) => {
     e.stopPropagation();
     setOpen(true);
-    // window.location.href =
-    //   "https://ltopx.lemonsqueezy.com/checkout/buy/df7a231a-ebb4-487e-9a10-961f10e47246";
   };
 
   return (
@@ -43,7 +41,7 @@ export default function Tokens({ type }: { type: "pc" | "mobile" }) {
         {!toggle ? (
           <div className="flex flex-1 items-center gap-1">
             <Progress.Root
-              className="flex-1 overflow-hidden rounded-full w-full h-4 bg-neutral-100 dark:bg-neutral-600"
+              className="flex-1 overflow-hidden rounded-full w-full h-4 bg-neutral-200 md:bg-neutral-100 dark:bg-neutral-600"
               style={{ transform: "translateZ(0)" }}
               value={percent}
             >
@@ -80,7 +78,9 @@ export default function Tokens({ type }: { type: "pc" | "mobile" }) {
                 : availableTokens - costTokens}
             </span>
             <span>/</span>
-            <span className="dark:text-neutral-500">{availableTokens}</span>
+            <span className="dark:text-neutral-500">
+              {availableTokens < 0 ? 0 : availableTokens}
+            </span>
           </div>
         )}
         <div className="text-xs hidden group-hover:block">

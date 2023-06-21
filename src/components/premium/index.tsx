@@ -130,6 +130,13 @@ const Premium: React.FC = () => {
                 />
                 {t("free-4")}
               </div>
+              <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
+                <FaCheckCircle
+                  size={16}
+                  className="left-0 text-green-400 absolute"
+                />
+                {t("free-5")}
+              </div>
             </div>
           </div>
           <AiFillGift
@@ -199,6 +206,13 @@ const Premium: React.FC = () => {
                   className="left-0 text-green-400 absolute"
                 />
                 {t("premium-6")}
+              </div>
+              <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
+                <FaCheckCircle
+                  size={16}
+                  className="left-0 text-green-400 absolute"
+                />
+                {t("premium-7")}
               </div>
             </div>
           </div>

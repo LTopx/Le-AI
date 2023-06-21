@@ -12,6 +12,7 @@ import {
   AiFillGift,
   AiOutlineAppstoreAdd,
   AiOutlineUser,
+  AiOutlineLogin,
 } from "react-icons/ai";
 import { usePromptOpen, useUserInfo, usePremium } from "@/hooks";
 import Dropdown, { type IDropdownItems } from "@/components/ui/Dropdown";
@@ -178,9 +179,11 @@ export default function Avatar() {
           </div>
         ) : (
           <div className="flex h-14 right-3 absolute items-center">
-            <Button type="primary" loading={loadingLogin}>
-              {t("log-in")}
-            </Button>
+            <Button
+              type="primary"
+              loading={loadingLogin}
+              leftIcon={<AiOutlineLogin size={20} />}
+            />
           </div>
         )
       }

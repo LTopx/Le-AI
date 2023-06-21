@@ -15,6 +15,13 @@
 - Added support for Token recharge to unlock more session quotas
 - Added activation guide
 - Guidance when there is insufficient Token for adding: Start Free Trial or Recharge Token
+- Added token allocation details for Free trial and Premium
+- Added daily scheduled task to calculate token consumption
+
+### Changed
+
+- Move the activation of the license key to the left menu for better visibility
+- Optimize clipboard usage
 
 ## v0.6.2
 

@@ -8,21 +8,16 @@ const CopyIcon: React.FC<React.HTMLAttributes<HTMLElement>> = ({
   className,
   content,
 }) => {
-  const [copySuccess, setCopySuccess] = React.useState(false);
-  const { copy } = useClipboard();
+  const { isCopied, copy } = useClipboard();
 
   const onCopy = () => {
-    if (copySuccess) return;
+    if (isCopied) return;
     copy(content);
-    setCopySuccess(true);
-    setTimeout(() => {
-      setCopySuccess(false);
-    }, 1800);
   };
 
   return (
     <div onClick={onCopy} className={className}>
-      {copySuccess ? (
+      {isCopied ? (
         <AiOutlineCheck className="text-[#52c41a]" size={18} />
       ) : (
         <AiOutlineCopy className="cursor-pointer" size={18} />

@@ -33,7 +33,7 @@ dependencies:
     specifier: 1.0.6
     version: 1.0.6(@types/react-dom@18.2.6)(@types/react@18.2.13)(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-progress':
-    specifier: ^1.0.3
+    specifier: 1.0.3
     version: 1.0.3(@types/react-dom@18.2.6)(@types/react@18.2.13)(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-select':
     specifier: 1.2.2
@@ -99,14 +99,14 @@ dependencies:
     specifier: 10.12.16
     version: 10.12.16(react-dom@18.2.0)(react@18.2.0)
   gpt-tokens:
-    specifier: ^1.0.9
+    specifier: 1.0.9
     version: 1.0.9
   js-tiktoken:
     specifier: 1.0.7
     version: 1.0.7
   l-hooks:
-    specifier: 0.4.5
-    version: 0.4.5(@types/qs@6.9.7)(qs@6.11.1)(react-dom@18.2.0)(react@18.2.0)
+    specifier: 0.4.6
+    version: 0.4.6(@types/qs@6.9.7)(qs@6.11.1)(react-dom@18.2.0)(react@18.2.0)
   math-random:
     specifier: 2.0.1
     version: 2.0.1
@@ -117,8 +117,8 @@ dependencies:
     specifier: 4.22.1
     version: 4.22.1(next@13.4.6)(nodemailer@6.9.3)(react-dom@18.2.0)(react@18.2.0)
   next-intl:
-    specifier: 2.14.6
-    version: 2.14.6(next@13.4.6)(react@18.2.0)
+    specifier: 2.15.0
+    version: 2.15.0(next@13.4.6)(react@18.2.0)
   next-themes:
     specifier: 0.2.1
     version: 0.2.1(next@13.4.6)(react-dom@18.2.0)(react@18.2.0)
@@ -182,7 +182,7 @@ devDependencies:
     specifier: 1.0.0
     version: 1.0.0
   '@types/nodemailer':
-    specifier: ^6.4.8
+    specifier: 6.4.8
     version: 6.4.8
   '@types/react-syntax-highlighter':
     specifier: 15.5.7
@@ -5630,8 +5630,8 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /l-hooks@0.4.5(@types/qs@6.9.7)(qs@6.11.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Cj724kAyw7GZgXcACttl22I+l9Xjn4vnmiD7GJuJJExa+Zbq1hsRMgwrVlJCpXrdknVq7YjtTt5pG2D1m37B1A==}
+  /l-hooks@0.4.6(@types/qs@6.9.7)(qs@6.11.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-DTXNmKqb6J9SYmBnq2EnFWCJ6B4wsNXDyAk+hpVX40O64VteTiaRNVl+6Bby0PjQgeBrz3ZGQa97ipxbxTedug==}
     peerDependencies:
       '@types/qs': '>=6.9.7'
       qs: '>=6.11.1'
@@ -5640,6 +5640,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.21.0
       '@types/qs': 6.9.7
+      '@vercel/analytics': 1.0.1
       qs: 6.11.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -6289,8 +6290,8 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /next-intl@2.14.6(next@13.4.6)(react@18.2.0):
-    resolution: {integrity: sha512-RZgQQMAUlGWmPx6gequHRCZf7NKD6ixCskyovRd1AMx0UeNqAZggbL7nFsGA8M7mZbE0twv3+4JLrPse8xbwsg==}
+  /next-intl@2.15.0(next@13.4.6)(react@18.2.0):
+    resolution: {integrity: sha512-fUPMlbPw0lZ+XynexfegNaqmj1BXOw/6KOPdyr734fRfjCKXjBzXQF0KB+TpjRi6oKtuYh0ZpD4JfCap9o0mNA==}
     engines: {node: '>=10'}
     peerDependencies:
       next: ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0
@@ -6300,7 +6301,7 @@ packages:
       negotiator: 0.6.3
       next: 13.4.6(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
-      use-intl: 2.14.6(react@18.2.0)
+      use-intl: 2.15.0(react@18.2.0)
     dev: false
 
   /next-themes@0.2.1(next@13.4.6)(react-dom@18.2.0)(react@18.2.0):
@@ -7832,8 +7833,8 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /use-intl@2.14.6(react@18.2.0):
-    resolution: {integrity: sha512-ehkW7/CpJkJQUbQZvtUvB+NukmlOS2FEj5rSRBnyRvV+GsbC+CKKDFcMLecyWA12s9wnqcAbEMQMfp3m1jcwPA==}
+  /use-intl@2.15.0(react@18.2.0):
+    resolution: {integrity: sha512-pQbJS4HGtZjfYgm8UbEG5/2RV+X3BepqL+10bY/cPPE5ihJVXVl8LKKWoB0MfKv1PMYEtLM9B9BAe2W9m8GDXQ==}
     engines: {node: '>=10'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0

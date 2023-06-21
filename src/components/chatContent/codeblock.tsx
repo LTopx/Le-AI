@@ -14,16 +14,11 @@ interface Props {
 
 const CodeBlock: React.FC<Props> = React.memo(({ language, value }) => {
   const t = useTranslations("chat");
-  const { copy } = useClipboard();
-  const [copied, setCopied] = React.useState(false);
+  const { isCopied, copy } = useClipboard();
 
   const copyToClipboard = () => {
-    if (copied) return;
+    if (isCopied) return;
     copy(value);
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 1800);
   };
 
   return (
@@ -35,7 +30,7 @@ const CodeBlock: React.FC<Props> = React.memo(({ language, value }) => {
             className="flex gap-0.5 items-center rounded bg-none p-1 text-xs text-white"
             onClick={copyToClipboard}
           >
-            {copied ? (
+            {isCopied ? (
               <>
                 <AiOutlineCheck className="text-[#52c41a] mr-1" size={18} />
                 {t("copied")}!

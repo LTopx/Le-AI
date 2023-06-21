@@ -15,6 +15,13 @@
 - 新增支持 Token 充值，解锁更多会话额度
 - 新增激活许可证引导
 - 新增 Token 不足时的引导：开始免费试用 or 充值 Token
+- 新增 Free trial 和 Premium 的 token 赠送数额说明
+- 新增定时任务每日核算 Token 消耗
+
+### 调整
+
+- 调整激活 license key 的位置到左侧菜单，更加醒目
+- 优化 clipboard 使用
 
 ## v0.6.2
 

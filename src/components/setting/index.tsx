@@ -19,7 +19,6 @@ import {
 } from "@/hooks";
 import type { IConfigStoreState } from "@/hooks";
 import { Button, Confirm, Modal, Select } from "@/components/ui";
-import Activate from "@/components/premium/activate";
 
 export default function Setting() {
   const router = useRouter();
@@ -33,13 +32,11 @@ export default function Setting() {
 
   // ref
   const fileRef = React.useRef<any>(null);
-  const activateRef = React.useRef<any>(null);
 
   const [plat, setPlat] = React.useState<Platform>("windows");
   const [loading, setLoading] = React.useState(false);
 
   const t = useTranslations("setting");
-  const tPremium = useTranslations("premium");
 
   const onClose = () => setVisible(false);
 
@@ -129,8 +126,6 @@ export default function Setting() {
     });
   };
 
-  const onActivate = () => activateRef.current?.init();
-
   React.useEffect(() => {
     setPlat(getPlatform());
 
@@ -213,18 +208,6 @@ export default function Setting() {
             onChange={onChangeSendMessageType}
           />
         </div>
-
-        <div
-          className={cn(
-            "flex items-center justify-between py-2 px-1 border-b",
-            "border-slate-100 dark:border-neutral-500/60"
-          )}
-        >
-          <div className="text-sm">{tPremium("license")}</div>
-          <Button className="w-44" type="primary" onClick={onActivate}>
-            {tPremium("activate")}
-          </Button>
-        </div>
       </Modal>
       <input
         ref={fileRef}
@@ -234,7 +217,6 @@ export default function Setting() {
         accept=".json"
         onChange={(e) => handleImport(e.target.files)}
       />
-      <Activate ref={activateRef} />
     </>
   );
 }

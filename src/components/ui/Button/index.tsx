@@ -8,7 +8,8 @@ type ButtonType = "default" | "primary" | "success" | "danger" | "outline";
 
 type ButtonSize = "xs" | "sm" | "base" | "lg";
 
-interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
+interface ButtonProps
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
   // Option to fit button width to its parent width
   disabled?: boolean;
   block?: boolean;
@@ -19,7 +20,7 @@ interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
   loading?: boolean;
 }
 
-const Button = React.forwardRef<any, ButtonProps>(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
@@ -51,6 +52,7 @@ const Button = React.forwardRef<any, ButtonProps>(
 
     return (
       <button
+        ref={forwardedRef}
         onClick={onBtnClick}
         className={cn(
           "border whitespace-nowrap transition-all duration-100 ease-linear rounded-md font-medium flex items-center justify-center gap-2 tracking-wide",
