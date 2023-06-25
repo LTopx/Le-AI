@@ -4,6 +4,10 @@
 
 > 2023-06-25
 
+### Add
+
+- Added the global variable CRON_SECRET for secure verification of scheduled tasks.
+
 ### Changed
 
 - Optimize the logic of initial user information retrieval: do not retrieve user information for unauthenticated users.
