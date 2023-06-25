@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { LResponseError } from "@/lib";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(request.url);
+    const headersList = headers();
+    const token = headersList.get("Authorization")?.split(" ")[1];
 
-    if (process.env.CRON_SECRET !== searchParams.get("secret")) {
+    if (process.env.CRON_SECRET !== token) {
       return LResponseError("cron cost error");
     }
 
