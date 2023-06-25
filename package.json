@@ -48,6 +48,7 @@
     "js-tiktoken": "1.0.7",
     "l-hooks": "0.4.6",
     "math-random": "2.0.1",
+    "microsoft-cognitiveservices-speech-sdk": "^1.29.0",
     "next": "13.4.7",
     "next-auth": "4.22.1",
     "next-intl": "2.15.1",

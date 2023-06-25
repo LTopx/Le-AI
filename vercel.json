@@ -6,7 +6,7 @@
     },
     {
       "path": "/api/cron/cost",
-      "schedule": "1 * * * *"
+      "schedule": "1 0 * * *"
     }
   ]
 }

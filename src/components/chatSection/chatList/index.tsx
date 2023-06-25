@@ -3,15 +3,22 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useDateFormat } from "l-hooks";
+import {
+  SpeechConfig,
+  SpeechSynthesizer,
+  SpeakerAudioDestination,
+  AudioConfig,
+} from "microsoft-cognitiveservices-speech-sdk";
 import CopyIcon from "@/components/site/copyIcon";
 import ChatContent from "@/components/chatContent";
-import Confirm from "@/components/ui/Confirm";
+import { Button, Confirm, Divider } from "@/components/ui";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
 import {
   AiOutlineLoading,
   AiOutlineDelete,
   AiOutlineUser,
 } from "react-icons/ai";
+import { BsFillPlayFill } from "react-icons/bs";
 import { cn, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/gpt-tokens";
 import { useChannel, useLLM } from "@/hooks";
@@ -23,6 +30,9 @@ const ChatList: React.FC = () => {
   const { format } = useDateFormat();
   const { azure } = useLLM();
   const t = useTranslations("chat");
+
+  const synthesizerRef = React.useRef<SpeechSynthesizer | null>(null);
+  const playerRef = React.useRef<SpeakerAudioDestination | null>(null);
 
   const user = session.data?.user;
 
@@ -69,6 +79,23 @@ const ChatList: React.FC = () => {
       findChannel.channel_cost.usd = Number(usedUSD.toFixed(5));
 
       return channel;
+    });
+  };
+
+  const onRead = (item: ChatItem) => {
+    playerRef.current = new SpeakerAudioDestination();
+    const audioConfig = AudioConfig.fromSpeakerOutput(playerRef.current);
+    const speechConfig = SpeechConfig.fromSubscription(
+      process.env.NEXT_PUBLIC_AZURE_TTS_KEY || "",
+      "westus"
+    );
+    speechConfig.speechSynthesisVoiceName = "zh-CN-liaoning-XiaobeiNeural";
+
+    synthesizerRef.current = new SpeechSynthesizer(speechConfig, audioConfig);
+
+    synthesizerRef.current.speakTextAsync(item.content, (res: any) => {
+      // 这里可以获取读语音的总时长，但是应该也可以从其他地方在没有开始读的情况下获取
+      console.log(res, "res");
     });
   };
 
@@ -146,6 +173,18 @@ const ChatList: React.FC = () => {
                 )}
               >
                 <ChatContent data={item} />
+                {/* {item.role === "assistant" && (
+                  <div>
+                    <Divider className="border-b-neutral-400/70 dark:border-b-neutral-200/40 my-2" />
+                    <Button
+                      type="outline"
+                      size="xs"
+                      onClick={() => onRead(item)}
+                    >
+                      <BsFillPlayFill className="cursor-pointer" size={18} />
+                    </Button>
+                  </div>
+                )} */}
               </div>
             </div>
           </div>
