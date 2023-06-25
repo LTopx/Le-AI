@@ -345,7 +345,10 @@ const ChatFooter: React.FC = () => {
               );
             } else {
               errorMessage =
-                errRes.msg || response.statusText || tCommon("service-error");
+                errRes.msg ||
+                errRes?.error?.message ||
+                response.statusText ||
+                tCommon("service-error");
             }
 
             toast.error(errorMessage, { duration: 4000 });

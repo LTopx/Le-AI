@@ -7,6 +7,7 @@
 ### Changed
 
 - Optimize the logic of initial user information retrieval: do not retrieve user information for unauthenticated users.
+- Improve the display of error messages returned by OpenAI
 
 ## v0.7.0
 

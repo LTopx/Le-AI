@@ -79,7 +79,7 @@ const ChatList: React.FC = () => {
   return (
     <>
       {!chatList.length && <Configure />}
-      <div className="flex flex-col mt-5 gap-5 ">
+      <div className="flex flex-col mt-5 gap-5">
         {chatList.map((item, index) => (
           <div
             key={item.id}
@@ -137,7 +137,7 @@ const ChatList: React.FC = () => {
               </div>
               <div
                 className={cn(
-                  "self-start py-2.5 px-3 rounded-md relative border border-transparent",
+                  "self-start py-2.5 px-3 rounded-lg relative border border-transparent",
                   { "bg-blue-200/70 dark:bg-blue-900": item.role === "user" },
                   {
                     "bg-neutral-200/60 dark:bg-neutral-800/90 dark:border-neutral-600/60":

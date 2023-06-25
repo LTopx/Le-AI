@@ -4,6 +4,10 @@ import { LResponseError } from "@/lib";
 
 export async function GET() {
   try {
+    console.log("\n\n");
+    console.log(process.env.CRON_SECRET, "CRON_SECRET");
+    console.log("\n\n");
+
     const costs = await prisma.cost.findMany({
       where: {
         createdAt: {
