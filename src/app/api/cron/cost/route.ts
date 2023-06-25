@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
-// import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { LResponseError } from "@/lib";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    console.log("\n\n");
-    console.log(process.env.CRON_SECRET, "CRON_SECRET");
-    console.log("12345");
-    console.log("\n\n");
+    const { searchParams } = new URL(request.url);
+
+    if (process.env.CRON_SECRET !== searchParams.get("secret")) {
+      return LResponseError("cron cost error");
+    }
 
     // const costs = await prisma.cost.findMany({
     //   where: {
