@@ -1,5 +1,13 @@
 # L-GPT Change Log
 
+## v0.7.1
+
+> 2023-06-25
+
+### Changed
+
+- Optimize the logic of initial user information retrieval: do not retrieve user information for unauthenticated users.
+
 ## v0.7.0
 
 > 2023-06-21

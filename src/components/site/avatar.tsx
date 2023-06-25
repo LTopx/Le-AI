@@ -148,8 +148,8 @@ export default function Avatar() {
   };
 
   React.useEffect(() => {
-    setUserInfo(0);
-  }, []);
+    if (session.data) setUserInfo(0);
+  }, [session.data]);
 
   return (
     <Dropdown
