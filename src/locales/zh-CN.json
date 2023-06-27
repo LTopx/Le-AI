@@ -76,7 +76,7 @@
     "delete": "删除",
     "delete-this-conversation": "删除会话",
     "delete-conversation": "你确认删除该会话?",
-    "feedback": "问题反馈",
+    "join-tg": "加入 Telegram",
     "messages": "条会话",
     "new-chat": "新建会话",
     "new-conversation": "新会话",
@@ -179,7 +179,7 @@
     "tokens-recharge": "Tokens 充值"
   },
   "responseErr": {
-    "10001": "请先登录或自行配置API Key",
+    "10001": "请先登录或自行配置API Key来使用L-GPT",
     "10002": "API Key缺失，请检查配置或联系开发人员",
     "10003": "语言模型参数错误",
     "10004": "请先配置Azure API Version",
@@ -268,16 +268,27 @@
     "token-desc": "Token 是LLM模型用于计算文本长度的基本单位。它们是字符组，有时与单词对齐，但不总是。特别是，它取决于字符数，包括标点符号或表情符号。",
     "what-is-token": "什么是 Token?"
   },
+  "tts": {
+    "fast": "较快",
+    "medium": "适中",
+    "x-fast": "极快",
+    "x-slow": "极慢",
+    "rate": "语速",
+    "setting": "文本转语音设置",
+    "slow": "较慢",
+    "voice": "声音",
+    "voice-tip": "选择部分英文语音可能无法正常播放中文"
+  },
   "welcome": {
     "desc": "L - GPT是一款开源项目，通过提供不同的AI模型来帮助你提高学习、工作、生活的效率。",
     "welcome": "欢迎来到"
   },
   "zLog": {
     "full-log": "点击查看完整更新日志",
-    "title": "v0.6.1 更新发布 🔥🔥",
-    "text1": "新增支持 OpenAI 刚更新的模型： gpt-3.5-turbo-0613/gpt-3.5-turbo-16k",
-    "text2": "新增计算Token消耗的能力，现在能够准确的计算并展示消耗的token",
-    "text3": "解决了一个项目初期挖的坑，现在能够支持多会话同时对话了，切换会话时不会断掉当前正在对话的会话",
-    "text4": "大批量代码优化和部分模块代码重构"
+    "title": "v0.7.1 版本发布 🔥🔥",
+    "text1": "新增 Azure TTS 功能，支持将会话回复的内容转换为语音（Premium）",
+    "text2": "完善 OpenAI 返回报错信息的展示",
+    "text3": "优化部分国际化内容",
+    "text4": "其它细节优化"
   }
 }

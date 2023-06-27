@@ -13,6 +13,7 @@ import Select from "./Select";
 import Slider from "./Slider";
 import Textarea from "./Textarea";
 import Tooltip from "./Tooltip";
+import NewSlider from "./NewSlider";
 
 export {
   Button,
@@ -28,5 +29,6 @@ export {
   Slider,
   Textarea,
   Tooltip,
+  NewSlider,
 };
 export type { ContextMenuOption, IDropdownItems };

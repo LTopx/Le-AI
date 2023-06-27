@@ -23,8 +23,8 @@ export default function Announcement() {
   };
 
   React.useEffect(() => {
-    // const announcement_version = localStorage.getItem("announcement_version");
-    // if (pkg.version !== announcement_version) setOpen(true);
+    const announcement_version = localStorage.getItem("announcement_version");
+    if (pkg.version !== announcement_version) setOpen(true);
   }, []);
 
   return (

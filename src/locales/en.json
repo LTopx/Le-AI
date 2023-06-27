@@ -76,7 +76,7 @@
     "delete": "Delete",
     "delete-this-conversation": "Delete conversation",
     "delete-conversation": "Are you sure delete this conversation?",
-    "feedback": "Issue feedback",
+    "join-tg": "Join Telegram",
     "messages": "messages",
     "new-chat": "New Chat",
     "new-conversation": "New Conversation",
@@ -179,7 +179,7 @@
     "tokens-recharge": "Tokens Recharge"
   },
   "responseErr": {
-    "10001": "Please log in or configure your API Key.",
+    "10001": "Please log in or configure your API Key to use L-GPT.",
     "10002": "API Key missing, please check configuration or contact the developer",
     "10003": "Language model parameter error",
     "10004": "Please configure Azure API Version first",
@@ -268,16 +268,27 @@
     "token-desc": "Tokens are the basic unit that LLM models use to compute the length of a text. They are groups of characters, which sometimes align with words, but not always. In particular, it depends on the number of characters and includes punctuation signs or emojis.",
     "what-is-token": "What is a Token?"
   },
+  "tts": {
+    "fast": "fast",
+    "medium": "medium",
+    "x-fast": "x-fast",
+    "x-slow": "x-slow",
+    "rate": "Rate",
+    "setting": "TTS Setting",
+    "slow": "slow",
+    "voice": "Voice",
+    "voice-tip": "Choosing en voice may not play Chinese properly."
+  },
   "welcome": {
     "desc": "L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
     "welcome": "Welcome to"
   },
   "zLog": {
     "full-log": "Click to view the full update log",
-    "title": "v0.6.1 Released 🔥🔥",
-    "text1": "Added support for OpenAI's recently updated model: gpt-3.5-turbo-0613 / gpt-3.5-turbo-16k",
-    "text2": "Added the ability to calculate token consumption, accurately displaying the amount of tokens consumed",
-    "text3": "Fixed an early-project issue, now supporting multiple concurrent sessions without interrupting the current session in progress when switching sessions",
-    "text4": "Conducted large-scale code optimization and partial module code refactoring"
+    "title": "v0.7.1 Released 🔥🔥",
+    "text1": "Added Azure TTS feature, supporting conversion of conversation replies into voice (Premium).",
+    "text2": "Improve the display of error messages returned by OpenAI",
+    "text3": "Optimize some internationalization content",
+    "text4": "Other details optimizations"
   }
 }

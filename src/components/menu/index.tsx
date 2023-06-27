@@ -13,8 +13,7 @@ import {
 } from "react-icons/ai";
 import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
 import { HiOutlineTranslate } from "react-icons/hi";
-import { RiFeedbackLine } from "react-icons/ri";
-import { BsKey } from "react-icons/bs";
+import { BsKey, BsTelegram } from "react-icons/bs";
 import { useDateFormat } from "l-hooks";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
@@ -304,7 +303,7 @@ export default function Menu() {
             href="https://t.me/+7fLJJoGV_bJhYTk1"
             target="_blank"
           >
-            <RiFeedbackLine size={18} /> {t("feedback")}
+            <BsTelegram size={18} className="text-[#3aa9ea]" /> {t("join-tg")}
           </a>
           {!!session.data && <Tokens type="pc" />}
           <div className="flex h-11 items-center justify-center">

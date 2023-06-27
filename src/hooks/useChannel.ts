@@ -38,6 +38,7 @@ export interface ChatItem {
   role: "user" | "assistant" | "system";
   time: string;
   content: string;
+  tts_loading?: boolean;
 }
 
 export interface ChannelListItem {
@@ -151,6 +152,11 @@ const getInitChannelList = () => {
           }
           item.channel_loading_connect = false;
           item.channel_loading = false;
+
+          item.chat_list.forEach((item) => {
+            item.tts_loading = false;
+          });
+
           return item;
         }
       );

@@ -4,10 +4,7 @@ import { AiOutlineQuestionCircle, AiOutlineCheck } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 import { cn } from "@/lib";
 import { useOpenAI } from "@/hooks";
-import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
-import Slider from "@/components/ui/Slider";
-import Tooltip from "@/components/ui/Tooltip";
+import { Button, Input, Slider, Tooltip } from "@/components/ui";
 
 type CheckStatus = "" | "success" | "error";
 

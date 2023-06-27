@@ -12,6 +12,7 @@ import Welcome from "@/components/site/welcome";
 import ChatSection from "@/components/chatSection";
 import Premium from "@/components/premium";
 import Recharge from "@/components/recharge";
+import TTSSetting from "@/components/ttsSetting";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <PromptMark />
       <Premium />
       <Recharge />
+      <TTSSetting />
       <section
         className={cn(
           "transition-colors h-full w-full relative md:w-[calc(100vw-17.5rem)]",

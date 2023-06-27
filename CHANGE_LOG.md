@@ -2,16 +2,18 @@
 
 ## v0.7.1
 
-> 2023-06-25
+> 2023-06-27
 
 ### Add
 
 - Added the global variable CRON_SECRET for secure verification of scheduled tasks.
+- Added Azure TTS feature, supporting conversion of conversation replies into voice (Premium).
 
 ### Changed
 
 - Optimize the logic of initial user information retrieval: do not retrieve user information for unauthenticated users.
 - Improve the display of error messages returned by OpenAI
+- Optimize some internationalization content
 
 ## v0.7.0
 

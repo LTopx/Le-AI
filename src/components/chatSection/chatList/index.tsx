@@ -3,25 +3,18 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useDateFormat } from "l-hooks";
-import {
-  SpeechConfig,
-  SpeechSynthesizer,
-  SpeakerAudioDestination,
-  AudioConfig,
-} from "microsoft-cognitiveservices-speech-sdk";
 import CopyIcon from "@/components/site/copyIcon";
 import ChatContent from "@/components/chatContent";
-import { Button, Confirm, Divider } from "@/components/ui";
+import { Confirm } from "@/components/ui";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
 import {
   AiOutlineLoading,
   AiOutlineDelete,
   AiOutlineUser,
 } from "react-icons/ai";
-import { BsFillPlayFill } from "react-icons/bs";
 import { cn, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/gpt-tokens";
-import { useChannel, useLLM } from "@/hooks";
+import { useChannel, useLLM, useTTS, useUserInfo, useTTSOpen } from "@/hooks";
 import type { ChatItem } from "@/hooks";
 import Configure from "../../chatConfigure";
 
@@ -29,14 +22,15 @@ const ChatList: React.FC = () => {
   const session = useSession();
   const { format } = useDateFormat();
   const { azure } = useLLM();
+  const { speak, pause } = useTTS();
+  const [channel, setChannel] = useChannel();
+  const [userInfo] = useUserInfo();
+  const [, setTTSOpen] = useTTSOpen();
   const t = useTranslations("chat");
 
-  const synthesizerRef = React.useRef<SpeechSynthesizer | null>(null);
-  const playerRef = React.useRef<SpeakerAudioDestination | null>(null);
+  const backupIdRef = React.useRef<string | null>(null);
 
   const user = session.data?.user;
-
-  const [channel, setChannel] = useChannel();
 
   const findChannel = channel.list.find(
     (item) => item.channel_id === channel.activeId
@@ -82,24 +76,60 @@ const ChatList: React.FC = () => {
     });
   };
 
-  const onRead = (item: ChatItem) => {
-    playerRef.current = new SpeakerAudioDestination();
-    const audioConfig = AudioConfig.fromSpeakerOutput(playerRef.current);
-    const speechConfig = SpeechConfig.fromSubscription(
-      process.env.NEXT_PUBLIC_AZURE_TTS_KEY || "",
-      "westus"
-    );
-    speechConfig.speechSynthesisVoiceName = "zh-CN-liaoning-XiaobeiNeural";
+  const onRead = (item: ChatItem, channel_id: string) => {
+    setChannel((channel) => {
+      const { list } = channel;
+      const findCh = list.find((item) => item.channel_id === channel_id);
+      if (!findCh) return channel;
+      const findChat = findCh.chat_list.find((val) => {
+        val.tts_loading = false;
+        return val.id === item.id;
+      });
+      if (!findChat) return channel;
+      findChat.tts_loading = true;
+      return channel;
+    });
 
-    synthesizerRef.current = new SpeechSynthesizer(speechConfig, audioConfig);
-
-    synthesizerRef.current.speakTextAsync(item.content, (res: any) => {
-      // 这里可以获取读语音的总时长，但是应该也可以从其他地方在没有开始读的情况下获取
-      console.log(res, "res");
+    speak(item.content, () => {
+      setChannel((channel) => {
+        const { list } = channel;
+        const findCh = list.find((item) => item.channel_id === channel_id);
+        if (!findCh) return channel;
+        const findChat = findCh.chat_list.find((val) => val.id === item.id);
+        if (!findChat) return channel;
+        findChat.tts_loading = false;
+        return channel;
+      });
     });
   };
 
+  const onPause = (item: ChatItem, channel_id: string) => {
+    setChannel((channel) => {
+      const { list } = channel;
+      const findCh = list.find((item) => item.channel_id === channel_id);
+      if (!findCh) return channel;
+      const findChat = findCh.chat_list.find((val) => val.id === item.id);
+      if (!findChat) return channel;
+      findChat.tts_loading = false;
+      return channel;
+    });
+    pause();
+  };
+
+  const onTTSSetting = () => setTTSOpen(true);
+
   React.useEffect(() => {
+    if (backupIdRef.current) {
+      const findNowCh = channel.list.find(
+        (item) => item.channel_id === backupIdRef.current
+      );
+      if (findNowCh) {
+        const findTTS = findNowCh.chat_list.find((val) => val.tts_loading);
+        if (findTTS) onPause(findTTS, backupIdRef.current);
+      }
+    }
+
+    backupIdRef.current = channel.activeId;
     scrollToBottom();
   }, [channel.activeId]);
 
@@ -164,7 +194,7 @@ const ChatList: React.FC = () => {
               </div>
               <div
                 className={cn(
-                  "self-start py-2.5 px-3 rounded-lg relative border border-transparent",
+                  "self-start py-2.5 px-3 rounded-lg relative border border-transparent group/item",
                   { "bg-blue-200/70 dark:bg-blue-900": item.role === "user" },
                   {
                     "bg-neutral-200/60 dark:bg-neutral-800/90 dark:border-neutral-600/60":
@@ -172,19 +202,15 @@ const ChatList: React.FC = () => {
                   }
                 )}
               >
-                <ChatContent data={item} />
-                {/* {item.role === "assistant" && (
-                  <div>
-                    <Divider className="border-b-neutral-400/70 dark:border-b-neutral-200/40 my-2" />
-                    <Button
-                      type="outline"
-                      size="xs"
-                      onClick={() => onRead(item)}
-                    >
-                      <BsFillPlayFill className="cursor-pointer" size={18} />
-                    </Button>
-                  </div>
-                )} */}
+                <ChatContent
+                  license_type={userInfo.license_type}
+                  data={item}
+                  onRead={() => onRead(item, findChannel?.channel_id as string)}
+                  onPause={() =>
+                    onPause(item, findChannel?.channel_id as string)
+                  }
+                  onTTSSetting={onTTSSetting}
+                />
               </div>
             </div>
           </div>

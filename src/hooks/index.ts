@@ -10,3 +10,4 @@ export * from "./usePrompt";
 export * from "./useUserInfo";
 export * from "./usePremium";
 export * from "./useRecharge";
+export * from "./useTTS";
