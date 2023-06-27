@@ -3,9 +3,10 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useDateFormat } from "l-hooks";
+import { BsFillPlayFill, BsStopFill } from "react-icons/bs";
 import CopyIcon from "@/components/site/copyIcon";
 import ChatContent from "@/components/chatContent";
-import { Confirm } from "@/components/ui";
+import { Confirm, Divider, Button, Link } from "@/components/ui";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
 import {
   AiOutlineLoading,
@@ -202,15 +203,43 @@ const ChatList: React.FC = () => {
                   }
                 )}
               >
-                <ChatContent
-                  license_type={userInfo.license_type}
-                  data={item}
-                  onRead={() => onRead(item, findChannel?.channel_id as string)}
-                  onPause={() =>
-                    onPause(item, findChannel?.channel_id as string)
-                  }
-                  onTTSSetting={onTTSSetting}
-                />
+                <ChatContent data={item} />
+
+                {item.role === "assistant" &&
+                  (userInfo.license_type === "premium" ||
+                    userInfo.license_type === "team") && (
+                    <>
+                      <Divider className="border-b-neutral-400/20 dark:border-b-neutral-200/20 my-2" />
+                      <div className="flex gap-2 items-center">
+                        <Button
+                          type="outline"
+                          size="xs"
+                          leftIcon={<BsFillPlayFill size={18} />}
+                          loading={item.tts_loading}
+                          onClick={() =>
+                            onRead(item, findChannel?.channel_id as string)
+                          }
+                        />
+                        {item.tts_loading && (
+                          <Button
+                            size="xs"
+                            type="primary"
+                            onClick={() =>
+                              onPause(item, findChannel?.channel_id as string)
+                            }
+                          >
+                            <BsStopFill size={18} />
+                          </Button>
+                        )}
+                        <Link
+                          className="md:hidden group-hover/item:block text-sm"
+                          onClick={onTTSSetting}
+                        >
+                          Setting
+                        </Link>
+                      </div>
+                    </>
+                  )}
               </div>
             </div>
           </div>
