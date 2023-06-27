@@ -4,9 +4,14 @@ import * as React from "react";
 import { AiOutlineCopy, AiOutlineCheck } from "react-icons/ai";
 import { useClipboard } from "l-hooks";
 
-const CopyIcon: React.FC<React.HTMLAttributes<HTMLElement>> = ({
+interface CopyIconProps extends React.HTMLAttributes<HTMLElement> {
+  size?: number;
+}
+
+const CopyIcon: React.FC<CopyIconProps> = ({
   className,
   content,
+  size = 18,
 }) => {
   const { isCopied, copy } = useClipboard();
 
@@ -18,9 +23,9 @@ const CopyIcon: React.FC<React.HTMLAttributes<HTMLElement>> = ({
   return (
     <div onClick={onCopy} className={className}>
       {isCopied ? (
-        <AiOutlineCheck className="text-[#52c41a]" size={18} />
+        <AiOutlineCheck className="text-[#52c41a]" size={size} />
       ) : (
-        <AiOutlineCopy className="cursor-pointer" size={18} />
+        <AiOutlineCopy className="cursor-pointer" size={size} />
       )}
     </div>
   );

@@ -52,8 +52,7 @@
     "delete-chat": "删除会话内容",
     "delete-chat-tip": "你确认删除该对话内容？",
     "enter-message": "请输入会话内容",
-    "re-generate": "重新生成",
-    "stop-generate": "停止生成",
+    "stop-generate": "停止",
     "type-message": "请输入聊天内容",
     "type-message-commandEnter": "请输入聊天内容（Command + Enter发送，可在设置中心修改）",
     "type-message-ctrlEnter": "请输入聊天内容（Ctrl + Enter发送，可在设置中心修改）",
@@ -275,6 +274,7 @@
     "x-slow": "极慢",
     "rate": "语速",
     "setting": "文本转语音设置",
+    "setting-icon": "设置",
     "slow": "较慢",
     "voice": "声音",
     "voice-tip": "选择部分英文语音可能无法正常播放中文"

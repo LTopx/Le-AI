@@ -52,8 +52,7 @@
     "delete-chat": "Delete conversation content",
     "delete-chat-tip": "Are you sure you want to delete this content?",
     "enter-message": "Please enter a message",
-    "re-generate": "Regenerate",
-    "stop-generate": "Stop Generating",
+    "stop-generate": "Stop",
     "type-message": "Type message here...",
     "type-message-commandEnter": "Type message here... (send with Command + Enter, can be modified in Settings)",
     "type-message-ctrlEnter": "Type message here... (send with Ctrl + Enter, can be modified in Settings)",
@@ -275,6 +274,7 @@
     "x-slow": "x-slow",
     "rate": "Rate",
     "setting": "TTS Setting",
+    "setting-icon": "Setting",
     "slow": "slow",
     "voice": "Voice",
     "voice-tip": "Choosing en voice may not play Chinese properly."

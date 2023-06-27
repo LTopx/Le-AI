@@ -31,7 +31,7 @@
     "@react-email/render": "0.0.7",
     "@sentry/nextjs": "7.56.0",
     "@svgr/webpack": "8.0.1",
-    "@types/node": "20.3.1",
+    "@types/node": "20.3.2",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "@upstash/redis": "1.21.0",

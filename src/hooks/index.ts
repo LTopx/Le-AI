@@ -11,3 +11,4 @@ export * from "./useUserInfo";
 export * from "./usePremium";
 export * from "./useRecharge";
 export * from "./useTTS";
+export * from "./useChatGPT";

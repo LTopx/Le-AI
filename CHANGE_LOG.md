@@ -2,7 +2,7 @@
 
 ## v0.7.1
 
-> 2023-06-27
+> 2023-06-28
 
 ### Add
 
@@ -14,6 +14,8 @@
 - Optimize the logic of initial user information retrieval: do not retrieve user information for unauthenticated users.
 - Improve the display of error messages returned by OpenAI
 - Optimize some internationalization content
+- Optimized some UI details
+- Optimized the code logic for sending conversation messages and refactored the logic for "regenerating" conversations
 
 ## v0.7.0
 

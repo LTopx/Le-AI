@@ -37,6 +37,7 @@ const Premium: React.FC = () => {
 
   return (
     <Modal
+      rootClassName="top-[50%]"
       title={t("license")}
       maskClosable={false}
       open={open}

@@ -3,25 +3,34 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useDateFormat } from "l-hooks";
-import { BsFillPlayFill, BsStopFill } from "react-icons/bs";
 import CopyIcon from "@/components/site/copyIcon";
 import ChatContent from "@/components/chatContent";
-import { Confirm, Divider, Button, Link } from "@/components/ui";
+import { Confirm, Button } from "@/components/ui";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
 import {
   AiOutlineLoading,
   AiOutlineDelete,
   AiOutlineUser,
+  AiOutlineRedo,
 } from "react-icons/ai";
 import { cn, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/gpt-tokens";
-import { useChannel, useLLM, useTTS, useUserInfo, useTTSOpen } from "@/hooks";
+import {
+  useChannel,
+  useLLM,
+  useTTS,
+  useUserInfo,
+  useTTSOpen,
+  useChatGPT,
+} from "@/hooks";
 import type { ChatItem } from "@/hooks";
 import Configure from "../../chatConfigure";
+import TTSHandler from "./ttsHandler";
 
 const ChatList: React.FC = () => {
   const session = useSession();
   const { format } = useDateFormat();
+  const { send } = useChatGPT();
   const { azure } = useLLM();
   const { speak, pause } = useTTS();
   const [channel, setChannel] = useChannel();
@@ -45,19 +54,17 @@ const ChatList: React.FC = () => {
     const { id } = item;
     setChannel((channel) => {
       const { list, activeId } = channel;
-      const findChannel = list.find((item) => item.channel_id === activeId);
-      if (!findChannel) return channel;
-      findChannel.chat_list = findChannel.chat_list.filter(
-        (item) => item.id !== id
-      );
+      const findCh = list.find((item) => item.channel_id === activeId);
+      if (!findCh) return channel;
+      findCh.chat_list = findCh.chat_list.filter((item) => item.id !== id);
 
-      let calcModel = findChannel.channel_model.name;
+      let calcModel = findCh.channel_model.name;
       const findAzureModel = azure.models.find(
         (item) => item.value === calcModel
       );
       if (findAzureModel) calcModel = findAzureModel.label;
 
-      const messages = findChannel.chat_list.map((item) => ({
+      const messages = findCh.chat_list.map((item) => ({
         role: item.role,
         content: item.content,
       }));
@@ -70,11 +77,39 @@ const ChatList: React.FC = () => {
       // Only updates the tokens required to process the entire content of the current session,
       // without affecting the tokens that have already been consumed,
       // and therefore does not affect the value of total_tokens.
-      findChannel.channel_cost.tokens = usedTokens;
-      findChannel.channel_cost.usd = Number(usedUSD.toFixed(5));
+      findCh.channel_cost.tokens = usedTokens;
+      findCh.channel_cost.usd = Number(usedUSD.toFixed(5));
 
       return channel;
     });
+  };
+
+  const onRegenerate = (item: ChatItem) => {
+    if (!findChannel) return;
+    const { channel_loading, channel_loading_connect, chat_list } = findChannel;
+
+    if (channel_loading || channel_loading_connect) return;
+
+    const findIndex = chat_list.findIndex((val) => val.id === item.id);
+
+    let arr: ChatItem[] = [];
+
+    if (item.role === "assistant") {
+      arr = chat_list.slice(0, findIndex);
+    } else if (item.role === "user") {
+      arr = chat_list.slice(0, findIndex + 1);
+    }
+    if (!arr.length) return;
+
+    setChannel((channel) => {
+      const { list, activeId } = channel;
+      const findCh = list.find((item) => item.channel_id === activeId);
+      if (!findCh) return channel;
+      findCh.chat_list = arr;
+      return channel;
+    });
+
+    send(arr, findChannel.channel_id);
   };
 
   const onRead = (item: ChatItem, channel_id: string) => {
@@ -134,6 +169,22 @@ const ChatList: React.FC = () => {
     scrollToBottom();
   }, [channel.activeId]);
 
+  React.useEffect(() => {
+    return () => {
+      setChannel((channel) => {
+        const { list, activeId } = channel;
+        const findCh = list.find((item) => item.channel_id === activeId);
+        if (!findCh) return channel;
+        const findTTS = findCh.chat_list.find((val) => val.tts_loading);
+        if (findTTS) {
+          findTTS.tts_loading = false;
+          pause();
+        }
+        return channel;
+      });
+    };
+  }, []);
+
   return (
     <>
       {!chatList.length && <Configure />}
@@ -141,7 +192,9 @@ const ChatList: React.FC = () => {
         {chatList.map((item, index) => (
           <div
             key={item.id}
-            className={cn("flex gap-3 group", { "mt-12": index === 0 })}
+            className={cn("flex gap-3 group", {
+              "mt-12": index === 0,
+            })}
           >
             <div>
               {item.role === "assistant" && (
@@ -171,26 +224,30 @@ const ChatList: React.FC = () => {
               )}
             </div>
             <div className="flex flex-col gap-1">
-              <div className="text-sm text-neutral-500 dark:text-neutral-300/90 flex items-center gap-4">
+              <div className="flex text-sm text-neutral-500 gap-4 items-center dark:text-neutral-300/90">
                 {format(Number(item.time), "MM-DD HH:mm:ss")}
-                <div className="flex gap-1.5">
-                  <CopyIcon
-                    className="transition-colors hover:text-black/90 dark:hover:text-sky-400/90"
-                    content={item.content}
-                  />
+                <div className="flex opacity-0 transition-opacity gap-1.5 group-hover:opacity-100">
+                  <Button type="outline" size="xs" className="rounded-full">
+                    <CopyIcon size={16} content={item.content} />
+                  </Button>
                   <Confirm
                     title={t("delete-chat")}
                     content={t("delete-chat-tip")}
                     trigger={
-                      <div>
-                        <AiOutlineDelete
-                          className="cursor-pointer transition-colors hover:text-black/90 dark:hover:text-sky-400/90"
-                          size={19}
-                        />
-                      </div>
+                      <Button size="xs" type="outline" className="rounded-full">
+                        <AiOutlineDelete size={16} />
+                      </Button>
                     }
                     onOk={() => onDelete(item)}
                   />
+                  <Button
+                    size="xs"
+                    type="outline"
+                    className="rounded-full"
+                    onClick={() => onRegenerate(item)}
+                  >
+                    <AiOutlineRedo size={16} />
+                  </Button>
                 </div>
               </div>
               <div
@@ -205,41 +262,15 @@ const ChatList: React.FC = () => {
               >
                 <ChatContent data={item} />
 
-                {item.role === "assistant" &&
-                  (userInfo.license_type === "premium" ||
-                    userInfo.license_type === "team") && (
-                    <>
-                      <Divider className="border-b-neutral-400/20 dark:border-b-neutral-200/20 my-2" />
-                      <div className="flex gap-2 items-center">
-                        <Button
-                          type="outline"
-                          size="xs"
-                          leftIcon={<BsFillPlayFill size={18} />}
-                          loading={item.tts_loading}
-                          onClick={() =>
-                            onRead(item, findChannel?.channel_id as string)
-                          }
-                        />
-                        {item.tts_loading && (
-                          <Button
-                            size="xs"
-                            type="primary"
-                            onClick={() =>
-                              onPause(item, findChannel?.channel_id as string)
-                            }
-                          >
-                            <BsStopFill size={18} />
-                          </Button>
-                        )}
-                        <Link
-                          className="md:hidden group-hover/item:block text-sm"
-                          onClick={onTTSSetting}
-                        >
-                          Setting
-                        </Link>
-                      </div>
-                    </>
-                  )}
+                <TTSHandler
+                  data={item}
+                  license_type={userInfo.license_type}
+                  onRead={() => onRead(item, findChannel?.channel_id as string)}
+                  onPause={() =>
+                    onPause(item, findChannel?.channel_id as string)
+                  }
+                  onTTSSetting={onTTSSetting}
+                />
               </div>
             </div>
           </div>
@@ -247,7 +278,7 @@ const ChatList: React.FC = () => {
         {!!findChannel?.channel_loading_connect && (
           <AiOutlineLoading
             size={24}
-            className="animate-spin text-sky-400 ml-11 dark:text-sky-400/90"
+            className="ml-11 animate-spin text-sky-400 dark:text-sky-400/90"
           />
         )}
       </div>
