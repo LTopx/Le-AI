@@ -1,5 +1,18 @@
 # L-GPT Change Log
 
+## v0.7.2
+
+> 2023-06-28
+
+### Fixed
+
+- Fixed bug of missing bufferutil and utf-8-validate after importing azure tts locally
+- Fixed issue of mistakenly referencing client code in the service side
+
+### Add
+
+- Use the language model previously selected by the user when creating a new conversation.
+
 ## v0.7.1
 
 > 2023-06-28

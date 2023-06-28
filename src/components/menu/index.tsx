@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { useSession } from "next-auth/react";
 import { useTranslations, useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -17,7 +17,7 @@ import { BsKey, BsTelegram } from "react-icons/bs";
 import { useDateFormat } from "l-hooks";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
-import { useSetting, useChannel, initChannelList } from "@/hooks";
+import { useSetting, useChannel, useModel, initChannelList } from "@/hooks";
 import type { ChannelListItem } from "@/hooks";
 import { Button, Confirm, ContextMenu, Dropdown } from "@/components/ui";
 import type { ContextMenuOption } from "@/components/ui/ContextMenu";
@@ -45,6 +45,7 @@ export default function Menu() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const { model_type, model_name, checkModel } = useModel();
   const { theme, setTheme } = useTheme();
   const { format } = useDateFormat();
   const [, setVisible] = useSetting();
@@ -73,8 +74,16 @@ export default function Menu() {
   ];
 
   const onChannelAdd = () => {
+    const check = checkModel();
+
     const channel_id = uuidv4();
     const addItem = { ...initChannelList[0], channel_id };
+
+    if (check) {
+      addItem.channel_model.type = model_type;
+      addItem.channel_model.name = model_name;
+    }
+
     setChannel((channel) => {
       channel.list.push(addItem);
       channel.activeId = channel_id;

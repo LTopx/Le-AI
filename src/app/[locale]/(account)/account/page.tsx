@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";

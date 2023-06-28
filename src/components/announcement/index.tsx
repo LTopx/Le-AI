@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import * as Toast from "@radix-ui/react-toast";
 import { useTranslations, useLocale } from "next-intl";
 import { AiOutlineCheck } from "react-icons/ai";

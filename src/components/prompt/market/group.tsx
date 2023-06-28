@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import { AiOutlineLoading, AiFillBug } from "react-icons/ai";
 import type { Prompt } from "@prisma/client";

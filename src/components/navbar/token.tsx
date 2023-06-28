@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import * as Accordion from "@radix-ui/react-accordion";
 import { useTranslations } from "next-intl";
 import { AiFillCaretDown } from "react-icons/ai";

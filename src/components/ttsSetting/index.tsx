@@ -1,4 +1,6 @@
-import * as React from "react";
+"use client";
+
+import React from "react";
 import { useTranslations } from "next-intl";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { cn } from "@/lib";
@@ -100,7 +102,7 @@ const TTS: React.FC = () => {
           "border-slate-100 dark:border-neutral-500/60"
         )}
       >
-        <div className="text-sm flex items-center gap-2">
+        <div className="flex text-sm gap-2 items-center">
           {t("voice")}
           <Tooltip title={t("voice-tip")}>
             <AiOutlineQuestionCircle size={18} />
@@ -116,7 +118,7 @@ const TTS: React.FC = () => {
           onChange={updateVoice}
         />
       </div>
-      <div className="text-sm h-8 flex items-center mt-2 px-1">
+      <div className="flex h-8 mt-2 text-sm px-1 items-center">
         {t("rate")}: {transRate(rate)}
       </div>
       <div>

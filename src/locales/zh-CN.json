@@ -268,6 +268,7 @@
     "what-is-token": "什么是 Token?"
   },
   "tts": {
+    "azure-tts": "Azure 文本转语音",
     "fast": "较快",
     "medium": "适中",
     "x-fast": "极快",

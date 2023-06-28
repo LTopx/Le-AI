@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
 import { VscDebugContinue } from "react-icons/vsc";

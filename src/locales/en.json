@@ -268,6 +268,7 @@
     "what-is-token": "What is a Token?"
   },
   "tts": {
+    "azure-tts": "Azure TTS",
     "fast": "fast",
     "medium": "medium",
     "x-fast": "x-fast",

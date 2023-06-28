@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import * as React from "react";
+import React from "react";
 import { HiOutlineChevronDoubleDown } from "react-icons/hi";
 
 import useScrollToEnd from "../hooks/useScrollToEnd";

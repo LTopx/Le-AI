@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import { useClipboard } from "l-hooks";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";

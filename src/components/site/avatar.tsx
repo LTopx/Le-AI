@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter, usePathname } from "next-intl/client";

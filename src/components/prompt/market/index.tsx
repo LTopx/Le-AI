@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";

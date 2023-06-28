@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AiOutlineClose } from "react-icons/ai";
 import { cn } from "@/lib";

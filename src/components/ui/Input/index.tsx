@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { isUndefined, cn } from "@/lib";
 

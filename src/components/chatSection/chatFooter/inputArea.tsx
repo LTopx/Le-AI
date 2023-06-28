@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import { AiOutlineSend, AiOutlineLoading } from "react-icons/ai";
 import { useConfig } from "@/hooks";

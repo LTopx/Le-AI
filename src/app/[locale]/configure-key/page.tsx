@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { cn } from "@/lib";
 import { useLLM } from "@/hooks";

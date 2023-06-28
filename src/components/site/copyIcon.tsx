@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { AiOutlineCopy, AiOutlineCheck } from "react-icons/ai";
 import { useClipboard } from "l-hooks";
 

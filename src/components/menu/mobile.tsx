@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { useSession } from "next-auth/react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next-intl/client";

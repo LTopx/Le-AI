@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import { ImPlay3 } from "react-icons/im";
 import { BsStopFill } from "react-icons/bs";

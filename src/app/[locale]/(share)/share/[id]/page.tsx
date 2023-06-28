@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Image from "next/image";
 import { Metadata } from "next";
 import { cn } from "@/lib";

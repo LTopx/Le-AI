@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { AiOutlineCheck } from "react-icons/ai";

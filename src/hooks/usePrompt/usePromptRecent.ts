@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { create } from "zustand";
 import type { IPrompt } from "./usePrompt";
 

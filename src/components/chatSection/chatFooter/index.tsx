@@ -1,4 +1,6 @@
-import * as React from "react";
+"use client";
+
+import React from "react";
 import { useTranslations } from "next-intl";
 import { v4 as uuidv4 } from "uuid";
 import type { ChatItem } from "@/hooks/useChannel";
@@ -11,7 +13,8 @@ import { HiOutlineDocumentText } from "react-icons/hi";
 import { BsFillStopFill } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
-import { useChannel, useLLM, useChatGPT, BASE_PROMPT } from "@/hooks";
+import { useChannel, useLLM, BASE_PROMPT } from "@/hooks";
+import { useChatGPT } from "@/hooks/useChatGPT";
 import { Button, Confirm } from "@/components/ui";
 import { useScrollToBottom } from "@/components/scrollToBottoms";
 import { isMobile, cn } from "@/lib";

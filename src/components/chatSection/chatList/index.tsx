@@ -1,4 +1,6 @@
-import * as React from "react";
+"use client";
+
+import React from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
@@ -15,14 +17,8 @@ import {
 } from "react-icons/ai";
 import { cn, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/gpt-tokens";
-import {
-  useChannel,
-  useLLM,
-  useTTS,
-  useUserInfo,
-  useTTSOpen,
-  useChatGPT,
-} from "@/hooks";
+import { useChannel, useLLM, useTTS, useUserInfo, useTTSOpen } from "@/hooks";
+import { useChatGPT } from "@/hooks/useChatGPT";
 import type { ChatItem } from "@/hooks";
 import Configure from "../../chatConfigure";
 import TTSHandler from "./ttsHandler";

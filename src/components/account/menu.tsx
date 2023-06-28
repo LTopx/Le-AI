@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "next-intl/client";
 import { cn } from "@/lib";

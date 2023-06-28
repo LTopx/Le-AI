@@ -1,7 +1,7 @@
-import * as React from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import { Divider, Input, Modal, Select } from "@/components/ui";
-import { useChannel, useLLM } from "@/hooks";
+import { useChannel, useLLM, useModel } from "@/hooks";
 import { cn } from "@/lib";
 
 interface IConversationSettings {
@@ -12,9 +12,28 @@ interface IConversationSettings {
 
 const renderLabel = (item: any) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex gap-2 items-center">
       {item.ico}
       {item.label}
+    </div>
+  );
+};
+
+const renderModelLabel = (item: any) => {
+  return (
+    <div className="flex gap-4 items-center">
+      <span className="truncate">{item.label}</span>
+      {!!item.premium && (
+        <span
+          className={cn(
+            "select-none rounded text-xs py-0.5 px-2 border",
+            "border-amber-400 text-amber-400 bg-amber-50",
+            "dark:border-orange-500 dark:text-orange-500 dark:bg-orange-50/90"
+          )}
+        >
+          PREMIUM
+        </span>
+      )}
     </div>
   );
 };
@@ -25,6 +44,7 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
   const tPrompt = useTranslations("prompt");
 
   const [channel, setChannel] = useChannel();
+  const { updateType, updateName } = useModel();
   const { openai, azure } = useLLM();
   const [open, setOpen] = React.useState(false);
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
@@ -34,25 +54,6 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
     model_type: "",
     model_value: "",
   });
-
-  const renderModelLabel = (item: any) => {
-    return (
-      <div className="flex gap-4 items-center">
-        <span className="truncate">{item.label}</span>
-        {!!item.premium && (
-          <span
-            className={cn(
-              "select-none rounded text-xs py-0.5 px-2 border",
-              "border-amber-400 text-amber-400 bg-amber-50",
-              "dark:border-orange-500 dark:text-orange-500 dark:bg-orange-50/90"
-            )}
-          >
-            PREMIUM
-          </span>
-        )}
-      </div>
-    );
-  };
 
   const onClose = () => setOpen(false);
 
@@ -97,6 +98,8 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
       findChannel.channel_name = formData.name;
       findChannel.channel_model.type = formData.model_type;
       findChannel.channel_model.name = formData.model_value;
+      updateType(formData.model_type);
+      updateName(formData.model_value);
       return channel;
     });
     onClose();
@@ -136,8 +139,8 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
           renderLabel={renderLabel}
           onChange={onChangeModelType}
         />
-        <div className="flex items-center mt-2">
-          <div className="text-sm text-black/90 dark:text-white/90 w-16">
+        <div className="flex mt-2 items-center">
+          <div className="text-sm text-black/90 w-16 dark:text-white/90">
             {tPrompt("model")}
           </div>
           <div className="flex-1">
@@ -153,7 +156,7 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
       </div>
       <Divider />
       <div className="flex items-center">
-        <div className="text-sm text-black/90 dark:text-white/90  w-16">
+        <div className="text-sm text-black/90 w-16  dark:text-white/90">
           {t("title")}
         </div>
         <Input

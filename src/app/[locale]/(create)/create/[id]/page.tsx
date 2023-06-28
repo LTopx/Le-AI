@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import type { Share } from "@prisma/client";

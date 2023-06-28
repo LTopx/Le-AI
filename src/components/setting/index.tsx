@@ -1,8 +1,9 @@
-import * as React from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
-import { TbTrashXFilled } from "react-icons/tb";
+import { AiOutlineSetting } from "react-icons/ai";
 import { BiExport, BiImport } from "react-icons/bi";
+import { TbTrashXFilled } from "react-icons/tb";
 import { saveAs } from "file-saver";
 import { useDateFormat } from "l-hooks";
 import toast from "react-hot-toast";
@@ -16,6 +17,7 @@ import {
   useSetting,
   useConfig,
   usePrompt,
+  useTTSOpen,
 } from "@/hooks";
 import type { IConfigStoreState } from "@/hooks";
 import { Button, Confirm, Modal, Select } from "@/components/ui";
@@ -28,6 +30,7 @@ export default function Setting() {
   const [visible, setVisible] = useSetting();
   const [prompts, setPrompts] = usePrompt();
   const [config, setConfig] = useConfig();
+  const [, setTTSOpen] = useTTSOpen();
   const { format } = useDateFormat();
 
   // ref
@@ -37,6 +40,7 @@ export default function Setting() {
   const [loading, setLoading] = React.useState(false);
 
   const t = useTranslations("setting");
+  const tTTS = useTranslations("tts");
 
   const onClose = () => setVisible(false);
 
@@ -151,13 +155,11 @@ export default function Setting() {
         >
           <div className="text-sm">API Key</div>
           <Button
-            className="w-44"
             type="primary"
             loading={loading}
             onClick={onSettingApiKey}
-          >
-            {t("configuration")}
-          </Button>
+            leftIcon={<AiOutlineSetting size={18} />}
+          />
         </div>
         <div
           className={cn(
@@ -202,11 +204,23 @@ export default function Setting() {
         >
           <div className="text-sm">{t("send-message")}</div>
           <Select
-            className="w-44"
+            className="w-40"
             options={sendMessageTypes(plat)}
             value={config.sendMessageType}
             onChange={onChangeSendMessageType}
           />
+        </div>
+
+        <div
+          className={cn(
+            "flex items-center justify-between py-2 px-1 border-b",
+            "border-slate-100 dark:border-neutral-500/60"
+          )}
+        >
+          <div className="text-sm">{tTTS("azure-tts")}</div>
+          <Button type="primary" onClick={() => setTTSOpen(true)}>
+            <AiOutlineSetting size={18} />
+          </Button>
         </div>
       </Modal>
       <input

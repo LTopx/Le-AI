@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { cn } from "@/lib";
 import { BsCheck2 } from "react-icons/bs";

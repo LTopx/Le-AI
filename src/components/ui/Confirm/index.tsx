@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { useTranslations } from "next-intl";
 import { AiFillExclamationCircle } from "react-icons/ai";

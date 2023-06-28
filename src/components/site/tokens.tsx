@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import * as Progress from "@radix-ui/react-progress";
 import { AiOutlinePieChart } from "react-icons/ai";
 import { BsLightningCharge } from "react-icons/bs";

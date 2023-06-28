@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { AiOutlineRedo } from "react-icons/ai";
@@ -9,6 +9,7 @@ import {
   useLLM,
   usePromptOpen,
   usePromptRecent,
+  useModel,
   BASE_PROMPT,
   type ChannelIcon,
   type IPrompt,
@@ -26,9 +27,29 @@ const renderLabel = (item: any) => {
   );
 };
 
+const renderModelLabel = (item: any) => {
+  return (
+    <div className="flex gap-4 items-center">
+      <span>{item.label}</span>
+      {!!item.premium && (
+        <span
+          className={cn(
+            "select-none rounded text-xs py-0.5 px-2 border",
+            "border-amber-400 text-amber-400 bg-amber-50",
+            "dark:border-orange-500 dark:text-orange-500 dark:bg-orange-50/90"
+          )}
+        >
+          PREMIUM
+        </span>
+      )}
+    </div>
+  );
+};
+
 const Configure = React.memo(() => {
   const [channel, setChannel] = useChannel();
   const [recentPrompt, setRecentPrompt] = usePromptRecent();
+  const { updateType, updateName } = useModel();
   const [, setOpen] = usePromptOpen();
   const { openai, azure } = useLLM();
   const [isShow, setIsShow] = React.useState(true);
@@ -52,38 +73,22 @@ const Configure = React.memo(() => {
 
   const t = useTranslations("prompt");
 
-  const renderModelLabel = (item: any) => {
-    return (
-      <div className="flex gap-4 items-center">
-        <span>{item.label}</span>
-        {!!item.premium && (
-          <span
-            className={cn(
-              "select-none rounded text-xs py-0.5 px-2 border",
-              "border-amber-400 text-amber-400 bg-amber-50",
-              "dark:border-orange-500 dark:text-orange-500 dark:bg-orange-50/90"
-            )}
-          >
-            PREMIUM
-          </span>
-        )}
-      </div>
-    );
-  };
-
   const onChangeType = (value: string) => {
+    updateType(value);
     setChannel((channel) => {
       const { list, activeId } = channel;
-      const nowChannel = list.find((item) => item.channel_id === activeId);
-      if (!nowChannel) return channel;
-      nowChannel.channel_model.type = value;
-      nowChannel.channel_model.name =
+      const findCh = list.find((item) => item.channel_id === activeId);
+      if (!findCh) return channel;
+      findCh.channel_model.type = value;
+      findCh.channel_model.name =
         LLMOptions.find((val) => val.value === value)?.models[0].value || "";
+      updateName(findCh.channel_model.name);
       return channel;
     });
   };
 
   const onChangeModel = (value: string) => {
+    updateName(value);
     setChannel((channel) => {
       const { list, activeId } = channel;
       const nowChannel = list.find((item) => item.channel_id === activeId);
@@ -110,9 +115,7 @@ const Configure = React.memo(() => {
 
   const onClose = () => setOpenModal(false);
 
-  const onToggleLan = () => {
-    setLanType(lanType === "cn" ? "en" : "cn");
-  };
+  const onToggleLan = () => setLanType(lanType === "cn" ? "en" : "cn");
 
   const onUse = (data: IPrompt) => {
     setInfo(data);
@@ -163,7 +166,7 @@ const Configure = React.memo(() => {
 
   return (
     <>
-      <div className="flex flex-col h-full w-full pt-16 pb-24 top-0 gap-1 left-0 absolute">
+      <div className="flex flex-col h-full w-full pt-16 pb-24 top-0 left-0 gap-1 absolute">
         {isShow && (
           <motion.div
             className="flex flex-col items-center justify-center"
@@ -222,19 +225,19 @@ const Configure = React.memo(() => {
               onClick={onOpenPrompt}
             >
               <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-2 justify-center text-orange-400">
+                <div className="flex text-orange-400 gap-2 items-center justify-center">
                   {findChannel?.channel_icon && (
                     <Icon className="nothing" name={findChannel.channel_icon} />
                   )}
                   Prompt
                 </div>
-                <div className="text-neutral-800 dark:text-neutral-100 text-sm line-clamp-6 hover:line-clamp-none hover:max-h-[calc(50vh)] hover:overflow-y-auto">
+                <div className="text-sm text-neutral-800 line-clamp-6 dark:text-neutral-100 hover:max-h-[calc(50vh)] hover:line-clamp-none hover:overflow-y-auto">
                   {findChannel?.channel_prompt}
                 </div>
               </div>
               <AiOutlineRedo
                 size={20}
-                className="absolute right-3 top-3 text-sky-400"
+                className="top-3 right-3 text-sky-400 absolute"
                 onClick={onResetPrompt}
               />
             </div>
@@ -250,7 +253,7 @@ const Configure = React.memo(() => {
           >
             <PremiumBtn />
             {!!recentPrompt.length && (
-              <div className="w-80 max-w-[calc(100vw-2rem)]">
+              <div className="max-w-[calc(100vw-2rem)] w-80">
                 <Divider>
                   <span className="text-sm">{t("recently-used")}</span>
                 </Divider>
@@ -261,7 +264,7 @@ const Configure = React.memo(() => {
 
         {isShow && (
           <motion.div
-            className="px-6 flex justify-center"
+            className="flex px-6 justify-center"
             initial={{ opacity: 0, y: 300 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -274,7 +277,7 @@ const Configure = React.memo(() => {
               },
             }}
           >
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 w-[50rem] max-w-[calc(100vw-2rem)]">
+            <div className="max-w-[calc(100vw-2rem)] grid w-[50rem] gap-3 grid-cols-2 lg:grid-cols-3">
               {recentPrompt.map((item) => (
                 <div
                   key={item.id}
@@ -313,14 +316,14 @@ const Configure = React.memo(() => {
       >
         <Divider />
         <div className="relative">
-          <div className="h-60 overflow-y-auto pt-4 text-[15px]">
+          <div className="h-60 pt-4 text-[15px] overflow-y-auto">
             {(info?.content as any)?.[lanType]}
           </div>
           {(info?.content as any)?.cn && (info?.content as any)?.en && (
             <Button
               type="primary"
               size="xs"
-              className="absolute right-0 top-[-0.5rem]"
+              className="top-[-0.5rem] right-0 absolute"
               onClick={onToggleLan}
             >
               <RiTranslate size={18} />

@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
 import * as Slider from "@radix-ui/react-slider";
 import { isUndefined, cn } from "@/lib";
 
