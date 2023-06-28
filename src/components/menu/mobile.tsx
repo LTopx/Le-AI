@@ -21,6 +21,7 @@ import {
   initChannelList,
   useMobileMenu,
   useSetting,
+  useModel,
 } from "@/hooks";
 import { lans } from "./index";
 import MenuIcon from "./icon";
@@ -31,6 +32,7 @@ export default function MobileMenu() {
   const session = useSession();
   const locale = useLocale();
   const router = useRouter();
+  const { model_type, model_name, checkModel } = useModel();
   const { theme, setTheme } = useTheme();
   const { format } = useDateFormat();
   const [channel, setChannel] = useChannel();
@@ -47,8 +49,16 @@ export default function MobileMenu() {
   const onClose = () => setMobileMenuVisible(false);
 
   const onChannelAdd = () => {
+    const check = checkModel();
+
     const channel_id = uuidv4();
     const addItem = { ...initChannelList[0], channel_id };
+
+    if (check) {
+      addItem.channel_model.type = model_type;
+      addItem.channel_model.name = model_name;
+    }
+
     setChannel((channel) => {
       channel.list.push(addItem);
       channel.activeId = channel_id;

@@ -14,6 +14,7 @@ import {
   usePremium,
   useRecharge,
   useStreamDecoder,
+  useScrollToBottom,
   BASE_PROMPT,
 } from "@/hooks";
 import type { ChatItem, ChannelListItem } from "@/hooks";
@@ -27,6 +28,7 @@ export const useChatGPT = () => {
   const [, setPremiumOpen] = usePremium();
   const [, setRechargeOpen] = useRecharge();
   const { decoder } = useStreamDecoder();
+  const { scrollToBottom } = useScrollToBottom();
   const { openai, azure } = useLLM();
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
 
@@ -220,6 +222,7 @@ export const useChatGPT = () => {
               } else {
                 lastItem.content += content;
               }
+              scrollToBottom();
               return channel;
             });
           },

@@ -1,11 +1,21 @@
 import React from "react";
-import { useOpenAI } from "@/hooks";
-import ScrollToBottoms from "@/components/scrollToBottoms";
+import { useOpenAI, useScrollToBottom } from "@/hooks";
 import ChatList from "./chatList";
 import ChatFooter from "./chatFooter";
 
 const ChatSection: React.FC = () => {
   const [openai] = useOpenAI();
+  const { updateScrollEle } = useScrollToBottom();
+
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const dom = scrollRef.current;
+    if (dom) {
+      updateScrollEle(dom);
+      requestAnimationFrame(() => dom.scrollTo(0, dom.scrollHeight));
+    }
+  }, [scrollRef.current]);
 
   if (
     !openai.openai.apiKey &&
@@ -16,15 +26,12 @@ const ChatSection: React.FC = () => {
     return null;
 
   return (
-    <ScrollToBottoms
-      className="h-full overflow-x-hidden relative"
-      scrollViewClassName="pl-5 pr-20"
-      mode="bottom"
-      nonce=""
-    >
-      <ChatList />
-      <ChatFooter />
-    </ScrollToBottoms>
+    <div className="h-[100%] overflow-x-hidden relative">
+      <div className="h-[100%] pr-10 pl-5 overflow-y-auto" ref={scrollRef}>
+        <ChatList />
+        <ChatFooter />
+      </div>
+    </div>
   );
 };
 

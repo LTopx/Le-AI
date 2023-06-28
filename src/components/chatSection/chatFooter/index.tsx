@@ -13,10 +13,9 @@ import { HiOutlineDocumentText } from "react-icons/hi";
 import { BsFillStopFill } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
-import { useChannel, useLLM, BASE_PROMPT } from "@/hooks";
+import { useChannel, useLLM, useScrollToBottom, BASE_PROMPT } from "@/hooks";
 import { useChatGPT } from "@/hooks/useChatGPT";
 import { Button, Confirm } from "@/components/ui";
-import { useScrollToBottom } from "@/components/scrollToBottoms";
 import { isMobile, cn } from "@/lib";
 import type { IShare } from "@/app/api/share/route";
 import Action from "@/components/share/action";
@@ -40,7 +39,7 @@ const ChatFooter: React.FC = () => {
   const tMenu = useTranslations("menu");
   const tCommon = useTranslations("common");
   const tRes = useTranslations("responseErr");
-  const scrollToBottom = useScrollToBottom();
+  const { scrollToBottom } = useScrollToBottom();
 
   const { run: sendMessage } = useDebounceFn(() => send(), { wait: 200 });
   const { run: cancel } = useDebounceFn(() => onCancel(), { wait: 200 });

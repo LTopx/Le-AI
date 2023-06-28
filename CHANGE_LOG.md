@@ -2,7 +2,7 @@
 
 ## v0.7.2
 
-> 2023-06-28
+> 2023-06-29
 
 ### Fixed
 
@@ -12,6 +12,10 @@
 ### Add
 
 - Use the language model previously selected by the user when creating a new conversation.
+
+### Changed
+
+- Refactor scrolling list module, optimize performance
 
 ## v0.7.1
 

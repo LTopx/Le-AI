@@ -8,7 +8,6 @@ import { useDateFormat } from "l-hooks";
 import CopyIcon from "@/components/site/copyIcon";
 import ChatContent from "@/components/chatContent";
 import { Confirm, Button } from "@/components/ui";
-import { useScrollToBottom } from "@/components/scrollToBottoms";
 import {
   AiOutlineLoading,
   AiOutlineDelete,
@@ -17,7 +16,14 @@ import {
 } from "react-icons/ai";
 import { cn, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/gpt-tokens";
-import { useChannel, useLLM, useTTS, useUserInfo, useTTSOpen } from "@/hooks";
+import {
+  useChannel,
+  useLLM,
+  useTTS,
+  useUserInfo,
+  useTTSOpen,
+  useScrollToBottom,
+} from "@/hooks";
 import { useChatGPT } from "@/hooks/useChatGPT";
 import type { ChatItem } from "@/hooks";
 import Configure from "../../chatConfigure";
@@ -32,6 +38,8 @@ const ChatList: React.FC = () => {
   const [channel, setChannel] = useChannel();
   const [userInfo] = useUserInfo();
   const [, setTTSOpen] = useTTSOpen();
+  const { scrollToBottom } = useScrollToBottom();
+
   const t = useTranslations("chat");
 
   const backupIdRef = React.useRef<string | null>(null);
@@ -43,8 +51,6 @@ const ChatList: React.FC = () => {
   );
 
   const chatList = findChannel?.chat_list || [];
-
-  const scrollToBottom = useScrollToBottom();
 
   const onDelete = (item: ChatItem) => {
     const { id } = item;
