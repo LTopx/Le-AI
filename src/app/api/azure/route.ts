@@ -5,7 +5,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { isUndefined, calcTokens, LResponseError } from "@/lib";
 import type { supportModelType } from "@/lib/gpt-tokens";
 import { prisma } from "@/lib/prisma";
-import { PREMIUM_MODELS } from "@/hooks";
+import { PREMIUM_MODELS } from "@/hooks/useLLM";
 
 // export const runtime = "edge";
 
