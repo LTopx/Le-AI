@@ -53,10 +53,7 @@
     "delete-chat-tip": "你确认删除该对话内容？",
     "enter-message": "请输入会话内容",
     "stop-generate": "停止",
-    "type-message": "请输入聊天内容",
-    "type-message-commandEnter": "请输入聊天内容（Command + Enter发送，可在设置中心修改）",
-    "type-message-ctrlEnter": "请输入聊天内容（Ctrl + Enter发送，可在设置中心修改）",
-    "type-message-enter": "请输入聊天内容（Enter发送，可在设置中心修改）"
+    "type-message": "请输入聊天内容"
   },
   "common": {
     "add": "新 增",

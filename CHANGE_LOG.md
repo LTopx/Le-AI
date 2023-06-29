@@ -16,6 +16,7 @@
 ### Changed
 
 - Refactor scrolling list module, optimize performance
+- Remove unnecessary features to improve performance.
 
 ## v0.7.1
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { AiOutlineSend, AiOutlineLoading } from "react-icons/ai";
+import { AiOutlineLoading } from "react-icons/ai";
+import { BsSend } from "react-icons/bs";
 import { useConfig } from "@/hooks";
 import { isMobile, getPlatform, cn } from "@/lib";
 
@@ -27,7 +28,6 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
 
     // data
     const [isFocus, setIsFocus] = React.useState<boolean>(false);
-    const [placeholder, setPlaceholder] = React.useState<string>("");
 
     // ref
     const inputRef = React.useRef<any>(null);
@@ -97,21 +97,6 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
       },
     }));
 
-    React.useEffect(() => {
-      const isMobileDevice = isMobile();
-      const platform = getPlatform();
-      if (isMobileDevice) return setPlaceholder(t("type-message"));
-      if (config.sendMessageType === "CommandEnter") {
-        if (platform === "windows") {
-          setPlaceholder(t("type-message-ctrlEnter"));
-        } else if (platform === "mac") {
-          setPlaceholder(t("type-message-commandEnter"));
-        }
-      } else if (config.sendMessageType === "Enter") {
-        setPlaceholder(t("type-message-enter"));
-      }
-    }, [config.sendMessageType]);
-
     return (
       <div
         className={cn(
@@ -126,7 +111,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
         <textarea
           className="bg-transparent rounded-md h-full outline-none text-sm w-full max-h-56 py-3 px-4 resize-none block"
           ref={inputRef}
-          placeholder={placeholder}
+          placeholder={t("type-message")}
           rows={1}
           onInput={onInput}
           value={value}
@@ -155,7 +140,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
               { "text-sky-400 dark:text-sky-400/90": value }
             )}
           >
-            <AiOutlineSend size={24} />
+            <BsSend size={20} />
           </div>
         )}
       </div>

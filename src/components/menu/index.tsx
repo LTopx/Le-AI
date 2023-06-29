@@ -96,14 +96,6 @@ export default function Menu() {
 
   const onActivate = () => activateRef.current?.init();
 
-  const onChannelClear = () => {
-    setChannel((channel) => {
-      channel.list = initChannelList;
-      channel.activeId = initChannelList[0].channel_id;
-      return channel;
-    });
-  };
-
   const onChannelDelete = (id: string) => {
     if (channel.list.length <= 1) {
       setChannel((channel) => {
@@ -184,8 +176,8 @@ export default function Menu() {
         <div
           ref={scrollRef}
           className={cn("overflow-y-auto scroll-smooth", {
-            "h-[calc(100vh-22.75rem)]": session.data,
-            "h-[calc(100vh-19.75rem)]": !session.data,
+            "h-[calc(100vh-19.75rem)]": session.data,
+            "h-[calc(100vh-16.75rem)]": !session.data,
           })}
         >
           {channel.list.map((item) => (
@@ -242,14 +234,6 @@ export default function Menu() {
                           )
                         : ""
                       : ""}
-                    {/* {item.chat_list.length
-                    ? item.chat_list.at(-1)?.time
-                      ? format(
-                          Number(item.chat_list.at(-1)?.time),
-                          "MM-DD HH:mm:ss"
-                        )
-                      : ""
-                    : ""} */}
                   </div>
                 </div>
                 <Confirm
@@ -273,12 +257,7 @@ export default function Menu() {
             </ContextMenu>
           ))}
         </div>
-        <div
-          className={cn(
-            "border-t flex flex-col pt-2 gap-1 dark:border-white/20",
-            { "h-[15.25rem]": session.data, "h-[12.25rem]": !session.data }
-          )}
-        >
+        <div className="border-t flex flex-col pt-2 gap-1 dark:border-white/20">
           <div
             onClick={onActivate}
             className={cn(
@@ -289,21 +268,6 @@ export default function Menu() {
             <BsKey size={18} />
             {tPremium("license-activate")}
           </div>
-          <Confirm
-            title={t("clear-all-conversation")}
-            content={t("clear-conversation")}
-            trigger={
-              <div
-                className={cn(
-                  "hover:bg-gray-200/60 h-11 rounded-lg transition-colors text-sm cursor-pointer flex items-center gap-2 px-2",
-                  "dark:hover:bg-slate-700/70"
-                )}
-              >
-                <AiOutlineDelete size={18} /> {t("clear-all-conversation")}
-              </div>
-            }
-            onOk={onChannelClear}
-          />
           <a
             className={cn(
               "hover:bg-gray-200/60 h-11 rounded-lg transition-colors text-sm cursor-pointer flex items-center gap-2 px-2",

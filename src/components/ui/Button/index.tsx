@@ -55,7 +55,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={forwardedRef}
         onClick={onBtnClick}
         className={cn(
-          "border whitespace-nowrap transition-all duration-100 ease-linear rounded-md font-medium flex items-center justify-center gap-2 tracking-wide",
+          "border whitespace-nowrap transition-all duration-100 ease-linear rounded-md font-medium flex items-center justify-center gap-1.5 tracking-wide",
           { "h-6 text-xs px-2": size === "xs" },
           { "h-8 text-sm px-3": size === "sm" },
           { "h-10 text-base px-4": size === "base" },

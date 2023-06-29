@@ -70,14 +70,6 @@ export default function MobileMenu() {
 
   const onActivate = () => activateRef.current?.init();
 
-  const onChannelClear = () => {
-    setChannel((channel) => {
-      channel.list = initChannelList;
-      channel.activeId = initChannelList[0].channel_id;
-      return channel;
-    });
-  };
-
   const onChannelDelete = (id: string) => {
     if (channel.list.length <= 1) {
       setChannel((channel) => {
@@ -219,8 +211,8 @@ export default function MobileMenu() {
           </div>
           <div
             className={cn("flex flex-col border-t gap-1 pt-1", {
-              "h-[15rem]": session.data,
-              "h-[12rem]": !session.data,
+              "h-[12rem]": session.data,
+              "h-[9rem]": !session.data,
             })}
           >
             <div
@@ -234,22 +226,6 @@ export default function MobileMenu() {
               <BsKey size={16} />
               {tPremium("license-activate")}
             </div>
-            <Confirm
-              title={t("clear-all-conversation")}
-              content={t("clear-conversation")}
-              trigger={
-                <div
-                  className={cn(
-                    "h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors",
-                    "hover:bg-gray-200/60 text-black/90",
-                    "dark:hover:bg-slate-700/70 dark:text-white/90"
-                  )}
-                >
-                  <AiOutlineDelete size={16} /> {t("clear-all-conversation")}
-                </div>
-              }
-              onOk={onChannelClear}
-            />
             <a
               className={cn(
                 "h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors",

@@ -53,10 +53,7 @@
     "delete-chat-tip": "Are you sure you want to delete this content?",
     "enter-message": "Please enter a message",
     "stop-generate": "Stop",
-    "type-message": "Type message here...",
-    "type-message-commandEnter": "Type message here... (send with Command + Enter, can be modified in Settings)",
-    "type-message-ctrlEnter": "Type message here... (send with Ctrl + Enter, can be modified in Settings)",
-    "type-message-enter": "Type message here... (send with Enter, can be modified in Settings)"
+    "type-message": "Type message here..."
   },
   "common": {
     "add": "Add",
