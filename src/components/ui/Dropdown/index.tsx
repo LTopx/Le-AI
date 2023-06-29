@@ -3,7 +3,8 @@
 import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { cn } from "@/lib";
-import { BsCheck2 } from "react-icons/bs";
+import Icon from "../Icon";
+import check_fill from "@iconify/icons-mingcute/check-fill";
 
 export interface IDropdownItems {
   label?: React.ReactNode;
@@ -99,14 +100,15 @@ const LDropdownMenu = React.forwardRef<any, IDropdownMenuProps>(
                 >
                   <div className="flex items-center gap-2">
                     {!!selectable && (
-                      <BsCheck2
+                      <Icon
+                        icon={check_fill}
                         className={cn("opacity-0", {
                           "opacity-100": item.value === value,
                         })}
                       />
                     )}
                     <div className="flex gap-2 items-center">
-                      <span>{item.icon}</span>
+                      <span className="flex items-center">{item.icon}</span>
                       <span>{item.label}</span>
                     </div>
                   </div>

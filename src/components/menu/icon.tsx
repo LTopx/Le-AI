@@ -1,12 +1,15 @@
-import { RiChatSmile2Line } from "react-icons/ri";
-import { HiOutlineTranslate } from "react-icons/hi";
-import { AiFillAlert, AiOutlineLoading } from "react-icons/ai";
-import { FaBook } from "react-icons/fa";
-import { TbSailboat } from "react-icons/tb";
-import { BsVectorPen, BsCodeSlash } from "react-icons/bs";
-import { MdMovieEdit } from "react-icons/md";
 import type { ChannelIcon } from "@/hooks";
 import { isUndefined } from "@/lib";
+import { Icon } from "@/components/ui";
+import loading_line from "@iconify/icons-mingcute/loading-line";
+import chat_4_line from "@iconify/icons-mingcute/chat-4-line";
+import translate_2_line from "@iconify/icons-mingcute/translate-2-line";
+import book_2_fill from "@iconify/icons-mingcute/book-2-fill";
+import film_line from "@iconify/icons-mingcute/film-line";
+import alert_octagon_fill from "@iconify/icons-mingcute/alert-octagon-fill";
+import pen_line from "@iconify/icons-mingcute/pen-line";
+import sailboat_line from "@iconify/icons-mingcute/sailboat-line";
+import code_line from "@iconify/icons-mingcute/code-line";
 
 export default function MenuIcon({
   name,
@@ -27,26 +30,29 @@ export default function MenuIcon({
   if (loading) {
     return (
       <div className="top-[50%] left-0 translate-y-[-50%] absolute">
-        <AiOutlineLoading size={16} className="animate-spin" />
+        <Icon icon={loading_line} size={16} className="animate-spin" />
       </div>
     );
   }
 
-  if (name === "RiChatSmile2Line") return <RiChatSmile2Line {...props} />;
+  if (name === "RiChatSmile2Line")
+    return <Icon icon={chat_4_line} {...props} />;
 
-  if (name === "BsVectorPen") return <BsVectorPen {...props} />;
+  if (name === "BsVectorPen") return <Icon icon={pen_line} {...props} />;
 
-  if (name === "HiOutlineTranslate") return <HiOutlineTranslate {...props} />;
+  if (name === "HiOutlineTranslate")
+    return <Icon icon={translate_2_line} {...props} />;
 
-  if (name === "FaBook") return <FaBook {...props} />;
+  if (name === "FaBook") return <Icon icon={book_2_fill} {...props} />;
 
-  if (name === "TbSailboat") return <TbSailboat {...props} />;
+  if (name === "TbSailboat") return <Icon icon={sailboat_line} {...props} />;
 
-  if (name === "BsCodeSlash") return <BsCodeSlash {...props} />;
+  if (name === "BsCodeSlash") return <Icon icon={code_line} {...props} />;
 
-  if (name === "MdMovieEdit") return <MdMovieEdit {...props} />;
+  if (name === "MdMovieEdit") return <Icon icon={film_line} {...props} />;
 
-  if (name === "AiFillAlert") return <AiFillAlert {...props} />;
+  if (name === "AiFillAlert")
+    return <Icon icon={alert_octagon_fill} {...props} />;
 
   return null;
 }

@@ -2,13 +2,11 @@ import React from "react";
 import { useDateFormat } from "l-hooks";
 import { useTranslations } from "next-intl";
 import { v4 as uuidv4 } from "uuid";
-import { RiTranslate } from "react-icons/ri";
 import { Prompt } from "@prisma/client";
 import { useChannel, usePromptRecent } from "@/hooks";
 import type { ChannelIcon } from "@/hooks";
-import Modal from "@/components/ui/Modal";
-import Divider from "@/components/ui/Divider";
-import Button from "@/components/ui/Button";
+import { Modal, Divider, Button, Icon } from "@/components/ui";
+import translate_line from "@iconify/icons-mingcute/translate-line";
 
 interface ApplyProps {
   onChoose: () => void;
@@ -127,7 +125,7 @@ const Apply = React.forwardRef<any, ApplyProps>(
                 className="absolute right-0 top-[-0.5rem]"
                 onClick={onToggleLan}
               >
-                <RiTranslate size={18} />
+                <Icon icon={translate_line} size={18} />
               </Button>
             )}
           </div>

@@ -3,12 +3,11 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import { LuStore } from "react-icons/lu";
-import { AiOutlineDeploymentUnit } from "react-icons/ai";
-import { BiCustomize } from "react-icons/bi";
-import { SiCodereview } from "react-icons/si";
-import { MdOutlineAutoAwesome } from "react-icons/md";
-import { Button, Modal } from "@/components/ui";
+import { Button, Modal, Icon } from "@/components/ui";
+import store_line from "@iconify/icons-mingcute/store-line";
+import bling_line from "@iconify/icons-mingcute/bling-line";
+import mosaic_line from "@iconify/icons-mingcute/mosaic-line";
+import search_3_line from "@iconify/icons-mingcute/search-3-line";
 import { usePromptOpen, usePrompt } from "@/hooks";
 import { Prompt } from "@prisma/client";
 import { cn } from "@/lib";
@@ -121,7 +120,7 @@ const PromptMarket: React.FC = () => {
         rootClassName="top-[50%]"
         title={
           <div className="flex gap-2 items-center">
-            <AiOutlineDeploymentUnit size={18} />
+            <Icon icon={store_line} size={18} />
             {t("prompt-market")}
           </div>
         }
@@ -148,7 +147,7 @@ const PromptMarket: React.FC = () => {
                 )}
               >
                 <div className="flex gap-2 items-center justify-center">
-                  <LuStore size={16} />
+                  <Icon icon={store_line} size={16} />
                   <span className="hidden lg:block">{t("market")}</span>
                 </div>
               </Tabs.Trigger>
@@ -161,7 +160,7 @@ const PromptMarket: React.FC = () => {
                 )}
               >
                 <div className="flex gap-2 items-center justify-center">
-                  <MdOutlineAutoAwesome size={16} />
+                  <Icon icon={bling_line} size={16} />
                   <span className="hidden whitespace-nowrap lg:block">
                     Awesome ChatGPT Prompts
                   </span>
@@ -178,7 +177,7 @@ const PromptMarket: React.FC = () => {
                     )}
                   >
                     <div className="flex gap-2 items-center justify-center">
-                      <BiCustomize size={16} />
+                      <Icon icon={mosaic_line} size={16} />
                       <span className="hidden lg:block">{t("custom")}</span>
                     </div>
                   </Tabs.Trigger>
@@ -191,7 +190,7 @@ const PromptMarket: React.FC = () => {
                     )}
                   >
                     <div className="flex gap-2 items-center justify-center">
-                      <SiCodereview size={16} />
+                      <Icon icon={search_3_line} size={16} />
                       <span className="hidden lg:block">
                         {t("under-review")}
                       </span>

@@ -1,9 +1,6 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
-import { AiOutlineSetting } from "react-icons/ai";
-import { BiExport, BiImport } from "react-icons/bi";
-import { TbTrashXFilled } from "react-icons/tb";
 import { saveAs } from "file-saver";
 import { useDateFormat } from "l-hooks";
 import toast from "react-hot-toast";
@@ -20,7 +17,11 @@ import {
   useTTSOpen,
 } from "@/hooks";
 import type { IConfigStoreState } from "@/hooks";
-import { Button, Confirm, Modal, Select } from "@/components/ui";
+import { Button, Confirm, Modal, Select, Icon } from "@/components/ui";
+import settings_3_line from "@iconify/icons-mingcute/settings-3-line";
+import delete_2_line from "@iconify/icons-mingcute/delete-2-line";
+import upload_3_line from "@iconify/icons-mingcute/upload-3-line";
+import download_3_line from "@iconify/icons-mingcute/download-3-line";
 
 export default function Setting() {
   const router = useRouter();
@@ -158,7 +159,7 @@ export default function Setting() {
             type="primary"
             loading={loading}
             onClick={onSettingApiKey}
-            leftIcon={<AiOutlineSetting size={18} />}
+            leftIcon={<Icon icon={settings_3_line} size={18} />}
           />
         </div>
         <div
@@ -173,7 +174,7 @@ export default function Setting() {
             content={t("reset-data-tip")}
             trigger={
               <Button type="danger">
-                <TbTrashXFilled size={18} />
+                <Icon icon={delete_2_line} size={18} />
               </Button>
             }
             onOk={handleResetData}
@@ -188,10 +189,10 @@ export default function Setting() {
           <div className="text-sm">{t("export-import")}</div>
           <div className="flex gap-2">
             <Button onClick={handleExport}>
-              <BiExport size={18} />
+              <Icon icon={upload_3_line} size={18} />
             </Button>
             <Button onClick={() => fileRef.current?.click()}>
-              <BiImport size={18} />
+              <Icon icon={download_3_line} size={18} />
             </Button>
           </div>
         </div>
@@ -219,7 +220,7 @@ export default function Setting() {
         >
           <div className="text-sm">{tTTS("azure-tts")}</div>
           <Button type="primary" onClick={() => setTTSOpen(true)}>
-            <AiOutlineSetting size={18} />
+            <Icon icon={settings_3_line} size={18} />
           </Button>
         </div>
       </Modal>

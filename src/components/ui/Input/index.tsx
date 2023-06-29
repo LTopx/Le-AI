@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { AiOutlineClose } from "react-icons/ai";
 import { isUndefined, cn } from "@/lib";
+import Icon from "../Icon";
+import close_line from "@iconify/icons-mingcute/close-line";
 
 type InputType = "text" | "password" | "number";
 
@@ -159,7 +160,7 @@ const Input = React.forwardRef<any, InputProps>(
               "dark:text-white/90 dark:hover:before:bg-white/20"
             )}
           >
-            <AiOutlineClose className="z-10" size={12} />
+            <Icon icon={close_line} className="z-10" size={12} />
           </span>
         )}
       </div>

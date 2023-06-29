@@ -3,9 +3,10 @@
 import React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useTranslations } from "next-intl";
-import { AiOutlineClose } from "react-icons/ai";
 import { cn } from "@/lib";
 import Button from "@/components/ui/Button";
+import Icon from "@/components/ui/Icon";
+import close_line from "@iconify/icons-mingcute/close-line";
 
 interface ModalProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
   /** The Drawer is open or not */
@@ -117,12 +118,12 @@ const Modal = React.forwardRef<any, ModalProps>(
               <Dialog.Close asChild>
                 <button
                   className={cn(
-                    "absolute right-2 top-2 w-7 h-7 flex items-center justify-center transition-colors",
+                    "absolute right-3 top-3 w-7 h-7 flex items-center justify-center transition-colors",
                     "text-black/40 hover:text-black/90",
                     "dark:text-white/40 dark:hover:text-white/90"
                   )}
                 >
-                  <AiOutlineClose size={18} />
+                  <Icon icon={close_line} size={18} />
                 </button>
               </Dialog.Close>
             </Dialog.Content>

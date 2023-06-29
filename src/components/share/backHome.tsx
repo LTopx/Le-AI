@@ -3,8 +3,8 @@
 import React from "react";
 import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
-import Button from "@/components/ui/Button";
-import { AiFillCaretLeft } from "react-icons/ai";
+import { Button, Icon } from "@/components/ui";
+import left_fill from "@iconify/icons-mingcute/left-fill";
 
 const BackHome: React.FC = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ const BackHome: React.FC = () => {
   return (
     <Button
       type="primary"
-      leftIcon={<AiFillCaretLeft />}
+      leftIcon={<Icon icon={left_fill} />}
       loading={loading}
       onClick={onClick}
     >

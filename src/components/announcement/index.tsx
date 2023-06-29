@@ -3,8 +3,9 @@
 import React from "react";
 import * as Toast from "@radix-ui/react-toast";
 import { useTranslations, useLocale } from "next-intl";
-import { AiOutlineCheck } from "react-icons/ai";
 import { cn } from "@/lib";
+import { Icon } from "@/components/ui";
+import check_line from "@iconify/icons-mingcute/check-line";
 import pkg from "../../../package.json";
 
 export default function Announcement() {
@@ -72,7 +73,7 @@ export default function Announcement() {
               "bg-sky-400 hover:bg-sky-500 active:bg-sky-600 text-white dark:bg-sky-400/90 dark:hover:bg-sky-500/90 dark:active:bg-sky-600/90"
             )}
           >
-            <AiOutlineCheck />
+            <Icon icon={check_line} />
           </button>
         </Toast.Action>
       </Toast.Root>

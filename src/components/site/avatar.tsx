@@ -5,18 +5,18 @@ import { useSession, signOut } from "next-auth/react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter, usePathname } from "next-intl/client";
 import Image from "next/image";
-import { BiUser, BiLogOut, BiLogIn } from "react-icons/bi";
-import { HiOutlineDocumentText } from "react-icons/hi";
-import { RiVipLine } from "react-icons/ri";
-import {
-  AiFillGift,
-  AiOutlineAppstoreAdd,
-  AiOutlineUser,
-  AiOutlineLogin,
-} from "react-icons/ai";
 import { usePromptOpen, useUserInfo, usePremium } from "@/hooks";
 import Dropdown, { type IDropdownItems } from "@/components/ui/Dropdown";
-import Button from "@/components/ui/Button";
+import { Button, Icon } from "@/components/ui";
+import document_line from "@iconify/icons-mingcute/document-line";
+import store_line from "@iconify/icons-mingcute/store-line";
+import VIP_3_line from "@iconify/icons-mingcute/vip-3-line";
+import gift_fill from "@iconify/icons-mingcute/gift-fill";
+import user_3_line from "@iconify/icons-mingcute/user-3-line";
+import exit_line from "@iconify/icons-mingcute/exit-line";
+import entrance_line from "@iconify/icons-mingcute/entrance-line";
+import user_3_fill from "@iconify/icons-mingcute/user-3-fill";
+import user_add_2_line from "@iconify/icons-mingcute/user-add-2-line";
 
 export default function Avatar() {
   const session = useSession();
@@ -40,7 +40,7 @@ export default function Avatar() {
       {
         label: t("documentation"),
         value: "documentation",
-        icon: <HiOutlineDocumentText />,
+        icon: <Icon icon={document_line} />,
       },
     ];
 
@@ -48,7 +48,7 @@ export default function Avatar() {
       menus.push({
         label: t("prompt-market"),
         value: "prompt-market",
-        icon: <AiOutlineAppstoreAdd />,
+        icon: <Icon icon={store_line} />,
       });
     }
 
@@ -59,7 +59,7 @@ export default function Avatar() {
             <span className="text-neutral-400">{tPremium("free-trial")}</span>
           ),
           value: "license",
-          icon: <RiVipLine />,
+          icon: <Icon icon={VIP_3_line} />,
         });
       } else if (license_type === "premium") {
         menus.unshift({
@@ -69,7 +69,7 @@ export default function Avatar() {
             </span>
           ),
           value: "license",
-          icon: <RiVipLine />,
+          icon: <Icon icon={VIP_3_line} />,
         });
       } else if (license_type === "team") {
         menus.unshift({
@@ -79,7 +79,7 @@ export default function Avatar() {
             </span>
           ),
           value: "license",
-          icon: <RiVipLine />,
+          icon: <Icon icon={VIP_3_line} />,
         });
       }
 
@@ -87,7 +87,7 @@ export default function Avatar() {
         menus.push({
           label: tPremium("more-license"),
           value: "more-license",
-          icon: <AiFillGift />,
+          icon: <Icon icon={gift_fill} />,
         });
       }
 
@@ -98,12 +98,12 @@ export default function Avatar() {
           {
             label: t("account-center"),
             value: "account",
-            icon: <BiUser />,
+            icon: <Icon icon={user_3_line} />,
           },
           {
             label: t("log-out"),
             value: "logout",
-            icon: <BiLogOut />,
+            icon: <Icon icon={exit_line} />,
           },
         ],
       ];
@@ -115,7 +115,7 @@ export default function Avatar() {
           {
             label: t("log-in"),
             value: "login",
-            icon: <BiLogIn />,
+            icon: <Icon icon={entrance_line} />,
           },
         ],
       ];
@@ -173,7 +173,7 @@ export default function Avatar() {
               />
             ) : (
               <div className="rounded-full flex bg-sky-400 h-8 w-8 justify-center items-center">
-                <AiOutlineUser className="text-white" size={20} />
+                <Icon icon={user_3_fill} className="text-white" size={20} />
               </div>
             )}
           </div>
@@ -182,7 +182,7 @@ export default function Avatar() {
             <Button
               type="primary"
               loading={loadingLogin}
-              leftIcon={<AiOutlineLogin size={20} />}
+              leftIcon={<Icon icon={user_add_2_line} size={20} />}
             />
           </div>
         )

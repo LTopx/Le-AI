@@ -5,12 +5,10 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
-import { AiFillGithub } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
 import { cn } from "@/lib";
-import Button from "@/components/ui/Button";
-import Divider from "@/components/ui/Divider";
-import Input from "@/components/ui/Input";
+import { Button, Divider, Input, Icon } from "@/components/ui";
+import googleIcon from "@iconify/icons-devicon/google";
+import githubIcon from "@iconify/icons-devicon/github";
 
 export default function AuthForm() {
   const router = useRouter();
@@ -104,7 +102,9 @@ export default function AuthForm() {
               className="h-9"
               block
               loading={loadingGithub}
-              leftIcon={<AiFillGithub size={16} />}
+              leftIcon={
+                <Icon className="text-sky-400" icon={githubIcon} size={16} />
+              }
               onClick={onGithubLogin}
             >
               <span className="text-sm">{t("continue-with-github")}</span>
@@ -113,7 +113,7 @@ export default function AuthForm() {
               className="h-9"
               block
               loading={loadingGoogle}
-              leftIcon={<FcGoogle size={16} />}
+              leftIcon={<Icon icon={googleIcon} size={16} />}
               onClick={onGoogleLogin}
             >
               <span className="text-sm">{t("continue-with-google")}</span>

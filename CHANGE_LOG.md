@@ -17,6 +17,7 @@
 
 - Refactor scrolling list module, optimize performance
 - Remove unnecessary features to improve performance.
+- Optimize UI details and unify global icon styles. Replace react-icons with MingCute Icon.
 
 ## v0.7.1
 

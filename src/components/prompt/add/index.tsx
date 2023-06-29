@@ -2,20 +2,18 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import { v4 as uuidv4 } from "uuid";
 import toast from "react-hot-toast";
-import { RiChatSmile2Line } from "react-icons/ri";
-import { HiOutlineTranslate } from "react-icons/hi";
-import { FaBook } from "react-icons/fa";
-import { MdMovieEdit } from "react-icons/md";
-import { AiFillAlert } from "react-icons/ai";
-import { TbSailboat } from "react-icons/tb";
-import { BsVectorPen, BsCodeSlash } from "react-icons/bs";
 import { Prompt } from "@prisma/client";
-import Modal from "@/components/ui/Modal";
-import Input from "@/components/ui/Input";
-import Textarea from "@/components/ui/Textarea";
-import Dropdown from "@/components/ui/Dropdown";
+import { Modal, Input, Textarea, Dropdown, Icon } from "@/components/ui";
+import chat_4_line from "@iconify/icons-mingcute/chat-4-line";
+import translate_2_line from "@iconify/icons-mingcute/translate-2-line";
+import book_2_fill from "@iconify/icons-mingcute/book-2-fill";
+import film_line from "@iconify/icons-mingcute/film-line";
+import alert_octagon_fill from "@iconify/icons-mingcute/alert-octagon-fill";
+import pen_line from "@iconify/icons-mingcute/pen-line";
+import sailboat_line from "@iconify/icons-mingcute/sailboat-line";
+import code_line from "@iconify/icons-mingcute/code-line";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
-import Icon from "@/components/menu/icon";
+import MenuIcon from "@/components/menu/icon";
 import { usePrompt } from "@/hooks";
 import type { ChannelIcon } from "@/hooks";
 
@@ -23,42 +21,42 @@ const options: IDropdownItems[] = [
   {
     label: "RiChatSmile2Line",
     value: "RiChatSmile2Line",
-    icon: <RiChatSmile2Line />,
+    icon: <Icon icon={chat_4_line} />,
   },
   {
     label: "HiOutlineTranslate",
     value: "HiOutlineTranslate",
-    icon: <HiOutlineTranslate />,
+    icon: <Icon icon={translate_2_line} />,
   },
   {
     label: "FaBook",
     value: "FaBook",
-    icon: <FaBook />,
+    icon: <Icon icon={book_2_fill} />,
   },
   {
     label: "MdMovieEdit",
     value: "MdMovieEdit",
-    icon: <MdMovieEdit />,
+    icon: <Icon icon={film_line} />,
   },
   {
     label: "AiFillAlert",
     value: "AiFillAlert",
-    icon: <AiFillAlert />,
+    icon: <Icon icon={alert_octagon_fill} />,
   },
   {
     label: "BsVectorPen",
     value: "BsVectorPen",
-    icon: <BsVectorPen />,
+    icon: <Icon icon={pen_line} />,
   },
   {
     label: "TbSailboat",
     value: "TbSailboat",
-    icon: <TbSailboat />,
+    icon: <Icon icon={sailboat_line} />,
   },
   {
     label: "BsCodeSlash",
     value: "BsCodeSlash",
-    icon: <BsCodeSlash />,
+    icon: <Icon icon={code_line} />,
   },
 ];
 
@@ -156,7 +154,10 @@ const Add = React.forwardRef((_, forwardedRef) => {
               }
               trigger={
                 <div className="border dark:border-neutral-200/40 rounded-md cursor-pointer flex h-8 w-8 justify-center items-center">
-                  <Icon className="nothing" name={form.icon as ChannelIcon} />
+                  <MenuIcon
+                    className="nothing"
+                    name={form.icon as ChannelIcon}
+                  />
                 </div>
               }
               options={options}

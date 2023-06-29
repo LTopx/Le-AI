@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { AiOutlineLoading } from "react-icons/ai";
+import Icon from "../Icon";
+import loading_line from "@iconify/icons-mingcute/loading-line";
 import { cn } from "@/lib";
 
 type ButtonType = "default" | "primary" | "success" | "danger" | "outline";
@@ -124,10 +125,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {leftIcon ? (
           <>
-            {loading ? <AiOutlineLoading className="animate-spin" /> : leftIcon}
+            {loading ? (
+              <Icon icon={loading_line} className="animate-spin" />
+            ) : (
+              leftIcon
+            )}
           </>
         ) : (
-          <>{loading ? <AiOutlineLoading className="animate-spin" /> : null}</>
+          <>
+            {loading ? (
+              <Icon icon={loading_line} className="animate-spin" />
+            ) : null}
+          </>
         )}
         {children}
         {rightIcon}

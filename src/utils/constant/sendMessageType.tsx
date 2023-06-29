@@ -1,5 +1,6 @@
-import { BiCommand } from "react-icons/bi";
 import type { Platform } from "@/lib";
+import { Icon } from "@/components/ui";
+import command_line from "@iconify/icons-mingcute/command-line";
 
 // Ways to send messages: Enter or Command + Enter
 export const sendMessageTypes = (platform: Platform) => {
@@ -11,7 +12,7 @@ export const sendMessageTypes = (platform: Platform) => {
     {
       label: (
         <div className="flex items-center gap-1">
-          {platform === "mac" ? <BiCommand /> : "Ctrl"}
+          {platform === "mac" ? <Icon icon={command_line} /> : "Ctrl"}
           <span>+</span>
           Enter
         </div>

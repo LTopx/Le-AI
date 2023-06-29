@@ -3,19 +3,17 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { v4 as uuidv4 } from "uuid";
-import type { ChatItem } from "@/hooks/useChannel";
-import {
-  AiOutlineClear,
-  AiOutlineShareAlt,
-  AiOutlineLoading,
-} from "react-icons/ai";
-import { HiOutlineDocumentText } from "react-icons/hi";
-import { BsFillStopFill } from "react-icons/bs";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
+import type { ChatItem } from "@/hooks/useChannel";
 import { useChannel, useLLM, useScrollToBottom, BASE_PROMPT } from "@/hooks";
 import { useChatGPT } from "@/hooks/useChatGPT";
-import { Button, Confirm } from "@/components/ui";
+import { Button, Confirm, Icon } from "@/components/ui";
+import stop_fill from "@iconify/icons-mingcute/stop-fill";
+import share_2_line from "@iconify/icons-mingcute/share-2-line";
+import document_line from "@iconify/icons-mingcute/document-line";
+import loading_line from "@iconify/icons-mingcute/loading-line";
+import broom_line from "@iconify/icons-mingcute/broom-line";
 import { isMobile, cn } from "@/lib";
 import type { IShare } from "@/app/api/share/route";
 import Action from "@/components/share/action";
@@ -187,7 +185,7 @@ const ChatFooter: React.FC = () => {
                   className="rounded-full"
                   type="danger"
                   onClick={cancel}
-                  leftIcon={<BsFillStopFill size={18} />}
+                  leftIcon={<Icon icon={stop_fill} size={18} />}
                 >
                   {t("stop-generate")}
                 </Button>
@@ -196,7 +194,7 @@ const ChatFooter: React.FC = () => {
               <Button
                 className="rounded-full"
                 type="outline"
-                leftIcon={<AiOutlineShareAlt size={18} />}
+                leftIcon={<Icon icon={share_2_line} size={18} />}
                 loading={loadingShare}
                 onClick={handleShare}
               >
@@ -209,7 +207,7 @@ const ChatFooter: React.FC = () => {
             className="rounded-full"
             type="success"
             onClick={() => window.open("https://docs.ltopx.com", "_blank")}
-            leftIcon={<HiOutlineDocumentText size={18} />}
+            leftIcon={<Icon icon={document_line} size={18} />}
           >
             {tCommon("docs")}
           </Button>
@@ -230,9 +228,13 @@ const ChatFooter: React.FC = () => {
                   )}
                 >
                   {loadingChannel ? (
-                    <AiOutlineLoading className="animate-spin" size={24} />
+                    <Icon
+                      className="animate-spin"
+                      icon={loading_line}
+                      size={24}
+                    />
                   ) : (
-                    <AiOutlineClear size={24} />
+                    <Icon icon={broom_line} size={24} />
                   )}
                 </div>
               }

@@ -2,9 +2,10 @@
 
 import React from "react";
 import * as Select from "@radix-ui/react-select";
-import { BsChevronDown } from "react-icons/bs";
-import { AiOutlineLoading } from "react-icons/ai";
 import { cn } from "@/lib";
+import Icon from "@/components/ui/Icon";
+import loading_line from "@iconify/icons-mingcute/loading-line";
+import down_fill from "@iconify/icons-mingcute/down-fill";
 import Item from "./item";
 
 type OptionsChildren = {
@@ -89,11 +90,15 @@ export default function LSelect({
         )}
       >
         <Select.Value placeholder={placeholder} />
-        <Select.Icon className="text-neutral-800 dark:text-neutral-300">
+        <Select.Icon className="text-neutral-800 dark:text-neutral-300 flex items-center">
           {loading ? (
-            <AiOutlineLoading size={14} className="animate-spin" />
+            <Icon icon={loading_line} size={14} className="animate-spin" />
           ) : (
-            <BsChevronDown size={12} className={cn({ "rotate-180": isOpen })} />
+            <Icon
+              icon={down_fill}
+              size={14}
+              className={cn({ "rotate-180": isOpen })}
+            />
           )}
         </Select.Icon>
       </Select.Trigger>

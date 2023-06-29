@@ -4,22 +4,22 @@ import { useTranslations, useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next-intl/client";
 import { useTheme } from "next-themes";
-import {
-  AiOutlineDelete,
-  AiFillGithub,
-  AiOutlineVerticalAlignTop,
-  AiOutlineSetting,
-  AiOutlineLoading,
-} from "react-icons/ai";
-import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
-import { HiOutlineTranslate } from "react-icons/hi";
-import { BsKey, BsTelegram } from "react-icons/bs";
 import { useDateFormat } from "l-hooks";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
 import { useSetting, useChannel, useModel, initChannelList } from "@/hooks";
 import type { ChannelListItem } from "@/hooks";
-import { Button, Confirm, ContextMenu, Dropdown } from "@/components/ui";
+import { Button, Confirm, ContextMenu, Dropdown, Icon } from "@/components/ui";
+import arrow_to_up_line from "@iconify/icons-mingcute/arrow-to-up-line";
+import delete_2_line from "@iconify/icons-mingcute/delete-2-line";
+import key_2_line from "@iconify/icons-mingcute/key-2-line";
+import telegram_fill from "@iconify/icons-mingcute/telegram-fill";
+import moon_fill from "@iconify/icons-mingcute/moon-fill";
+import sun_line from "@iconify/icons-mingcute/sun-line";
+import github_line from "@iconify/icons-mingcute/github-line";
+import loading_line from "@iconify/icons-mingcute/loading-line";
+import translate_2_line from "@iconify/icons-mingcute/translate-2-line";
+import settings_3_line from "@iconify/icons-mingcute/settings-3-line";
 import type { ContextMenuOption } from "@/components/ui/ContextMenu";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
 import Logo from "@/components/site/logo";
@@ -64,12 +64,12 @@ export default function Menu() {
     {
       label: t("to-top"),
       value: "top",
-      icon: <AiOutlineVerticalAlignTop size={18} />,
+      icon: <Icon icon={arrow_to_up_line} size={18} />,
     },
     {
       label: t("delete"),
       value: "delete",
-      icon: <AiOutlineDelete size={18} />,
+      icon: <Icon icon={delete_2_line} size={18} />,
     },
   ];
 
@@ -248,7 +248,7 @@ export default function Menu() {
                         "dark:text-neutral-400 dark:hover:text-white/90"
                       )}
                     >
-                      <AiOutlineDelete size={20} />
+                      <Icon icon={delete_2_line} size={20} />
                     </div>
                   }
                   onOk={() => onChannelDelete(item.channel_id)}
@@ -265,7 +265,7 @@ export default function Menu() {
               "dark:hover:bg-slate-700/70 text-sky-400"
             )}
           >
-            <BsKey size={18} />
+            <Icon icon={key_2_line} size={18} />
             {tPremium("license-activate")}
           </div>
           <a
@@ -276,7 +276,8 @@ export default function Menu() {
             href="https://t.me/+7fLJJoGV_bJhYTk1"
             target="_blank"
           >
-            <BsTelegram size={18} className="text-[#3aa9ea]" /> {t("join-tg")}
+            <Icon icon={telegram_fill} size={18} className="text-[#3aa9ea]" />
+            {t("join-tg")}
           </a>
           {!!session.data && <Tokens type="pc" />}
           <div className="flex h-11 items-center justify-center">
@@ -290,9 +291,9 @@ export default function Menu() {
                 )}
               >
                 {nowTheme === "light" ? (
-                  <MdDarkMode size={20} />
+                  <Icon icon={moon_fill} size={20} />
                 ) : (
-                  <MdOutlineLightMode size={20} />
+                  <Icon icon={sun_line} size={20} />
                 )}
               </div>
             </div>
@@ -306,7 +307,7 @@ export default function Menu() {
                   "dark:hover:bg-slate-700/70"
                 )}
               >
-                <AiFillGithub size={20} />
+                <Icon icon={github_line} size={20} />
               </a>
             </div>
             <Dropdown
@@ -324,9 +325,13 @@ export default function Menu() {
                     )}
                   >
                     {loadingChangeLang ? (
-                      <AiOutlineLoading size={20} className="animate-spin" />
+                      <Icon
+                        icon={loading_line}
+                        size={20}
+                        className="animate-spin"
+                      />
                     ) : (
-                      <HiOutlineTranslate size={20} />
+                      <Icon icon={translate_2_line} size={20} />
                     )}
                   </div>
                 </div>
@@ -341,7 +346,7 @@ export default function Menu() {
                   "dark:hover:bg-slate-700/70"
                 )}
               >
-                <AiOutlineSetting size={20} />
+                <Icon icon={settings_3_line} size={20} />
               </div>
             </div>
           </div>

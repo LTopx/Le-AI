@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { cn } from "@/lib";
 import {
   Modal,
@@ -10,7 +9,9 @@ import {
   Button,
   NewSlider as Slider,
   Tooltip,
+  Icon,
 } from "@/components/ui";
+import question_line from "@iconify/icons-mingcute/question-line";
 import { useTTSOpen, useTTS, type TTSRate } from "@/hooks";
 
 const renderLabel = (item: any) => {
@@ -105,7 +106,7 @@ const TTS: React.FC = () => {
         <div className="flex text-sm gap-2 items-center">
           {t("voice")}
           <Tooltip title={t("voice-tip")}>
-            <AiOutlineQuestionCircle size={18} />
+            <Icon icon={question_line} size={18} />
           </Tooltip>
         </div>
         <Select

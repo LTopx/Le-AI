@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { ImPlay3 } from "react-icons/im";
-import { BsStopFill } from "react-icons/bs";
 import type { ChatItem, LicenseType } from "@/hooks";
-import { Divider, Button, Link } from "@/components/ui";
+import { Divider, Button, Link, Icon } from "@/components/ui";
+import play_fill from "@iconify/icons-mingcute/play-fill";
+import stop_fill from "@iconify/icons-mingcute/stop-fill";
 
 interface Props {
   data: ChatItem;
@@ -35,13 +35,13 @@ const TTSHandler: React.FC<Props> = ({
         <Button
           type="outline"
           size="xs"
-          leftIcon={<ImPlay3 size={14} />}
+          leftIcon={<Icon icon={play_fill} size={14} />}
           loading={data.tts_loading}
           onClick={onRead}
         />
         {data.tts_loading && (
           <Button size="xs" type="primary" onClick={onPause}>
-            <BsStopFill size={18} />
+            <Icon icon={stop_fill} size={14} />
           </Button>
         )}
         <Link

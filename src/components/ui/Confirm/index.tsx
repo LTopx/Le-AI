@@ -3,9 +3,10 @@
 import React from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { useTranslations } from "next-intl";
-import { AiFillExclamationCircle } from "react-icons/ai";
 import { cn } from "@/lib";
-import Button from "@/components/ui/Button";
+import Button from "../Button";
+import Icon from "../Icon";
+import warning_fill from "@iconify/icons-mingcute/warning-fill";
 
 interface ConfirmProps {
   type?: "danger" | "primary";
@@ -90,7 +91,13 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
                   "dark:text-white/90"
                 )}
               >
-                {icon || <AiFillExclamationCircle className="text-amber-500" />}
+                {icon || (
+                  <Icon
+                    icon={warning_fill}
+                    size={20}
+                    className="text-amber-500"
+                  />
+                )}
                 {title || "Title"}
               </AlertDialog.Title>
               <AlertDialog.Description

@@ -1,8 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { AiOutlineRedo } from "react-icons/ai";
-import { RiTranslate } from "react-icons/ri";
 import { cn } from "@/lib";
 import {
   useChannel,
@@ -14,8 +12,10 @@ import {
   type ChannelIcon,
   type IPrompt,
 } from "@/hooks";
-import { Button, Divider, Modal, Select } from "@/components/ui";
-import Icon from "@/components/menu/icon";
+import { Button, Divider, Modal, Select, Icon } from "@/components/ui";
+import refresh_3_line from "@iconify/icons-mingcute/refresh-3-line";
+import translate_line from "@iconify/icons-mingcute/translate-line";
+import MenuIcon from "@/components/menu/icon";
 import PremiumBtn from "./premiumBtn";
 
 const renderLabel = (item: any) => {
@@ -227,7 +227,10 @@ const Configure = React.memo(() => {
               <div className="flex flex-col gap-1">
                 <div className="flex text-orange-400 gap-2 items-center justify-center">
                   {findChannel?.channel_icon && (
-                    <Icon className="nothing" name={findChannel.channel_icon} />
+                    <MenuIcon
+                      className="nothing"
+                      name={findChannel.channel_icon}
+                    />
                   )}
                   Prompt
                 </div>
@@ -235,7 +238,8 @@ const Configure = React.memo(() => {
                   {findChannel?.channel_prompt}
                 </div>
               </div>
-              <AiOutlineRedo
+              <Icon
+                icon={refresh_3_line}
                 size={20}
                 className="top-3 right-3 text-sky-400 absolute"
                 onClick={onResetPrompt}
@@ -298,7 +302,10 @@ const Configure = React.memo(() => {
                       "dark:group-hover:bg-sky-700 dark:group-hover:border-sky-700"
                     )}
                   >
-                    <Icon className="nothing" name={item.icon as ChannelIcon} />
+                    <MenuIcon
+                      className="nothing"
+                      name={item.icon as ChannelIcon}
+                    />
                   </div>
                   <div className="truncate">{item.title}</div>
                 </div>
@@ -326,7 +333,7 @@ const Configure = React.memo(() => {
               className="top-[-0.5rem] right-0 absolute"
               onClick={onToggleLan}
             >
-              <RiTranslate size={18} />
+              <Icon icon={translate_line} size={18} />
             </Button>
           )}
         </div>

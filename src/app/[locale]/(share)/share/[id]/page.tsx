@@ -5,15 +5,15 @@ import { cn } from "@/lib";
 import { prisma } from "@/lib/prisma";
 import { redis } from "@/lib/redis";
 import type { Share } from "@prisma/client";
-import { AiOutlineUser } from "react-icons/ai";
-import { SiMicrosoftazure } from "react-icons/si";
-import Button from "@/components/ui/Button";
 import CopyIcon from "@/components/site/copyIcon";
 import ChatContent from "@/components/chatContent";
 import BasicInfo from "@/components/share/basicInfo";
 import NotFound from "@/components/share/notFound";
 import Continue from "@/components/share/continue";
 import Title from "@/components/share/title";
+import { Button, Icon } from "@/components/ui";
+import openai_line from "@iconify/icons-mingcute/openai-line";
+import user_3_fill from "@iconify/icons-mingcute/user-3-fill";
 
 type Props = {
   params: { id: string };
@@ -100,7 +100,10 @@ export default async function Share({ params }: any) {
             />
           </div>
           <div>
-            <Button type="outline" leftIcon={<SiMicrosoftazure size={14} />}>
+            <Button
+              type="outline"
+              leftIcon={<Icon icon={openai_line} size={16} />}
+            >
               {(content.channel_model as any)?.type}
             </Button>
           </div>
@@ -122,7 +125,10 @@ export default async function Share({ params }: any) {
                       "bg-black/25 dark:bg-slate-50"
                     )}
                   >
-                    <AiOutlineUser className="text-white dark:text-neutral-600" />
+                    <Icon
+                      icon={user_3_fill}
+                      className="text-white dark:text-neutral-600"
+                    />
                   </div>
                 )}
               </div>

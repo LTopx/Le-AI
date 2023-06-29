@@ -1,9 +1,9 @@
 import React from "react";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { AiFillGift } from "react-icons/ai";
 import { usePremium, useUserInfo } from "@/hooks";
-import { Button } from "@/components/ui";
+import { Button, Icon } from "@/components/ui";
+import gift_fill from "@iconify/icons-mingcute/gift-fill";
 
 const PremiumBtn: React.FC = () => {
   const session = useSession();
@@ -30,7 +30,7 @@ const PremiumBtn: React.FC = () => {
       size="base"
       onClick={onCheck}
     >
-      <AiFillGift size={28} className="text-orange-400" />
+      <Icon icon={gift_fill} size={26} className="text-orange-400" />
       <span>{tCommon("premium")}</span>
     </Button>
   );

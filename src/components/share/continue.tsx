@@ -3,8 +3,8 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
-import { VscDebugContinue } from "react-icons/vsc";
-import Button from "@/components/ui/Button";
+import { Button, Icon } from "@/components/ui";
+import navigation_fill from "@iconify/icons-mingcute/navigation-fill";
 
 interface IProps {
   id: string;
@@ -24,7 +24,7 @@ const Continue: React.FC<IProps> = ({ id }) => {
     <Button
       type="outline"
       size="base"
-      rightIcon={<VscDebugContinue />}
+      rightIcon={<Icon icon={navigation_fill} size={18} />}
       loading={loading}
       onClick={onContinue}
     >

@@ -6,6 +6,7 @@ import Divider from "./Divider";
 import Drawer from "./Drawer";
 import Dropdown from "./Dropdown";
 import type { IDropdownItems } from "./Dropdown";
+import Icon from "./Icon";
 import Input from "./Input";
 import Link from "./Link";
 import Modal from "./Modal";
@@ -22,6 +23,7 @@ export {
   Divider,
   Drawer,
   Dropdown,
+  Icon,
   Input,
   Link,
   Modal,

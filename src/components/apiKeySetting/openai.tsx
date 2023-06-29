@@ -1,10 +1,11 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { AiOutlineQuestionCircle, AiOutlineCheck } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 import { cn } from "@/lib";
 import { useOpenAI } from "@/hooks";
-import { Button, Input, Slider, Tooltip } from "@/components/ui";
+import { Button, Input, Slider, Tooltip, Icon } from "@/components/ui";
+import check_line from "@iconify/icons-mingcute/check-line";
+import question_line from "@iconify/icons-mingcute/question-line";
 
 type CheckStatus = "" | "success" | "error";
 
@@ -86,7 +87,7 @@ export default function OpenAI() {
           <Button
             className="w-22 md:w-28"
             type="primary"
-            leftIcon={<AiOutlineCheck />}
+            leftIcon={<Icon icon={check_line} />}
             loading={loading}
             onClick={onCheck}
           >
@@ -124,7 +125,7 @@ export default function OpenAI() {
         <div className="mb-1 text-sm flex items-center gap-2">
           {t("temperature")}
           <Tooltip title={t("temperature-tip")}>
-            <AiOutlineQuestionCircle size={18} />
+            <Icon icon={question_line} size={18} />
           </Tooltip>
         </div>
         <div className="flex items-center gap-2">
@@ -149,7 +150,7 @@ export default function OpenAI() {
         <div className="mb-1 text-sm flex items-center gap-2">
           {t("max-tokens")}
           <Tooltip title={t("max-tokens-tip")}>
-            <AiOutlineQuestionCircle size={18} />
+            <Icon icon={question_line} size={18} />
           </Tooltip>
         </div>
         <Input

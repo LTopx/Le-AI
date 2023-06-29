@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/server";
-import { AiOutlineUser } from "react-icons/ai";
+import { Icon } from "@/components/ui";
+import user_3_fill from "@iconify/icons-mingcute/user-3-fill";
 
 const baseURL =
   process.env.NODE_ENV === "development"
@@ -87,7 +88,11 @@ export default async function Image({ params }: Props) {
                   }}
                 >
                   {item.role === "user" ? (
-                    <AiOutlineUser style={{ color: "#fff" }} size={24} />
+                    <Icon
+                      icon={user_3_fill}
+                      style={{ color: "#fff" }}
+                      size={24}
+                    />
                   ) : (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img

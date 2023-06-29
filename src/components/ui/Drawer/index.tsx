@@ -2,8 +2,9 @@
 
 import React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { AiOutlineClose } from "react-icons/ai";
 import { cn } from "@/lib";
+import Icon from "../Icon";
+import close_line from "@iconify/icons-mingcute/close-line";
 
 interface DrawerProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
   /** The Drawer is open or not */
@@ -87,7 +88,7 @@ const Drawer = React.memo(
                     "dark:text-white/40 dark:hover:text-white/90"
                   )}
                 >
-                  <AiOutlineClose size={18} />
+                  <Icon icon={close_line} size={20} />
                 </button>
               </Dialog.Close>
             </Dialog.Content>

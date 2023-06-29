@@ -1,9 +1,10 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { AiOutlineLoading } from "react-icons/ai";
-import { BsSend } from "react-icons/bs";
 import { useConfig } from "@/hooks";
 import { isMobile, getPlatform, cn } from "@/lib";
+import { Icon } from "@/components/ui";
+import loading_line from "@iconify/icons-mingcute/loading-line";
+import send_line from "@iconify/icons-mingcute/send-line";
 
 export interface ChatInputProps {
   className?: string | undefined;
@@ -128,7 +129,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
               "dark:text-sky-400/90"
             )}
           >
-            <AiOutlineLoading size={24} className="animate-spin" />
+            <Icon className="animate-spin" icon={loading_line} size={24} />
           </div>
         ) : (
           <div
@@ -140,7 +141,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
               { "text-sky-400 dark:text-sky-400/90": value }
             )}
           >
-            <BsSend size={20} />
+            <Icon icon={send_line} size={24} />
           </div>
         )}
       </div>

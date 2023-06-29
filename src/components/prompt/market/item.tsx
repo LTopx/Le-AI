@@ -2,19 +2,15 @@ import React from "react";
 import { useDateFormat } from "l-hooks";
 import { useTranslations } from "next-intl";
 import type { Prompt } from "@prisma/client";
-import {
-  AiOutlineMenu,
-  AiOutlineEdit,
-  AiOutlineDelete,
-  AiOutlineSelect,
-} from "react-icons/ai";
-import { RiTranslate } from "react-icons/ri";
-import { MdOutlinePublish } from "react-icons/md";
-import Button from "@/components/ui/Button";
-import Dropdown from "@/components/ui/Dropdown";
+import { Button, Dropdown, Divider, Icon } from "@/components/ui";
+import check_2_fill from "@iconify/icons-mingcute/check-2-fill";
+import pencil_2_line from "@iconify/icons-mingcute/pencil-2-line";
+import align_arrow_up_line from "@iconify/icons-mingcute/align-arrow-up-line";
+import delete_2_line from "@iconify/icons-mingcute/delete-2-line";
+import list_expansion_fill from "@iconify/icons-mingcute/list-expansion-fill";
+import translate_line from "@iconify/icons-mingcute/translate-line";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
-import Divider from "@/components/ui/Divider";
-import Icon from "@/components/menu/icon";
+import MenuIcon from "@/components/menu/icon";
 import type { ChannelIcon } from "@/hooks";
 import { cn } from "@/lib";
 
@@ -46,22 +42,22 @@ const PromptItem: React.FC<Props> = ({
     {
       label: t("apply"),
       value: "apply",
-      icon: <AiOutlineSelect />,
+      icon: <Icon icon={check_2_fill} />,
     },
     {
       label: t("edit"),
       value: "edit",
-      icon: <AiOutlineEdit />,
+      icon: <Icon icon={pencil_2_line} />,
     },
     {
       label: t("release"),
       value: "release",
-      icon: <MdOutlinePublish />,
+      icon: <Icon icon={align_arrow_up_line} />,
     },
     {
       label: t("delete"),
       value: "delete",
-      icon: <AiOutlineDelete />,
+      icon: <Icon icon={delete_2_line} />,
     },
   ];
 
@@ -109,7 +105,7 @@ const PromptItem: React.FC<Props> = ({
     >
       <div className="flex flex-col">
         <div className="font-semibold text-base text-ellipsis pl-6 pr-2 overflow-hidden whitespace-nowrap relative">
-          <Icon name={data.icon as ChannelIcon} />
+          <MenuIcon name={data.icon as ChannelIcon} />
           {data.title}
         </div>
         <Divider className="my-2" />
@@ -140,7 +136,7 @@ const PromptItem: React.FC<Props> = ({
               trigger={
                 <div>
                   <Button size="xs" type="primary">
-                    <AiOutlineMenu />
+                    <Icon icon={list_expansion_fill} />
                   </Button>
                 </div>
               }
@@ -161,7 +157,8 @@ const PromptItem: React.FC<Props> = ({
         </div>
       </div>
       {content?.cn && content?.en && (
-        <RiTranslate
+        <Icon
+          icon={translate_line}
           size={20}
           className="absolute right-2 top-2 text-sky-400"
           onClick={onToggleLan}

@@ -12,7 +12,9 @@ interface LPopoverProps
 export default function LPopover({ children, title }: LPopoverProps) {
   return (
     <Popover.Root>
-      <Popover.Trigger>{children}</Popover.Trigger>
+      <Popover.Trigger className="flex items-center">
+        {children}
+      </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
           side="top"

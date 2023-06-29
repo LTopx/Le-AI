@@ -2,20 +2,16 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "react-hot-toast";
 import { useClipboard } from "l-hooks";
-import {
-  AiOutlineLink,
-  AiOutlineTwitter,
-  AiOutlineDelete,
-  AiOutlineLoading,
-} from "react-icons/ai";
-import { BsThreeDots } from "react-icons/bs";
-import { FiUserMinus } from "react-icons/fi";
-import { RxOpenInNewWindow } from "react-icons/rx";
 import { cn } from "@/lib";
-import Modal from "@/components/ui/Modal";
-import Dropdown from "@/components/ui/Dropdown";
-import Button from "@/components/ui/Button";
+import { Modal, Dropdown, Button, Icon } from "@/components/ui";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
+import user_hide_line from "@iconify/icons-mingcute/user-hide-line";
+import twitter_fill from "@iconify/icons-mingcute/twitter-fill";
+import delete_2_line from "@iconify/icons-mingcute/delete-2-line";
+import link_line from "@iconify/icons-mingcute/link-line";
+import external_link_line from "@iconify/icons-mingcute/external-link-line";
+import loading_line from "@iconify/icons-mingcute/loading-line";
+import more_1_fill from "@iconify/icons-mingcute/more-1-fill";
 
 const Action = React.forwardRef((_, forwardedRef) => {
   const t = useTranslations("share");
@@ -30,17 +26,19 @@ const Action = React.forwardRef((_, forwardedRef) => {
     {
       label: t("share-anonymously"),
       value: "anonymous",
-      icon: <FiUserMinus size={16} className="text-neutral-600" />,
+      icon: (
+        <Icon icon={user_hide_line} size={16} className="text-neutral-600" />
+      ),
     },
     {
       label: t("share-to-twitter"),
       value: "twitter",
-      icon: <AiOutlineTwitter size={16} className="text-[#379bf0]" />,
+      icon: <Icon icon={twitter_fill} size={16} className="text-[#379bf0]" />,
     },
     {
       label: t("share-remove"),
       value: "delete",
-      icon: <AiOutlineDelete size={16} className="text-rose-600" />,
+      icon: <Icon icon={delete_2_line} size={16} className="text-rose-600" />,
     },
   ];
 
@@ -127,14 +125,14 @@ const Action = React.forwardRef((_, forwardedRef) => {
         <div className="flex gap-2">
           <Button
             type="success"
-            leftIcon={<AiOutlineLink />}
+            leftIcon={<Icon icon={link_line} />}
             onClick={() => onLink("copy")}
           >
             {t("copy-link")}
           </Button>
           <Button
             type="primary"
-            leftIcon={<RxOpenInNewWindow />}
+            leftIcon={<Icon icon={external_link_line} />}
             onClick={() => onLink("open")}
           >
             {t("open")}
@@ -147,7 +145,7 @@ const Action = React.forwardRef((_, forwardedRef) => {
               "hover:bg-neutral-100"
             )}
           >
-            <AiOutlineLoading className="animate-spin" />
+            <Icon icon={loading_line} className="animate-spin" />
           </button>
         ) : (
           <Dropdown
@@ -156,11 +154,11 @@ const Action = React.forwardRef((_, forwardedRef) => {
             trigger={
               <button
                 className={cn(
-                  "px-3 rounded-md border transition-colors",
+                  "px-3 rounded-md border transition-colors flex items-center",
                   "hover:bg-neutral-100"
                 )}
               >
-                <BsThreeDots />
+                <Icon icon={more_1_fill} />
               </button>
             }
           />

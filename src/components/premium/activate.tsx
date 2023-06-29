@@ -3,9 +3,9 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { AiOutlineCheck } from "react-icons/ai";
-import { BsArrowReturnRight } from "react-icons/bs";
-import { Modal, Input, Button } from "@/components/ui";
+import { Modal, Input, Button, Icon } from "@/components/ui";
+import arrow_right_down_fill from "@iconify/icons-mingcute/arrow-right-down-fill";
+import check_line from "@iconify/icons-mingcute/check-line";
 import { useSetting, usePremium, useUserInfo, useRecharge } from "@/hooks";
 
 const Activate = React.forwardRef((_, forwardedRef) => {
@@ -105,7 +105,7 @@ const Activate = React.forwardRef((_, forwardedRef) => {
             onClick={onCheckPremium}
             className="text-sky-400 cursor-pointer transition-colors hover:underline hover:text-sky-500 flex items-center gap-1"
           >
-            <BsArrowReturnRight />
+            <Icon icon={arrow_right_down_fill} />
             {t("buy-for-you")}
           </span>
         </div>
@@ -115,7 +115,8 @@ const Activate = React.forwardRef((_, forwardedRef) => {
             onClick={onCheckRecharge}
             className="text-sky-400 cursor-pointer transition-colors hover:underline hover:text-sky-500 flex items-center gap-1"
           >
-            <BsArrowReturnRight />
+            <Icon icon={arrow_right_down_fill} />
+            {/* <BsArrowReturnRight /> */}
             {t("buy-for-you")}
           </span>
         </div>
@@ -123,7 +124,7 @@ const Activate = React.forwardRef((_, forwardedRef) => {
           <Button
             type="primary"
             className="h-9 w-36"
-            leftIcon={<AiOutlineCheck />}
+            leftIcon={<Icon icon={check_line} />}
             loading={loading}
             onClick={onActivate}
           >
