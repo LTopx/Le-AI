@@ -22,6 +22,7 @@
 - 删减部分多余功能，提升性能
 - 优化 UI 细节，统一全局图标样式。将 react-icons 替换为 MingCute Icon
 - 优化 OpenAI/Azure 接口返回错误格式
+- 升级 gpt-tokens 依赖
 
 ## v0.7.1
 

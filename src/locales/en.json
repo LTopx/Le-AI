@@ -285,10 +285,10 @@
   },
   "zLog": {
     "full-log": "Click to view the full update log",
-    "title": "v0.7.1 Released 🔥🔥",
-    "text1": "Added Azure TTS feature, supporting conversion of conversation replies into voice (Premium).",
-    "text2": "Improve the display of error messages returned by OpenAI",
-    "text3": "Optimize some internationalization content",
-    "text4": "Other details optimizations"
+    "title": "v0.7.2 Released 🔥🔥",
+    "text1": "New: Support for automatic playback with Azure TTS (Premium)",
+    "text2": "Optimization: After actively switching language models, subsequent new sessions will use the same model",
+    "text3": "Unified global icon style",
+    "text4": "Refactored a large number of module codes to improve performance"
   }
 }

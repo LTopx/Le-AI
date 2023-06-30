@@ -1,4 +1,4 @@
-import { Tiktoken, getEncoding, encodingForModel } from "js-tiktoken";
+import { encodingForModel, getEncoding, Tiktoken } from "js-tiktoken";
 import Decimal from "decimal.js";
 
 /**
@@ -30,12 +30,27 @@ export class GPTTokens {
   constructor(options: {
     model: supportModelType;
     messages: MessageItem[];
-    debug?: boolean;
     plus?: boolean;
   }) {
-    const { debug = false, model, messages, plus = false } = options;
+    const { model, messages, plus = false } = options;
 
-    this.debug = debug;
+    if (model === "gpt-3.5-turbo")
+      this.warning(
+        `${model} may update over time. Returning num tokens assuming gpt-3.5-turbo-0613`
+      );
+    if (model === "gpt-3.5-turbo-16k")
+      this.warning(
+        `${model} may update over time. Returning num tokens assuming gpt-3.5-turbo-16k-0613`
+      );
+    if (model === "gpt-4")
+      this.warning(
+        `${model} may update over time. Returning num tokens assuming gpt-4-0613`
+      );
+    if (model === "gpt-4-32k")
+      this.warning(
+        `${model} may update over time. Returning num tokens assuming gpt-4-32k-0613`
+      );
+
     this.model = model;
     this.plus = plus;
     this.messages = messages;
@@ -44,8 +59,6 @@ export class GPTTokens {
   public readonly plus;
   public readonly model;
   public readonly messages;
-
-  private readonly debug!: boolean;
 
   // https://openai.com/pricing/
   // gpt-3.5-turbo
@@ -98,7 +111,7 @@ export class GPTTokens {
     .toNumber();
 
   // Used Tokens
-  public get usedTokens(): number {
+  public get usedTokens() {
     return this.num_tokens_from_messages(this.messages, this.model);
   }
 
@@ -150,30 +163,18 @@ export class GPTTokens {
       price = promptUSD.add(completionUSD).toNumber();
     }
 
-    if (this.plus) {
-      if (
-        [
-          "gpt-3.5-turbo",
-          "gpt-3.5-turbo-0301",
-          "gpt-3.5-turbo-0613",
-          "gpt-3.5-turbo-16k",
-          "gpt-3.5-turbo-16k-0613",
-        ].includes(this.model)
-      ) {
-        price = new Decimal(price).mul(0.75).toNumber();
-      }
-    }
-
-    return price;
+    return this.plus && this.model.startsWith("gpt-3.5-turbo")
+      ? new Decimal(price).mul(0.75).toNumber()
+      : price;
   }
 
-  private get promptUsedTokens(): number {
+  private get promptUsedTokens() {
     const messages = this.messages.filter((item) => item.role !== "assistant");
 
     return this.num_tokens_from_messages(messages, this.model);
   }
 
-  private get completionUsedTokens(): number {
+  private get completionUsedTokens() {
     const messages = this.messages.filter((item) => item.role === "assistant");
 
     return this.num_tokens_from_messages(messages, this.model);
@@ -184,9 +185,7 @@ export class GPTTokens {
    * @param message The message to print. Will be prefixed with "Warning: ".
    * @returns void
    */
-  private warning(message: string): void {
-    if (!this.debug) return;
-
+  private warning(message: string) {
     console.warn("Warning:", message);
   }
 
@@ -200,29 +199,23 @@ export class GPTTokens {
   private num_tokens_from_messages(
     messages: MessageItem[],
     model: supportModelType
-  ): number {
+  ) {
     let encoding!: Tiktoken;
     let tokens_per_message!: number;
     let tokens_per_name!: number;
     let num_tokens = 0;
-    let modelType!: "gpt-3.5-turbo" | "gpt-4";
 
-    if (
-      [
-        "gpt-3.5-turbo",
-        "gpt-3.5-turbo-0301",
-        "gpt-3.5-turbo-0613",
-        "gpt-3.5-turbo-16k",
-        "gpt-3.5-turbo-16k-0613",
-      ].includes(model)
-    ) {
-      modelType = "gpt-3.5-turbo";
+    if (["gpt-3.5-turbo-0301"].includes(model)) {
       tokens_per_message = 4;
       tokens_per_name = -1;
     }
 
     if (
       [
+        "gpt-3.5-turbo",
+        "gpt-3.5-turbo-0613",
+        "gpt-3.5-turbo-16k",
+        "gpt-3.5-turbo-16k-0613",
         "gpt-4",
         "gpt-4-0314",
         "gpt-4-0613",
@@ -231,13 +224,12 @@ export class GPTTokens {
         "gpt-4-32k-0613",
       ].includes(model)
     ) {
-      modelType = "gpt-4";
       tokens_per_message = 3;
       tokens_per_name = 1;
     }
 
     try {
-      encoding = encodingForModel(modelType);
+      encoding = encodingForModel(model);
     } catch (e) {
       this.warning("model not found. Using cl100k_base encoding.");
 
@@ -259,6 +251,7 @@ export class GPTTokens {
     // Supplementary
     // encoding.free()
 
+    // every reply is primed with <|start|>assistant<|message|>
     return num_tokens + 3;
   }
 }

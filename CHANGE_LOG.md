@@ -22,6 +22,7 @@
 - Remove unnecessary features to improve performance.
 - Optimize UI details and unify global icon styles. Replace react-icons with MingCute Icon.
 - Optimize OpenAI/Azure API to return error messages in a more user-friendly format
+- Upgrade gpt-tokens dependency
 
 ## v0.7.1
 
