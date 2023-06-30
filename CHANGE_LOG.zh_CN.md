@@ -8,17 +8,20 @@
 
 - 修复本地引入 azure tts 后，缺失 bufferutil 和 utf-8-validate 的 bug
 - 修复在 service 端错误引用了 client 代码的问题
+- 修复 azure tts 播放和暂停控制的 bug
 
 ### 新增
 
 - 新建会话时，沿用用户之前选择的语言模型
 - 添加初始化全局 loading
+- Azure TTS 新增自动播放选项（Premium）
 
 ### 调整
 
 - 重构滚动列表模块，优化性能
 - 删减部分多余功能，提升性能
 - 优化 UI 细节，统一全局图标样式。将 react-icons 替换为 MingCute Icon
+- 优化 OpenAI/Azure 接口返回错误格式
 
 ## v0.7.1
 

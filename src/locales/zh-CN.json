@@ -265,6 +265,8 @@
     "what-is-token": "什么是 Token?"
   },
   "tts": {
+    "auto-play": "自动播放",
+    "auto-play-tip": "在每次回复后自动播放音频",
     "azure-tts": "Azure 文本转语音",
     "fast": "较快",
     "medium": "适中",

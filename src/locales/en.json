@@ -265,6 +265,8 @@
     "what-is-token": "What is a Token?"
   },
   "tts": {
+    "auto-play": "Auto Play",
+    "auto-play-tip": "Play the audio automatically after each reply",
     "azure-tts": "Azure TTS",
     "fast": "fast",
     "medium": "medium",

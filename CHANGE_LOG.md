@@ -8,17 +8,20 @@
 
 - Fixed bug of missing bufferutil and utf-8-validate after importing azure tts locally
 - Fixed issue of mistakenly referencing client code in the service side
+- Fix bug for Azure TTS play and pause controls
 
 ### Add
 
 - Use the language model previously selected by the user when creating a new conversation.
 - Add global initialization loading
+- Azure TTS adds an automatic playback option (Premium)
 
 ### Changed
 
 - Refactor scrolling list module, optimize performance
 - Remove unnecessary features to improve performance.
 - Optimize UI details and unify global icon styles. Replace react-icons with MingCute Icon.
+- Optimize OpenAI/Azure API to return error messages in a more user-friendly format
 
 ## v0.7.1
 

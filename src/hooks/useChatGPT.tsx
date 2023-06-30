@@ -15,6 +15,7 @@ import {
   useRecharge,
   useStreamDecoder,
   useScrollToBottom,
+  useTTS,
   BASE_PROMPT,
 } from "@/hooks";
 import type { ChatItem, ChannelListItem } from "@/hooks";
@@ -29,6 +30,7 @@ export const useChatGPT = () => {
   const [, setRechargeOpen] = useRecharge();
   const { decoder } = useStreamDecoder();
   const { scrollToBottom } = useScrollToBottom();
+  const { speak, autoPlay } = useTTS();
   const { openai, azure } = useLLM();
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
 
@@ -236,6 +238,32 @@ export const useChatGPT = () => {
           const { list } = channel;
           findCh = list.find((item) => item.channel_id === channel_id);
           if (!findCh) return channel;
+
+          const findLast = findCh.chat_list.at(-1);
+
+          if (autoPlay !== "0" && findLast?.role === "assistant") {
+            const findTTSActive = findCh.chat_list.find(
+              (item) => item.tts_loading
+            );
+            if (findTTSActive) findTTSActive.tts_loading = false;
+
+            findLast.tts_loading = true;
+            speak(findLast.content, () => {
+              setChannel((channel) => {
+                const { list } = channel;
+                const findCh = list.find(
+                  (item) => item.channel_id === channel_id
+                );
+                if (!findCh) return channel;
+                const findChat = findCh.chat_list.find(
+                  (val) => val.id === findLast.id
+                );
+                if (!findChat) return channel;
+                findChat.tts_loading = false;
+                return channel;
+              });
+            });
+          }
 
           // end channel loading
           findCh.channel_loading = false;

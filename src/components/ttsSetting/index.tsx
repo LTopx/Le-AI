@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
+import * as Switch from "@radix-ui/react-switch";
 import { cn } from "@/lib";
 import Icon from "@/components/icon";
 import {
@@ -32,8 +33,16 @@ const mapRate = (rate: TTSRate) => {
 
 const TTS: React.FC = () => {
   const [open, setOpen] = useTTSOpen();
-  const { voice, voices, rate, updateVoice, updateVoices, updateRate } =
-    useTTS();
+  const {
+    voice,
+    voices,
+    rate,
+    autoPlay,
+    updateVoice,
+    updateVoices,
+    updateRate,
+    updateAutoPlay,
+  } = useTTS();
   const [loading, setLoading] = React.useState(false);
 
   const t = useTranslations("tts");
@@ -123,12 +132,40 @@ const TTS: React.FC = () => {
       </div>
       <div>
         <Slider
-          className="flex-1"
+          className="flex-1 px-1"
           max={1}
           step={0.25}
           defaultValue={mapRate(rate)}
           onChange={onChangeRate}
         />
+      </div>
+      <div
+        className={cn(
+          "flex items-center justify-between py-2 px-1 border-b",
+          "border-slate-100 dark:border-neutral-500/60"
+        )}
+      >
+        <div className="flex text-sm gap-2 items-center">
+          {t("auto-play")}
+          <Tooltip title={t("auto-play-tip")}>
+            <Icon icon="question_line" size={18} />
+          </Tooltip>
+        </div>
+        <Switch.Root
+          defaultChecked={autoPlay === "0" ? false : true}
+          onCheckedChange={(checked) => updateAutoPlay(checked ? "1" : "0")}
+          className={cn(
+            "w-12 h-6 rounded-full relative outline-none cursor-pointer transition-colors",
+            "data-[state=unchecked]:bg-neutral-200/80 data-[state=checked]:bg-sky-400"
+          )}
+        >
+          <Switch.Thumb
+            className={cn(
+              "block w-4 h-4 bg-white rounded-full transition-all",
+              "translate-x-1 data-[state=checked]:translate-x-7"
+            )}
+          />
+        </Switch.Root>
       </div>
     </Modal>
   );

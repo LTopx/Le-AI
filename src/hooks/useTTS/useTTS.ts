@@ -13,10 +13,15 @@ interface ITTS {
   voice: string;
   voices: any[];
   rate: TTSRate;
+  player: SpeakerAudioDestination | null;
+  // 0:false, 1:true
+  autoPlay: string;
 
   updateVoice: (voice: string) => void;
   updateVoices: (voices: string[]) => void;
   updateRate: (rate: TTSRate) => void;
+  updateAutoPlay: (autoPlay: string) => void;
+  updatePlayer: (player: SpeakerAudioDestination | null) => void;
 }
 
 const key = process.env.NEXT_PUBLIC_AZURE_TTS_KEY || "";
@@ -26,6 +31,8 @@ const useStore = create<ITTS>((set) => ({
   voice: "zh-CN-XiaoxiaoNeural",
   voices: [],
   rate: "medium",
+  autoPlay: "0",
+  player: null,
 
   updateVoice: (voice: string) => {
     localStorage.setItem("voice", voice);
@@ -39,26 +46,35 @@ const useStore = create<ITTS>((set) => ({
     localStorage.setItem("voiceRate", rate);
     set({ rate });
   },
+  updateAutoPlay: (autoPlay: string) => {
+    localStorage.setItem("autoPlay", autoPlay);
+    set({ autoPlay });
+  },
+  updatePlayer: (player: SpeakerAudioDestination | null) => {
+    set({ player });
+  },
 }));
 
 export const useTTS = () => {
   const configRef = React.useRef<SpeechConfig | null>(null);
-  const playerRef = React.useRef<SpeakerAudioDestination | null>(null);
   const synthRef = React.useRef<SpeechSynthesizer | null>(null);
 
-  const { voice, voices, rate } = useStore();
+  const { voice, voices, rate, autoPlay, player } = useStore();
 
   const updateVoice = useStore((state) => state.updateVoice);
   const updateVoices = useStore((state) => state.updateVoices);
   const updateRate = useStore((state) => state.updateRate);
+  const updateAutoPlay = useStore((state) => state.updateAutoPlay);
+  const updatePlayer = useStore((state) => state.updatePlayer);
 
   const speak = (content: string, cb?: () => void) => {
     return new Promise((resolve, reject) => {
       try {
         pause();
-        playerRef.current = new SpeakerAudioDestination();
+        const player = new SpeakerAudioDestination();
+        updatePlayer(player);
 
-        const audioConfig = AudioConfig.fromSpeakerOutput(playerRef.current);
+        const audioConfig = AudioConfig.fromSpeakerOutput(player);
         if (!configRef.current) {
           configRef.current = SpeechConfig.fromSubscription(key, region);
         }
@@ -83,7 +99,7 @@ export const useTTS = () => {
           synthRef.current?.close();
         });
 
-        playerRef.current.onAudioEnd = () => {
+        player.onAudioEnd = () => {
           cb?.();
         };
       } catch (error) {
@@ -92,12 +108,15 @@ export const useTTS = () => {
     });
   };
 
-  const pause = () => playerRef.current?.pause();
+  const pause = React.useCallback(() => {
+    player?.pause();
+  }, [player]);
 
   React.useEffect(() => {
     const localVoice = localStorage.getItem("voice") || "zh-CN-XiaoxiaoNeural";
     const localVoices = localStorage.getItem("voices");
     const localRate = localStorage.getItem("voiceRate") || "medium";
+    const localAutoPlay = localStorage.getItem("autoPlay") || "0";
 
     try {
       updateVoices(localVoices ? JSON.parse(localVoices) : []);
@@ -106,6 +125,7 @@ export const useTTS = () => {
     }
     updateVoice(localVoice);
     updateRate(localRate as TTSRate);
+    updateAutoPlay(localAutoPlay);
   }, []);
 
   return {
@@ -114,8 +134,10 @@ export const useTTS = () => {
     voice,
     voices,
     rate,
+    autoPlay,
     updateVoice,
     updateVoices,
     updateRate,
+    updateAutoPlay,
   };
 };

@@ -1,6 +1,6 @@
 {
   "name": "l-gpt",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -25,6 +25,7 @@
     "@radix-ui/react-progress": "1.0.3",
     "@radix-ui/react-select": "1.2.2",
     "@radix-ui/react-slider": "1.1.2",
+    "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tabs": "1.0.4",
     "@radix-ui/react-toast": "1.1.4",
     "@react-email/components": "0.0.7",
@@ -44,7 +45,7 @@
     "eslint-config-next": "13.4.7",
     "file-saver": "2.0.5",
     "framer-motion": "10.12.17",
-    "gpt-tokens": "1.0.9",
+    "gpt-tokens": "1.0.10",
     "js-tiktoken": "1.0.7",
     "l-hooks": "0.4.6",
     "math-random": "2.0.1",

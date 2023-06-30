@@ -205,8 +205,11 @@ export async function POST(request: Request) {
     );
 
     return new Response(readable, response);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error, "openai error");
-    return new Response("Error", { status: 500 });
+    return NextResponse.json(
+      { error: { message: error?.message || "Error" } },
+      { status: 500 }
+    );
   }
 }
