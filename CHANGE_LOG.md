@@ -2,7 +2,7 @@
 
 ## v0.7.2
 
-> 2023-06-29
+> 2023-06-30
 
 ### Fixed
 
@@ -12,6 +12,7 @@
 ### Add
 
 - Use the language model previously selected by the user when creating a new conversation.
+- Add global initialization loading
 
 ### Changed
 
