@@ -4,12 +4,9 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
 import { cn } from "@/lib";
 import { usePremium, useUserInfo } from "@/hooks";
-import { Modal, Link, Icon } from "@/components/ui";
+import Icon from "@/components/icon";
+import { Modal, Link } from "@/components/ui";
 import PremiumBtn, { type LicenseTabTypes } from "./button";
-import check_circle_fill from "@iconify/icons-mingcute/check-circle-fill";
-import gift_fill from "@iconify/icons-mingcute/gift-fill";
-import VIP_2_fill from "@iconify/icons-mingcute/vip-2-fill";
-import group_fill from "@iconify/icons-mingcute/group-fill";
 
 const Premium: React.FC = () => {
   const router = useRouter();
@@ -106,7 +103,7 @@ const Premium: React.FC = () => {
             <div className="flex flex-col mt-2 text-sm gap-2">
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -114,7 +111,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -122,7 +119,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -130,7 +127,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -138,7 +135,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -147,7 +144,7 @@ const Premium: React.FC = () => {
             </div>
           </div>
           <Icon
-            icon={gift_fill}
+            icon="gift_fill"
             size={32}
             className="top-4 right-4 text-orange-400 absolute"
           />
@@ -175,7 +172,7 @@ const Premium: React.FC = () => {
             <div className="flex flex-col mt-2 text-sm gap-2">
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -183,7 +180,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -191,7 +188,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -199,7 +196,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -207,7 +204,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -215,7 +212,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -223,7 +220,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -232,7 +229,7 @@ const Premium: React.FC = () => {
             </div>
           </div>
           <Icon
-            icon={VIP_2_fill}
+            icon="vip_2_fill"
             size={32}
             className="top-4 right-4 text-orange-400 absolute"
           />
@@ -254,7 +251,7 @@ const Premium: React.FC = () => {
             <div className="flex flex-col mt-2 text-sm gap-2">
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -262,7 +259,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -270,7 +267,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -278,7 +275,7 @@ const Premium: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -287,7 +284,7 @@ const Premium: React.FC = () => {
             </div>
           </div>
           <Icon
-            icon={group_fill}
+            icon="group_fill"
             size={32}
             className="top-4 right-4 text-orange-400 absolute"
           />

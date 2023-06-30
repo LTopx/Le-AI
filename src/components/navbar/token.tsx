@@ -3,8 +3,8 @@ import * as Accordion from "@radix-ui/react-accordion";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib";
 import type { ChannelCost } from "@/hooks";
-import { Button, Divider, Modal, Icon } from "@/components/ui";
-import down_fill from "@iconify/icons-mingcute/down-fill";
+import Icon from "@/components/icon";
+import { Button, Divider, Modal } from "@/components/ui";
 
 interface TokenProps {
   cost: ChannelCost | undefined;
@@ -40,7 +40,7 @@ const AccordionTrigger = React.forwardRef(
       >
         <span className="font-medium">{children}</span>
         <Icon
-          icon={down_fill}
+          icon="down_fill"
           size={16}
           className="transition-all group-data-[state=open]:rotate-180"
         />

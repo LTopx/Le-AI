@@ -5,9 +5,7 @@ import { useTranslations } from "next-intl";
 import { useClipboard } from "l-hooks";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { Icon } from "@/components/ui";
-import check_line from "@iconify/icons-mingcute/check-line";
-import copy_2_line from "@iconify/icons-mingcute/copy-2-line";
+import Icon from "@/components/icon";
 
 interface Props {
   language: string;
@@ -35,7 +33,7 @@ const CodeBlock: React.FC<Props> = React.memo(({ language, value }) => {
             {isCopied ? (
               <>
                 <Icon
-                  icon={check_line}
+                  icon="check_line"
                   className="text-[#52c41a] mr-1"
                   size={18}
                 />
@@ -43,7 +41,7 @@ const CodeBlock: React.FC<Props> = React.memo(({ language, value }) => {
               </>
             ) : (
               <>
-                <Icon icon={copy_2_line} className="mr-1" size={18} />{" "}
+                <Icon icon="copy_2_line" className="mr-1" size={18} />
                 {t("copy-code")}
               </>
             )}

@@ -3,8 +3,7 @@
 import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { cn } from "@/lib";
-import Icon from "../Icon";
-import check_fill from "@iconify/icons-mingcute/check-fill";
+import Icon from "@/components/icon";
 
 export interface IDropdownItems {
   label?: React.ReactNode;
@@ -101,7 +100,7 @@ const LDropdownMenu = React.forwardRef<any, IDropdownMenuProps>(
                   <div className="flex items-center gap-2">
                     {!!selectable && (
                       <Icon
-                        icon={check_fill}
+                        icon="check_fill"
                         className={cn("opacity-0", {
                           "opacity-100": item.value === value,
                         })}

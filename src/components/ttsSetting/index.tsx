@@ -3,15 +3,14 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib";
+import Icon from "@/components/icon";
 import {
   Modal,
   Select,
   Button,
   NewSlider as Slider,
   Tooltip,
-  Icon,
 } from "@/components/ui";
-import question_line from "@iconify/icons-mingcute/question-line";
 import { useTTSOpen, useTTS, type TTSRate } from "@/hooks";
 
 const renderLabel = (item: any) => {
@@ -106,7 +105,7 @@ const TTS: React.FC = () => {
         <div className="flex text-sm gap-2 items-center">
           {t("voice")}
           <Tooltip title={t("voice-tip")}>
-            <Icon icon={question_line} size={18} />
+            <Icon icon="question_line" size={18} />
           </Tooltip>
         </div>
         <Select

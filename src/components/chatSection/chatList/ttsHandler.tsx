@@ -1,9 +1,8 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import type { ChatItem, LicenseType } from "@/hooks";
-import { Divider, Button, Link, Icon } from "@/components/ui";
-import play_fill from "@iconify/icons-mingcute/play-fill";
-import stop_fill from "@iconify/icons-mingcute/stop-fill";
+import Icon from "@/components/icon";
+import { Divider, Button, Link } from "@/components/ui";
 
 interface Props {
   data: ChatItem;
@@ -35,13 +34,13 @@ const TTSHandler: React.FC<Props> = ({
         <Button
           type="outline"
           size="xs"
-          leftIcon={<Icon icon={play_fill} size={14} />}
+          leftIcon={<Icon icon="play_fill" size={14} />}
           loading={data.tts_loading}
           onClick={onRead}
         />
         {data.tts_loading && (
           <Button size="xs" type="primary" onClick={onPause}>
-            <Icon icon={stop_fill} size={14} />
+            <Icon icon="stop_fill" size={14} />
           </Button>
         )}
         <Link

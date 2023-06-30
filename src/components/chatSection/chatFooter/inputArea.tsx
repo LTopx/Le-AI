@@ -2,9 +2,7 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import { useConfig } from "@/hooks";
 import { isMobile, getPlatform, cn } from "@/lib";
-import { Icon } from "@/components/ui";
-import loading_line from "@iconify/icons-mingcute/loading-line";
-import send_line from "@iconify/icons-mingcute/send-line";
+import Icon from "@/components/icon";
 
 export interface ChatInputProps {
   className?: string | undefined;
@@ -129,7 +127,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
               "dark:text-sky-400/90"
             )}
           >
-            <Icon className="animate-spin" icon={loading_line} size={24} />
+            <Icon className="animate-spin" icon="loading_line" size={24} />
           </div>
         ) : (
           <div
@@ -141,7 +139,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
               { "text-sky-400 dark:text-sky-400/90": value }
             )}
           >
-            <Icon icon={send_line} size={24} />
+            <Icon icon="send_line" size={24} />
           </div>
         )}
       </div>

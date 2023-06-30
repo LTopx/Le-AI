@@ -6,15 +6,8 @@ import { useTheme } from "next-themes";
 import { useDateFormat } from "l-hooks";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
-import { Button, Confirm, Drawer, Dropdown, Icon } from "@/components/ui";
-import delete_2_line from "@iconify/icons-mingcute/delete-2-line";
-import key_2_line from "@iconify/icons-mingcute/key-2-line";
-import telegram_fill from "@iconify/icons-mingcute/telegram-fill";
-import moon_fill from "@iconify/icons-mingcute/moon-fill";
-import sun_line from "@iconify/icons-mingcute/sun-line";
-import github_line from "@iconify/icons-mingcute/github-line";
-import translate_2_line from "@iconify/icons-mingcute/translate-2-line";
-import settings_3_line from "@iconify/icons-mingcute/settings-3-line";
+import Icon from "@/components/icon";
+import { Button, Confirm, Drawer, Dropdown } from "@/components/ui";
 import Logo from "@/components/site/logo";
 import {
   useChannel,
@@ -201,7 +194,7 @@ export default function MobileMenu() {
                       )}
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <Icon icon={delete_2_line} size={20} />
+                      <Icon icon="delete_2_line" size={20} />
                     </div>
                   }
                   onOk={() => onChannelDelete(item.channel_id)}
@@ -223,7 +216,7 @@ export default function MobileMenu() {
                 "dark:hover:bg-slate-700/70 text-sky-400"
               )}
             >
-              <Icon icon={key_2_line} size={16} />
+              <Icon icon="key_2_line" size={16} />
               {tPremium("license-activate")}
             </div>
             <a
@@ -235,7 +228,7 @@ export default function MobileMenu() {
               href="https://t.me/+7fLJJoGV_bJhYTk1"
               target="_blank"
             >
-              <Icon icon={telegram_fill} size={16} className="text-[#3aa9ea]" />
+              <Icon icon="telegram_fill" size={16} className="text-[#3aa9ea]" />
               {t("join-tg")}
             </a>
             {!!session.data && <Tokens type="mobile" />}
@@ -250,9 +243,9 @@ export default function MobileMenu() {
                   )}
                 >
                   {nowTheme === "light" ? (
-                    <Icon icon={moon_fill} size={20} />
+                    <Icon icon="moon_fill" size={20} />
                   ) : (
-                    <Icon icon={sun_line} size={20} />
+                    <Icon icon="sun_line" size={20} />
                   )}
                 </div>
               </div>
@@ -266,7 +259,7 @@ export default function MobileMenu() {
                     "dark:hover:bg-slate-700/70"
                   )}
                 >
-                  <Icon icon={github_line} size={20} />
+                  <Icon icon="github_line" size={20} />
                 </a>
               </div>
               <Dropdown
@@ -283,7 +276,7 @@ export default function MobileMenu() {
                         "dark:hover:bg-slate-700/70"
                       )}
                     >
-                      <Icon icon={translate_2_line} size={20} />
+                      <Icon icon="translate_2_line" size={20} />
                     </div>
                   </div>
                 }
@@ -297,7 +290,7 @@ export default function MobileMenu() {
                     "dark:hover:bg-slate-700/70"
                   )}
                 >
-                  <Icon icon={settings_3_line} size={20} />
+                  <Icon icon="settings_3_line" size={20} />
                 </div>
               </div>
             </div>

@@ -12,9 +12,8 @@ import {
   type ChannelIcon,
   type IPrompt,
 } from "@/hooks";
-import { Button, Divider, Modal, Select, Icon } from "@/components/ui";
-import refresh_3_line from "@iconify/icons-mingcute/refresh-3-line";
-import translate_line from "@iconify/icons-mingcute/translate-line";
+import Icon from "@/components/icon";
+import { Button, Divider, Modal, Select } from "@/components/ui";
 import MenuIcon from "@/components/menu/icon";
 import PremiumBtn from "./premiumBtn";
 
@@ -239,7 +238,7 @@ const Configure = React.memo(() => {
                 </div>
               </div>
               <Icon
-                icon={refresh_3_line}
+                icon="refresh_3_line"
                 size={20}
                 className="top-3 right-3 text-sky-400 absolute"
                 onClick={onResetPrompt}
@@ -333,7 +332,7 @@ const Configure = React.memo(() => {
               className="top-[-0.5rem] right-0 absolute"
               onClick={onToggleLan}
             >
-              <Icon icon={translate_line} size={18} />
+              <Icon icon="translate_line" size={18} />
             </Button>
           )}
         </div>

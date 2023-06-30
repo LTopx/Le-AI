@@ -1,9 +1,8 @@
 import React from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useTranslations } from "next-intl";
-import { Modal, Button, Link, Icon } from "@/components/ui";
-import check_circle_fill from "@iconify/icons-mingcute/check-circle-fill";
-import lightning_fill from "@iconify/icons-mingcute/lightning-fill";
+import Icon from "@/components/icon";
+import { Modal, Button, Link } from "@/components/ui";
 import { useRecharge } from "@/hooks";
 import { cn } from "@/lib";
 
@@ -83,7 +82,7 @@ const Recharge: React.FC = () => {
             <div className="flex flex-col mt-2 text-sm gap-2">
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -91,7 +90,7 @@ const Recharge: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -99,7 +98,7 @@ const Recharge: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -108,7 +107,7 @@ const Recharge: React.FC = () => {
             </div>
           </div>
           <Icon
-            icon={lightning_fill}
+            icon="lightning_fill"
             size={32}
             className="top-4 right-4 text-orange-400 absolute"
           />
@@ -129,7 +128,7 @@ const Recharge: React.FC = () => {
             <div className="flex flex-col mt-2 text-sm gap-2">
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -137,7 +136,7 @@ const Recharge: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -145,7 +144,7 @@ const Recharge: React.FC = () => {
               </div>
               <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-300">
                 <Icon
-                  icon={check_circle_fill}
+                  icon="check_circle_fill"
                   size={18}
                   className="left-0 text-green-400 absolute"
                 />
@@ -154,7 +153,7 @@ const Recharge: React.FC = () => {
             </div>
           </div>
           <Icon
-            icon={lightning_fill}
+            icon="lightning_fill"
             size={32}
             className="top-4 right-4 text-orange-400 absolute"
           />

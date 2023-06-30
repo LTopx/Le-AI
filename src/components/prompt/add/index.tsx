@@ -3,15 +3,8 @@ import { useTranslations } from "next-intl";
 import { v4 as uuidv4 } from "uuid";
 import toast from "react-hot-toast";
 import { Prompt } from "@prisma/client";
-import { Modal, Input, Textarea, Dropdown, Icon } from "@/components/ui";
-import chat_4_line from "@iconify/icons-mingcute/chat-4-line";
-import translate_2_line from "@iconify/icons-mingcute/translate-2-line";
-import book_2_fill from "@iconify/icons-mingcute/book-2-fill";
-import film_line from "@iconify/icons-mingcute/film-line";
-import alert_octagon_fill from "@iconify/icons-mingcute/alert-octagon-fill";
-import pen_line from "@iconify/icons-mingcute/pen-line";
-import sailboat_line from "@iconify/icons-mingcute/sailboat-line";
-import code_line from "@iconify/icons-mingcute/code-line";
+import Icon from "@/components/icon";
+import { Modal, Input, Textarea, Dropdown } from "@/components/ui";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
 import MenuIcon from "@/components/menu/icon";
 import { usePrompt } from "@/hooks";
@@ -21,42 +14,42 @@ const options: IDropdownItems[] = [
   {
     label: "RiChatSmile2Line",
     value: "RiChatSmile2Line",
-    icon: <Icon icon={chat_4_line} />,
+    icon: <Icon icon="chat_4_line" />,
   },
   {
     label: "HiOutlineTranslate",
     value: "HiOutlineTranslate",
-    icon: <Icon icon={translate_2_line} />,
+    icon: <Icon icon="translate_2_line" />,
   },
   {
     label: "FaBook",
     value: "FaBook",
-    icon: <Icon icon={book_2_fill} />,
+    icon: <Icon icon="book_2_fill" />,
   },
   {
     label: "MdMovieEdit",
     value: "MdMovieEdit",
-    icon: <Icon icon={film_line} />,
+    icon: <Icon icon="film_line" />,
   },
   {
     label: "AiFillAlert",
     value: "AiFillAlert",
-    icon: <Icon icon={alert_octagon_fill} />,
+    icon: <Icon icon="alert_octagon_fill" />,
   },
   {
     label: "BsVectorPen",
     value: "BsVectorPen",
-    icon: <Icon icon={pen_line} />,
+    icon: <Icon icon="pen_line" />,
   },
   {
     label: "TbSailboat",
     value: "TbSailboat",
-    icon: <Icon icon={sailboat_line} />,
+    icon: <Icon icon="sailboat_line" />,
   },
   {
     label: "BsCodeSlash",
     value: "BsCodeSlash",
-    icon: <Icon icon={code_line} />,
+    icon: <Icon icon="code_line" />,
   },
 ];
 

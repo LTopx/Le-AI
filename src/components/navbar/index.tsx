@@ -11,10 +11,8 @@ import {
   usePremium,
 } from "@/hooks";
 import Avatar from "@/components/site/avatar";
-import { Button, Icon } from "@/components/ui";
-import indent_increase_line from "@iconify/icons-mingcute/indent-increase-line";
-import pencil_2_line from "@iconify/icons-mingcute/pencil-2-line";
-import gift_fill from "@iconify/icons-mingcute/gift-fill";
+import Icon from "@/components/icon";
+import { Button } from "@/components/ui";
 import ConversationSetting from "./conversationSetting";
 import Token from "./token";
 
@@ -82,7 +80,7 @@ export default function Navbar() {
             "dark:text-white/90 dark:hover:text-sky-400/90"
           )}
         >
-          <Icon icon={indent_increase_line} size={22} />
+          <Icon icon="indent_increase_line" size={22} />
         </div>
         <div className="h-full max-w-[60%] relative">
           <div
@@ -110,7 +108,7 @@ export default function Navbar() {
 
             {!!apiKey && (
               <Icon
-                icon={pencil_2_line}
+                icon="pencil_2_line"
                 size={18}
                 className={cn(
                   "absolute right-0 top-[50%] translate-y-[-50%] transition-colors",
@@ -140,7 +138,7 @@ export default function Navbar() {
 
         <div className="absolute right-16 hidden md:block">
           <Button type="outline" onClick={onOpenPremium}>
-            <Icon icon={gift_fill} size={20} className="text-orange-400" />
+            <Icon icon="gift_fill" size={20} className="text-orange-400" />
           </Button>
         </div>
 

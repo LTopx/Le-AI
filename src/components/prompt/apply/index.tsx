@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 import { Prompt } from "@prisma/client";
 import { useChannel, usePromptRecent } from "@/hooks";
 import type { ChannelIcon } from "@/hooks";
-import { Modal, Divider, Button, Icon } from "@/components/ui";
-import translate_line from "@iconify/icons-mingcute/translate-line";
+import Icon from "@/components/icon";
+import { Modal, Divider, Button } from "@/components/ui";
 
 interface ApplyProps {
   onChoose: () => void;
@@ -125,7 +125,7 @@ const Apply = React.forwardRef<any, ApplyProps>(
                 className="absolute right-0 top-[-0.5rem]"
                 onClick={onToggleLan}
               >
-                <Icon icon={translate_line} size={18} />
+                <Icon icon="translate_line" size={18} />
               </Button>
             )}
           </div>

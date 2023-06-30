@@ -5,8 +5,7 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib";
 import Button from "../Button";
-import Icon from "../Icon";
-import warning_fill from "@iconify/icons-mingcute/warning-fill";
+import Icon from "@/components/icon";
 
 interface ConfirmProps {
   type?: "danger" | "primary";
@@ -93,7 +92,7 @@ const Confirm = React.forwardRef<any, ConfirmProps>(
               >
                 {icon || (
                   <Icon
-                    icon={warning_fill}
+                    icon="warning_fill"
                     size={20}
                     className="text-amber-500"
                   />

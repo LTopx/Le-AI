@@ -3,9 +3,7 @@ import { useTranslations } from "next-intl";
 import type { Prompt } from "@prisma/client";
 import { cn } from "@/lib";
 import PromptItem from "./item";
-import { Icon } from "@/components/ui";
-import loading_line from "@iconify/icons-mingcute/loading-line";
-import bug_fill from "@iconify/icons-mingcute/bug-fill";
+import Icon from "@/components/icon";
 
 interface IGroupProps {
   type?: string;
@@ -43,7 +41,7 @@ const Group: React.FC<IGroupProps> = ({
   if (loading) {
     return (
       <div className="flex h-40 justify-center items-center">
-        <Icon icon={loading_line} size={18} className="animate-spin" />
+        <Icon icon="loading_line" size={18} className="animate-spin" />
       </div>
     );
   }
@@ -51,7 +49,7 @@ const Group: React.FC<IGroupProps> = ({
   if (!list.length)
     return (
       <div className="flex h-40 text-[hsl(215.4,16.3%,56.9%)] gap-2 items-center justify-center">
-        <Icon icon={bug_fill} size={18} />
+        <Icon icon="bug_fill" size={18} />
         {t("no-data")}
       </div>
     );

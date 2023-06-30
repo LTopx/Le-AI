@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import question_line from "@iconify/icons-mingcute/question-line";
 import { cn } from "@/lib";
 import { useOpenAI, useLLM } from "@/hooks";
+import Icon from "@/components/icon";
 import {
   Button,
   Divider,
@@ -12,7 +12,6 @@ import {
   Select,
   Slider,
   Tooltip,
-  Icon,
 } from "@/components/ui";
 
 const Azure: React.FC = () => {
@@ -155,7 +154,7 @@ const Azure: React.FC = () => {
           <div className="mb-1 text-sm flex items-center gap-2">
             {t("temperature")}
             <Tooltip title={t("temperature-tip")}>
-              <Icon icon={question_line} size={18} />
+              <Icon icon="question_line" size={18} />
             </Tooltip>
           </div>
           <div className="flex items-center gap-2">
@@ -180,7 +179,7 @@ const Azure: React.FC = () => {
           <div className="mb-1 text-sm flex items-center gap-2">
             {t("max-tokens")}
             <Tooltip title={t("max-tokens-tip")}>
-              <Icon icon={question_line} size={18} />
+              <Icon icon="question_line" size={18} />
             </Tooltip>
           </div>
           <Input

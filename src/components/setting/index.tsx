@@ -17,11 +17,8 @@ import {
   useTTSOpen,
 } from "@/hooks";
 import type { IConfigStoreState } from "@/hooks";
-import { Button, Confirm, Modal, Select, Icon } from "@/components/ui";
-import settings_3_line from "@iconify/icons-mingcute/settings-3-line";
-import delete_2_line from "@iconify/icons-mingcute/delete-2-line";
-import upload_3_line from "@iconify/icons-mingcute/upload-3-line";
-import download_3_line from "@iconify/icons-mingcute/download-3-line";
+import Icon from "@/components/icon";
+import { Button, Confirm, Modal, Select } from "@/components/ui";
 
 export default function Setting() {
   const router = useRouter();
@@ -159,7 +156,7 @@ export default function Setting() {
             type="primary"
             loading={loading}
             onClick={onSettingApiKey}
-            leftIcon={<Icon icon={settings_3_line} size={18} />}
+            leftIcon={<Icon icon="settings_3_line" size={18} />}
           />
         </div>
         <div
@@ -174,7 +171,7 @@ export default function Setting() {
             content={t("reset-data-tip")}
             trigger={
               <Button type="danger">
-                <Icon icon={delete_2_line} size={18} />
+                <Icon icon="delete_2_line" size={18} />
               </Button>
             }
             onOk={handleResetData}
@@ -189,10 +186,10 @@ export default function Setting() {
           <div className="text-sm">{t("export-import")}</div>
           <div className="flex gap-2">
             <Button onClick={handleExport}>
-              <Icon icon={upload_3_line} size={18} />
+              <Icon icon="upload_3_line" size={18} />
             </Button>
             <Button onClick={() => fileRef.current?.click()}>
-              <Icon icon={download_3_line} size={18} />
+              <Icon icon="download_3_line" size={18} />
             </Button>
           </div>
         </div>
@@ -220,7 +217,7 @@ export default function Setting() {
         >
           <div className="text-sm">{tTTS("azure-tts")}</div>
           <Button type="primary" onClick={() => setTTSOpen(true)}>
-            <Icon icon={settings_3_line} size={18} />
+            <Icon icon="settings_3_line" size={18} />
           </Button>
         </div>
       </Modal>

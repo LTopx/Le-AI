@@ -2,9 +2,8 @@ import React from "react";
 import * as Progress from "@radix-ui/react-progress";
 import { cn } from "@/lib";
 import { useUserInfo, useRecharge } from "@/hooks";
-import { Button, Icon } from "@/components/ui";
-import chart_pie_line from "@iconify/icons-mingcute/chart-pie-line";
-import lightning_line from "@iconify/icons-mingcute/lightning-line";
+import Icon from "@/components/icon";
+import { Button } from "@/components/ui";
 
 export default function Tokens({ type }: { type: "pc" | "mobile" }) {
   const [tokens] = useUserInfo();
@@ -35,7 +34,7 @@ export default function Tokens({ type }: { type: "pc" | "mobile" }) {
       )}
       onClick={() => setToggle((prev) => !prev)}
     >
-      <Icon icon={chart_pie_line} size={18} />
+      <Icon icon="chart_pie_line" size={18} />
       <div className="flex-1 flex items-center gap-2 group">
         <div>Token</div>
         {!toggle ? (
@@ -85,7 +84,7 @@ export default function Tokens({ type }: { type: "pc" | "mobile" }) {
         )}
         <div className="text-xs hidden group-hover:block">
           <Button size="xs" type="primary" onClick={onRecharge}>
-            <Icon icon={lightning_line} />
+            <Icon icon="lightning_line" />
           </Button>
         </div>
       </div>

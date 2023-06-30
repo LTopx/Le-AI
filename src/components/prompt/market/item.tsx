@@ -2,13 +2,8 @@ import React from "react";
 import { useDateFormat } from "l-hooks";
 import { useTranslations } from "next-intl";
 import type { Prompt } from "@prisma/client";
-import { Button, Dropdown, Divider, Icon } from "@/components/ui";
-import check_2_fill from "@iconify/icons-mingcute/check-2-fill";
-import pencil_2_line from "@iconify/icons-mingcute/pencil-2-line";
-import align_arrow_up_line from "@iconify/icons-mingcute/align-arrow-up-line";
-import delete_2_line from "@iconify/icons-mingcute/delete-2-line";
-import list_expansion_fill from "@iconify/icons-mingcute/list-expansion-fill";
-import translate_line from "@iconify/icons-mingcute/translate-line";
+import Icon from "@/components/icon";
+import { Button, Dropdown, Divider } from "@/components/ui";
 import type { IDropdownItems } from "@/components/ui/Dropdown";
 import MenuIcon from "@/components/menu/icon";
 import type { ChannelIcon } from "@/hooks";
@@ -42,22 +37,22 @@ const PromptItem: React.FC<Props> = ({
     {
       label: t("apply"),
       value: "apply",
-      icon: <Icon icon={check_2_fill} />,
+      icon: <Icon icon="check_2_fill" />,
     },
     {
       label: t("edit"),
       value: "edit",
-      icon: <Icon icon={pencil_2_line} />,
+      icon: <Icon icon="pencil_2_line" />,
     },
     {
       label: t("release"),
       value: "release",
-      icon: <Icon icon={align_arrow_up_line} />,
+      icon: <Icon icon="align_arrow_up_line" />,
     },
     {
       label: t("delete"),
       value: "delete",
-      icon: <Icon icon={delete_2_line} />,
+      icon: <Icon icon="delete_2_line" />,
     },
   ];
 
@@ -136,7 +131,7 @@ const PromptItem: React.FC<Props> = ({
               trigger={
                 <div>
                   <Button size="xs" type="primary">
-                    <Icon icon={list_expansion_fill} />
+                    <Icon icon="list_expansion_fill" />
                   </Button>
                 </div>
               }
@@ -158,7 +153,7 @@ const PromptItem: React.FC<Props> = ({
       </div>
       {content?.cn && content?.en && (
         <Icon
-          icon={translate_line}
+          icon="translate_line"
           size={20}
           className="absolute right-2 top-2 text-sky-400"
           onClick={onToggleLan}

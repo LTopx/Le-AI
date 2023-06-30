@@ -2,8 +2,7 @@
 
 import React from "react";
 import { isUndefined, cn } from "@/lib";
-import Icon from "../Icon";
-import close_line from "@iconify/icons-mingcute/close-line";
+import Icon from "@/components/icon";
 
 type InputType = "text" | "password" | "number";
 
@@ -160,7 +159,7 @@ const Input = React.forwardRef<any, InputProps>(
               "dark:text-white/90 dark:hover:before:bg-white/20"
             )}
           >
-            <Icon icon={close_line} className="z-10" size={12} />
+            <Icon icon="close_line" className="z-10" size={12} />
           </span>
         )}
       </div>

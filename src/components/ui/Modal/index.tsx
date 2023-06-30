@@ -5,8 +5,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib";
 import Button from "@/components/ui/Button";
-import Icon from "@/components/ui/Icon";
-import close_line from "@iconify/icons-mingcute/close-line";
+import Icon from "@/components/icon";
 
 interface ModalProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
   /** The Drawer is open or not */
@@ -123,7 +122,7 @@ const Modal = React.forwardRef<any, ModalProps>(
                     "dark:text-white/40 dark:hover:text-white/90"
                   )}
                 >
-                  <Icon icon={close_line} size={18} />
+                  <Icon icon="close_line" size={18} />
                 </button>
               </Dialog.Close>
             </Dialog.Content>

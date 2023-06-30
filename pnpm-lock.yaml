@@ -8,18 +8,6 @@ dependencies:
   '@emotion/css':
     specifier: 11.11.2
     version: 11.11.2
-  '@iconify/icons-devicon':
-    specifier: 1.2.11
-    version: 1.2.11
-  '@iconify/icons-mingcute':
-    specifier: 1.2.6
-    version: 1.2.6
-  '@iconify/icons-simple-icons':
-    specifier: 1.2.57
-    version: 1.2.57
-  '@iconify/react':
-    specifier: 4.1.1
-    version: 4.1.1(react@18.2.0)
   '@next-auth/prisma-adapter':
     specifier: 1.0.7
     version: 1.0.7(@prisma/client@4.16.1)(next-auth@4.22.1)
@@ -132,8 +120,8 @@ dependencies:
     specifier: 4.22.1
     version: 4.22.1(next@13.4.7)(nodemailer@6.9.3)(react-dom@18.2.0)(react@18.2.0)
   next-intl:
-    specifier: 2.16.0
-    version: 2.16.0(next@13.4.7)(react@18.2.0)
+    specifier: 2.17.0
+    version: 2.17.0(next@13.4.7)(react@18.2.0)
   next-themes:
     specifier: 0.2.1
     version: 0.2.1(next@13.4.7)(react-dom@18.2.0)(react@18.2.0)
@@ -1711,37 +1699,6 @@ packages:
 
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
-    dev: false
-
-  /@iconify/icons-devicon@1.2.11:
-    resolution: {integrity: sha512-TPx8ompK2+Y3J+PTjIlSAkgF9iB1a6b9j+LyZ1IdmbLAXCyMe6sy3vBAC0QWnd72xghgJVtc/6Go34pPNDRd7A==}
-    dependencies:
-      '@iconify/types': 2.0.0
-    dev: false
-
-  /@iconify/icons-mingcute@1.2.6:
-    resolution: {integrity: sha512-Wo8LHfuulQc6WDD0nU01YOecDVxOL1iphydJ8gUeKYUniKsFUG0918OUwQ2tKDTuZY5Yi5EGg14c9HqODXwBDQ==}
-    dependencies:
-      '@iconify/types': 2.0.0
-    dev: false
-
-  /@iconify/icons-simple-icons@1.2.57:
-    resolution: {integrity: sha512-We9arZeeUZF9qa2NytTDViq2FsJYBmBO7AE0JVVlVd8bdbFB/FaPQtiCkC0cs/2LXZakUrkoJXJWUD9F7ueWmg==}
-    dependencies:
-      '@iconify/types': 2.0.0
-    dev: false
-
-  /@iconify/react@4.1.1(react@18.2.0):
-    resolution: {integrity: sha512-jed14EjvKjee8mc0eoscGxlg7mSQRkwQG3iX3cPBCO7UlOjz0DtlvTqxqEcHUJGh+z1VJ31Yhu5B9PxfO0zbdg==}
-    peerDependencies:
-      react: '>=16'
-    dependencies:
-      '@iconify/types': 2.0.0
-      react: 18.2.0
-    dev: false
-
-  /@iconify/types@2.0.0:
-    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
     dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -6378,8 +6335,8 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /next-intl@2.16.0(next@13.4.7)(react@18.2.0):
-    resolution: {integrity: sha512-bjJ/9gm45AkZjnoU9WGysd9uYte5u+i4ghbJ9wtTBuvPdwRXsRrOL2GdjOMdZGTJPnpM3BsL0kdhkZEy2oG13w==}
+  /next-intl@2.17.0(next@13.4.7)(react@18.2.0):
+    resolution: {integrity: sha512-rx/um5aGhcexa3TusHb/ilgPXuZ0k3GXLI7RGZ02xC1ooQgcqn9C4ctHe2GR00XW313t3ZnfuHhumk7xlPq85g==}
     engines: {node: '>=10'}
     peerDependencies:
       next: ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0
@@ -6389,7 +6346,7 @@ packages:
       negotiator: 0.6.3
       next: 13.4.7(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
-      use-intl: 2.16.0(react@18.2.0)
+      use-intl: 2.17.0(react@18.2.0)
     dev: false
 
   /next-themes@0.2.1(next@13.4.7)(react-dom@18.2.0)(react@18.2.0):
@@ -7913,8 +7870,8 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /use-intl@2.16.0(react@18.2.0):
-    resolution: {integrity: sha512-n0fFJ1t4V5iHArhSLNDWizkRXWoBlvEIIgce2Pds1orGKODYjcOBwEO/mTSYRtj7HDZkZxO3sdPFC/mi3TV2Bw==}
+  /use-intl@2.17.0(react@18.2.0):
+    resolution: {integrity: sha512-vnLZeWyAZU2BoTQ6DeXfOBy5gxU/Fz6SSid0wJneDjlmCeT8BaVeHzzN+4Qj6mM9p8AH5I1zwjzU9rPYkmznIw==}
     engines: {node: '>=10'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0

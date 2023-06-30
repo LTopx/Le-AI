@@ -7,11 +7,8 @@ import { useTranslations } from "next-intl";
 import { useDateFormat } from "l-hooks";
 import CopyIcon from "@/components/site/copyIcon";
 import ChatContent from "@/components/chatContent";
-import { Confirm, Button, Icon } from "@/components/ui";
-import user_3_fill from "@iconify/icons-mingcute/user-3-fill";
-import delete_2_line from "@iconify/icons-mingcute/delete-2-line";
-import refresh_3_line from "@iconify/icons-mingcute/refresh-3-line";
-import loading_line from "@iconify/icons-mingcute/loading-line";
+import Icon from "@/components/icon";
+import { Confirm, Button } from "@/components/ui";
 import { cn, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/gpt-tokens";
 import {
@@ -219,7 +216,7 @@ const ChatList: React.FC = () => {
                     />
                   ) : (
                     <Icon
-                      icon={user_3_fill}
+                      icon="user_3_fill"
                       className="text-white dark:text-neutral-600"
                     />
                   )}
@@ -238,7 +235,7 @@ const ChatList: React.FC = () => {
                     content={t("delete-chat-tip")}
                     trigger={
                       <Button size="xs" type="outline" className="rounded-full">
-                        <Icon icon={delete_2_line} size={16} />
+                        <Icon icon="delete_2_line" size={16} />
                       </Button>
                     }
                     onOk={() => onDelete(item)}
@@ -249,7 +246,7 @@ const ChatList: React.FC = () => {
                     className="rounded-full"
                     onClick={() => onRegenerate(item)}
                   >
-                    <Icon icon={refresh_3_line} size={16} />
+                    <Icon icon="refresh_3_line" size={16} />
                   </Button>
                 </div>
               </div>
@@ -281,7 +278,7 @@ const ChatList: React.FC = () => {
         {!!findChannel?.channel_loading_connect && (
           <div>
             <Icon
-              icon={loading_line}
+              icon="loading_line"
               size={24}
               className="ml-11 animate-spin text-sky-400 dark:text-sky-400/90"
             />
