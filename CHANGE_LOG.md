@@ -1,5 +1,13 @@
 # L-GPT Change Log
 
+## v0.7.3
+
+> 2023-07-01
+
+### Add
+
+- Added support for Azure for the 0613 and 0613-16K models.
+
 ## v0.7.2
 
 > 2023-06-30

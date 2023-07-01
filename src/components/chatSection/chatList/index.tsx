@@ -55,7 +55,9 @@ const ChatList: React.FC = () => {
       if (!findCh) return channel;
       findCh.chat_list = findCh.chat_list.filter((item) => item.id !== id);
 
-      let calcModel = findCh.channel_model.name;
+      const channel_model = findCh.channel_model;
+
+      let calcModel = channel_model.name;
       const findAzureModel = azure.models.find(
         (item) => item.value === calcModel
       );
@@ -66,9 +68,15 @@ const ChatList: React.FC = () => {
         content: item.content,
       }));
 
+      const isPlus =
+        channel_model.type === "openai" &&
+        (channel_model.name === "gpt-3.5-turbo" ||
+          channel_model.name === "gpt-3.5-turbo-0613");
+
       const { usedTokens, usedUSD } = calcTokens(
         messages,
-        calcModel as supportModelType
+        calcModel as supportModelType,
+        isPlus
       );
 
       // Only updates the tokens required to process the entire content of the current session,

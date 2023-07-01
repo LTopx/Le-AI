@@ -143,6 +143,7 @@ const useStore = create<LLMState & LLMAction>((set) => ({
     models: [
       // system default
       { label: "gpt-3.5-turbo", value: "lgpt-35-turbo" },
+      { label: "gpt-3.5-turbo-16k", value: "lgpt-35-turbo-16k" },
       { label: "gpt-4", value: "gpt-4", premium: true },
       { label: "gpt-4-32k", value: "gpt-4-32k", premium: true },
     ],

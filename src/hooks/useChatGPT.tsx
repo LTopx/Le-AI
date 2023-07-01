@@ -279,6 +279,13 @@ export const useChatGPT = () => {
             };
           }
 
+          const channel_model = findCh.channel_model;
+
+          const isPlus =
+            channel_model.type === "openai" &&
+            (channel_model.name === "gpt-3.5-turbo" ||
+              channel_model.name === "gpt-3.5-turbo-0613");
+
           const { usedTokens, usedUSD } = calcTokens(
             [
               { role: "system", content: findCh.channel_prompt },
@@ -287,7 +294,8 @@ export const useChatGPT = () => {
                 content: item.content,
               })),
             ],
-            findModelLabel.label
+            findModelLabel.label,
+            isPlus
           );
 
           findCh.channel_cost.tokens = usedTokens;
@@ -379,12 +387,20 @@ export const useChatGPT = () => {
         const findCh = channel.list.find((e) => e.channel_id === channel_id);
         if (!findCh) return channel;
 
+        const channel_model = findCh.channel_model;
+
+        const isPlus =
+          channel_model.type === "openai" &&
+          (channel_model.name === "gpt-3.5-turbo" ||
+            channel_model.name === "gpt-3.5-turbo-0613");
+
         const { usedTokens, usedUSD } = calcTokens(
           [
             ...newParams.chat_list,
             { role: "assistant", content: findCh.channel_name },
           ],
-          findModelLabel.label
+          findModelLabel.label,
+          isPlus
         );
 
         findCh.channel_cost.function_tokens += usedTokens;
@@ -424,13 +440,20 @@ export const useChatGPT = () => {
         };
       }
 
+      const channel_model = findCh.channel_model;
+
       const findLLM: any = LLMOptions.find(
-        (item) => item.value === findCh.channel_model.type
+        (item) => item.value === channel_model.type
       );
 
       const findModelLabel = findLLM.models.find(
-        (item: any) => item.value === findCh.channel_model.name
+        (item: any) => item.value === channel_model.name
       );
+
+      const isPlus =
+        channel_model.type === "openai" &&
+        (channel_model.name === "gpt-3.5-turbo" ||
+          channel_model.name === "gpt-3.5-turbo-0613");
 
       const { usedTokens, usedUSD } = calcTokens(
         [
@@ -440,7 +463,8 @@ export const useChatGPT = () => {
             content: item.content,
           })),
         ],
-        findModelLabel.label
+        findModelLabel.label,
+        isPlus
       );
 
       findCh.channel_cost.tokens = usedTokens;

@@ -80,7 +80,9 @@ const stream = async (
   if (userId && !headerApiKey) {
     const final = [...messages, { role: "assistant", content: resultContent }];
 
-    const { usedTokens, usedUSD } = calcTokens(final, model, true);
+    const isPlus = model === "gpt-3.5-turbo" || model === "gpt-3.5-turbo-0613";
+
+    const { usedTokens, usedUSD } = calcTokens(final, model, isPlus);
 
     const findUser = await prisma.user.findUnique({
       where: { id: userId },
