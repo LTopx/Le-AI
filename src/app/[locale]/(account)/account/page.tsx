@@ -78,8 +78,8 @@ const Cost: React.FC = () => {
         },
       },
       grid: {
-        left: 50,
-        right: 10,
+        left: 70,
+        right: 30,
       },
       xAxis: {
         type: "category",
@@ -132,7 +132,7 @@ const Cost: React.FC = () => {
     <>
       <div className="text-2xl font-semibold">{t("usage")}</div>
       <div className="text-sm mt-4 mb-8">{t("usage-tip")}</div>
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2 mb-8">
         <div>{t("month")}</div>
         <Select
           className="w-44"
@@ -143,7 +143,7 @@ const Cost: React.FC = () => {
       </div>
       <div
         ref={costRef}
-        className="w-full h-80 border rounded-md flex justify-center items-center"
+        className="w-full h-80 border dark:border-neutral-500 rounded-md flex justify-center items-center"
       >
         <Icon className="animate-spin" icon="loading_line" />
       </div>
