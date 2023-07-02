@@ -6,7 +6,13 @@ import { v4 as uuidv4 } from "uuid";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
 import type { ChatItem } from "@/hooks/useChannel";
-import { useChannel, useLLM, useScrollToBottom, BASE_PROMPT } from "@/hooks";
+import {
+  useChannel,
+  useLLM,
+  useScrollToBottom,
+  useConversationSetting,
+  BASE_PROMPT,
+} from "@/hooks";
 import { useChatGPT } from "@/hooks/useChatGPT";
 import Icon from "@/components/icon";
 import { Button, Confirm } from "@/components/ui";
@@ -22,6 +28,7 @@ const ChatFooter: React.FC = () => {
   const { openai, azure } = useLLM();
   const [inputValue, setInputValue] = React.useState<string>("");
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
+  const [, setConversationSettingOpen] = useConversationSetting();
   const [loadingShare, setLoadingShare] = React.useState(false);
 
   // ref
@@ -42,6 +49,24 @@ const ChatFooter: React.FC = () => {
     (item) => item.channel_id === channel.activeId
   );
   const loadingChannel = !!findChannel?.channel_loading;
+
+  const renderLLM = () => {
+    const findLLM = LLMOptions.find(
+      (item) => item.value === findChannel?.channel_model.type
+    );
+    if (!findLLM) return "";
+    const findModel = findLLM.models.find(
+      (item) => item.value === findChannel?.channel_model.name
+    );
+    return findModel?.label || "";
+  };
+
+  const renderIcon = () => {
+    const icon = LLMOptions.find(
+      (item) => item.value === findChannel?.channel_model.type
+    )?.ico;
+    return icon || null;
+  };
 
   const onCancel = () => {
     if (!loadingChannel) return;
@@ -173,70 +198,76 @@ const ChatFooter: React.FC = () => {
           "dark:via-neutral-900 dark:to-neutral-900"
         )}
       >
-        <div className="flex py-2 gap-2 justify-center items-center">
-          {!!findChannel?.chat_list?.length && (
-            <>
-              {loadingChannel && (
+        <div className="flex items-center justify-between">
+          <div className="flex py-1.5 gap-2 items-center">
+            {!!findChannel?.chat_list?.length && (
+              <>
                 <Button
-                  className="rounded-full"
-                  type="danger"
-                  onClick={cancel}
-                  leftIcon={<Icon icon="stop_fill" size={18} />}
+                  className="rounded-full h-7 px-2.5 text-xs hidden md:flex"
+                  type="outline"
+                  leftIcon={renderIcon()}
+                  onClick={() => setConversationSettingOpen(true)}
                 >
-                  {t("stop-generate")}
+                  {renderLLM()?.toUpperCase()}
                 </Button>
-              )}
+                {loadingChannel && (
+                  <Button
+                    className="rounded-full h-7 px-2.5 text-xs"
+                    type="danger"
+                    onClick={cancel}
+                    leftIcon={<Icon icon="stop_fill" size={18} />}
+                  >
+                    {t("stop-generate")}
+                  </Button>
+                )}
 
+                <Button
+                  className="rounded-full h-7 px-2.5 text-xs"
+                  type="outline"
+                  scaleable
+                  leftIcon={<Icon icon="share_2_line" size={16} />}
+                  loading={loadingShare}
+                  onClick={handleShare}
+                >
+                  {tShare("share")}
+                </Button>
+              </>
+            )}
+
+            <Button
+              className="rounded-full h-7 px-2.5 text-xs"
+              type="success"
+              scaleable
+              onClick={() => window.open("https://docs.ltopx.com", "_blank")}
+              leftIcon={<Icon icon="document_line" size={18} />}
+            >
+              {tCommon("docs")}
+            </Button>
+          </div>
+          <Confirm
+            disabled={loadingChannel}
+            title={tMenu("clear-all-conversation")}
+            content={t("clear-current-conversation")}
+            trigger={
               <Button
-                className="rounded-full"
+                className={cn(
+                  "rounded-full h-7 px-2.5 text-xs ",
+                  "border-rose-400 text-rose-400 dark:border-rose-400/90 dark:text-rose-400/90",
+                  "hover:bg-rose-50/80 active:bg-rose-100/80"
+                )}
                 type="outline"
-                leftIcon={<Icon icon="share_2_line" size={18} />}
-                loading={loadingShare}
-                onClick={handleShare}
+                leftIcon={<Icon icon="broom_line" size={16} />}
               >
-                {tShare("share")}
+                <span className="hidden md:block">
+                  {tMenu("clear-all-conversation")}
+                </span>
               </Button>
-            </>
-          )}
-
-          <Button
-            className="rounded-full"
-            type="success"
-            onClick={() => window.open("https://docs.ltopx.com", "_blank")}
-            leftIcon={<Icon icon="document_line" size={18} />}
-          >
-            {tCommon("docs")}
-          </Button>
+            }
+            onOk={clearNowConversation}
+          />
         </div>
 
         <div className="flex">
-          <div className="flex items-end">
-            <Confirm
-              disabled={loadingChannel}
-              title={tMenu("clear-all-conversation")}
-              content={t("clear-current-conversation")}
-              trigger={
-                <div
-                  className={cn(
-                    "w-8 h-[2.75rem] flex items-center cursor-pointer transition-colors",
-                    "text-black/90 hover:text-sky-400",
-                    "dark:text-white/90 dark:hover:text-sky-400/90"
-                  )}
-                >
-                  {loadingChannel ? (
-                    <Icon
-                      className="animate-spin"
-                      icon="loading_line"
-                      size={24}
-                    />
-                  ) : (
-                    <Icon icon="broom_line" size={24} />
-                  )}
-                </div>
-              }
-              onOk={clearNowConversation}
-            />
-          </div>
           <Inputarea
             ref={inputRef}
             value={inputValue}

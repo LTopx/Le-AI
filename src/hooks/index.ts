@@ -12,3 +12,4 @@ export * from "./useRecharge";
 export * from "./useTTS";
 export * from "./useModel";
 export * from "./useScrollToBottom";
+export * from "./useConversationSetting";

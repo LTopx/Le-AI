@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { Divider, Input, Modal, Select } from "@/components/ui";
-import { useChannel, useLLM, useModel } from "@/hooks";
+import { useChannel, useLLM, useModel, useConversationSetting } from "@/hooks";
 import { cn } from "@/lib";
 
 interface IConversationSettings {
@@ -38,15 +38,16 @@ const renderModelLabel = (item: any) => {
   );
 };
 
-const ChangeTitle = React.forwardRef((_, forwardedRef) => {
+const ChangeTitle: React.FC = () => {
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
   const tPrompt = useTranslations("prompt");
 
   const [channel, setChannel] = useChannel();
   const { updateType, updateName } = useModel();
+  const [open, setOpen] = useConversationSetting();
   const { openai, azure } = useLLM();
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
   const [modelOptions, setModelOptions] = React.useState<any[]>([]);
   const [formData, setFormData] = React.useState<IConversationSettings>({
@@ -105,8 +106,8 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
     onClose();
   };
 
-  React.useImperativeHandle(forwardedRef, () => ({
-    init() {
+  React.useEffect(() => {
+    if (open) {
       const { activeId, list } = channel;
       const findChannel = list.find((item) => item.channel_id === activeId);
       if (!findChannel) return;
@@ -117,10 +118,8 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
         model_value: findChannel.channel_model.name,
       });
       getModelOptions(findChannel.channel_model.type);
-
-      setOpen(true);
-    },
-  }));
+    }
+  }, [open]);
 
   return (
     <Modal
@@ -170,7 +169,7 @@ const ChangeTitle = React.forwardRef((_, forwardedRef) => {
       </div>
     </Modal>
   );
-});
+};
 
 ChangeTitle.displayName = "ChangeTitle";
 

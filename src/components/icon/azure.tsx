@@ -30,7 +30,7 @@ export const Azure = ({ size = 16, className, style, onClick }: IconProps) => (
         y2="71.076"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-opacity=".3" />
+        <stop stopOpacity=".3" />
         <stop offset=".071" stopOpacity=".2" />
         <stop offset=".321" stopOpacity=".1" />
         <stop offset=".623" stopOpacity=".05" />

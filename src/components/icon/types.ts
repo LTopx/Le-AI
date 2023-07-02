@@ -1,6 +1,7 @@
 export type IconType =
   | "loading_line"
   | "azure"
+  | "openai"
   | "check_line"
   | "question_line"
   | "refresh_3_line"

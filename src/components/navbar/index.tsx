@@ -9,6 +9,7 @@ import {
   useMobileMenu,
   useLLM,
   usePremium,
+  useConversationSetting,
 } from "@/hooks";
 import Avatar from "@/components/site/avatar";
 import Icon from "@/components/icon";
@@ -17,13 +18,13 @@ import ConversationSetting from "./conversationSetting";
 import Token from "./token";
 
 export default function Navbar() {
-  const conversationSettingRef = React.useRef<any>(null);
   const tokenRef = React.useRef<any>(null);
   const tMenu = useTranslations("menu");
   const tSetting = useTranslations("setting");
   const [channel] = useChannel();
   const { openai, azure } = useLLM();
   const [, setPremiumOpen] = usePremium();
+  const [, setConversationSettingOpen] = useConversationSetting();
   const [openAI] = useOpenAI();
 
   const [, setMobileMenuVisible] = useMobileMenu();
@@ -39,7 +40,7 @@ export default function Navbar() {
 
   const onConversationSetting = () => {
     if (!apiKey) return;
-    conversationSettingRef.current?.init();
+    setConversationSettingOpen(true);
   };
 
   const onCheckToken = () => tokenRef.current?.init();
@@ -144,7 +145,7 @@ export default function Navbar() {
 
         <Avatar />
       </div>
-      <ConversationSetting ref={conversationSettingRef} />
+      <ConversationSetting />
       <Token ref={tokenRef} cost={activeCost} />
     </>
   );

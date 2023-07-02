@@ -1,6 +1,7 @@
 import { IconProps } from "./types";
 import { Loading_line } from "./loading_line";
 import { Azure } from "./azure";
+import { Openai } from "./openai";
 import { Check_line } from "./check_line";
 import { Question_line } from "./question_line";
 import { Refresh_3_line } from "./refresh_3_line";
@@ -194,6 +195,8 @@ const Icon: React.FC<IconProps> = (props) => {
   if (icon === "loading_line") return <Loading_line {...props} />;
 
   if (icon === "azure") return <Azure {...props} />;
+
+  if (icon === "openai") return <Openai {...props} />;
 
   if (icon === "check_line") return <Check_line {...props} />;
 
