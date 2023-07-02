@@ -1,16 +1,19 @@
 {
   "account": {
-    "account": "Account",
     "account-tip": "Set up account basic information",
     "avatar": "Avatar",
     "avatar-placeholder": "Please enter your avatar URL here",
     "email": "Email",
     "email-placeholder": "Please enter your email address",
+    "month": "Month:",
     "name": "Name",
     "name-placeholder": "Please enter your name",
     "save": "Save",
     "save-success": "Save Success",
-    "teams": "Teams"
+    "teams": "Teams",
+    "usage": "Usage",
+    "usage-tip": "Below is a summary of the Token usage for your account. The data is updated daily (not in real-time).",
+    "user-info": "User Info"
   },
   "auth": {
     "access-denied": "Access Denied",

@@ -7,6 +7,7 @@
 ### Add
 
 - Added support for Azure for the 0613 and 0613-16K models.
+- Add support for viewing token consumption details
 
 ## v0.7.2
 

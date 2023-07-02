@@ -18,7 +18,7 @@ export default function Menu() {
 
   const menuItems: MenuItemProps[] = [
     {
-      label: t("account"),
+      label: t("usage"),
       value: "account",
       path: "/account",
     },
@@ -26,6 +26,11 @@ export default function Menu() {
       label: t("teams"),
       value: "team",
       path: "/account/team",
+    },
+    {
+      label: t("user-info"),
+      value: "info",
+      path: "/account/info",
     },
   ];
 

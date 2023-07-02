@@ -1,16 +1,19 @@
 {
   "account": {
-    "account": "账户",
     "account-tip": "设置账户基本信息",
     "avatar": "头像",
     "avatar-placeholder": "请输入头像URL链接",
     "email": "邮箱",
     "email-placeholder": "请输入邮箱",
+    "month": "月份：",
     "name": "昵称",
     "name-placeholder": "请输入昵称",
     "save": "保存",
     "save-success": "保存成功",
-    "teams": "团队"
+    "teams": "团队",
+    "usage": "使用情况",
+    "usage-tip": "下面是您账户的Token使用情况摘要。数据每日更新（非实时）",
+    "user-info": "用户信息"
   },
   "auth": {
     "access-denied": "访问被拒绝",
