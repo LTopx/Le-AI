@@ -6,7 +6,11 @@ import PlausibleProvider from "next-plausible";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <PlausibleProvider domain="gpt.ltopx.com">
+    <PlausibleProvider
+      domain="gpt.ltopx.com"
+      selfHosted
+      customDomain={process.env.NEXT_PLAUSIBLE_DOMAIN}
+    >
       <SessionProvider>
         <ThemeProvider attribute="class">{children}</ThemeProvider>
       </SessionProvider>
