@@ -26,7 +26,7 @@ const PremiumBtn: React.FC = () => {
   return (
     <Button
       type="outline"
-      className="flex items-center gap-2 mt-4 mb-3"
+      className="flex items-center gap-2 mt-4 mb-2"
       size="base"
       onClick={onCheck}
     >

@@ -256,7 +256,7 @@ const Configure = React.memo(() => {
             transition={{ duration: 0.5 }}
           >
             <PremiumBtn />
-            <div className="flex gap-2">
+            <div className="flex gap-2 mt-3">
               <Button
                 className="rounded-full h-7 px-2.5 text-xs"
                 type="success"

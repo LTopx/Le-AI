@@ -15,7 +15,7 @@
 - Add an input box to display the language model currently used in the session at the top
 - Add the function of setting the maximum length of context carried in a session
 - Add a "New Conversation" shortcut button at the top of the input box
-- Add Plausible Analytics tracking
+- Add Plausible Analytics tracking and replace Vercel Analytics
 
 ### Changed
 

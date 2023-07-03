@@ -15,7 +15,7 @@
 - 新增输入框顶部显示当前会话使用的语言模型
 - 新增设置会话携带上下文数量的最大长度功能
 - 输入框顶部新增”新建会话“快捷操作按钮
-- 新增 Plausible Analytics 统计
+- 新增 Plausible Analytics 统计，替换 vercel analytics
 
 ### 调整
 
