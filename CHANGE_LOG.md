@@ -15,11 +15,13 @@
 - Add an input box to display the language model currently used in the session at the top
 - Add the function of setting the maximum length of context carried in a session
 - Add a "New Conversation" shortcut button at the top of the input box
+- Add Plausible Analytics tracking
 
 ### Changed
 
 - Adjust layout of top buttons in input field
 - Non-Premium members can only create a maximum of 10 sessions (Premium).
+- Upgrade Azure API version to 2023-06-01-preview
 
 ## v0.7.2
 

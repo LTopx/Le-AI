@@ -131,6 +131,9 @@ dependencies:
   next-intl:
     specifier: 2.17.0
     version: 2.17.0(next@13.4.7)(react@18.2.0)
+  next-plausible:
+    specifier: ^3.8.0
+    version: 3.8.0(next@13.4.7)(react-dom@18.2.0)(react@18.2.0)
   next-themes:
     specifier: 0.2.1
     version: 0.2.1(next@13.4.7)(react-dom@18.2.0)(react@18.2.0)
@@ -6405,6 +6408,18 @@ packages:
       next: 13.4.7(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       use-intl: 2.17.0(react@18.2.0)
+    dev: false
+
+  /next-plausible@3.8.0(next@13.4.7)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-fOSI5dRwQkDcARAPqwCM2nqYf2bCP5ITUrX/jj2owkggi7LHAaKku4k/6CoKHAygs7EumYiGOuPt+qaTxxo+YA==}
+    peerDependencies:
+      next: ^11.1.0 || ^12.0.0 || ^13.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      next: 13.4.7(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /next-themes@0.2.1(next@13.4.7)(react-dom@18.2.0)(react@18.2.0):

@@ -179,8 +179,8 @@ const ChangeTitle: React.FC = () => {
         </div>
         <div className="flex items-center">
           <div className="text-sm text-black/90 w-36 dark:text-white/90 flex items-center gap-1">
-            <span>{tChat("context-length")}</span>
-            <Tooltip title={tChat("context-length-tip")}>
+            <span>{tChat("context-limit")}</span>
+            <Tooltip title={tChat("context-limit-tip")}>
               <Icon icon="question_line" size={18} />
             </Tooltip>
           </div>
