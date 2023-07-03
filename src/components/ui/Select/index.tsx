@@ -2,7 +2,7 @@
 
 import React from "react";
 import * as Select from "@radix-ui/react-select";
-import { cn } from "@/lib";
+import { cn, isUndefined } from "@/lib";
 import Icon from "@/components/icon";
 import Item from "./item";
 
@@ -79,7 +79,7 @@ export default function LSelect({
           { "h-9": size === "large" },
           { "bg-white border-sky-500": isOpen },
           { "dark:bg-transparent": isOpen },
-          { "text-gray-400": !value },
+          { "text-gray-400": isUndefined(value) },
           {
             "cursor-not-allowed text-gray-400/80 hover:bg-gray-200/70 dark:hover:bg-neutral-700/90":
               !!disabled,

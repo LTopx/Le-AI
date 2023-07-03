@@ -31,19 +31,9 @@ const CodeBlock: React.FC<Props> = React.memo(({ language, value }) => {
             onClick={copyToClipboard}
           >
             {isCopied ? (
-              <>
-                <Icon
-                  icon="check_line"
-                  className="text-[#52c41a] mr-1"
-                  size={18}
-                />
-                {t("copied")}!
-              </>
+              <Icon icon="check_line" className="text-[#52c41a]" size={18} />
             ) : (
-              <>
-                <Icon icon="copy_2_line" className="mr-1" size={18} />
-                {t("copy-code")}
-              </>
+              <Icon icon="copy_2_line" size={18} />
             )}
           </button>
         </div>

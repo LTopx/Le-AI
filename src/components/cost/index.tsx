@@ -10,8 +10,6 @@ const Cost: React.FC = () => {
   const costRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    console.log(costRef.current, "costRef");
-
     const dom = costRef.current;
     const myChart = echarts.init(dom as HTMLDivElement);
     const option = {

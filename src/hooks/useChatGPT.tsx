@@ -113,10 +113,16 @@ export const useChatGPT = () => {
       params.resourceName = modelConfig.resourceName;
     }
 
-    params.chat_list = chat_list.map((item) => ({
-      role: item.role,
-      content: item.content,
-    }));
+    const sliceStart = chat_list.length - (1 + findCh.channel_context_length);
+
+    const arr = chat_list
+      .map((item) => ({
+        role: item.role,
+        content: item.content,
+      }))
+      .slice(sliceStart <= 0 ? 0 : sliceStart, chat_list.length);
+
+    params.chat_list = arr;
 
     fetch(fetchUrl, {
       method: "POST",

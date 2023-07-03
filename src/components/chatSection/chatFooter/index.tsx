@@ -203,12 +203,23 @@ const ChatFooter: React.FC = () => {
             {!!findChannel?.chat_list?.length && (
               <>
                 <Button
-                  className="rounded-full h-7 px-2.5 text-xs hidden md:flex"
+                  className="rounded-full h-7 px-2.5 text-xs"
+                  type="outline"
+                  scaleable
+                  onClick={() => setConversationSettingOpen(true)}
+                  leftIcon={<Icon icon="settings_3_line" size={18} />}
+                >
+                  <span className="hidden md:block">{t("chat-setting")}</span>
+                </Button>
+                <Button
+                  className="rounded-full h-7 px-2.5 text-xs"
                   type="outline"
                   leftIcon={renderIcon()}
                   onClick={() => setConversationSettingOpen(true)}
                 >
-                  {renderLLM()?.toUpperCase()}
+                  <span className="hidden md:block">
+                    {renderLLM()?.toUpperCase()}
+                  </span>
                 </Button>
                 {loadingChannel && (
                   <Button
@@ -217,7 +228,9 @@ const ChatFooter: React.FC = () => {
                     onClick={cancel}
                     leftIcon={<Icon icon="stop_fill" size={18} />}
                   >
-                    {t("stop-generate")}
+                    <span className="hidden md:block">
+                      {t("stop-generate")}
+                    </span>
                   </Button>
                 )}
 
@@ -229,7 +242,7 @@ const ChatFooter: React.FC = () => {
                   loading={loadingShare}
                   onClick={handleShare}
                 >
-                  {tShare("share")}
+                  <span className="hidden md:block">{tShare("share")}</span>
                 </Button>
               </>
             )}
@@ -241,30 +254,33 @@ const ChatFooter: React.FC = () => {
               onClick={() => window.open("https://docs.ltopx.com", "_blank")}
               leftIcon={<Icon icon="document_line" size={18} />}
             >
-              {tCommon("docs")}
+              <span className="hidden md:block">{tCommon("docs")}</span>
             </Button>
           </div>
-          <Confirm
-            disabled={loadingChannel}
-            title={tMenu("clear-all-conversation")}
-            content={t("clear-current-conversation")}
-            trigger={
-              <Button
-                className={cn(
-                  "rounded-full h-7 px-2.5 text-xs ",
-                  "border-rose-400 text-rose-400 dark:border-rose-400/90 dark:text-rose-400/90",
-                  "hover:bg-rose-50/80 active:bg-rose-100/80"
-                )}
-                type="outline"
-                leftIcon={<Icon icon="broom_line" size={16} />}
-              >
-                <span className="hidden md:block">
-                  {tMenu("clear-all-conversation")}
-                </span>
-              </Button>
-            }
-            onOk={clearNowConversation}
-          />
+          {!!findChannel?.chat_list?.length && (
+            <Confirm
+              disabled={loadingChannel}
+              title={tMenu("clear-all-conversation")}
+              content={t("clear-current-conversation")}
+              trigger={
+                <Button
+                  className={cn(
+                    "rounded-full h-7 px-2.5 text-xs ",
+                    "border-rose-400 text-rose-400 dark:border-rose-400/90 dark:text-rose-400/90",
+                    "hover:bg-rose-50/80 active:bg-rose-100/80"
+                  )}
+                  type="outline"
+                  scaleable
+                  leftIcon={<Icon icon="broom_line" size={16} />}
+                >
+                  <span className="hidden md:block">
+                    {tMenu("clear-all-conversation")}
+                  </span>
+                </Button>
+              }
+              onOk={clearNowConversation}
+            />
+          )}
         </div>
 
         <div className="flex">

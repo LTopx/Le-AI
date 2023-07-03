@@ -2,6 +2,7 @@ import React from "react";
 import { useOpenAI, useScrollToBottom } from "@/hooks";
 import ChatList from "./chatList";
 import ChatFooter from "./chatFooter";
+import ConversationSetting from "../conversationSetting";
 
 const ChatSection: React.FC = () => {
   const [openai] = useOpenAI();
@@ -26,12 +27,15 @@ const ChatSection: React.FC = () => {
     return null;
 
   return (
-    <div className="h-[100%] overflow-x-hidden relative">
-      <div className="h-[100%] pr-10 pl-5 overflow-y-auto" ref={scrollRef}>
-        <ChatList />
-        <ChatFooter />
+    <>
+      <div className="h-[100%] overflow-x-hidden relative">
+        <div className="h-[100%] pr-10 pl-5 overflow-y-auto" ref={scrollRef}>
+          <ChatList />
+          <ChatFooter />
+        </div>
       </div>
-    </div>
+      <ConversationSetting />
+    </>
   );
 };
 

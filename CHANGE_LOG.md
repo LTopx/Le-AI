@@ -2,13 +2,18 @@
 
 ## v0.7.3
 
-> 2023-07-02
+> 2023-07-03
+
+### Fixed
+
+- Fix Select component display bug
 
 ### Add
 
-- Added support for Azure for the 0613 and 0613-16K models.
+- Added support for Azure for the 0613 and 0613-16K models
 - Add support for viewing token consumption details
-- Add an input box to display the language model currently used in the session at the top.
+- Add an input box to display the language model currently used in the session at the top
+- Add the function of setting the maximum length of context carried in a session
 
 ## v0.7.2
 

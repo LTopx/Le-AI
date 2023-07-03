@@ -1,6 +1,7 @@
 import React from "react";
 import { create } from "zustand";
 import { v4 as uuidv4 } from "uuid";
+import { isUndefined } from "@/lib";
 import { BASE_PROMPT } from "./usePrompt";
 
 interface ChannelModel {
@@ -50,6 +51,7 @@ export interface ChannelListItem {
   channel_cost: ChannelCost;
   channel_loading_connect: boolean;
   channel_loading: boolean;
+  channel_context_length: number;
   chat_list: ChatItem[];
 }
 
@@ -117,6 +119,7 @@ export const initChannelList: ChannelListItem[] = [
     },
     channel_loading_connect: false,
     channel_loading: false,
+    channel_context_length: 8,
     chat_list: [],
   },
 ];
@@ -147,15 +150,18 @@ const getInitChannelList = () => {
               total_usd: 0,
             };
           }
-          if (!item.channel_prompt) {
-            item.channel_prompt = BASE_PROMPT;
-          }
+          if (!item.channel_prompt) item.channel_prompt = BASE_PROMPT;
+
           item.channel_loading_connect = false;
           item.channel_loading = false;
 
           item.chat_list.forEach((item) => {
             item.tts_loading = false;
           });
+
+          if (isUndefined(item.channel_context_length)) {
+            item.channel_context_length = 8;
+          }
 
           return item;
         }

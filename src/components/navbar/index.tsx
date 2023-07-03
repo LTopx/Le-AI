@@ -3,18 +3,10 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib";
-import {
-  useChannel,
-  useOpenAI,
-  useMobileMenu,
-  useLLM,
-  usePremium,
-  useConversationSetting,
-} from "@/hooks";
+import { useChannel, useOpenAI, useMobileMenu, usePremium } from "@/hooks";
 import Avatar from "@/components/site/avatar";
 import Icon from "@/components/icon";
 import { Button } from "@/components/ui";
-import ConversationSetting from "./conversationSetting";
 import Token from "./token";
 
 export default function Navbar() {
@@ -22,13 +14,10 @@ export default function Navbar() {
   const tMenu = useTranslations("menu");
   const tSetting = useTranslations("setting");
   const [channel] = useChannel();
-  const { openai, azure } = useLLM();
   const [, setPremiumOpen] = usePremium();
-  const [, setConversationSettingOpen] = useConversationSetting();
   const [openAI] = useOpenAI();
 
   const [, setMobileMenuVisible] = useMobileMenu();
-  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
 
   const apiKey =
     openAI.openai.apiKey ||
@@ -37,11 +26,6 @@ export default function Navbar() {
     openAI.env.AZURE_API_KEY;
 
   const onOpenMenu = () => setMobileMenuVisible(true);
-
-  const onConversationSetting = () => {
-    if (!apiKey) return;
-    setConversationSettingOpen(true);
-  };
 
   const onCheckToken = () => tokenRef.current?.init();
 
@@ -52,18 +36,6 @@ export default function Navbar() {
   );
 
   const activeCost = activeChannel?.channel_cost;
-
-  const renderIcon = () => {
-    const icon = LLMOptions.find(
-      (item) => item.value === activeChannel?.channel_model.type
-    )?.ico;
-
-    if (!icon) return null;
-
-    return (
-      <div className="top-[50%] left-0 translate-y-[-50%] absolute">{icon}</div>
-    );
-  };
 
   return (
     <>
@@ -85,10 +57,8 @@ export default function Navbar() {
         </div>
         <div className="h-full max-w-[60%] relative">
           <div
-            onClick={onConversationSetting}
             className={cn(
-              "group font-semibold cursor-pointer relative transition-colors text-ellipsis whitespace-nowrap overflow-hidden",
-              { "pr-6": !!apiKey, "pl-6": !!renderIcon() },
+              "group font-semibold relative transition-colors text-ellipsis whitespace-nowrap overflow-hidden",
               "text-slate-700 hover:text-slate-900",
               "dark:text-slate-400 dark:hover:text-slate-300",
               {
@@ -97,27 +67,9 @@ export default function Navbar() {
               }
             )}
           >
-            {renderIcon()}
-
-            {apiKey ? (
-              <span className="transition-colors group-hover:text-sky-400 dark:group-hover:text-sky-400/90">
-                {activeChannel?.channel_name || tMenu("new-conversation")}
-              </span>
-            ) : (
-              tSetting("set-api-key")
-            )}
-
-            {!!apiKey && (
-              <Icon
-                icon="pencil_2_line"
-                size={18}
-                className={cn(
-                  "absolute right-0 top-[50%] translate-y-[-50%] transition-colors",
-                  "group-hover:text-sky-400",
-                  "dark:hover:text-sky-400/90"
-                )}
-              />
-            )}
+            {apiKey
+              ? activeChannel?.channel_name || tMenu("new-conversation")
+              : tSetting("set-api-key")}
           </div>
           {!!activeCost?.tokens && (
             <div
@@ -145,7 +97,6 @@ export default function Navbar() {
 
         <Avatar />
       </div>
-      <ConversationSetting />
       <Token ref={tokenRef} cost={activeCost} />
     </>
   );

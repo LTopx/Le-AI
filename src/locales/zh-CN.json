@@ -47,15 +47,18 @@
   },
   "chat": {
     "canceled": "已取消",
+    "chat-setting": "会话设置",
     "clear-current-conversation": "确认清空当前会话内容？",
+    "conversation-setting": "会话设置",
     "copy": "复制",
-    "copied": "已复制",
-    "copy-code": "复制代码",
+    "context-length": "上下文消息",
+    "context-length-tip": "进行此会话时携带的上下文长度，默认为8。选择为0时，则每次会话不携带上下文，相当于一问一答。",
     "delete": "删除",
     "delete-chat": "删除会话内容",
     "delete-chat-tip": "你确认删除该对话内容？",
     "enter-message": "请输入会话内容",
     "stop-generate": "停止",
+    "title": "标题",
     "type-message": "请输入聊天内容"
   },
   "common": {
@@ -81,10 +84,6 @@
     "new-conversation": "新会话",
     "setting": "设置",
     "to-top": "置顶"
-  },
-  "nav": {
-    "conversation-setting": "会话设置",
-    "title": "标题"
   },
   "premium": {
     "activate": "点击激活",

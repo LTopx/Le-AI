@@ -47,15 +47,18 @@
   },
   "chat": {
     "canceled": "Canceled",
+    "chat-setting": "Settings",
     "clear-current-conversation": "Are you sure to clear the current conversation?",
+    "conversation-setting": "Conversation Setting",
     "copy": "Copy",
-    "copied": "Copied",
-    "copy-code": "Copy Code",
+    "context-length": "Context Length",
+    "context-length-tip": "The default length of context carried during this conversation is 8. If you choose 0, there will be no context carried in each session, which is equivalent to a one-question-one-answer format.",
     "delete": "Delete",
     "delete-chat": "Delete conversation content",
     "delete-chat-tip": "Are you sure you want to delete this content?",
     "enter-message": "Please enter a message",
     "stop-generate": "Stop",
+    "title": "Title",
     "type-message": "Type message here..."
   },
   "common": {
@@ -70,7 +73,7 @@
     "tip": "Tip"
   },
   "menu": {
-    "clear-all-conversation": "Clear Conversation",
+    "clear-all-conversation": "Clear Context",
     "clear-conversation": "Are you sure clear all conversations?",
     "delete": "Delete",
     "delete-this-conversation": "Delete conversation",
@@ -81,10 +84,6 @@
     "new-conversation": "New Conversation",
     "setting": "Setting",
     "to-top": "Pin to top"
-  },
-  "nav": {
-    "conversation-setting": "Conversation Setting",
-    "title": "Title"
   },
   "premium": {
     "activate": "Activate",
