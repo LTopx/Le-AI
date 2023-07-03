@@ -9,7 +9,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <PlausibleProvider
       domain="gpt.ltopx.com"
       selfHosted
-      customDomain={process.env.NEXT_PLAUSIBLE_DOMAIN}
+      customDomain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
     >
       <SessionProvider>
         <ThemeProvider attribute="class">{children}</ThemeProvider>
