@@ -291,22 +291,6 @@ export default function Menu() {
           {!!session.data && <Tokens type="pc" />}
           <div className="flex h-11 items-center justify-center">
             <div className="flex flex-1 justify-center">
-              <div
-                onClick={onToggleTheme}
-                className={cn(
-                  "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
-                  "hover:bg-gray-200/60",
-                  "dark:hover:bg-slate-700/70"
-                )}
-              >
-                {nowTheme === "light" ? (
-                  <Icon icon="moon_fill" size={20} />
-                ) : (
-                  <Icon icon="sun_line" size={20} />
-                )}
-              </div>
-            </div>
-            <div className="flex flex-1 justify-center">
               <a
                 href="https://github.com/Peek-A-Booo/L-GPT"
                 target="_blank"
@@ -318,6 +302,22 @@ export default function Menu() {
               >
                 <Icon icon="github_line" size={20} />
               </a>
+            </div>
+            <div className="flex flex-1 justify-center">
+              <div
+                onClick={onToggleTheme}
+                className={cn(
+                  "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
+                  "hover:bg-gray-200/60",
+                  "dark:hover:bg-slate-700/70"
+                )}
+              >
+                {nowTheme === "light" ? (
+                  <Icon icon="moon_fill" size={22} />
+                ) : (
+                  <Icon icon="sun_line" size={22} />
+                )}
+              </div>
             </div>
             <Dropdown
               selectable
@@ -340,7 +340,7 @@ export default function Menu() {
                         className="animate-spin"
                       />
                     ) : (
-                      <Icon icon="translate_2_line" size={20} />
+                      <Icon icon="translate_2_line" size={22} />
                     )}
                   </div>
                 </div>

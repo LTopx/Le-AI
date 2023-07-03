@@ -2,7 +2,7 @@
 
 ## v0.7.3
 
-> 2023-07-03
+> 2023-07-04
 
 ### Fixed
 
@@ -22,6 +22,7 @@
 - Adjust layout of top buttons in input field
 - Non-Premium members can only create a maximum of 10 sessions (Premium).
 - Upgrade Azure API version to 2023-06-01-preview
+- Optimize the avatar icons in the conversation list to display according to the currently used language model.
 
 ## v0.7.2
 

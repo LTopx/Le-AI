@@ -105,28 +105,26 @@ const TTS: React.FC = () => {
         </div>
       }
     >
-      <div
-        className={cn(
-          "flex items-center justify-between py-2 px-1 border-b",
-          "border-slate-100 dark:border-neutral-500/60"
-        )}
-      >
-        <div className="flex text-sm gap-2 items-center">
-          {t("voice")}
-          <Tooltip title={t("voice-tip")}>
-            <Icon icon="question_line" size={18} />
-          </Tooltip>
+      <div className="flex flex-col gap-3">
+        <div>
+          <div className="mb-2 text-sm flex items-center gap-2">
+            {t("voice")}
+            <Tooltip title={t("voice-tip")}>
+              <Icon icon="question_line" size={18} />
+            </Tooltip>
+          </div>
+          <Select
+            className="w-full"
+            contentClassName="max-h-80"
+            loading={loading}
+            options={voices}
+            renderLabel={renderLabel}
+            value={voice}
+            onChange={updateVoice}
+          />
         </div>
-        <Select
-          className="w-56"
-          contentClassName="max-h-80"
-          loading={loading}
-          options={voices}
-          renderLabel={renderLabel}
-          value={voice}
-          onChange={updateVoice}
-        />
       </div>
+
       <div className="flex h-8 mt-2 text-sm px-1 items-center">
         {t("rate")}: {transRate(rate)}
       </div>

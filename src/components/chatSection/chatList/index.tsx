@@ -47,6 +47,25 @@ const ChatList: React.FC = () => {
 
   const chatList = findChannel?.chat_list || [];
 
+  const renderAssistantIcon = () => {
+    if (findChannel?.channel_model.type === "openai") {
+      return (
+        <div className="rounded-full flex bg-[#20a37f] h-8 w-8 justify-center items-center">
+          <Icon icon="openai" size={20} className="text-white" />
+        </div>
+      );
+    }
+    if (findChannel?.channel_model.type === "azure") {
+      return (
+        <div className="rounded-full flex bg-sky-200/70 h-8 w-8 justify-center items-center">
+          <Icon icon="azure" size={20} className="text-white" />
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   const onDelete = (item: ChatItem) => {
     const { id } = item;
     setChannel((channel) => {
@@ -202,11 +221,12 @@ const ChatList: React.FC = () => {
             })}
           >
             <div>
-              {item.role === "assistant" && (
-                <div className="rounded-full flex bg-[#20a37f] h-8 w-8 justify-center items-center">
-                  <Image src="/gpt.svg" alt="gpt" width={20} height={20} />
+              {item.role === "assistant" && renderAssistantIcon()}
+              {/* {item.role === "assistant" && (
+                <div className="rounded-full flex bg-sky-200/70 h-8 w-8 justify-center items-center">
+                  <Icon icon="azure" size={20} className="text-white" />
                 </div>
-              )}
+              )} */}
               {item.role === "user" && (
                 <div
                   className={cn(

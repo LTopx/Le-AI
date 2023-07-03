@@ -288,10 +288,10 @@
   },
   "zLog": {
     "full-log": "Click to view the full update log",
-    "title": "v0.7.2 Released 🔥🔥",
-    "text1": "New: Support for automatic playback with Azure TTS (Premium)",
-    "text2": "Optimization: After actively switching language models, subsequent new sessions will use the same model",
-    "text3": "Unified global icon style",
+    "title": "v0.7.3 Released 🔥🔥",
+    "text1": "Added support for Azure to the 0613 and 0613-16K models",
+    "text2": "Account center now supports viewing token consumption details",
+    "text3": "Added feature to set maximum context length in conversations.",
     "text4": "Refactored a large number of module codes to improve performance"
   }
 }

@@ -42,8 +42,8 @@ const useStore = create<LLMState & LLMAction>((set) => ({
   openai: {
     label: "OpenAI",
     value: "openai",
-    ico: <Icon icon="openai" size={16} />,
-    ico_big: <Icon icon="openai" size={32} />,
+    ico: <Icon icon="openai" style={{ color: "#71a697" }} size={16} />,
+    ico_big: <Icon icon="openai" style={{ color: "#71a697" }} size={32} />,
     models: [
       { label: "gpt-3.5-turbo", value: "gpt-3.5-turbo" },
       { label: "gpt-3.5-turbo-0613", value: "gpt-3.5-turbo-0613" },

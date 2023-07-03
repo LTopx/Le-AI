@@ -147,25 +147,23 @@ const ChangeTitle: React.FC = () => {
           renderLabel={renderLabel}
           onChange={onChangeModelType}
         />
-        <div className="flex mt-2 items-center">
-          <div className="text-sm text-black/90 w-36 dark:text-white/90">
+        <div className="flex flex-col mt-4">
+          <div className="text-sm text-black/90 dark:text-white/90 mb-2">
             {tPrompt("model")}
           </div>
-          <div className="flex-1">
-            <Select
-              className="w-full"
-              options={modelOptions}
-              renderLabel={renderModelLabel}
-              value={formData.model_value}
-              onChange={(value) => onChangeForm(value, "model_value")}
-            />
-          </div>
+          <Select
+            className="w-full"
+            options={modelOptions}
+            renderLabel={renderModelLabel}
+            value={formData.model_value}
+            onChange={(value) => onChangeForm(value, "model_value")}
+          />
         </div>
       </div>
       <Divider />
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center">
-          <div className="text-sm text-black/90 w-36  dark:text-white/90">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col">
+          <div className="text-sm text-black/90 mb-2 dark:text-white/90">
             {tChat("title")}
           </div>
           <Input
@@ -177,15 +175,14 @@ const ChangeTitle: React.FC = () => {
             onChange={(value) => onChangeForm(value, "name")}
           />
         </div>
-        <div className="flex items-center">
-          <div className="text-sm text-black/90 w-36 dark:text-white/90 flex items-center gap-1">
+        <div className="flex flex-col">
+          <div className="text-sm text-black/90 dark:text-white/90 flex items-center gap-1 mb-2">
             <span>{tChat("context-limit")}</span>
             <Tooltip title={tChat("context-limit-tip")}>
               <Icon icon="question_line" size={18} />
             </Tooltip>
           </div>
           <Select
-            className="flex-1"
             options={lengthOptions}
             value={formData.context_length}
             onChange={(value) => onChangeForm(value, "context_length")}
