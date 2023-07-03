@@ -10,7 +10,8 @@
     "lint": "next lint",
     "db-gn": "prisma generate",
     "db-pull": "dotenv -e .env.local -- npx prisma db pull",
-    "db-push": "dotenv -e .env.local -- npx prisma db push"
+    "db-push": "dotenv -e .env.local -- npx prisma db push",
+    "pm2": "next start -p 9000"
   },
   "dependencies": {
     "@emotion/css": "11.11.2",
