@@ -71,6 +71,7 @@ const Configure = React.memo(() => {
   }, [channel]);
 
   const t = useTranslations("prompt");
+  const tCommon = useTranslations("common");
 
   const onChangeType = (value: string) => {
     updateType(value);
@@ -255,6 +256,17 @@ const Configure = React.memo(() => {
             transition={{ duration: 0.5 }}
           >
             <PremiumBtn />
+            <div className="flex gap-2">
+              <Button
+                className="rounded-full h-7 px-2.5 text-xs"
+                type="success"
+                scaleable
+                onClick={() => window.open("https://docs.ltopx.com", "_blank")}
+                leftIcon={<Icon icon="document_line" size={18} />}
+              >
+                {tCommon("docs")}
+              </Button>
+            </div>
             {!!recentPrompt.length && (
               <div className="max-w-[calc(100vw-2rem)] w-80">
                 <Divider>

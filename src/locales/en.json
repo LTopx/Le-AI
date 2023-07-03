@@ -49,6 +49,7 @@
     "canceled": "Canceled",
     "chat-setting": "Settings",
     "clear-current-conversation": "Are you sure to clear the current conversation?",
+    "conversation-limit": "Free users can only create up to 10 sessions",
     "conversation-setting": "Conversation Setting",
     "copy": "Copy",
     "context-length": "Context Length",

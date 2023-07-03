@@ -69,7 +69,8 @@ export type IconType =
   | "warning_fill"
   | "close_line"
   | "check_fill"
-  | "command_line";
+  | "command_line"
+  | "add_line";
 
 export interface IconProps {
   className?: string;

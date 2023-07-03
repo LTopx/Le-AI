@@ -70,9 +70,12 @@ import { Warning_fill } from "./warning_fill";
 import { Close_line } from "./close_line";
 import { Check_fill } from "./check_fill";
 import { Command_line } from "./command_line";
+import { Add_line } from "./add_line";
 
 const Icon: React.FC<IconProps> = (props) => {
   const { icon } = props;
+
+  if (icon === "add_line") return <Add_line {...props} />;
 
   if (icon === "command_line") return <Command_line {...props} />;
 

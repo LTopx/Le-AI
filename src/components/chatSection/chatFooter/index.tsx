@@ -11,7 +11,10 @@ import {
   useLLM,
   useScrollToBottom,
   useConversationSetting,
+  useModel,
+  useUserInfo,
   BASE_PROMPT,
+  initChannelList,
 } from "@/hooks";
 import { useChatGPT } from "@/hooks/useChatGPT";
 import Icon from "@/components/icon";
@@ -25,6 +28,8 @@ const ChatFooter: React.FC = () => {
   // data
   const { send: sendChatGPT, abort } = useChatGPT();
   const [channel, setChannel] = useChannel();
+  const [userInfo] = useUserInfo();
+  const { model_type, model_name, checkModel } = useModel();
   const { openai, azure } = useLLM();
   const [inputValue, setInputValue] = React.useState<string>("");
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
@@ -183,6 +188,34 @@ const ChatFooter: React.FC = () => {
       });
   };
 
+  const onChannelAdd = () => {
+    const { license_type } = userInfo;
+
+    if (
+      channel.list.length >= 4 &&
+      license_type !== "premium" &&
+      license_type !== "team"
+    ) {
+      return toast.error(t("conversation-limit"), { id: "conversation-limit" });
+    }
+
+    const check = checkModel();
+
+    const channel_id = uuidv4();
+    const addItem = { ...initChannelList[0], channel_id };
+
+    if (check) {
+      addItem.channel_model.type = model_type;
+      addItem.channel_model.name = model_name;
+    }
+
+    setChannel((channel) => {
+      channel.list.unshift(addItem);
+      channel.activeId = channel_id;
+      return channel;
+    });
+  };
+
   React.useEffect(() => {
     setInputValue("");
     inputRef.current?.reset();
@@ -199,64 +232,62 @@ const ChatFooter: React.FC = () => {
         )}
       >
         <div className="flex items-center justify-between">
-          <div className="flex py-1.5 gap-2 items-center">
-            {!!findChannel?.chat_list?.length && (
-              <>
+          {!!findChannel?.chat_list?.length && (
+            <div className="flex py-1.5 gap-2 items-center">
+              <Button
+                className="rounded-full h-7 px-2.5 text-xs"
+                type="outline"
+                scaleable
+                onClick={() => setConversationSettingOpen(true)}
+                leftIcon={<Icon icon="settings_3_line" size={18} />}
+              >
+                <span className="hidden lg:block">{t("chat-setting")}</span>
+              </Button>
+              <Button
+                className="rounded-full h-7 px-2.5 text-xs"
+                type="outline"
+                scaleable
+                leftIcon={renderIcon()}
+                onClick={() => setConversationSettingOpen(true)}
+              >
+                <span className="hidden lg:block">
+                  {renderLLM()?.toUpperCase()}
+                </span>
+              </Button>
+              {loadingChannel && (
                 <Button
                   className="rounded-full h-7 px-2.5 text-xs"
-                  type="outline"
-                  scaleable
-                  onClick={() => setConversationSettingOpen(true)}
-                  leftIcon={<Icon icon="settings_3_line" size={18} />}
+                  type="danger"
+                  onClick={cancel}
+                  leftIcon={<Icon icon="stop_fill" size={18} />}
                 >
-                  <span className="hidden md:block">{t("chat-setting")}</span>
+                  <span className="hidden lg:block">{t("stop-generate")}</span>
                 </Button>
-                <Button
-                  className="rounded-full h-7 px-2.5 text-xs"
-                  type="outline"
-                  leftIcon={renderIcon()}
-                  onClick={() => setConversationSettingOpen(true)}
-                >
-                  <span className="hidden md:block">
-                    {renderLLM()?.toUpperCase()}
-                  </span>
-                </Button>
-                {loadingChannel && (
-                  <Button
-                    className="rounded-full h-7 px-2.5 text-xs"
-                    type="danger"
-                    onClick={cancel}
-                    leftIcon={<Icon icon="stop_fill" size={18} />}
-                  >
-                    <span className="hidden md:block">
-                      {t("stop-generate")}
-                    </span>
-                  </Button>
-                )}
+              )}
 
-                <Button
-                  className="rounded-full h-7 px-2.5 text-xs"
-                  type="outline"
-                  scaleable
-                  leftIcon={<Icon icon="share_2_line" size={16} />}
-                  loading={loadingShare}
-                  onClick={handleShare}
-                >
-                  <span className="hidden md:block">{tShare("share")}</span>
-                </Button>
-              </>
-            )}
+              <Button
+                className="rounded-full h-7 px-2.5 text-xs"
+                type="outline"
+                scaleable
+                leftIcon={<Icon icon="share_2_line" size={16} />}
+                loading={loadingShare}
+                onClick={handleShare}
+              >
+                <span className="hidden lg:block">{tShare("share")}</span>
+              </Button>
 
-            <Button
-              className="rounded-full h-7 px-2.5 text-xs"
-              type="success"
-              scaleable
-              onClick={() => window.open("https://docs.ltopx.com", "_blank")}
-              leftIcon={<Icon icon="document_line" size={18} />}
-            >
-              <span className="hidden md:block">{tCommon("docs")}</span>
-            </Button>
-          </div>
+              <Button
+                className="rounded-full h-7 px-2.5 text-xs"
+                type="outline"
+                scaleable
+                leftIcon={<Icon icon="add_line" size={16} />}
+                onClick={onChannelAdd}
+              >
+                <span className="hidden lg:block">{tMenu("new-chat")}</span>
+              </Button>
+            </div>
+          )}
+
           {!!findChannel?.chat_list?.length && (
             <Confirm
               disabled={loadingChannel}
@@ -273,7 +304,7 @@ const ChatFooter: React.FC = () => {
                   scaleable
                   leftIcon={<Icon icon="broom_line" size={16} />}
                 >
-                  <span className="hidden md:block">
+                  <span className="hidden lg:block">
                     {tMenu("clear-all-conversation")}
                   </span>
                 </Button>

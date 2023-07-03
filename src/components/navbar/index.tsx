@@ -58,7 +58,7 @@ export default function Navbar() {
         <div className="h-full max-w-[60%] relative">
           <div
             className={cn(
-              "group font-semibold relative transition-colors text-ellipsis whitespace-nowrap overflow-hidden",
+              "group font-semibold relative transition-colors truncate",
               "text-slate-700 hover:text-slate-900",
               "dark:text-slate-400 dark:hover:text-slate-300",
               {

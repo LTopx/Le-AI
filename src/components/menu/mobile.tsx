@@ -5,6 +5,7 @@ import { useRouter } from "next-intl/client";
 import { useTheme } from "next-themes";
 import { useDateFormat } from "l-hooks";
 import { v4 as uuidv4 } from "uuid";
+import toast from "react-hot-toast";
 import { cn } from "@/lib";
 import Icon from "@/components/icon";
 import { Button, Confirm, Drawer, Dropdown } from "@/components/ui";
@@ -15,6 +16,7 @@ import {
   useMobileMenu,
   useSetting,
   useModel,
+  useUserInfo,
 } from "@/hooks";
 import { lans } from "./index";
 import MenuIcon from "./icon";
@@ -25,6 +27,7 @@ export default function MobileMenu() {
   const session = useSession();
   const locale = useLocale();
   const router = useRouter();
+  const [userInfo] = useUserInfo();
   const { model_type, model_name, checkModel } = useModel();
   const { theme, setTheme } = useTheme();
   const { format } = useDateFormat();
@@ -35,6 +38,7 @@ export default function MobileMenu() {
   const [nowTheme, setNowTheme] = React.useState<any>("");
 
   const t = useTranslations("menu");
+  const tChat = useTranslations("chat");
   const tPremium = useTranslations("premium");
 
   const activateRef = React.useRef<any>(null);
@@ -42,6 +46,18 @@ export default function MobileMenu() {
   const onClose = () => setMobileMenuVisible(false);
 
   const onChannelAdd = () => {
+    const { license_type } = userInfo;
+
+    if (
+      channel.list.length >= 10 &&
+      license_type !== "premium" &&
+      license_type !== "team"
+    ) {
+      return toast.error(tChat("conversation-limit"), {
+        id: "conversation-limit",
+      });
+    }
+
     const check = checkModel();
 
     const channel_id = uuidv4();
@@ -53,7 +69,7 @@ export default function MobileMenu() {
     }
 
     setChannel((channel) => {
-      channel.list.push(addItem);
+      channel.list.unshift(addItem);
       channel.activeId = channel_id;
       return channel;
     });
