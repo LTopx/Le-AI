@@ -104,7 +104,7 @@ const MobileMenu: React.FC = () => {
           >
             <div
               className={cn(
-                "tracking-tight cursor-pointer dark:text-white/70",
+                "tracking-tight cursor-pointer dark:text-white/70 transition-all",
                 {
                   "font-semibold text-xl dark:text-white":
                     item.path === pathname,
