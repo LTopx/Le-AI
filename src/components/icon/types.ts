@@ -70,7 +70,8 @@ export type IconType =
   | "close_line"
   | "check_fill"
   | "command_line"
-  | "add_line";
+  | "add_line"
+  | "menu_line";
 
 export interface IconProps {
   className?: string;

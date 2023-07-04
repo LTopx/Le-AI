@@ -106,7 +106,7 @@ export default function LSelect({
           position="popper"
           sideOffset={4}
           className={cn(
-            "z-[1999] py-1 rounded-md border shadow-md",
+            "z-[1999] py-1 rounded-md border shadow-md max-h-80 overflow-y-auto",
             "bg-white",
             "dark:bg-neutral-700 dark:border-neutral-600",
             "data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut",

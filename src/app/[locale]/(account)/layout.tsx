@@ -5,6 +5,7 @@ import { cn } from "@/lib";
 import Avatar from "@/components/site/avatar";
 import Logo from "@/components/site/logo";
 import Menu from "@/components/account/menu";
+import MobileMenu from "@/components/account/mobileMenu";
 
 export default async function AuthenticationLayout({
   children,
@@ -16,7 +17,7 @@ export default async function AuthenticationLayout({
   if (!session?.user) return redirect("/login");
 
   return (
-    <div>
+    <div className="fixed left-0 top-0 w-full h-full">
       <div
         className={cn(
           "h-14 flex items-center justify-between px-6 border-b",
@@ -26,7 +27,7 @@ export default async function AuthenticationLayout({
         <Logo />
         <Avatar />
       </div>
-      <div className="mt-10">
+      <div className="pt-10 max-h-[calc(100vh-3.5rem)] overflow-y-auto">
         <div className="max-w-[75rem] m-auto px-6">
           <div className="flex gap-12">
             <div className="hidden md:block">
@@ -36,6 +37,7 @@ export default async function AuthenticationLayout({
           </div>
         </div>
       </div>
+      <MobileMenu />
     </div>
   );
 }

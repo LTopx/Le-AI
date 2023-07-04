@@ -1,5 +1,13 @@
 # L-GPT Change Log
 
+## v0.7.4
+
+> 2023-07-04
+
+### Add
+
+- Add a toggle menu button for the account center interface on mobile devices.
+
 ## v0.7.3
 
 > 2023-07-04

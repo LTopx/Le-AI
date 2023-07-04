@@ -9,6 +9,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
+        logo: "linear-gradient(90deg,#41BDF8,#59A5F0,#788ADE,#936DC2,#A34E9D)",
         "share-ico":
           "linear-gradient(to right top,#d16ba5,#c777b9,#ba83ca,#aa8fd8,#9a9ae1,#8aa7ec,#79b3f4,#69bff8,#52cffe,#41dfff,#46eefa,#5ffbf1)",
         "license-free":
@@ -55,6 +56,11 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        flow: {
+          "0%": { backgroundPosition: "0 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0 50%" },
+        },
       },
       animation: {
         fadeIn: "fadeIn 0.2s ease-in-out",
@@ -68,6 +74,7 @@ module.exports = {
           "accordionSlideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)",
         accordionSlideUp:
           "accordionSlideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)",
+        flow: "flow 6s linear infinite",
       },
     },
   },

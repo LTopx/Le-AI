@@ -71,9 +71,12 @@ import { Close_line } from "./close_line";
 import { Check_fill } from "./check_fill";
 import { Command_line } from "./command_line";
 import { Add_line } from "./add_line";
+import { Menu_line } from "./menu_line";
 
 const Icon: React.FC<IconProps> = (props) => {
   const { icon } = props;
+
+  if (icon === "menu_line") return <Menu_line {...props} />;
 
   if (icon === "add_line") return <Add_line {...props} />;
 

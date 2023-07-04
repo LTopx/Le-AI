@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "next-intl/client";
 import { cn } from "@/lib";
 
-interface MenuItemProps {
+export interface MenuItemProps {
   label: string;
   value: string;
   path: string;

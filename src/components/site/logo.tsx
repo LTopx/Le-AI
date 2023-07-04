@@ -39,10 +39,14 @@ export default function Logo({
         className="flex items-center gap-2 cursor-pointer select-none text-transparent font-extrabold"
         onClick={onClick}
       >
-        <span className="bg-clip-text bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
+        <span className="bg-clip-text animate-flow bg-logo bg-[size:400%]">
           L-GPT
         </span>
-        {!!share && <span className="bg-clip-text bg-share-ico">Share</span>}
+        {!!share && (
+          <span className="bg-clip-text bg-share-ico animate-flow bg-[size:400%]">
+            Share
+          </span>
+        )}
       </div>
       {!!version && (
         <span
