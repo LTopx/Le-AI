@@ -20,7 +20,7 @@ const UserFill = () => (
 const baseURL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : "https://gpt.ltopx.com";
+    : "https://chat.ltopx.com";
 
 // Route segment config
 export const runtime = "edge";

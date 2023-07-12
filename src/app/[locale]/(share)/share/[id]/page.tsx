@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: shareRes.channel_name,
       description: "L-GPT Share Chat",
       siteName: "L-GPT",
-      url: "https://gpt.ltopx.com",
+      url: "https://chat.ltopx.com",
     },
     twitter: {
       title: shareRes.channel_name,

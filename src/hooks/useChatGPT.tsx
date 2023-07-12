@@ -51,10 +51,9 @@ export const useChatGPT = () => {
   const handleRecharge = () => {
     toast.dismiss();
     if (!userInfo.license_type) {
-      // 开始免费试用
+      // start free trial
       setPremiumOpen(true);
     } else {
-      // 打开充值token界面
       setRechargeOpen(true);
     }
   };

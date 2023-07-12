@@ -174,8 +174,8 @@ dependencies:
     specifier: 9.0.0
     version: 9.0.0
   zustand:
-    specifier: 4.3.8
-    version: 4.3.8(react@18.2.0)
+    specifier: 4.3.9
+    version: 4.3.9(react@18.2.0)
 
 devDependencies:
   '@tailwindcss/typography':
@@ -8104,8 +8104,8 @@ packages:
       tslib: 2.3.0
     dev: false
 
-  /zustand@4.3.8(react@18.2.0):
-    resolution: {integrity: sha512-4h28KCkHg5ii/wcFFJ5Fp+k1J3gJoasaIbppdgZFO4BPJnsNxL0mQXBSFgOgAdCdBj35aDTPvdAJReTMntFPGg==}
+  /zustand@4.3.9(react@18.2.0):
+    resolution: {integrity: sha512-Tat5r8jOMG1Vcsj8uldMyqYKC5IZvQif8zetmLHs9WoZlntTHmIoNM8TpLRY31ExncuUvUOXehd0kvahkuHjDw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       immer: '>=9.0'

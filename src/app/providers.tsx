@@ -7,7 +7,7 @@ import PlausibleProvider from "next-plausible";
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <PlausibleProvider
-      domain="gpt.ltopx.com"
+      domain="chat.ltopx.com"
       selfHosted
       customDomain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
     >

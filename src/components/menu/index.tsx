@@ -57,7 +57,6 @@ export default function Menu() {
   const tPremium = useTranslations("premium");
 
   // ref
-  const scrollRef = React.useRef<any>(null);
   const activateRef = React.useRef<any>(null);
 
   const menuItems: ContextMenuOption[] = [
@@ -183,7 +182,6 @@ export default function Menu() {
           {t("new-chat")}
         </Button>
         <div
-          ref={scrollRef}
           className={cn("overflow-y-auto scroll-smooth", {
             "h-[calc(100vh-19.75rem)]": session.data,
             "h-[calc(100vh-16.75rem)]": !session.data,
