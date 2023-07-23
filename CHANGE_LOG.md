@@ -18,6 +18,7 @@
 - Remove sentry
 - Temporarily remove prompt market, refactor and go online before next weekend
 - Refactor most of the logic related to zustand status, greatly reduce the number of renders, and improve the overall performance.
+- Replace plausible with umami for monitoring
 
 ## v0.7.4
 

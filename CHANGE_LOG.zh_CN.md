@@ -18,6 +18,7 @@
 - 移除 sentry
 - 暂时移除 prompt market，下周末之前重构好上线
 - 重构 zustand 状态相关的大部分逻辑，极大的减少 render 次数，提升整体性能
+- 移除 plausible，替换监控为 umami
 
 ## v0.7.4
 
