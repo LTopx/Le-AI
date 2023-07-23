@@ -1,8 +1,7 @@
-import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/utils/plugin/auth";
 import { prisma } from "@/lib/prisma";
-import { LResponseError } from "@/lib";
+import { ResErr, ResSuccess } from "@/lib";
 
 const activityCode = [
   {
@@ -20,22 +19,20 @@ const activityCode = [
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
 
-  if (!session) return LResponseError("Please log in first");
+  if (!session) return ResErr({ error: 20001 });
 
   const user = await prisma.user.findUnique({
     where: { id: session?.user.id },
   });
 
-  if (!user) return LResponseError("User does not exist");
+  if (!user) return ResErr({ error: 20002 });
 
   const { license_key, instance_name } = await request.json();
 
   const findActivity = activityCode.find((p) => p.code === license_key);
 
   if (findActivity) {
-    if ((user as any)[findActivity.label]) {
-      return LResponseError("You have already used this license key.");
-    }
+    if ((user as any)[findActivity.label]) return ResErr({ error: 20003 });
 
     const updateData = {
       availableTokens: user.availableTokens + findActivity.value,
@@ -47,10 +44,7 @@ export async function POST(request: Request) {
       where: { id: session?.user.id },
     });
 
-    return NextResponse.json(
-      { error: 0, data: { type: "activity" } },
-      { status: 200 }
-    );
+    return ResSuccess({ data: { type: "activity" } });
   }
 
   try {
@@ -71,7 +65,7 @@ export async function POST(request: Request) {
       }
     ).then((res) => res.json());
 
-    if (!check.valid) return LResponseError(check.error || "error");
+    if (!check.valid) return ResErr({ msg: check.error || "error" });
 
     const { license_key: licenseKey, meta } = check;
     const { variant_id } = meta;
@@ -80,16 +74,16 @@ export async function POST(request: Request) {
       (p: any) => p.id === String(variant_id)
     );
 
-    if (!findvariants) return LResponseError("License key is invalid.");
+    if (!findvariants) return ResErr({ error: 20004 });
 
     const variants_name = findvariants.attributes.name;
     const price = findvariants.attributes.price;
 
     if (variants_name.includes("Free") && user.freeTrialed) {
-      return LResponseError("You have already used your free trial");
+      return ResErr({ error: 20005 });
     }
     if (variants_name.includes("Premium") && user.license_type === "premium") {
-      return LResponseError("Your license is already premium");
+      return ResErr({ error: 20006 });
     }
 
     const res = await fetch(
@@ -101,7 +95,7 @@ export async function POST(request: Request) {
       }
     ).then((res) => res.json());
 
-    if (!res.activated) return LResponseError(res.error || "error");
+    if (!res.activated) return ResErr({ msg: check.error || "error" });
 
     const { instance } = res;
 
@@ -132,7 +126,7 @@ export async function POST(request: Request) {
         if (user.license_type !== "premium" && user.license_type !== "team") {
           license_type = "free";
         }
-        add_tokens = 10000;
+        add_tokens = 15000;
         freeTrialed = 1;
       }
 
@@ -163,9 +157,9 @@ export async function POST(request: Request) {
       });
     }
 
-    return NextResponse.json({ error: 0, data: { type } }, { status: 200 });
+    return ResSuccess({ data: { type } });
   } catch (error) {
     console.log(error, "validate licenses error");
-    return LResponseError("validate licenses error");
+    return ResErr({ error: 20007 });
   }
 }

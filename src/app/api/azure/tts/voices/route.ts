@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { LResponseError } from "@/lib";
+import { ResErr } from "@/lib";
 
 export async function GET() {
   const key = process.env.NEXT_PUBLIC_AZURE_TTS_KEY || "";
@@ -15,6 +15,6 @@ export async function GET() {
     return NextResponse.json({ error: 0, data }, { status: 200 });
   } catch (error) {
     console.log("get azure tts voices list error");
-    return LResponseError("get azure tts voices list error");
+    return ResErr({ msg: "get azure tts voices list error" });
   }
 }

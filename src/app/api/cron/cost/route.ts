@@ -1,7 +1,6 @@
-import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
-import { LResponseError } from "@/lib";
+import { ResErr, ResSuccess } from "@/lib";
 
 export async function GET() {
   try {
@@ -9,7 +8,7 @@ export async function GET() {
     const token = headersList.get("Authorization")?.split(" ")[1];
 
     if (process.env.CRON_SECRET !== token) {
-      return LResponseError("cron cost error");
+      return ResErr({ msg: "cron validate error" });
     }
 
     const costs = await prisma.cost.findMany({
@@ -21,7 +20,7 @@ export async function GET() {
     });
 
     // if costs exist means already run today
-    if (costs.length) return LResponseError("already run today");
+    if (costs.length) return ResErr({ msg: "already run today" });
 
     const users = await prisma.user.findMany({
       where: {
@@ -31,10 +30,10 @@ export async function GET() {
       },
     });
 
-    if (!users.length) return LResponseError("no users need to cost");
+    if (!users.length) return ResErr({ msg: "no users need to cost" });
 
     for (const user of users) {
-      const { id, availableTokens, costTokens, costUSD } = user;
+      const { id, costTokens, costUSD } = user;
 
       await prisma.cost.create({
         data: {
@@ -48,15 +47,14 @@ export async function GET() {
         data: {
           costTokens: 0,
           costUSD: 0,
-          availableTokens: availableTokens - costTokens,
         },
         where: { id: user.id },
       });
     }
 
-    return NextResponse.json({ error: 0 }, { status: 200 });
+    return ResSuccess();
   } catch (error) {
     console.log("cost error");
-    return LResponseError("error");
+    return ResErr({ msg: "error" });
   }
 }

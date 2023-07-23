@@ -1,47 +1,47 @@
-"use client";
-
 import React from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
+import { Modal, Input, Button } from "@ltopx/lx-ui";
 import Icon from "@/components/icon";
-import { Modal, Input, Button } from "@/components/ui";
-import { useSetting, usePremium, useUserInfo, useRecharge } from "@/hooks";
+import { useFetchError } from "@/hooks/useFetchError";
+import { useUserInfoStore } from "@/hooks/useUserInfo";
+import { useOpenStore } from "@/hooks/useOpen";
 
 const Activate = React.forwardRef((_, forwardedRef) => {
-  const t = useTranslations("premium");
-  const [, setSettingOpen] = useSetting();
-  const [, setPremiumOpen] = usePremium();
-  const [, setUserInfo] = useUserInfo();
-  const [, setRechargeOpen] = useRecharge();
+  const tPremium = useTranslations("premium");
+  const { catchError } = useFetchError();
+
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const [open, setOpen] = React.useState(false);
   const [licenseKey, setLicenseKey] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
-  const onClose = () => setOpen(false);
+  const updateUserInfo = useUserInfoStore((state) => state.update);
+  const updatePremiumOpen = useOpenStore((state) => state.updatePremiumOpen);
+  const updateChargeTokenOpen = useOpenStore(
+    (state) => state.updateChargeTokenOpen
+  );
 
   const onCheckPremium = () => {
     setOpen(false);
-    setSettingOpen(false);
-    setPremiumOpen(true);
+    updatePremiumOpen(true);
   };
 
-  const onCheckRecharge = () => {
+  const onChargeToken = () => {
     setOpen(false);
-    setSettingOpen(false);
-    setRechargeOpen(true);
+    updateChargeTokenOpen(true);
   };
 
   const onActivate = () => {
-    if (!licenseKey?.trim()?.length) {
-      return toast.error(t("enter-license-key"), { id: "enter-license-key" });
+    if (loading) return;
+
+    if (!licenseKey?.trim()) {
+      toast.error(tPremium("enter-license-key"), { id: "enter-license-key" });
+      return inputRef.current?.focus();
     }
 
-    const params = {
-      license_key: licenseKey,
-      instance_name: "L-GPT",
-    };
-
+    const params = { license_key: licenseKey, instance_name: "L-GPT" };
     setLoading(true);
     fetch("/api/licenses/activate", {
       method: "POST",
@@ -50,83 +50,90 @@ const Activate = React.forwardRef((_, forwardedRef) => {
       .then((res) => res.json())
       .then((res) => {
         if (res.error) {
-          return toast.error(res.msg, { id: "license-key-error" });
+          return toast.error(catchError(res), { id: "activate_error" });
         }
 
         let toastInfo = "";
 
         if (res.data.type === "tokens") {
-          toastInfo = t("tokens-recharged");
+          toastInfo = tPremium("tokens-recharged");
         } else if (res.data.type === "license") {
-          toastInfo = t("license-key-activated");
+          toastInfo = tPremium("license-key-activated");
         } else if (res.data.type === "activity") {
-          toastInfo = t("gift-code-used-success");
+          toastInfo = tPremium("gift-code-used-success");
         }
 
         toast.success(toastInfo, { id: "activated", duration: 5000 });
-
-        setUserInfo(0);
+        updateUserInfo(0);
         setOpen(false);
-        setSettingOpen(false);
       })
       .finally(() => {
         setLoading(false);
       });
   };
 
+  const onClose = () => setOpen(false);
+
   React.useImperativeHandle(forwardedRef, () => ({
     init() {
-      setLicenseKey("");
       setOpen(true);
+      setLicenseKey("");
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
     },
   }));
 
   return (
     <Modal
-      title={t("activate-license")}
+      title={tPremium("activate-license")}
       footer={null}
-      maskClosable={false}
       open={open}
       onClose={onClose}
     >
       <div className="flex flex-col gap-3">
-        <div className="text-sm">{t("enter-license-key-to-lock-features")}</div>
+        <div className="text-sm">
+          {tPremium("enter-license-key-to-lock-features")}
+        </div>
         <Input
-          size="large"
-          placeholder={t("enter-license-key")}
+          ref={inputRef}
+          size="lg"
+          placeholder={tPremium("enter-license-key")}
           allowClear
           value={licenseKey}
           onChange={setLicenseKey}
+          onEnter={onActivate}
         />
         <div className="text-sm mt-2 flex gap-4">
-          <span>{t("not-have-one")}</span>
+          <span>{tPremium("not-have-one")}</span>
           <span
             onClick={onCheckPremium}
             className="text-sky-400 cursor-pointer transition-colors hover:underline hover:text-sky-500 flex items-center gap-1"
           >
             <Icon icon="arrow_right_down_fill" />
-            {t("buy-for-you")}
+            {tPremium("buy-for-you")}
           </span>
         </div>
         <div className="text-sm mb-2 flex gap-4">
-          <span>{t("get-more-token")}</span>
+          <span>{tPremium("get-more-token")}</span>
           <span
-            onClick={onCheckRecharge}
+            onClick={onChargeToken}
             className="text-sky-400 cursor-pointer transition-colors hover:underline hover:text-sky-500 flex items-center gap-1"
           >
             <Icon icon="arrow_right_down_fill" />
-            {t("buy-for-you")}
+            {tPremium("buy-for-you")}
           </span>
         </div>
         <div className="flex justify-center">
           <Button
             type="primary"
-            className="h-9 w-36"
-            leftIcon={<Icon icon="check_line" />}
+            size="lg"
+            className="w-36"
+            icon={<Icon icon="check_line" />}
             loading={loading}
             onClick={onActivate}
           >
-            {t("activate")}
+            {tPremium("activate")}
           </Button>
         </div>
       </div>

@@ -1,5 +1,24 @@
 # L-GPT Change Log
 
+## v0.8.0
+
+> 2023-07-23
+
+### Add
+
+- Added the introduction of @ltopx/lx-ui component library to further unify the global style.
+
+### Fixed
+
+- Fixed the problem of incorrect deduction of fees under different models (previously, a lot of fees were deducted).
+
+### Changed
+
+- Remove @vercel/analytics
+- Remove sentry
+- Temporarily remove prompt market, refactor and go online before next weekend
+- Refactor most of the logic related to zustand status, greatly reduce the number of renders, and improve the overall performance.
+
 ## v0.7.4
 
 > 2023-07-04

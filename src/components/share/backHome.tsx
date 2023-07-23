@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next-intl/client";
 import { useTranslations } from "next-intl";
 import Icon from "@/components/icon";
-import { Button } from "@/components/ui";
+import { Button } from "@ltopx/lx-ui";
 
 const BackHome: React.FC = () => {
   const router = useRouter();
@@ -19,9 +19,10 @@ const BackHome: React.FC = () => {
   return (
     <Button
       type="primary"
-      leftIcon={<Icon icon="left_fill" />}
+      icon={<Icon icon="left_fill" />}
       loading={loading}
       onClick={onClick}
+      size="lg"
     >
       {t("back-home")}
     </Button>

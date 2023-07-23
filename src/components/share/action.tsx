@@ -2,48 +2,56 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "react-hot-toast";
 import { useClipboard } from "l-hooks";
+import { Modal, Button, Dropdown, type DropdownOption } from "@ltopx/lx-ui";
 import { cn } from "@/lib";
-import Icon from "@/components/icon";
-import { Modal, Dropdown, Button } from "@/components/ui";
-import type { IDropdownItems } from "@/components/ui/Dropdown";
+import Icon from "../icon";
 
 const Action = React.forwardRef((_, forwardedRef) => {
-  const t = useTranslations("share");
+  const tShare = useTranslations("share");
   const tCommon = useTranslations("common");
   const { copy } = useClipboard();
 
+  const [open, setOpen] = React.useState(false);
   const shareId = React.useRef<string>("");
   const [shareLink, setShareLink] = React.useState<string>("");
-  const [loadingAction, setLoadingAction] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState(false);
 
-  const options: IDropdownItems[] = [
+  const options: DropdownOption[] = [
     {
-      label: t("share-anonymously"),
-      value: "anonymous",
-      icon: (
-        <Icon icon="user_hide_line" size={16} className="text-neutral-600" />
+      label: (
+        <div className="flex gap-2 items-center">
+          <Icon icon="user_hide_line" size={16} className="text-neutral-600" />
+          {tShare("share-anonymously")}
+        </div>
       ),
+      value: "anonymous",
     },
     {
-      label: t("share-to-twitter"),
+      label: (
+        <div className="flex gap-2 items-center">
+          <Icon icon="twitter_fill" size={16} className="text-[#379bf0]" />
+          {tShare("share-to-twitter")}
+        </div>
+      ),
       value: "twitter",
-      icon: <Icon icon="twitter_fill" size={16} className="text-[#379bf0]" />,
     },
     {
-      label: t("share-remove"),
+      label: (
+        <div className="flex gap-2 items-center">
+          <Icon icon="delete_2_line" size={16} className="text-rose-600" />
+          {tShare("share-remove")}
+        </div>
+      ),
       value: "delete",
-      icon: <Icon icon="delete_2_line" size={16} className="text-rose-600" />,
     },
   ];
-
-  const [open, setOpen] = React.useState(false);
 
   const onClose = () => setOpen(false);
 
   const onLink = (type: "copy" | "open") => {
     if (type === "copy") {
       copy(shareLink);
-      toast.success(t("share-link-copy-success"), { id: "copy-success" });
+      toast.success(tShare("share-link-copy-success"), { id: "copy-success" });
     } else {
       window.open(shareLink);
     }
@@ -52,32 +60,32 @@ const Action = React.forwardRef((_, forwardedRef) => {
   const onSelect = async (value: string) => {
     if (value === "delete") {
       try {
-        setLoadingAction(true);
-        const res = await fetch("/api/share/delete", {
-          method: "POST",
+        setLoading(true);
+        const res = await fetch("/api/share", {
+          method: "DELETE",
           body: JSON.stringify({ id: shareId.current }),
         }).then((res) => res.json());
         if (res.error) {
           return toast.error(tCommon("service-error"), { id: "delete-error" });
         }
-        toast.success(t("share-remove-success"), { id: "delete-success" });
+        toast.success(tShare("share-remove-success"), { id: "delete-success" });
         onClose();
       } finally {
-        setLoadingAction(false);
+        setLoading(false);
       }
     } else if (value === "twitter") {
       window.open(`https://twitter.com/share?url=${shareLink}`);
     } else if (value === "anonymous") {
-      setLoadingAction(true);
+      setLoading(true);
       const res = await fetch("/api/share", {
         method: "PUT",
         body: JSON.stringify({ id: shareId.current, anonymous: 1 }),
       }).then((res) => res.json());
-      setLoadingAction(false);
+      setLoading(false);
       if (res.error) {
         return toast.error(tCommon("service-error"), { id: "update-error" });
       }
-      toast.success(t("share-update-success"), { id: "update-success" });
+      toast.success(tShare("share-update-success"), { id: "update-success" });
     }
   };
 
@@ -95,23 +103,23 @@ const Action = React.forwardRef((_, forwardedRef) => {
 
   return (
     <Modal
-      title={t("share-link")}
+      title={tShare("share-link")}
       maskClosable={false}
       open={open}
       onClose={onClose}
       footer={null}
     >
-      <div className="mb-4 text-sm text-neutral-600 dark:text-white/80 flex flex-col gap-2">
-        <div>🎉🎉 {t("share-created")}</div>
-        <div>{t("share-logged-user-tip")}</div>
-        <div>❌❌ {t("share-delete-tip")}</div>
+      <div className="flex flex-col text-sm mb-4 text-neutral-600 gap-2 dark:text-white/80">
+        <div>🎉🎉 {tShare("share-created")}</div>
+        <div>{tShare("share-logged-user-tip")}</div>
+        <div>❌❌ {tShare("share-delete-tip")}</div>
         <div>
           <a
             href="https://docs.ltopx.com/token"
             target="_blank"
-            className="text-sm text-sky-500 hover:text-sky-400 transition-colors mx-0.5"
+            className="mx-0.5 text-sm transition-colors text-sky-500 hover:text-sky-400"
           >
-            {t("learn-more")}
+            {tShare("learn-more")}
           </a>
         </div>
       </div>
@@ -119,20 +127,20 @@ const Action = React.forwardRef((_, forwardedRef) => {
         <div className="flex gap-2">
           <Button
             type="success"
-            leftIcon={<Icon icon="link_line" />}
+            icon={<Icon icon="link_line" />}
             onClick={() => onLink("copy")}
           >
-            {t("copy-link")}
+            {tShare("copy-link")}
           </Button>
           <Button
             type="primary"
-            leftIcon={<Icon icon="external_link_line" />}
+            icon={<Icon icon="external_link_line" />}
             onClick={() => onLink("open")}
           >
-            {t("open")}
+            {tShare("open")}
           </Button>
         </div>
-        {loadingAction ? (
+        {loading ? (
           <button
             className={cn(
               "px-3 rounded-md border transition-colors",
@@ -142,20 +150,16 @@ const Action = React.forwardRef((_, forwardedRef) => {
             <Icon icon="loading_line" className="animate-spin" />
           </button>
         ) : (
-          <Dropdown
-            options={options}
-            onSelect={onSelect}
-            trigger={
-              <button
-                className={cn(
-                  "px-3 rounded-md border transition-colors flex items-center",
-                  "hover:bg-neutral-100"
-                )}
-              >
-                <Icon icon="more_1_fill" />
-              </button>
-            }
-          />
+          <Dropdown options={options} onSelect={onSelect}>
+            <button
+              className={cn(
+                "px-3 rounded-md border transition-colors flex items-center",
+                "hover:bg-neutral-100"
+              )}
+            >
+              <Icon icon="more_1_fill" />
+            </button>
+          </Dropdown>
         )}
       </div>
     </Modal>

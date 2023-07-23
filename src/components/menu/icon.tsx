@@ -1,4 +1,4 @@
-import type { ChannelIcon } from "@/hooks";
+import type { ChannelIcon } from "@/hooks/useChannel/types";
 import { isUndefined } from "@/lib";
 import Icon from "@/components/icon";
 
@@ -11,7 +11,7 @@ export default function MenuIcon({
   className?: string;
   loading?: boolean;
 }) {
-  const localClassName = "top-[50%] left-0 translate-y-[-50%] absolute";
+  const localClassName = "top-[50%] left-0 -translate-y-[50%] absolute";
 
   const props = {
     size: 16,
@@ -20,7 +20,7 @@ export default function MenuIcon({
 
   if (loading) {
     return (
-      <div className="top-[50%] left-0 translate-y-[-50%] absolute">
+      <div className="top-[50%] left-0 -translate-y-[50%] absolute">
         <Icon icon="loading_line" size={16} className="animate-spin" />
       </div>
     );

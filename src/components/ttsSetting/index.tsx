@@ -1,27 +1,11 @@
-"use client";
-
 import React from "react";
 import { useTranslations } from "next-intl";
-import * as Switch from "@radix-ui/react-switch";
+import { shallow } from "zustand/shallow";
+import { Modal, Button, Tooltip, Select, Slider, Switch } from "@ltopx/lx-ui";
 import { cn } from "@/lib";
+import { useOpenStore } from "@/hooks/useOpen";
+import { useTTSStore, type TTSRate } from "@/hooks/useTTS";
 import Icon from "@/components/icon";
-import {
-  Modal,
-  Select,
-  Button,
-  NewSlider as Slider,
-  Tooltip,
-} from "@/components/ui";
-import { useTTSOpen, useTTS, type TTSRate } from "@/hooks";
-
-const renderLabel = (item: any) => {
-  return (
-    <div className="flex gap-2 items-center">
-      <span>{item.LocalName}</span>
-      <span>({item.Locale.split("-").slice(0, 2).join("-")})</span>
-    </div>
-  );
-};
 
 const mapRate = (rate: TTSRate) => {
   if (rate === "x-slow") return 0;
@@ -31,29 +15,32 @@ const mapRate = (rate: TTSRate) => {
   if (rate === "x-fast") return 1;
 };
 
-const TTS: React.FC = () => {
-  const [open, setOpen] = useTTSOpen();
-  const {
-    voice,
-    voices,
-    rate,
-    autoPlay,
-    updateVoice,
-    updateVoices,
-    updateRate,
-    updateAutoPlay,
-  } = useTTS();
-  const [loading, setLoading] = React.useState(false);
-
-  const t = useTranslations("tts");
+export default function TTSSetting() {
+  const tTTS = useTranslations("tts");
   const tCommon = useTranslations("common");
 
+  const [open, setOpen] = useOpenStore((state) => [
+    state.ttsSettingOpen,
+    state.updateTtsSettingOpen,
+  ]);
+  const [voice, voices, rate, autoPlay] = useTTSStore(
+    (state) => [state.voice, state.voices, state.rate, state.autoPlay],
+    shallow
+  );
+  const [loading, setLoading] = React.useState(false);
+  const updateVoice = useTTSStore((state) => state.updateVoice);
+  const updateVoices = useTTSStore((state) => state.updateVoices);
+  const updateRate = useTTSStore((state) => state.updateRate);
+  const updateAutoPlay = useTTSStore((state) => state.updateAutoPlay);
+
+  const onClose = () => setOpen(false);
+
   const transRate = (rate: TTSRate) => {
-    if (rate === "x-slow") return t("x-slow");
-    if (rate === "slow") return t("slow");
-    if (rate === "medium") return t("medium");
-    if (rate === "fast") return t("fast");
-    if (rate === "x-fast") return t("x-fast");
+    if (rate === "x-slow") return tTTS("x-slow");
+    if (rate === "slow") return tTTS("slow");
+    if (rate === "medium") return tTTS("medium");
+    if (rate === "fast") return tTTS("fast");
+    if (rate === "x-fast") return tTTS("x-fast");
   };
 
   const getVoices = async () => {
@@ -77,8 +64,6 @@ const TTS: React.FC = () => {
     }
   };
 
-  const onClose = () => setOpen(false);
-
   const onChangeRate = (val: number) => {
     if (val === 0) return updateRate("x-slow");
     if (val === 0.25) return updateRate("slow");
@@ -93,50 +78,49 @@ const TTS: React.FC = () => {
 
   return (
     <Modal
-      title={t("setting")}
+      title={tTTS("setting")}
       maskClosable={false}
       open={open}
       onClose={onClose}
       footer={
-        <div className="flex justify-end">
-          <Button type="primary" onClick={onClose}>
-            {tCommon("ok")}
-          </Button>
-        </div>
+        <Button type="primary" onClick={onClose}>
+          {tCommon("ok")}
+        </Button>
       }
     >
-      <div className="flex flex-col gap-3">
-        <div>
-          <div className="mb-2 text-sm flex items-center gap-2">
-            {t("voice")}
-            <Tooltip title={t("voice-tip")}>
-              <Icon icon="question_line" size={18} />
-            </Tooltip>
-          </div>
-          <Select
-            className="w-full"
-            contentClassName="max-h-80"
-            loading={loading}
-            options={voices}
-            renderLabel={renderLabel}
-            value={voice}
-            onChange={updateVoice}
-          />
-        </div>
-      </div>
-
-      <div className="flex h-8 mt-2 text-sm px-1 items-center">
-        {t("rate")}: {transRate(rate)}
-      </div>
       <div>
-        <Slider
-          className="flex-1 px-1"
-          max={1}
-          step={0.25}
-          defaultValue={mapRate(rate)}
-          onChange={onChangeRate}
+        <div className="flex text-sm mb-2 gap-2 items-center">
+          {tTTS("voice")}
+          <Tooltip title={tTTS("voice-tip")}>
+            <Icon icon="question_line" size={18} />
+          </Tooltip>
+        </div>
+        <Select
+          className="w-full"
+          loading={loading}
+          options={voices.map((item) => ({
+            ...item,
+            label: (
+              <div className="flex gap-2 items-center">
+                <span>{item.LocalName}</span>
+                <span>({item.Locale.split("-").slice(0, 2).join("-")})</span>
+              </div>
+            ),
+          }))}
+          value={voice}
+          onChange={updateVoice}
         />
       </div>
+      <div className="flex h-8 mt-2 text-sm px-1 items-center">
+        {tTTS("rate")}: {transRate(rate)}
+      </div>
+      <Slider
+        className="flex-1 px-1"
+        max={1}
+        step={0.25}
+        defaultValue={mapRate(rate)}
+        onChange={onChangeRate}
+      />
       <div
         className={cn(
           "flex items-center justify-between py-2 px-1 border-b",
@@ -144,29 +128,16 @@ const TTS: React.FC = () => {
         )}
       >
         <div className="flex text-sm gap-2 items-center">
-          {t("auto-play")}
-          <Tooltip title={t("auto-play-tip")}>
+          {tTTS("auto-play")}
+          <Tooltip title={tTTS("auto-play-tip")}>
             <Icon icon="question_line" size={18} />
           </Tooltip>
         </div>
-        <Switch.Root
+        <Switch
           defaultChecked={autoPlay === "0" ? false : true}
-          onCheckedChange={(checked) => updateAutoPlay(checked ? "1" : "0")}
-          className={cn(
-            "w-12 h-6 rounded-full relative outline-none cursor-pointer transition-colors",
-            "data-[state=unchecked]:bg-neutral-200/80 data-[state=checked]:bg-sky-400"
-          )}
-        >
-          <Switch.Thumb
-            className={cn(
-              "block w-4 h-4 bg-white rounded-full transition-all",
-              "translate-x-1 data-[state=checked]:translate-x-7"
-            )}
-          />
-        </Switch.Root>
+          onChange={(checked) => updateAutoPlay(checked ? "1" : "0")}
+        />
       </div>
     </Modal>
   );
-};
-
-export default TTS;
+}

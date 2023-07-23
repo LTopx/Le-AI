@@ -4,14 +4,14 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
 import Icon from "@/components/icon";
-import { Button } from "@/components/ui";
+import { Button } from "@ltopx/lx-ui";
 
 interface IProps {
   id: string;
 }
 
 const Continue: React.FC<IProps> = ({ id }) => {
-  const t = useTranslations("share");
+  const tShare = useTranslations("share");
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
 
@@ -22,13 +22,13 @@ const Continue: React.FC<IProps> = ({ id }) => {
 
   return (
     <Button
-      type="outline"
-      size="base"
-      rightIcon={<Icon icon="navigation_fill" size={18} />}
+      type="primary"
+      outline
+      icon={<Icon icon="navigation_fill" size={18} />}
       loading={loading}
       onClick={onContinue}
     >
-      {t("continue-conversation")}
+      {tShare("continue-conversation")}
     </Button>
   );
 };

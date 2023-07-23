@@ -1,13 +1,14 @@
+import React from "react";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { authOptions } from "@/utils/plugin/auth";
 import { cn } from "@/lib";
-import Avatar from "@/components/site/avatar";
 import Logo from "@/components/site/logo";
+import Avatar from "@/components/site/avatar";
 import Menu from "@/components/account/menu";
 import MobileMenu from "@/components/account/mobileMenu";
 
-export default async function AuthenticationLayout({
+export default async function AccountLayout({
   children,
 }: {
   children: React.ReactNode;

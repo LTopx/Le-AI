@@ -8,12 +8,11 @@ import Icon from "@/components/icon";
 interface CopyIconProps extends React.HTMLAttributes<HTMLElement> {
   size?: number;
 }
-
-const CopyIcon: React.FC<CopyIconProps> = ({
+export default function CopyIcon({
   className,
   content,
   size = 18,
-}) => {
+}: CopyIconProps) {
   const { isCopied, copy } = useClipboard();
 
   const onCopy = () => {
@@ -33,6 +32,4 @@ const CopyIcon: React.FC<CopyIconProps> = ({
       )}
     </div>
   );
-};
-
-export default CopyIcon;
+}

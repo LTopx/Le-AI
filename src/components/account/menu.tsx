@@ -22,11 +22,11 @@ export default function Menu() {
       value: "account",
       path: "/account",
     },
-    {
-      label: t("teams"),
-      value: "team",
-      path: "/account/team",
-    },
+    // {
+    //   label: t("teams"),
+    //   value: "team",
+    //   path: "/account/team",
+    // },
     {
       label: t("user-info"),
       value: "info",

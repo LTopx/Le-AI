@@ -1,6 +1,16 @@
-import { NextIntlClientProvider } from "next-intl";
+import React from "react";
+import Script from "next/script";
+import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import { notFound } from "next/navigation";
+import Providers from "../providers";
 import Announcement from "@/components/announcement";
+
+export function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "zh-CN" }];
+}
+
+const inter = Inter({ subsets: ["latin"] });
 
 async function getMessages(locale: string) {
   try {
@@ -20,9 +30,15 @@ export default async function LocaleLayout({
   const messages = await getMessages(locale);
 
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
-      <Announcement />
-      {children}
-    </NextIntlClientProvider>
+    <html lang={locale} className={inter.className} suppressHydrationWarning>
+      <Script src="/disableSafariScalable.js" />
+      <body>
+        <Providers locale={locale} messages={messages}>
+          <Announcement />
+          {children}
+        </Providers>
+        <Toaster toastOptions={{ style: { maxWidth: "calc(100vw - 2rem)" } }} />
+      </body>
+    </html>
   );
 }

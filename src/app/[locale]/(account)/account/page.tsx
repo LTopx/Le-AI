@@ -2,36 +2,31 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
+import { useDebounceFn } from "ahooks";
 import * as echarts from "echarts/core";
 import { GridComponent, TooltipComponent } from "echarts/components";
 import { BarChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
-import { useDebounceFn } from "ahooks";
-import { Select } from "@/components/ui";
 import Icon from "@/components/icon";
+import SelectMonth from "@/components/account/selectMonth";
 
 echarts.use([GridComponent, TooltipComponent, BarChart, CanvasRenderer]);
 
-const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => ({
-  label: item,
-  value: item,
-}));
+const getMonthDate = (params: Date) => {
+  const date = new Date(params);
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  return new Date(year, month, 0).getDate();
+};
 
-const Cost: React.FC = () => {
+export default function Account() {
+  const tAccount = useTranslations("account");
+
   const costRef = React.useRef<HTMLDivElement>(null);
   const costChart = React.useRef<echarts.ECharts>();
   const resizeAbort = React.useRef<AbortController>();
 
-  const [month, setMonth] = React.useState<number>(new Date().getMonth() + 1);
-
-  const t = useTranslations("account");
-
-  const getMonthDate = (params: Date) => {
-    const date = new Date(params);
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    return new Date(year, month, 0).getDate();
-  };
+  const [month, setMonth] = React.useState<string>("");
 
   const getCost = async (date: Date) => {
     try {
@@ -108,13 +103,15 @@ const Cost: React.FC = () => {
     wait: 500,
   });
 
-  const onChange = (value: number) => {
+  const onChange = (value: string) => {
     setMonth(value);
-    setChartData(new Date(new Date().setMonth(value - 1)));
+    setChartData(new Date(new Date().setMonth(Number(value) - 1)));
   };
 
   React.useEffect(() => {
     setChartData();
+
+    setMonth(String(new Date().getMonth() + 1));
 
     resizeAbort.current = new AbortController();
 
@@ -129,17 +126,12 @@ const Cost: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <div className="text-2xl font-semibold">{t("usage")}</div>
-      <div className="text-sm mt-4 mb-8">{t("usage-tip")}</div>
+    <div>
+      <div className="text-2xl font-semibold">{tAccount("usage")}</div>
+      <div className="text-sm mt-4 mb-8">{tAccount("usage-tip")}</div>
       <div className="flex items-center gap-2 mb-8">
-        <div>{t("month")}</div>
-        <Select
-          className="w-44"
-          options={months}
-          value={month}
-          onChange={onChange}
-        />
+        <div>{tAccount("month")}</div>
+        <SelectMonth month={month} onChange={onChange} />
       </div>
       <div
         ref={costRef}
@@ -147,8 +139,6 @@ const Cost: React.FC = () => {
       >
         <Icon className="animate-spin" icon="loading_line" />
       </div>
-    </>
+    </div>
   );
-};
-
-export default Cost;
+}

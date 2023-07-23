@@ -10,17 +10,17 @@ const ViewsCount: React.FC<{ count: number; time: any; from: string }> = ({
   time,
   from,
 }) => {
-  const t = useTranslations("share");
+  const tShare = useTranslations("share");
   const { format } = useDateFormat();
 
   return (
     <div className="flex flex-col gap-2">
       {!!from && (
         <div>
-          {t("from")} {from}
+          {tShare("from")} {from}
         </div>
       )}
-      <div className="flex items-center gap-2">
+      <div className="flex gap-2 items-center">
         <div className="flex gap-1">
           <Icon icon="time_line" size={18} />
           <span>{format(time, "YYYY-MM-DD")}</span>
@@ -28,7 +28,7 @@ const ViewsCount: React.FC<{ count: number; time: any; from: string }> = ({
         <span>|</span>
         <div className="flex gap-1">
           <Icon icon="user_visible_line" size={18} />
-          {t("page-views")}：{count}
+          {tShare("page-views")}：{count}
         </div>
       </div>
     </div>

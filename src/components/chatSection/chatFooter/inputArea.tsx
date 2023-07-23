@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { useConfig } from "@/hooks";
+import { useConfigStore } from "@/hooks/useConfig";
 import { isMobile, getPlatform, cn } from "@/lib";
 import Icon from "@/components/icon";
 
@@ -19,11 +19,9 @@ export interface ChatInputRef {
 }
 
 const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
-  (props, forwardedRef) => {
-    const { className, loading, value, onChange, onSubmit } = props;
-
-    const t = useTranslations("chat");
-    const [config] = useConfig();
+  ({ className, loading, value, onChange, onSubmit }, forwardedRef) => {
+    const tChat = useTranslations("chat");
+    const sendMessageType = useConfigStore((state) => state.sendMessageType);
 
     // data
     const [isFocus, setIsFocus] = React.useState<boolean>(false);
@@ -43,7 +41,6 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
 
     const onKeyDown = (e: any) => {
       const isMobileDevice = isMobile();
-      const { sendMessageType } = config;
       const platform = getPlatform();
 
       if (isMobileDevice) {
@@ -110,7 +107,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
         <textarea
           className="bg-transparent rounded-md h-full outline-none text-sm w-full max-h-56 py-3 px-4 resize-none block"
           ref={inputRef}
-          placeholder={t("type-message")}
+          placeholder={tChat("type-message")}
           rows={1}
           onInput={onInput}
           value={value}

@@ -1,0 +1,211 @@
+"use client";
+
+import React from "react";
+import Image from "next/image";
+import { useSession, signOut } from "next-auth/react";
+import { useTranslations } from "next-intl";
+import { useRouter, usePathname } from "next-intl/client";
+import { Dropdown, Button, type DropdownOption } from "@ltopx/lx-ui";
+import { useUserInfoStore } from "@/hooks/useUserInfo";
+import { useOpenStore } from "@/hooks/useOpen";
+import Icon from "@/components/icon";
+import Btn from "./button";
+
+export default function Avatar() {
+  const session = useSession();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const tAuth = useTranslations("auth");
+  const tPremium = useTranslations("premium");
+
+  const [loading, setLoading] = React.useState(false);
+
+  const user = session.data?.user;
+
+  const license_type = useUserInfoStore((state) => state.license_type);
+  const updateUserInfo = useUserInfoStore((state) => state.update);
+  const updatePremiumOpen = useOpenStore((state) => state.updatePremiumOpen);
+
+  const menus = React.useMemo(() => {
+    let base: DropdownOption[] = [
+      {
+        label: (
+          <div className="flex gap-2 items-center">
+            <Icon icon="document_line" />
+            {tAuth("documentation")}
+          </div>
+        ),
+        value: "documentation",
+      },
+    ];
+
+    if (session.data) {
+      if (license_type === "free") {
+        base.unshift({
+          label: (
+            <div className="flex gap-2 items-center">
+              <Icon icon="vip_3_line" />
+              <span className="text-neutral-400">{tPremium("free-trial")}</span>
+            </div>
+          ),
+          value: "license",
+        });
+      } else if (license_type === "premium") {
+        base.unshift({
+          label: (
+            <div className="flex gap-2 items-center">
+              <Icon icon="vip_3_line" />
+              <span className="bg-clip-text bg-license-premium text-transparent">
+                {tPremium("premium")}
+              </span>
+            </div>
+          ),
+          value: "license",
+        });
+      } else if (license_type === "team") {
+        base.unshift({
+          label: (
+            <div className="flex gap-2 items-center">
+              <Icon icon="vip_3_line" />
+              <span className="bg-clip-text bg-license-team text-transparent">
+                {tPremium("team")}
+              </span>
+            </div>
+          ),
+          value: "license",
+        });
+      }
+
+      if (pathname === "/") {
+        base.push({
+          label: (
+            <div className="flex gap-2 items-center">
+              <Icon icon="gift_fill" />
+              {tPremium("more-license")}
+            </div>
+          ),
+          value: "more-license",
+        });
+      }
+      base = [
+        ...base,
+        { type: "seperate", value: "seperate_1" },
+        {
+          label: (
+            <div className="flex gap-2 items-center">
+              <Icon icon="user_3_line" />
+              {tAuth("account-center")}
+            </div>
+          ),
+          value: "account",
+        },
+        {
+          label: (
+            <div className="flex gap-2 items-center">
+              <Icon icon="exit_line" />
+              {tAuth("log-out")}
+            </div>
+          ),
+          value: "logout",
+        },
+      ];
+    } else {
+      base = [
+        ...base,
+        { type: "seperate", value: "seperate_1" },
+        {
+          label: (
+            <div className="flex gap-2 items-center">
+              <Icon icon="entrance_line" />
+              {tAuth("log-in")}
+            </div>
+          ),
+          value: "login",
+        },
+      ];
+    }
+
+    return base;
+  }, [pathname, session.data, license_type]);
+
+  const disabled = !!(loading || session.status === "loading");
+
+  const renderLabel = () => {
+    if (!user) return null;
+    return (
+      <div className="border-b px-2 pb-1">
+        <div className="font-medium text-sm">
+          {user.name || user.email?.split("@")[0]}
+        </div>
+        <div className="text-xs">{user.email}</div>
+      </div>
+    );
+  };
+
+  const onSelect = async (value: string) => {
+    switch (value) {
+      case "login":
+        setLoading(true);
+        router.push("/login");
+        break;
+      case "logout":
+        await signOut({ callbackUrl: "/" });
+        break;
+      case "documentation":
+        window.open("https://docs.ltopx.com");
+        break;
+      case "license":
+        if (pathname !== "/") return;
+        updatePremiumOpen(true);
+        break;
+      case "more-license":
+        if (pathname !== "/") return;
+        updatePremiumOpen(true);
+        break;
+      case "account":
+        if (pathname.includes("/account")) return;
+        router.push("/account");
+        break;
+    }
+  };
+
+  React.useEffect(() => {
+    if (session.data) updateUserInfo(0);
+  }, [session.data]);
+
+  return (
+    <Dropdown
+      label={renderLabel()}
+      options={menus}
+      onSelect={onSelect}
+      align="end"
+      disabled={disabled}
+    >
+      {session.data?.user ? (
+        <div className="cursor-pointer">
+          {session.data.user.image ? (
+            <Image
+              className="rounded-full"
+              src={session.data.user.image}
+              alt="Avatar"
+              width={32}
+              height={32}
+            />
+          ) : (
+            <div className="rounded-full flex bg-sky-400 h-8 w-8 justify-center items-center">
+              <Icon icon="user_3_fill" className="text-white" size={20} />
+            </div>
+          )}
+        </div>
+      ) : (
+        <Button
+          type="primary"
+          size="sm"
+          icon={<Icon icon="user_add_2_line" size={18} />}
+          loading={disabled}
+        />
+      )}
+    </Dropdown>
+  );
+}

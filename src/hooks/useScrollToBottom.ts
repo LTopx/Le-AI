@@ -1,30 +1,25 @@
-import React from "react";
 import { create } from "zustand";
 
-interface IScrollToBottom {
+export type ScrollToBottomStore = {
   scrollEle: HTMLDivElement | null;
   updateScrollEle: (scrollEle: HTMLDivElement | null) => void;
-}
+  scrollToBottom: () => void;
+};
 
-const useStore = create<IScrollToBottom>((set) => ({
+export const useScrollToBottomStore = create<ScrollToBottomStore>((set) => ({
   scrollEle: null,
 
   updateScrollEle: (scrollEle) => set({ scrollEle }),
+
+  scrollToBottom: () => {
+    set((state) => {
+      const { scrollEle } = state;
+      if (scrollEle) {
+        requestAnimationFrame(() =>
+          scrollEle.scrollTo(0, scrollEle.scrollHeight)
+        );
+      }
+      return {};
+    });
+  },
 }));
-
-export function useScrollToBottom() {
-  const { scrollEle } = useStore();
-
-  const updateScrollEle = useStore((state) => state.updateScrollEle);
-
-  const scrollToBottom = React.useCallback(() => {
-    if (!scrollEle) return;
-    requestAnimationFrame(() => scrollEle.scrollTo(0, scrollEle.scrollHeight));
-  }, [scrollEle]);
-
-  return {
-    scrollEle,
-    updateScrollEle,
-    scrollToBottom,
-  };
-}

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { ResErr, ResSuccess } from "@/lib";
 
 const getEnvProxyUrl = () => {
   const API_PROXY = process.env.NEXT_PUBLIC_OPENAI_API_PROXY;
@@ -27,19 +27,7 @@ export async function GET(request: Request) {
   const key = searchParams.get("key");
   const proxyUrl = searchParams.get("proxy");
 
-  if (!model || !key) {
-    return NextResponse.json(
-      { error: -1, msg: "params error" },
-      {
-        status: 500,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        },
-      }
-    );
-  }
+  if (!model || !key) return ResErr({ error: 20008 });
 
   const ENV_API_PROXY = getEnvProxyUrl();
   const proxy = proxyUrl || ENV_API_PROXY || "https://api.openai.com";
@@ -55,58 +43,20 @@ export async function GET(request: Request) {
       headers: { Authorization: `Bearer ${key}` },
     }).then(async (res) => res.json());
     if (res1.error) {
-      return NextResponse.json(
-        { error: -1, msg: res1.error },
-        {
-          status: 500,
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-          },
-        }
-      );
+      return ResErr({ msg: res1.error });
     } else {
       const res2 = await fetch(fetchURL2, {
         headers: { Authorization: `Bearer ${key}` },
       }).then(async (res) => res.json());
       if (res2.error) {
-        return NextResponse.json(
-          { error: -1, msg: res1.error },
-          {
-            status: 500,
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-              "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            },
-          }
-        );
+        return ResErr({ msg: res2.error });
       } else {
-        return NextResponse.json(
-          { error: 0, data: { ...res1, total_usage: res2.total_usage / 100 } },
-          {
-            status: 200,
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-              "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            },
-          }
-        );
+        return ResSuccess({
+          data: { ...res1, total_usage: res2.total_usage / 100 },
+        });
       }
     }
   } catch (error: any) {
-    return NextResponse.json(
-      { error: -1, msg: "error" },
-      {
-        status: 500,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        },
-      }
-    );
+    return ResErr({ msg: "error" });
   }
 }

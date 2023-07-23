@@ -1,14 +1,27 @@
 import React from "react";
-import { useOpenAI, useScrollToBottom } from "@/hooks";
+import { shallow } from "zustand/shallow";
+import { useScrollToBottomStore } from "@/hooks/useScrollToBottom";
+import { useOpenAIStore } from "@/hooks/useOpenAI";
 import ChatList from "./chatList";
 import ChatFooter from "./chatFooter";
-import ConversationSetting from "../conversationSetting";
+import ChatSetting from "./chatSetting";
 
-const ChatSection: React.FC = () => {
-  const [openai] = useOpenAI();
-  const { updateScrollEle } = useScrollToBottom();
-
+export default function ChatSection() {
   const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  const [openAIKey, azureKey, env] = useOpenAIStore(
+    (state) => [state.openai.apiKey, state.azure.apiKey, state.env],
+    shallow
+  );
+
+  const apiKey = React.useMemo(
+    () => openAIKey || azureKey || env.OPENAI_API_KEY || env.AZURE_API_KEY,
+    [openAIKey, azureKey, env]
+  );
+
+  const updateScrollEle = useScrollToBottomStore(
+    (state) => state.updateScrollEle
+  );
 
   React.useEffect(() => {
     const dom = scrollRef.current;
@@ -18,25 +31,17 @@ const ChatSection: React.FC = () => {
     }
   }, [scrollRef.current]);
 
-  if (
-    !openai.openai.apiKey &&
-    !openai.azure.apiKey &&
-    !openai.env.OPENAI_API_KEY &&
-    !openai.env.AZURE_API_KEY
-  )
-    return null;
+  if (!apiKey) return null;
 
   return (
     <>
-      <div className="h-[100%] overflow-x-hidden relative">
+      <div className="h-full overflow-x-hidden relative">
         <div className="h-[100%] pr-10 pl-5 overflow-y-auto" ref={scrollRef}>
           <ChatList />
           <ChatFooter />
         </div>
       </div>
-      <ConversationSetting />
+      <ChatSetting />
     </>
   );
-};
-
-export default ChatSection;
+}

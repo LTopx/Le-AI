@@ -1,13 +1,12 @@
 import { headers } from "next/headers";
-import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { isUndefined, calcTokens, LResponseError } from "@/lib";
-import type { supportModelType } from "@/lib/gpt-tokens";
+import { calcTokens } from "@/lib/calcTokens";
+import { authOptions } from "@/utils/plugin/auth";
+import type { supportModelType } from "@/lib/calcTokens/old_gpt-tokens";
 import { prisma } from "@/lib/prisma";
+import { ResErr, isUndefined } from "@/lib";
 import { PREMIUM_MODELS } from "@/hooks/useLLM";
-
-// export const runtime = "edge";
+import { BASE_PRICE } from "@/utils/constant";
 
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -80,11 +79,15 @@ const stream = async (
     if (findUser) {
       const costTokens = findUser.costTokens + usedTokens;
       const costUSD = Number((findUser.costUSD + usedUSD).toFixed(5));
+      const availableTokens =
+        findUser.availableTokens - Math.ceil(usedUSD * BASE_PRICE);
+
       await prisma.user.update({
         where: { id: userId },
         data: {
           costTokens,
           costUSD,
+          availableTokens,
         },
       });
     }
@@ -118,9 +121,7 @@ export async function POST(request: Request) {
   /**
    * If not logged in, only the locally configured API Key can be used.
    */
-  if (!session && !headerApiKey) {
-    return NextResponse.json({ error: 10001 }, { status: 500 });
-  }
+  if (!session && !headerApiKey) return ResErr({ error: 10001 });
 
   // Logging in without your own key means using the author's key.
   // At this point, you need to check the token balance of the current account first.
@@ -128,7 +129,7 @@ export async function POST(request: Request) {
     const user = await prisma.user.findUnique({
       where: { id: session?.user.id },
     });
-    if (!user) return LResponseError("User does not exist");
+    if (!user) return ResErr({ error: 20002 });
 
     // audit user license
     if (
@@ -136,16 +137,11 @@ export async function POST(request: Request) {
       user.license_type !== "team" &&
       PREMIUM_MODELS.includes(modelLabel)
     ) {
-      // 无权使用模型。需使用API Key或开通Premium License以获得使用权限。
-      return LResponseError(
-        "Use API Key or Premium License to get permission for model usage."
-      );
+      return ResErr({ error: 20009 });
     }
 
-    const { costTokens, availableTokens } = user;
-    if (costTokens >= availableTokens) {
-      return NextResponse.json({ error: 10005 }, { status: 500 });
-    }
+    const { availableTokens } = user;
+    if (availableTokens <= 0) return ResErr({ error: 10005 });
   }
 
   // first use local
@@ -153,13 +149,9 @@ export async function POST(request: Request) {
   // or empty
   const Authorization = headerApiKey || ENV_API_KEY || "";
 
-  if (!Authorization) {
-    return NextResponse.json({ error: 10002 }, { status: 500 });
-  }
+  if (!Authorization) return ResErr({ error: 10002 });
 
-  if (!ENV_API_VERSION) {
-    return NextResponse.json({ error: 10004 }, { status: 500 });
-  }
+  if (!ENV_API_VERSION) return ResErr({ error: 10004 });
 
   const RESOURCE_NAME =
     resourceName || process.env.NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME;
@@ -167,7 +159,6 @@ export async function POST(request: Request) {
   const fetchURL = `https://${RESOURCE_NAME}.openai.azure.com/openai/deployments/${model}/chat/completions?api-version=${ENV_API_VERSION}`;
 
   const messages = [...chat_list];
-
   if (prompt) messages.unshift({ role: "system", content: prompt });
 
   try {
@@ -189,7 +180,6 @@ export async function POST(request: Request) {
     });
 
     const { readable, writable } = new TransformStream();
-
     stream(
       response.body as ReadableStream,
       writable,
@@ -198,13 +188,9 @@ export async function POST(request: Request) {
       session?.user.id,
       headerApiKey
     );
-
     return new Response(readable, response);
   } catch (error: any) {
-    console.log(error, "azure error");
-    return NextResponse.json(
-      { error: { message: error?.message || "Error" } },
-      { status: 500 }
-    );
+    console.log(error, "openai error");
+    return ResErr({ msg: error?.message || "Error" });
   }
 }

@@ -1,10 +1,5 @@
 import React from "react";
 import type { Metadata } from "next";
-import Script from "next/script";
-import { Inter } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react";
-import { Toaster } from "react-hot-toast";
-import { Providers } from "./providers";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -23,21 +18,10 @@ export const metadata: Metadata = {
   appleWebApp: { capable: true, title: "L-GPT" },
 };
 
-const inter = Inter({ subsets: ["latin"] });
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
-      <Script src="/disableSafariScalable.js" />
-      <body>
-        <Providers>{children}</Providers>
-        <Toaster toastOptions={{ style: { maxWidth: "calc(100vw - 2rem)" } }} />
-        <Analytics debug={false} />
-      </body>
-    </html>
-  );
+  return children;
 }

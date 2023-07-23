@@ -4,9 +4,9 @@ import React from "react";
 import { useTranslations } from "next-intl";
 
 const NotFound: React.FC = () => {
-  const t = useTranslations("share");
+  const tShare = useTranslations("share");
 
-  return <>{t("not-exist")}</>;
+  return <>{tShare("not-exist")}</>;
 };
 
 export default NotFound;

@@ -1,17 +1,16 @@
 import React from "react";
 import { useSession } from "next-auth/react";
+import { shallow } from "zustand/shallow";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui";
-import type { LicenseType } from "@/hooks";
+import { useRouter } from "next-intl/client";
+import { Button } from "@ltopx/lx-ui";
+import { useOpenStore } from "@/hooks/useOpen";
+import { useUserInfoStore } from "@/hooks/useUserInfo";
 
-export type LicenseTabTypes = "free" | "premium" | "team";
+export type LicenseTypes = "free" | "premium" | "team";
 
-interface IProps {
-  type: LicenseTabTypes;
-  license_type: LicenseType;
-  freeTrialed: number;
-  onLogin: () => void;
-  onPay: (url: string) => void;
+export interface PremiumBtnProps {
+  type: LicenseTypes;
 }
 
 const URL = {
@@ -20,17 +19,25 @@ const URL = {
     "https://lgpt.lemonsqueezy.com/checkout/buy/ba446f9e-f7c2-4eba-adfd-2c4db87c7b5a",
 };
 
-const PremiumBtn: React.FC<IProps> = ({
-  type,
-  license_type,
-  freeTrialed,
-  onLogin,
-  onPay,
-}) => {
+export default function PremiumBtn(props: PremiumBtnProps) {
+  const { type } = props;
+
+  const router = useRouter();
   const session = useSession();
 
-  const t = useTranslations("premium");
+  const tPremium = useTranslations("premium");
   const tAuth = useTranslations("auth");
+
+  const updatePremiumOpen = useOpenStore((state) => state.updatePremiumOpen);
+  const [freeTrialed, license_type] = useUserInfoStore(
+    (state) => [state.freeTrialed, state.license_type],
+    shallow
+  );
+
+  const onLogin = () => {
+    updatePremiumOpen(false);
+    router.push("/login");
+  };
 
   if (!session.data) {
     return (
@@ -47,10 +54,13 @@ const PremiumBtn: React.FC<IProps> = ({
       <div className="flex justify-center mt-3">
         <Button
           type="primary"
-          onClick={() => onPay(URL.free)}
           disabled={!!freeTrialed}
+          href={URL.free}
+          target="_blank"
         >
-          {freeTrialed ? t("free-trial-already") : t("get-free-trial")}
+          {freeTrialed
+            ? tPremium("free-trial-already")
+            : tPremium("get-free-trial")}
         </Button>
       </div>
     );
@@ -61,12 +71,13 @@ const PremiumBtn: React.FC<IProps> = ({
       <div className="flex justify-center mt-3">
         <Button
           type="primary"
-          onClick={() => onPay(URL.premium)}
           disabled={license_type === "premium"}
+          href={URL.premium}
+          target="_blank"
         >
           {license_type === "premium"
-            ? t("premium-already")
-            : `${t("buy")} L-GPT ${t("premium")}`}
+            ? tPremium("premium-already")
+            : `${tPremium("buy")} L-GPT ${tPremium("premium")}`}
         </Button>
       </div>
     );
@@ -76,13 +87,11 @@ const PremiumBtn: React.FC<IProps> = ({
     return (
       <div className="flex justify-center mt-3">
         <Button type="primary" disabled>
-          {t("coming-soon")}...
+          {tPremium("coming-soon")}...
         </Button>
       </div>
     );
   }
 
   return null;
-};
-
-export default PremiumBtn;
+}

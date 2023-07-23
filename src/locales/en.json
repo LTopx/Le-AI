@@ -12,7 +12,7 @@
     "save-success": "Save Success",
     "teams": "Teams",
     "usage": "Usage",
-    "usage-tip": "Below is a summary of the Token usage for your account. The data is updated daily (not in real-time).",
+    "usage-tip": "Below is a summary of the Points usage for your account. The data is updated daily (not in real-time).",
     "user-info": "User Info"
   },
   "auth": {
@@ -26,9 +26,12 @@
     "configuration": "Server error",
     "configuration-1": "There is a problem with the server configuration.",
     "configuration-2": "Check the server logs for more information.",
+    "continue": "CONTINUE",
+    "continue-gpt": "Continue to L-GPT",
     "continue-with-github": "Continue with Github",
     "continue-with-google": "Continue with Google",
     "documentation": "Documentation",
+    "email-address": "Email Address",
     "error": "Error",
     "input-email": "Please enter your email",
     "input-valid-email": "Please enter a valid email address",
@@ -73,6 +76,17 @@
     "service-error": "Service is having a hiccup, please try again later",
     "tip": "Tip"
   },
+  "errorCode": {
+    "20001": "Please log in first",
+    "20002": "User does not exist, please register first",
+    "20003": "You have already used this license key",
+    "20004": "License key is invalid",
+    "20005": "You have already used your free trial",
+    "20006": "Your license is already premium",
+    "20007": "Validate licenses error",
+    "20008": "Params error",
+    "20009": "The Model is not available for your current plan. Please upgrade to Premium or Team to unlock this feature"
+  },
   "menu": {
     "clear-all-conversation": "Clear Context",
     "clear-conversation": "Are you sure clear all conversations?",
@@ -96,7 +110,7 @@
     "enter-license-key": "Enter you license key",
     "enter-license-key-to-lock-features": "Enter L-GPT License Key to unlock all the features.",
     "free": "Free",
-    "free-1": "Gift 10,000 tokens for trial usage",
+    "free-1": "Gift 10,000 points for trial usage",
     "free-2": "Basic Chat Features",
     "free-3": "Basic Functionality Iteration",
     "free-4": "GPT-3.5",
@@ -104,7 +118,7 @@
     "free-trial": "Free Trial",
     "free-trial-already": "Free Trial already used",
     "get-free-trial": "Get L-GPT Free Trial",
-    "get-more-token": "Get more tokens?",
+    "get-more-token": "Get more points?",
     "gift-code-used-success": "Gift code used successfully",
     "learn-more-license": "Learn more about L-GPT License...",
     "license": "L-GPT License",
@@ -114,11 +128,11 @@
     "not-have-one": "Don't have a license key?",
     "premium": "Premium",
     "premium-already": "You are already a premium",
-    "premium-1": "Gift 500,000 tokens",
+    "premium-1": "Gift 500,000 points(GPT-3.5)",
     "premium-2": "Includes all Free features",
     "premium-3": "Unlock all features, Mac and Win Client in the future",
-    "premium-4": "GPT-4 and Claude to be supported in the future.",
-    "premium-5": "20% bonus for Token recharge",
+    "premium-4": "GPT-4 supported, Claude to be supported in the future.",
+    "premium-5": "20% bonus for Points recharge",
     "premium-6": "Lifetime license",
     "premium-7": "Support our future development",
     "team": "Team",
@@ -126,7 +140,7 @@
     "team-2": "As a team administrator",
     "team-3": "Support team management",
     "team-4": "More features are coming soon",
-    "tokens-recharged": "L-GPT Tokens recharge successful!"
+    "tokens-recharged": "L-GPT Points recharge successful!"
   },
   "prompt": {
     "add-prompt": "Add Prompt",
@@ -167,22 +181,22 @@
     "under-review": "Under review"
   },
   "recharge": {
-    "learn-more-about-token": "Learn more about L-GPT Tokens...",
+    "learn-more-about-token": "Learn more about L-GPT Points...",
     "no-expiration-date": "No expiration date",
     "pkg": "Package",
-    "pkg-1-desc-1": "1,660,000 tokens (≈ 1,250,000 words)",
-    "pkg-1-desc-2": "Get an extra 330,000 tokens for Premium",
-    "pkg-2-desc-1": "3,400,000 tokens (≈ 2,550,000 words)",
-    "pkg-2-desc-2": "Get an extra 700,000 tokens for Premium",
+    "pkg-1-desc-1": "1,660,000 points (≈ 1,250,000 words, GPT-3.5)",
+    "pkg-1-desc-2": "Get an extra 330,000 points for Premium",
+    "pkg-2-desc-1": "3,400,000 points (≈ 2,550,000 words, GPT-3.5)",
+    "pkg-2-desc-2": "Get an extra 700,000 points for Premium",
     "recharge": "Recharge",
-    "tokens-recharge": "Tokens Recharge"
+    "tokens-recharge": "Points Recharge"
   },
   "responseErr": {
     "10001": "Please log in or configure your API Key to use L-GPT.",
     "10002": "API Key missing, please check configuration or contact the developer",
     "10003": "Language model parameter error",
     "10004": "Please configure Azure API Version first",
-    "10005": "Insufficient token balance",
+    "10005": "Insufficient points balance",
     "context_length_exceeded": "Session content is too long. Delete some or create a new session.",
     "learn-more": "Learn More"
   },
@@ -219,7 +233,6 @@
     "configuration": "Configuration",
     "configuration-learn-more": "Any questions? Click to learn more.",
     "confirm-delete": "Confirm delete",
-    "create-new-deployment": "Create new deployment",
     "deployment-name": "Deployment name",
     "deployments": "Deployments",
     "deterministic": "Deterministic",
@@ -264,10 +277,12 @@
     "how-to-cost-3": "Each language model has its own pricing, and the corresponding official website has a detailed description of the pricing.",
     "know-more": "Click here to learn more about OpenAI models, tokens, and context limits.",
     "learn-more": "Learn more about Token",
+    "points": "Points",
     "token-desc": "Tokens are the basic unit that LLM models use to compute the length of a text. They are groups of characters, which sometimes align with words, but not always. In particular, it depends on the number of characters and includes punctuation signs or emojis.",
     "what-is-token": "What is a Token?"
   },
   "tts": {
+    "auth-error": "Text-to-Speech is not available for your current plan. Please upgrade to Premium or Team to unlock this feature.",
     "auto-play": "Auto Play",
     "auto-play-tip": "Play the audio automatically after each reply",
     "azure-tts": "Azure TTS",
@@ -288,10 +303,11 @@
   },
   "zLog": {
     "full-log": "Click to view the full update log",
-    "title": "v0.7.3 Released 🔥🔥",
-    "text1": "Added support for Azure to the 0613 and 0613-16K models",
-    "text2": "Account center now supports viewing token consumption details",
-    "text3": "Added feature to set maximum context length in conversations.",
-    "text4": "Refactored a large number of module codes to improve performance"
+    "title": "v0.8.0 Released 🔥🔥",
+    "text1": "Refactor most of the logic related to zustand status, greatly reduce the number of renders, and improve the overall performance.",
+    "text2": "Fixed the problem of incorrect deduction of fees under different models (previously, a lot of fees were deducted🤣🤣).",
+    "text3": "Added the introduction of @ltopx/lx-ui component library to further unify the global style.",
+    "text4": "Remove @vercel/analytics, Sentry",
+    "text5": "Temporarily take down the content related to Prompt. It will be re-launched next week after restructuring."
   }
 }

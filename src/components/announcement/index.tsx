@@ -2,21 +2,15 @@
 
 import React from "react";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
-import { Modal, Button, Link } from "@/components/ui";
+import { Modal, Button } from "@ltopx/lx-ui";
+import { useTranslations } from "next-intl";
 import pkg from "../../../package.json";
 
 export default function Announcement() {
-  const locale = useLocale();
-  const t = useTranslations("zLog");
+  const tZLog = useTranslations("zLog");
   const tCommon = useTranslations("common");
 
   const [open, setOpen] = React.useState(false);
-
-  const url =
-    locale === "zh-CN"
-      ? "https://docs.ltopx.com/zh-CN/change-log"
-      : "https://docs.ltopx.com/change-log";
 
   const onClose = () => {
     localStorage.setItem("announcement_version", pkg.version);
@@ -30,9 +24,8 @@ export default function Announcement() {
 
   return (
     <Modal
-      rootClassName="top-[50%]"
       width={700}
-      title={t("title")}
+      title={tZLog("title")}
       maskClosable={false}
       open={open}
       onClose={onClose}
@@ -44,25 +37,35 @@ export default function Announcement() {
         </div>
       }
     >
-      <Link target="_blank" href={url}>
-        {t("full-log")}
-      </Link>
+      <div className="flex">
+        <Button
+          type="link"
+          target="_blank"
+          href="https://docs.ltopx.com/change-log"
+        >
+          {tZLog("full-log")}
+        </Button>
+      </div>
       <ul
         role="list"
         className="marker:text-sky-400 mt-3 list-disc pl-5 space-y-3 text-slate-500 max-h-[500px] overflow-y-auto"
       >
-        <li>{t("text1")}</li>
-        <div>
+        <li>{tZLog("text1")}</li>
+        <li>{tZLog("text2")}</li>
+        <li>{tZLog("text3")}</li>
+        <li>{tZLog("text4")}</li>
+        <li>{tZLog("text5")}</li>
+        {/* <div>
           <Image src="/change_1.jpg" alt="" width={400} height={400} />
         </div>
-        <li>{t("text2")}</li>
+        <li>{tZLog("text2")}</li>
         <div>
           <Image src="/change_2.jpg" alt="" width={400} height={400} />
         </div>
-        <li>{t("text3")}</li>
+        <li>{tZLog("text3")}</li>
         <div>
           <Image src="/change_3.jpg" alt="" width={400} height={400} />
-        </div>
+        </div> */}
       </ul>
     </Modal>
   );

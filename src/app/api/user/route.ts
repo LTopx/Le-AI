@@ -1,20 +1,20 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/utils/plugin/auth";
 import { prisma } from "@/lib/prisma";
-import { LResponseError } from "@/lib";
+import { ResErr } from "@/lib";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
 
-  if (!session) return LResponseError("Please log in first");
+  if (!session) return ResErr({ error: 20001 });
 
   try {
     const user = await prisma.user.findUnique({
       where: { id: session?.user.id },
     });
 
-    if (!user) return LResponseError("User does not exist");
+    if (!user) return ResErr({ error: 20002 });
 
     await prisma.user.update({
       data: { recentlyUse: new Date() },

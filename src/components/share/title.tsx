@@ -4,9 +4,9 @@ import React from "react";
 import { useTranslations } from "next-intl";
 
 const Title: React.FC<{ name: string | null }> = ({ name }) => {
-  const t = useTranslations("share");
+  const tShare = useTranslations("share");
 
-  return <>{name || t("untitled")}</>;
+  return <>{name || tShare("untitled")}</>;
 };
 
 export default Title;

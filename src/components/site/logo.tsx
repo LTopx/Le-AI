@@ -10,7 +10,7 @@ export default function Logo({
   disabled = false,
   share = false,
   version = true,
-  size = "default",
+  size = "base",
 }) {
   const router = useRouter();
   const locale = useLocale();
@@ -31,7 +31,7 @@ export default function Logo({
     <div
       className={cn(
         "flex items-center gap-3",
-        { "text-2xl": size === "default" },
+        { "text-2xl": size === "base" },
         { "text-4xl": size === "large" }
       )}
     >
@@ -50,7 +50,7 @@ export default function Logo({
       </div>
       {!!version && (
         <span
-          className="text-xs cursor-pointer font-semibold py-1.5 px-3 bg-slate-400/10 rounded-full tabular-nums"
+          className="text-xs cursor-pointer font-semibold py-1.5 px-3 bg-slate-400/20 rounded-full tabular-nums"
           onClick={onCheckLog}
         >
           v{pkg.version}

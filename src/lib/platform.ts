@@ -2,7 +2,7 @@
 
 export type Platform = "windows" | "mac";
 
-const getPlatform = (): Platform => {
+export const getPlatform = (): Platform => {
   const agent = navigator.userAgent.toLowerCase();
   const isMac = /macintosh|mac os x/i.test(navigator.userAgent);
   if (agent.indexOf("win32") >= 0 || agent.indexOf("wow32") >= 0) {
@@ -14,5 +14,3 @@ const getPlatform = (): Platform => {
   if (isMac) return "mac";
   return "windows";
 };
-
-export { getPlatform };

@@ -1,92 +1,89 @@
-"use client";
-
 import React from "react";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { useDateFormat } from "l-hooks";
-import CopyIcon from "@/components/site/copyIcon";
-import ChatContent from "@/components/chatContent";
-import Icon from "@/components/icon";
-import { Confirm, Button } from "@/components/ui";
+import { shallow } from "zustand/shallow";
+import { useFormatter, useTranslations } from "next-intl";
+import { useRouter } from "next-intl/client";
+import { useDebounceFn } from "ahooks";
+import toast from "react-hot-toast";
+import { Button } from "@ltopx/lx-ui";
+import { useChannelStore } from "@/hooks/useChannel";
+import { useLLMStore } from "@/hooks/useLLM";
+import { useScrollToBottomStore } from "@/hooks/useScrollToBottom";
+import type { ChatItem, ChannelListItem } from "@/hooks/useChannel/types";
+import { useTTSStore } from "@/hooks/useTTS";
+import { useOpenStore } from "@/hooks/useOpen";
+import { useUserInfoStore } from "@/hooks/useUserInfo";
 import { cn, calcTokens } from "@/lib";
-import type { supportModelType } from "@/lib/gpt-tokens";
-import {
-  useChannel,
-  useLLM,
-  useTTS,
-  useUserInfo,
-  useTTSOpen,
-  useScrollToBottom,
-} from "@/hooks";
-import { useChatGPT } from "@/hooks/useChatGPT";
-import type { ChatItem } from "@/hooks";
-import Configure from "../../chatConfigure";
-import TTSHandler from "./ttsHandler";
+import type { supportModelType } from "@/lib/calcTokens/old_gpt-tokens";
+import Icon from "@/components/icon";
+import Avatar from "./avatar";
+import Handler from "./handler";
+import ChatConfigure from "../chatConfigure";
+import ChatContent from "../chatContent";
+import ChatTTS from "../chatTTS";
 
-const ChatList: React.FC = () => {
+export default function ChatList() {
+  const format = useFormatter();
   const session = useSession();
-  const { format } = useDateFormat();
-  const { send } = useChatGPT();
-  const { azure } = useLLM();
-  const { speak, pause } = useTTS();
-  const [channel, setChannel] = useChannel();
-  const [userInfo] = useUserInfo();
-  const [, setTTSOpen] = useTTSOpen();
-  const { scrollToBottom } = useScrollToBottom();
+  const router = useRouter();
 
-  const t = useTranslations("chat");
+  const tTTS = useTranslations("tts");
+  const tRes = useTranslations("responseErr");
+  const tAuth = useTranslations("auth");
+  const tRecharge = useTranslations("recharge");
+  const tPremium = useTranslations("premium");
+  const tErrorCode = useTranslations("errorCode");
+  const tCommon = useTranslations("common");
 
-  const backupIdRef = React.useRef<string | null>(null);
-
-  const user = session.data?.user;
-
-  const findChannel = channel.list.find(
-    (item) => item.channel_id === channel.activeId
+  const [activeId, list] = useChannelStore(
+    (state) => [state.activeId, state.list],
+    shallow
   );
+  const azure = useLLMStore((state) => state.azure);
+  const license_type = useUserInfoStore((state) => state.license_type);
 
+  const findChannel = list.find((item) => item.channel_id === activeId);
   const chatList = findChannel?.chat_list || [];
 
-  const renderAssistantIcon = () => {
-    if (findChannel?.channel_model.type === "openai") {
-      return (
-        <div className="rounded-full flex bg-[#20a37f] h-8 w-8 justify-center items-center">
-          <Icon icon="openai" size={20} className="text-white" />
-        </div>
-      );
-    }
-    if (findChannel?.channel_model.type === "azure") {
-      return (
-        <div className="rounded-full flex bg-sky-200/70 h-8 w-8 justify-center items-center">
-          <Icon icon="azure" size={20} className="text-white" />
-        </div>
-      );
-    }
+  const updateList = useChannelStore((state) => state.updateList);
+  const sendGPT = useChannelStore((state) => state.sendGPT);
+  const speak = useTTSStore((state) => state.speak);
+  const pause = useTTSStore((state) => state.pause);
+  const updateTTSOpen = useOpenStore((state) => state.updateTtsSettingOpen);
+  const updateUserInfo = useUserInfoStore((state) => state.update);
+  const updateChargeTokenOpen = useOpenStore(
+    (state) => state.updateChargeTokenOpen
+  );
+  const updatePremiumOpen = useOpenStore((state) => state.updatePremiumOpen);
 
-    return null;
-  };
+  const { run } = useDebounceFn((item) => onDelete(item), {
+    wait: 100,
+  });
+
+  const scrollToBottom = useScrollToBottomStore(
+    (state) => state.scrollToBottom
+  );
 
   const onDelete = (item: ChatItem) => {
     const { id } = item;
-    setChannel((channel) => {
-      const { list, activeId } = channel;
-      const findCh = list.find((item) => item.channel_id === activeId);
-      if (!findCh) return channel;
-      findCh.chat_list = findCh.chat_list.filter((item) => item.id !== id);
+    const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
+    const findCh = newList.find((item) => item.channel_id === activeId);
+    if (!findCh) return;
+    findCh.chat_list = findCh.chat_list.filter((item) => item.id !== id);
 
-      const channel_model = findCh.channel_model;
+    const channel_model = findCh.channel_model;
 
-      let calcModel = channel_model.name;
-      const findAzureModel = azure.models.find(
-        (item) => item.value === calcModel
-      );
-      if (findAzureModel) calcModel = findAzureModel.label;
+    let calcModel = channel_model.name;
+    const findAzureModel = azure.models.find(
+      (item) => item.value === calcModel
+    );
+    if (findAzureModel) calcModel = findAzureModel.label;
+    const messages = findCh.chat_list.map((item) => ({
+      role: item.role,
+      content: item.content,
+    }));
 
-      const messages = findCh.chat_list.map((item) => ({
-        role: item.role,
-        content: item.content,
-      }));
-
+    if (messages.length) {
       const isPlus =
         channel_model.type === "openai" &&
         (channel_model.name === "gpt-3.5-turbo" ||
@@ -98,26 +95,46 @@ const ChatList: React.FC = () => {
         isPlus
       );
 
-      // Only updates the tokens required to process the entire content of the current session,
-      // without affecting the tokens that have already been consumed,
-      // and therefore does not affect the value of total_tokens.
       findCh.channel_cost.tokens = usedTokens;
       findCh.channel_cost.usd = Number(usedUSD.toFixed(5));
+    } else {
+      findCh.channel_cost.tokens = 0;
+      findCh.channel_cost.usd = 0;
+    }
 
-      return channel;
-    });
+    updateList(newList);
+  };
+
+  const onLogin = () => {
+    toast.dismiss();
+    router.push("/login");
+  };
+
+  const onRecharge = () => {
+    toast.dismiss();
+    if (!license_type) {
+      // start free trial
+      updatePremiumOpen(true);
+    } else {
+      updateChargeTokenOpen(true);
+    }
+  };
+
+  const onExceeded = () => {
+    window.open("https://docs.ltopx.com/conversation-limits");
   };
 
   const onRegenerate = (item: ChatItem) => {
-    if (!findChannel) return;
-    const { channel_loading, channel_loading_connect, chat_list } = findChannel;
+    const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
+    const findCh = newList.find((item) => item.channel_id === activeId);
+    if (!findCh) return;
 
+    const { channel_loading, channel_loading_connect, chat_list } = findCh;
     if (channel_loading || channel_loading_connect) return;
 
     const findIndex = chat_list.findIndex((val) => val.id === item.id);
 
     let arr: ChatItem[] = [];
-
     if (item.role === "assistant") {
       arr = chat_list.slice(0, findIndex);
     } else if (item.role === "user") {
@@ -125,180 +142,179 @@ const ChatList: React.FC = () => {
     }
     if (!arr.length) return;
 
-    setChannel((channel) => {
-      const { list, activeId } = channel;
-      const findCh = list.find((item) => item.channel_id === activeId);
-      if (!findCh) return channel;
-      findCh.chat_list = arr;
-      return channel;
-    });
+    findCh.chat_list = arr;
+    updateList(newList);
 
-    send(arr, findChannel.channel_id);
+    try {
+      sendGPT(arr, activeId);
+
+      if (session.data) updateUserInfo(2000);
+    } catch (errRes: any) {
+      let errorMessage = "error";
+      if (errRes.error === 10001) {
+        return toast(
+          () => (
+            <div className="flex gap-4 items-center">
+              {tRes("10001")}
+              <Button type="primary" onClick={onLogin}>
+                {tAuth("log-in")}
+              </Button>
+            </div>
+          ),
+          { duration: 5000 }
+        );
+      } else if (errRes.error === 10002) {
+        errorMessage = tRes("10002");
+      } else if (errRes.error === 10004) {
+        errorMessage = tRes("10004");
+      } else if (errRes.error === 10005) {
+        return toast(
+          () => (
+            <div className="flex gap-4 items-center">
+              {tRes("10005")}
+              <Button type="primary" onClick={onRecharge}>
+                {license_type ? tRecharge("recharge") : tPremium("free-trial")}
+              </Button>
+            </div>
+          ),
+          { duration: 5000 }
+        );
+      } else if (errRes.error === 20002) {
+        errorMessage = tErrorCode("20002");
+      } else if (errRes.error === 20009) {
+        errorMessage = tErrorCode("20009");
+      } else if (errRes.error.code === "context_length_exceeded") {
+        return toast(
+          () => (
+            <div className="flex gap-4 items-center">
+              {tRes("context_length_exceeded")}
+              <Button type="primary" onClick={onExceeded}>
+                {tRes("learn-more")}
+              </Button>
+            </div>
+          ),
+          { duration: 5000 }
+        );
+      } else {
+        errorMessage =
+          errRes.msg || errRes.error?.message || tCommon("service-error");
+      }
+      toast.error(errorMessage, { duration: 4000 });
+      return;
+    }
   };
 
   const onRead = (item: ChatItem, channel_id: string) => {
-    setChannel((channel) => {
-      const { list } = channel;
-      const findCh = list.find((item) => item.channel_id === channel_id);
-      if (!findCh) return channel;
-      const findChat = findCh.chat_list.find((val) => {
-        val.tts_loading = false;
-        return val.id === item.id;
-      });
-      if (!findChat) return channel;
-      findChat.tts_loading = true;
-      return channel;
+    if (license_type !== "premium" && license_type !== "team") {
+      return toast.error(tTTS("auth-error"), { id: "license_type_error" });
+    }
+
+    const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
+    const findCh = newList.find((item) => item.channel_id === channel_id);
+    if (!findCh) return;
+
+    findCh.chat_list.forEach((val) => {
+      val.tts_loading = val.id === item.id;
     });
+    updateList(newList);
 
     speak(item.content, () => {
-      setChannel((channel) => {
-        const { list } = channel;
-        const findCh = list.find((item) => item.channel_id === channel_id);
-        if (!findCh) return channel;
-        const findChat = findCh.chat_list.find((val) => val.id === item.id);
-        if (!findChat) return channel;
-        findChat.tts_loading = false;
-        return channel;
-      });
+      const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
+      const findCh = newList.find((item) => item.channel_id === channel_id);
+      if (!findCh) return;
+      const findChat = findCh.chat_list.find((val) => val.id === item.id);
+      if (!findChat) return;
+      findChat.tts_loading = false;
+      updateList(newList);
     });
   };
 
   const onPause = (item: ChatItem, channel_id: string) => {
-    setChannel((channel) => {
-      const { list } = channel;
-      const findCh = list.find((item) => item.channel_id === channel_id);
-      if (!findCh) return channel;
-      const findChat = findCh.chat_list.find((val) => val.id === item.id);
-      if (!findChat) return channel;
-      findChat.tts_loading = false;
-      return channel;
-    });
+    const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
+    const findCh = newList.find((item) => item.channel_id === channel_id);
+    if (!findCh) return;
+    const findChat = findCh.chat_list.find((val) => val.id === item.id);
+    if (!findChat) return;
+    findChat.tts_loading = false;
+    updateList(newList);
     pause();
   };
 
-  const onTTSSetting = () => setTTSOpen(true);
-
   React.useEffect(() => {
-    if (backupIdRef.current) {
-      const findNowCh = channel.list.find(
-        (item) => item.channel_id === backupIdRef.current
-      );
-      if (findNowCh) {
-        const findTTS = findNowCh.chat_list.find((val) => val.tts_loading);
-        if (findTTS) onPause(findTTS, backupIdRef.current);
+    pause();
+
+    if (findChannel) {
+      // 切换频道时看当前列表是否有 ttsLoading
+      const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
+      const findCh = newList.find((item) => item.channel_id === activeId);
+      if (findCh?.chat_list?.length) {
+        const findTTSLoading = findCh.chat_list.find(
+          (item) => item.tts_loading
+        );
+        if (findTTSLoading) {
+          findCh.chat_list.forEach((val) => {
+            val.tts_loading = false;
+          });
+          updateList(newList);
+        }
       }
     }
 
-    backupIdRef.current = channel.activeId;
     scrollToBottom();
-  }, [channel.activeId]);
-
-  React.useEffect(() => {
-    return () => {
-      setChannel((channel) => {
-        const { list, activeId } = channel;
-        const findCh = list.find((item) => item.channel_id === activeId);
-        if (!findCh) return channel;
-        const findTTS = findCh.chat_list.find((val) => val.tts_loading);
-        if (findTTS) {
-          findTTS.tts_loading = false;
-          pause();
-        }
-        return channel;
-      });
-    };
-  }, []);
+  }, [activeId]);
 
   return (
     <>
-      {!chatList.length && <Configure />}
+      {!chatList.length && findChannel && (
+        <ChatConfigure list={list} channel={findChannel} />
+      )}
       <div className="flex flex-col mt-5 gap-5">
         {chatList.map((item, index) => (
           <div
             key={item.id}
-            className={cn("flex gap-3 group", {
-              "mt-12": index === 0,
-            })}
+            className={cn("flex gap-3 group", { "mt-12": index === 0 })}
           >
-            <div>
-              {item.role === "assistant" && renderAssistantIcon()}
-              {/* {item.role === "assistant" && (
-                <div className="rounded-full flex bg-sky-200/70 h-8 w-8 justify-center items-center">
-                  <Icon icon="azure" size={20} className="text-white" />
-                </div>
-              )} */}
-              {item.role === "user" && (
-                <div
-                  className={cn(
-                    "rounded-full flex h-8 w-8 justify-center items-center",
-                    "bg-black/25 dark:bg-slate-50"
-                  )}
-                >
-                  {user?.image ? (
-                    <Image
-                      className="rounded-full"
-                      src={user.image}
-                      alt="Avatar"
-                      width={32}
-                      height={32}
-                    />
-                  ) : (
-                    <Icon
-                      icon="user_3_fill"
-                      className="text-white dark:text-neutral-600"
-                    />
-                  )}
-                </div>
-              )}
-            </div>
+            <Avatar role={item.role} model={findChannel?.channel_model} />
             <div className="flex flex-col gap-1">
               <div className="flex text-sm text-neutral-500 gap-4 items-center dark:text-neutral-300/90">
-                {format(Number(item.time), "MM-DD HH:mm:ss")}
-                <div className="flex opacity-0 transition-opacity gap-1.5 group-hover:opacity-100">
-                  <Button type="outline" size="xs" className="rounded-full">
-                    <CopyIcon size={16} content={item.content} />
-                  </Button>
-                  <Confirm
-                    title={t("delete-chat")}
-                    content={t("delete-chat-tip")}
-                    trigger={
-                      <Button size="xs" type="outline" className="rounded-full">
-                        <Icon icon="delete_2_line" size={16} />
-                      </Button>
-                    }
-                    onOk={() => onDelete(item)}
-                  />
-                  <Button
-                    size="xs"
-                    type="outline"
-                    className="rounded-full"
-                    onClick={() => onRegenerate(item)}
-                  >
-                    <Icon icon="refresh_3_line" size={16} />
-                  </Button>
-                </div>
+                {format.dateTime(new Date(Number(item.time)), {
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  second: "numeric",
+                })}
+                <Handler
+                  content={item.content}
+                  onDelete={() => run(item)}
+                  onRegenerate={() => onRegenerate(item)}
+                />
               </div>
               <div
                 className={cn(
                   "self-start py-2.5 px-3 rounded-lg relative border border-transparent group/item",
-                  { "bg-blue-200/70 dark:bg-blue-900": item.role === "user" },
                   {
-                    "bg-neutral-200/60 dark:bg-neutral-800/90 dark:border-neutral-600/60":
+                    "bg-blue-200/70 dark:bg-blue-700/70": item.role === "user",
+                  },
+                  {
+                    "bg-neutral-200/60 dark:bg-zinc-900/50 dark:border-neutral-600/60":
                       item.role === "assistant",
                   }
                 )}
               >
                 <ChatContent data={item} />
-
-                <TTSHandler
-                  data={item}
-                  license_type={userInfo.license_type}
-                  onRead={() => onRead(item, findChannel?.channel_id as string)}
-                  onPause={() =>
-                    onPause(item, findChannel?.channel_id as string)
-                  }
-                  onTTSSetting={onTTSSetting}
-                />
+                {item.role === "assistant" && (
+                  <ChatTTS
+                    data={item}
+                    onRead={() =>
+                      onRead(item, findChannel?.channel_id as string)
+                    }
+                    onPause={() =>
+                      onPause(item, findChannel?.channel_id as string)
+                    }
+                    onTTSSetting={() => updateTTSOpen(true)}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -316,6 +332,4 @@ const ChatList: React.FC = () => {
       <div className="h-32 overflow-hidden" />
     </>
   );
-};
-
-export default ChatList;
+}

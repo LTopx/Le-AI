@@ -3,8 +3,8 @@
 import React from "react";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import { Input, Button } from "@ltopx/lx-ui";
 import toast from "react-hot-toast";
-import { Input, Button } from "@/components/ui";
 
 interface UserInfo {
   name: string;
@@ -12,9 +12,9 @@ interface UserInfo {
   image: string;
 }
 
-export default function Account() {
+export default function UserInfo() {
   const { data: session, update } = useSession();
-  const t = useTranslations("account");
+  const tAccount = useTranslations("account");
   const tCommon = useTranslations("common");
 
   const [loading, setLoading] = React.useState(false);
@@ -32,10 +32,11 @@ export default function Account() {
     });
   };
 
-  const save = () => {
+  const onSave = () => {
     if (!userInfo.name?.trim()) {
-      return toast.error(t("name-placeholder"), { id: "input-name" });
+      return toast.error(tAccount("name-placeholder"), { id: "input-name" });
     }
+
     const params = {
       name: userInfo.name,
       image: userInfo.image || "",
@@ -60,7 +61,7 @@ export default function Account() {
           });
         }
 
-        toast.success(t("save-success"), { id: "save-success" });
+        toast.success(tAccount("save-success"), { id: "save-success" });
         // update session
         update();
       })
@@ -82,42 +83,42 @@ export default function Account() {
 
   return (
     <div>
-      <div className="text-2xl font-semibold">{t("user-info")}</div>
-      <div className="text-sm mt-4 mb-8">{t("account-tip")}</div>
+      <div className="text-2xl font-semibold">{tAccount("user-info")}</div>
+      <div className="text-sm mt-4 mb-8">{tAccount("account-tip")}</div>
       <div className="p-6 border rounded-md dark:border-neutral-600">
         <div className="mb-5">
-          <div className="text-sm mb-1.5">{t("email")}</div>
+          <div className="text-sm mb-1.5">{tAccount("email")}</div>
           <Input
             disabled
-            placeholder={t("email-placeholder")}
+            placeholder={tAccount("email-placeholder")}
             allowClear
             value={userInfo.email}
           />
         </div>
         <div className="mb-5">
           <div className="text-sm mb-1.5">
-            {t("name")}
+            {tAccount("name")}
             <span className="text-rose-500"> *</span>
           </div>
           <Input
-            placeholder={t("name-placeholder")}
+            placeholder={tAccount("name-placeholder")}
             allowClear
             value={userInfo.name}
             onChange={(value) => onchange(value, "name")}
           />
         </div>
         <div className="mb-5">
-          <div className="text-sm mb-1.5">{t("avatar")}</div>
+          <div className="text-sm mb-1.5">{tAccount("avatar")}</div>
           <Input
-            placeholder={t("avatar-placeholder")}
+            placeholder={tAccount("avatar-placeholder")}
             allowClear
             value={userInfo.image}
             onChange={(value) => onchange(value, "image")}
           />
         </div>
-        <div>
-          <Button type="primary" loading={loading} onClick={save}>
-            {t("save")}
+        <div className="flex">
+          <Button type="primary" loading={loading} onClick={onSave}>
+            {tAccount("save")}
           </Button>
         </div>
       </div>

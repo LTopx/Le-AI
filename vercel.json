@@ -1,7 +1,7 @@
 {
   "crons": [
     {
-      "path": "/api/share/cron",
+      "path": "/api/cron/share",
       "schedule": "0 3 * * *"
     },
     {

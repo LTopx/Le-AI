@@ -30,23 +30,23 @@ function Content({ children }: { children: React.ReactNode }) {
 const MobileMenu: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const t = useTranslations("account");
+  const tAccount = useTranslations("account");
 
   const [open, setOpen] = React.useState(false);
 
   const menuItems: MenuItemProps[] = [
     {
-      label: t("usage"),
+      label: tAccount("usage"),
       value: "account",
       path: "/account",
     },
+    // {
+    //   label: t("teams"),
+    //   value: "team",
+    //   path: "/account/team",
+    // },
     {
-      label: t("teams"),
-      value: "team",
-      path: "/account/team",
-    },
-    {
-      label: t("user-info"),
+      label: tAccount("user-info"),
       value: "info",
       path: "/account/info",
     },
