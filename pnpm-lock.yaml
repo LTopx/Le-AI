@@ -9,8 +9,8 @@ dependencies:
     specifier: 11.11.2
     version: 11.11.2
   '@ltopx/lx-ui':
-    specifier: 0.0.81
-    version: 0.0.81(@babel/core@7.22.9)(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
+    specifier: 0.0.84
+    version: 0.0.84(@babel/core@7.22.9)(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
   '@next-auth/prisma-adapter':
     specifier: 1.0.7
     version: 1.0.7(@prisma/client@5.0.0)(next-auth@4.22.3)
@@ -63,8 +63,8 @@ dependencies:
     specifier: 2.0.5
     version: 2.0.5
   framer-motion:
-    specifier: 10.13.0
-    version: 10.13.0(react-dom@18.2.0)(react@18.2.0)
+    specifier: 10.13.1
+    version: 10.13.1(react-dom@18.2.0)(react@18.2.0)
   gpt-tokens:
     specifier: 1.1.1
     version: 1.1.1
@@ -1734,8 +1734,8 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
 
-  /@ltopx/lx-ui@0.0.81(@babel/core@7.22.9)(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3):
-    resolution: {integrity: sha512-CHomkpbGuIXurJ/C0wQ5Jm2ntbbWY5fvY2djVCqoZuf1Rzmw72NqFJSpSW8RFow1bv4TDsJrNSew9zfdvl6kAw==}
+  /@ltopx/lx-ui@0.0.84(@babel/core@7.22.9)(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3):
+    resolution: {integrity: sha512-Q16BjfifWhS0u6QEE12yTQ4Mq+oakFCSSwvBpLAxEwMLVvtC2TBRgKAR2ba5QxeVAq70JSbRrnjSDG6jt4HXyA==}
     peerDependencies:
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
@@ -1751,7 +1751,7 @@ packages:
       '@radix-ui/react-tabs': 1.0.4(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-tooltip': 1.0.6(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
       clsx: 2.0.0
-      framer-motion: 10.13.0(react-dom@18.2.0)(react@18.2.0)
+      framer-motion: 10.13.1(react-dom@18.2.0)(react@18.2.0)
       next: 13.4.12(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
       nextra: 2.10.0(next@13.4.12)(react-dom@18.2.0)(react@18.2.0)
       nextra-theme-docs: 2.10.0(next@13.4.12)(nextra@2.10.0)(react-dom@18.2.0)(react@18.2.0)
@@ -5291,8 +5291,8 @@ packages:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
     dev: false
 
-  /framer-motion@10.13.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-xKhw9VCizmwEHbopOfluaoVunGHSZyMztGbTvsgOYqCjaKu6qtlwWY1J+6GhL41NY1P157JgEikjDm67XCFnvQ==}
+  /framer-motion@10.13.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-uiKsaLEoySeln3eOPy8wUB3FkNtRRiVga5xJOkgs7C0sHVyvpJajXJFSoabt+emBojgnMQY0epnjl0ppoYPxkQ==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0

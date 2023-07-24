@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  presets: [require("./lx-ui-preset.ts")],
+  presets: [require("@ltopx/lx-ui/dist/presets")],
   darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
