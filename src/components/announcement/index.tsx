@@ -37,6 +37,12 @@ export default function Announcement() {
         </div>
       }
     >
+      <Image
+        src="https://docs.ltopx.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.8.1-1.c9dce942.png&w=1920&q=75"
+        alt=""
+        width={1920}
+        height={800}
+      />
       <div className="flex">
         <Button
           type="link"
@@ -53,8 +59,8 @@ export default function Announcement() {
         <li>{tZLog("text1")}</li>
         <li>{tZLog("text2")}</li>
         <li>{tZLog("text3")}</li>
-        <li>{tZLog("text4")}</li>
-        <li>{tZLog("text5")}</li>
+        {/* <li>{tZLog("text4")}</li>
+        <li>{tZLog("text5")}</li> */}
         {/* <div>
           <Image src="/change_1.jpg" alt="" width={400} height={400} />
         </div>

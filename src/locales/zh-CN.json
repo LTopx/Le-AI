@@ -316,11 +316,9 @@
   },
   "zLog": {
     "full-log": "点击查看完整更新日志",
-    "title": "v0.8.0 更新公告 🔥🔥",
-    "text1": "重构 zustand 状态相关的大部分逻辑，极大的减少 render 次数，提升整体性能",
-    "text2": "修复不同模型下费用扣除不正确的问题（之前少扣了不少费用）🤣🤣",
-    "text3": "新增引入 @ltopx/lx-ui 组件库，进一步统一全局风格样式",
-    "text4": "移除@vercel/analytics、Sentry",
-    "text5": "暂时下线Prompt 相关内容，下周重构后再上线"
+    "title": "v0.8.1 更新公告 🔥🔥",
+    "text1": "Prompt功能部分回归，新增 AI 角色模板模板功能，内置部分常用模板",
+    "text2": "调整 gpt-tokens 计算模块，现在能够正确计算所有消耗的 token",
+    "text3": "接下来会继续增加自定义AI 角色模板功能，以及 prompt library 功能"
   }
 }

@@ -316,11 +316,9 @@
   },
   "zLog": {
     "full-log": "Click to view the full update log",
-    "title": "v0.8.0 Released 🔥🔥",
-    "text1": "Refactor most of the logic related to zustand status, greatly reduce the number of renders, and improve the overall performance.",
-    "text2": "Fixed the problem of incorrect deduction of fees under different models (previously, a lot of fees were deducted🤣🤣).",
-    "text3": "Added the introduction of @ltopx/lx-ui component library to further unify the global style.",
-    "text4": "Remove @vercel/analytics, Sentry",
-    "text5": "Temporarily take down the content related to Prompt. It will be re-launched next week after restructuring."
+    "title": "v0.8.1 Released 🔥🔥",
+    "text1": "The Prompt function is back, with the addition of AI role template functionality and built-in commonly used templates.",
+    "text2": "Adjusted the gpt-tokens calculation module to correctly calculate all consumed tokens now.",
+    "text3": "Next, we will continue to add custom AI role template functionality and prompt library features."
   }
 }
