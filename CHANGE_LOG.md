@@ -2,11 +2,12 @@
 
 ## v0.8.1
 
-> 2023-07-31
+> 2023-08-01
 
 ### Add
 
 - Added AI Characters template function, built-in some common templates
+- AI character template has added a new customization feature, allowing users to customize and use templates according to their preferences.
 
 ### Changed
 

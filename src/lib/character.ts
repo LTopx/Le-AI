@@ -1,6 +1,6 @@
 import type { ChannelIcon } from "@/hooks/useChannel/types";
 
-type ModalConfig = {
+export type ModalConfig = {
   model_type: "openai" | "azure";
   model_name: string;
   context_length: number;
@@ -11,7 +11,8 @@ export type CharacterType =
   | "role-play"
   | "hr"
   | "writing"
-  | "translate";
+  | "translate"
+  | "mine";
 
 export interface Characters {
   "zh-CN": Character[];
