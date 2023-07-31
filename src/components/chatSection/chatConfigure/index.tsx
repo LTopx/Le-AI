@@ -5,10 +5,13 @@ import { shallow } from "zustand/shallow";
 import { Select, Button } from "@ltopx/lx-ui";
 import { useLLMStore } from "@/hooks/useLLM";
 import { useChannelStore } from "@/hooks/useChannel";
-import type { ChannelListItem } from "@/hooks/useChannel/types";
+import { useOpenStore } from "@/hooks/useOpen";
+import type { ChannelListItem, ChannelIcon } from "@/hooks/useChannel/types";
 import { useModelCacheStore } from "@/hooks/useModelCache";
 import { cn } from "@/lib";
 import Icon from "@/components/icon";
+import PremiumBtn from "./premiumBtn";
+import MenuIcon from "@/components/menu/icon";
 
 interface ChatConfigureProps {
   list: ChannelListItem[];
@@ -68,6 +71,9 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
   const updateList = useChannelStore((state) => state.updateList);
   const updateType = useModelCacheStore((state) => state.updateType);
   const updateName = useModelCacheStore((state) => state.updateName);
+  const updateCharacterOpen = useOpenStore(
+    (state) => state.updateCharacterOpen
+  );
 
   const onChangeType = (value: string) => {
     const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
@@ -146,6 +152,7 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
           </div>
         </div>
         <div className="flex justify-center gap-2 mt-3">
+          <PremiumBtn />
           <Button
             rounded
             outline
@@ -156,6 +163,30 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
           >
             {tCommon("docs")}
           </Button>
+        </div>
+        <div className="flex justify-center mt-5">
+          <div
+            className={cn(
+              "w-80 max-w-[calc(100vw-2rem)] dark:bg-[hsla(0,0%,100%,0.08)]",
+              "flex flex-col items-center justify-between shadow-sm text-xs gap-2 px-4 py-3",
+              "dark:text-[hsla(0,0%,100%,0.9)]",
+              "border border-[rgb(229,230,235)] dark:border-[hsla(0,0%,100%,0.08)]",
+              "select-none rounded-lg transition-colors cursor-pointer",
+              "hover:bg-[rgb(229,230,235)] dark:hover:bg-[hsla(0,0%,100%,0.12)]"
+            )}
+            onClick={() => updateCharacterOpen(true)}
+          >
+            <div className="flex items-center gap-1">
+              <MenuIcon
+                className="w-4 h-4"
+                name={channel.channel_icon as ChannelIcon}
+              />
+              <div>{channel.channel_prompt_name}</div>
+            </div>
+            <div className="text-gray-600 dark:text-[hsla(0,0%,100%,0.9)] max-h-[300px] overflow-y-auto">
+              {channel.channel_prompt}
+            </div>
+          </div>
         </div>
       </motion.div>
     </div>

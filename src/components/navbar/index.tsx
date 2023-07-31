@@ -32,7 +32,7 @@ export default function Navbar() {
           <Icon
             icon="gift_fill"
             size={30}
-            className="text-orange-400 cursor-pointer"
+            className="text-orange-400 dark:text-orange-500 cursor-pointer"
             onClick={() => updatePremiumOpen(true)}
           />
         </div>

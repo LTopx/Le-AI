@@ -42,35 +42,30 @@ interface MessageItem {
 }
 
 export class GPTTokens {
-  constructor(options: {
-    model: supportModelType;
-    messages: MessageItem[];
-    plus?: boolean;
-  }) {
-    const { model, messages, plus = false } = options;
+  constructor(options: { model: supportModelType; messages: MessageItem[] }) {
+    const { model, messages } = options;
 
     if (!GPTTokens.supportModels.includes(model))
       throw new Error(`Model ${model} is not supported`);
 
-    // if (model === "gpt-3.5-turbo")
-    //   this.warning(
-    //     `${model} may update over time. Returning num tokens assuming gpt-3.5-turbo-0613`
-    //   );
-    // if (model === "gpt-3.5-turbo-16k")
-    //   this.warning(
-    //     `${model} may update over time. Returning num tokens assuming gpt-3.5-turbo-16k-0613`
-    //   );
-    // if (model === "gpt-4")
-    //   this.warning(
-    //     `${model} may update over time. Returning num tokens assuming gpt-4-0613`
-    //   );
-    // if (model === "gpt-4-32k")
-    //   this.warning(
-    //     `${model} may update over time. Returning num tokens assuming gpt-4-32k-0613`
-    //   );
+    if (model === "gpt-3.5-turbo")
+      this.warning(
+        `${model} may update over time. Returning num tokens assuming gpt-3.5-turbo-0613`
+      );
+    if (model === "gpt-3.5-turbo-16k")
+      this.warning(
+        `${model} may update over time. Returning num tokens assuming gpt-3.5-turbo-16k-0613`
+      );
+    if (model === "gpt-4")
+      this.warning(
+        `${model} may update over time. Returning num tokens assuming gpt-4-0613`
+      );
+    if (model === "gpt-4-32k")
+      this.warning(
+        `${model} may update over time. Returning num tokens assuming gpt-4-32k-0613`
+      );
 
     this.model = model;
-    this.plus = plus;
     this.messages = messages;
   }
 
@@ -88,14 +83,20 @@ export class GPTTokens {
     "gpt-4-32k-0613",
   ];
 
-  public readonly plus;
   public readonly model;
   public readonly messages;
 
   // https://openai.com/pricing/
-  // gpt-3.5-turbo
+  // gpt-3.5-turbo 4K context
+  // $0.0015 / 1K tokens
+  public readonly gpt3_5_turboPromptTokenUnit = new Decimal(0.0015)
+    .div(1000)
+    .toNumber();
+
+  // https://openai.com/pricing/
+  // gpt-3.5-turbo 4K context
   // $0.002 / 1K tokens
-  public readonly gpt3_5_turboTokenUnit = new Decimal(0.002)
+  public readonly gpt3_5_turboCompletionTokenUnit = new Decimal(0.002)
     .div(1000)
     .toNumber();
 
@@ -150,10 +151,16 @@ export class GPTTokens {
       ["gpt-3.5-turbo", "gpt-3.5-turbo-0301", "gpt-3.5-turbo-0613"].includes(
         this.model
       )
-    )
-      price = new Decimal(this.usedTokens)
-        .mul(this.gpt3_5_turboTokenUnit)
-        .toNumber();
+    ) {
+      const promptUSD = new Decimal(this.promptUsedTokens).mul(
+        this.gpt3_5_turboPromptTokenUnit
+      );
+      const completionUSD = new Decimal(this.completionUsedTokens).mul(
+        this.gpt3_5_turboCompletionTokenUnit
+      );
+
+      price = promptUSD.add(completionUSD).toNumber();
+    }
 
     if (["gpt-3.5-turbo-16k", "gpt-3.5-turbo-16k-0613"].includes(this.model)) {
       const promptUSD = new Decimal(this.promptUsedTokens).mul(
@@ -190,9 +197,7 @@ export class GPTTokens {
       price = promptUSD.add(completionUSD).toNumber();
     }
 
-    return this.plus && this.model.startsWith("gpt-3.5-turbo")
-      ? new Decimal(price).mul(0.75).toNumber()
-      : price;
+    return price;
   }
 
   // Used Tokens (total)
@@ -200,7 +205,7 @@ export class GPTTokens {
     return this.promptUsedTokens + this.completionUsedTokens;
   }
 
-  // Used Tokens (prompt
+  // Used Tokens (prompt)
   public get promptUsedTokens() {
     return GPTTokens.num_tokens_from_messages(this.promptMessages, this.model);
   }

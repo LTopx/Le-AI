@@ -8,6 +8,7 @@ import PcMenu from "@/components/menu/pc";
 import MobileMenu from "@/components/menu/mobile";
 import Setting from "@/components/setting";
 import Navbar from "@/components/navbar";
+import Character from "@/components/character";
 import Premium from "@/components/premium";
 import ChargeToken from "@/components/chargeToken";
 import Welcome from "@/components/site/welcome";
@@ -29,6 +30,7 @@ export default function Home() {
       <Premium />
       <ChargeToken />
       <TTSSetting />
+      <Character />
       <section
         className={cn(
           "transition-colors h-full w-full relative md:w-[calc(100vw-17.5rem)]",

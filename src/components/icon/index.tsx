@@ -72,9 +72,21 @@ import { Check_fill } from "./check_fill";
 import { Command_line } from "./command_line";
 import { Add_line } from "./add_line";
 import { Menu_line } from "./menu_line";
+import { Star_line } from "./star_line";
+import { Angel_fill } from "./angel_fill";
+import { Unlock_line } from "./unlock_line";
+import { Game_2_line } from "./game_2_line";
 
 const Icon: React.FC<IconProps> = (props) => {
   const { icon } = props;
+
+  if (icon === "game_2_line") return <Game_2_line {...props} />;
+
+  if (icon === "unlock_line") return <Unlock_line {...props} />;
+
+  if (icon === "angel_fill") return <Angel_fill {...props} />;
+
+  if (icon === "star_line") return <Star_line {...props} />;
 
   if (icon === "menu_line") return <Menu_line {...props} />;
 

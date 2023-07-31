@@ -32,11 +32,13 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={inter.className} suppressHydrationWarning>
       <Script src="/disableSafariScalable.js" />
-      <script
-        async
-        src={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}
-        data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-      ></script>
+      {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
+        <script
+          async
+          src={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}
+          data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+        ></script>
+      )}
       <body>
         <Providers locale={locale} messages={messages}>
           <Announcement />

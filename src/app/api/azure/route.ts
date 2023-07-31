@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { getServerSession } from "next-auth/next";
 import { calcTokens } from "@/lib/calcTokens";
 import { authOptions } from "@/utils/plugin/auth";
-import type { supportModelType } from "@/lib/calcTokens/old_gpt-tokens";
+import type { supportModelType } from "@/lib/calcTokens/gpt-tokens";
 import { prisma } from "@/lib/prisma";
 import { ResErr, isUndefined } from "@/lib";
 import { PREMIUM_MODELS } from "@/hooks/useLLM";

@@ -14,7 +14,7 @@ import { useTTSStore } from "@/hooks/useTTS";
 import { useOpenStore } from "@/hooks/useOpen";
 import { useUserInfoStore } from "@/hooks/useUserInfo";
 import { cn, calcTokens } from "@/lib";
-import type { supportModelType } from "@/lib/calcTokens/old_gpt-tokens";
+import type { supportModelType } from "@/lib/calcTokens/gpt-tokens";
 import Icon from "@/components/icon";
 import Avatar from "./avatar";
 import Handler from "./handler";
@@ -84,15 +84,9 @@ export default function ChatList() {
     }));
 
     if (messages.length) {
-      const isPlus =
-        channel_model.type === "openai" &&
-        (channel_model.name === "gpt-3.5-turbo" ||
-          channel_model.name === "gpt-3.5-turbo-0613");
-
       const { usedTokens, usedUSD } = calcTokens(
         messages,
-        calcModel as supportModelType,
-        isPlus
+        calcModel as supportModelType
       );
 
       findCh.channel_cost.tokens = usedTokens;

@@ -18,6 +18,7 @@ interface IConversationSettings {
   model_type: string;
   model_value: string;
   context_length: string;
+  prompt: string;
 }
 
 const lengthOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) => ({
@@ -80,6 +81,7 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
       model_type: "",
       model_value: "",
       context_length: "8",
+      prompt: "",
     });
 
     const getModelOptions = (type: string) => {
@@ -118,6 +120,7 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
         findCh.channel_model.type = formData.model_type;
         findCh.channel_model.name = formData.model_value;
         findCh.channel_context_length = Number(formData.context_length);
+        findCh.channel_prompt = formData.prompt;
         updateList(newList);
         updateType(formData.model_type);
         updateName(formData.model_value);
@@ -128,7 +131,12 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
     React.useEffect(() => {
       const findCh = list.find((item) => item.channel_id === activeId);
       if (!findCh) return;
-      const { channel_name, channel_model, channel_context_length } = findCh;
+      const {
+        channel_name,
+        channel_model,
+        channel_context_length,
+        channel_prompt,
+      } = findCh;
       let context_length = "8";
       if (!isUndefined(channel_context_length)) {
         context_length = String(channel_context_length);
@@ -139,6 +147,7 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
         model_value: channel_model.name,
         // default is 8
         context_length,
+        prompt: channel_prompt,
       });
       getModelOptions(findCh.channel_model.type);
     }, []);
@@ -175,7 +184,6 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
             </div>
             <Input
               allowClear
-              size="base"
               maxLength={30}
               placeholder={tCommon("please-enter") as string}
               value={formData.name}
@@ -193,6 +201,17 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
               options={lengthOptions}
               value={formData.context_length}
               onChange={(value) => onChangeForm(value, "context_length")}
+            />
+          </div>
+          <div className="flex flex-col">
+            <div className="text-sm text-black/90 dark:text-white/90 flex items-center gap-1 mb-2">
+              System Role
+            </div>
+            <Input
+              allowClear
+              placeholder={tPrompt("system-role-placeholder")}
+              value={formData.prompt}
+              onChange={(value) => onChangeForm(value, "prompt")}
             />
           </div>
         </div>

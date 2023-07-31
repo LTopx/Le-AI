@@ -48,6 +48,15 @@
     "verification-1": "登录链接已失效。",
     "verification-2": "它可能已经被使用了，或者已经过期了。"
   },
+  "character": {
+    "all": "所有类别",
+    "ai-character": "AI 角色模板",
+    "helper": "助手",
+    "hr": "人力资源",
+    "role-play": "角色扮演",
+    "translate": "翻译",
+    "writing": "写作"
+  },
   "chat": {
     "canceled": "已取消",
     "chat-setting": "会话设置",
@@ -67,14 +76,17 @@
   },
   "common": {
     "add": "新 增",
+    "apply": "使用",
     "cancel": "取 消",
+    "collect": "收藏",
     "create": "新 增",
     "docs": "帮助文档",
     "ok": "确 定",
     "please-enter": "请输入",
     "premium": "L-GPT 高级版",
     "service-error": "服务开小差啦，请稍后再试",
-    "tip": "提示"
+    "tip": "提示",
+    "todo": "待开发..."
   },
   "errorCode": {
     "20001": "请先登录",
@@ -176,6 +188,7 @@
     "rule-2": "每位用户最多只能提交5个待审核的prompt。待审核通过后，您可以继续提交新的prompt。",
     "rule-3": "一旦您提交的prompt审核失败，维护人员有权直接删除该prompt。",
     "start-conversation": "开始会话",
+    "system-role-placeholder": "请输入 System Role",
     "sure-delete": "确认删除",
     "title": "Prompt 标题",
     "under-review": "待审核"

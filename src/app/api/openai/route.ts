@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { getServerSession } from "next-auth/next";
 import { calcTokens } from "@/lib/calcTokens";
 import { authOptions } from "@/utils/plugin/auth";
-import type { supportModelType } from "@/lib/calcTokens/old_gpt-tokens";
+import type { supportModelType } from "@/lib/calcTokens/gpt-tokens";
 import { prisma } from "@/lib/prisma";
 import { ResErr, isUndefined } from "@/lib";
 import { PREMIUM_MODELS } from "@/hooks/useLLM";
@@ -79,9 +79,7 @@ const stream = async (
   if (userId && !headerApiKey) {
     const final = [...messages, { role: "assistant", content: resultContent }];
 
-    const isPlus = model === "gpt-3.5-turbo" || model === "gpt-3.5-turbo-0613";
-
-    const { usedTokens, usedUSD } = calcTokens(final, model, isPlus);
+    const { usedTokens, usedUSD } = calcTokens(final, model);
 
     const findUser = await prisma.user.findUnique({
       where: { id: userId },

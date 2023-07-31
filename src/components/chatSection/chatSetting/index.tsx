@@ -24,6 +24,7 @@ export default function ChatSetting() {
     <Modal
       title={tChat("conversation-setting")}
       open={open}
+      maskClosable={false}
       okText={tCommon("ok")}
       cancelText={tCommon("cancel")}
       onClose={onClose}

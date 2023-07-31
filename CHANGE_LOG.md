@@ -1,5 +1,17 @@
 # L-GPT Change Log
 
+## v0.8.1
+
+> 2023-07-31
+
+### Add
+
+- Added AI Characters template function, built-in some common templates
+
+### Changed
+
+- Adjust the gpt-tokens calculation module, now able to correctly calculate all token consumption
+
 ## v0.8.0
 
 > 2023-07-23

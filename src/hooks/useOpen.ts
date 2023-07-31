@@ -7,6 +7,7 @@ type OpenStore = {
   mobileMenuOpen: boolean;
   ttsSettingOpen: boolean;
   chatSettingOpen: boolean;
+  characterOpen: boolean;
 
   updateSettingOpen: (settingOpen: boolean) => void;
   updatePremiumOpen: (premiumOpen: boolean) => void;
@@ -14,6 +15,7 @@ type OpenStore = {
   updateMobileMenuOpen: (mobileMenuOpen: boolean) => void;
   updateTtsSettingOpen: (ttsSettingOpen: boolean) => void;
   updateChatSettingOpen: (chatSettingOpen: boolean) => void;
+  updateCharacterOpen: (characterOpen: boolean) => void;
 };
 
 export const useOpenStore = create<OpenStore>((set) => ({
@@ -23,6 +25,7 @@ export const useOpenStore = create<OpenStore>((set) => ({
   mobileMenuOpen: false,
   ttsSettingOpen: false,
   chatSettingOpen: false,
+  characterOpen: false,
 
   updateSettingOpen: (settingOpen) => set({ settingOpen }),
   updatePremiumOpen: (premiumOpen) => set({ premiumOpen }),
@@ -30,4 +33,5 @@ export const useOpenStore = create<OpenStore>((set) => ({
   updateMobileMenuOpen: (mobileMenuOpen) => set({ mobileMenuOpen }),
   updateTtsSettingOpen: (ttsSettingOpen) => set({ ttsSettingOpen }),
   updateChatSettingOpen: (chatSettingOpen) => set({ chatSettingOpen }),
+  updateCharacterOpen: (characterOpen) => set({ characterOpen }),
 }));

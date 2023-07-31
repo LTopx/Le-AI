@@ -42,6 +42,14 @@ export default function MenuIcon({
 
   if (name === "MdMovieEdit") return <Icon icon="film_line" {...props} />;
 
+  if (name === "AngelFill") return <Icon icon="angel_fill" {...props} />;
+
+  if (name === "UnlockLine") return <Icon icon="unlock_line" {...props} />;
+
+  if (name === "DocumentLine") return <Icon icon="document_line" {...props} />;
+
+  if (name === "GameLine") return <Icon icon="game_2_line" {...props} />;
+
   if (name === "AiFillAlert")
     return <Icon icon="alert_octagon_fill" {...props} />;
 

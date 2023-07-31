@@ -8,8 +8,9 @@ import { useOpenAIStore } from "../useOpenAI";
 import { useUserInfoStore } from "../useUserInfo";
 import { useTTSStore } from "../useTTS";
 import { useScrollToBottomStore } from "../useScrollToBottom";
-import type { ChannelListItem, ChatItem } from "./types";
+import type { ChannelListItem, ChatItem, ChannelIcon } from "./types";
 import { streamDecoder } from "@/lib/streamDecoder";
+import { type Character } from "@/lib/character";
 
 type ChannelStore = {
   activeId: string;
@@ -22,6 +23,7 @@ type ChannelStore = {
   deleteList: (id: string) => void;
   clearItem: () => void;
   addChatItem: (content: string) => ChatItem[];
+  updateCharacter: (item: Character) => void;
   sendGPT: (chat_list: ChatItem[], channel_id: string) => Promise<void>;
   getChannelName: (params: any) => Promise<void>;
   cancelGPT: (channel_id: string) => void;
@@ -37,6 +39,7 @@ export const initChannelList: ChannelListItem[] = [
       name: "gpt-3.5-turbo",
     },
     channel_prompt: BASE_PROMPT,
+    channel_prompt_name: "system",
     channel_cost: {
       tokens: 0,
       usd: 0,
@@ -67,6 +70,7 @@ const getInitChannelList = () => {
               name: "gpt-3.5-turbo",
             };
             item.channel_prompt = "";
+            item.channel_prompt_name = "";
           }
           if (!item.channel_cost) {
             item.channel_cost = {
@@ -79,6 +83,7 @@ const getInitChannelList = () => {
             };
           }
           if (!item.channel_prompt) item.channel_prompt = BASE_PROMPT;
+          if (!item.channel_prompt_name) item.channel_prompt_name = "system";
 
           item.channel_loading_connect = false;
           item.channel_loading = false;
@@ -164,10 +169,16 @@ export const useChannelStore = create<ChannelStore>((set) => ({
       const findCh = newList.find((item) => item.channel_id === state.activeId);
       if (!findCh) return {};
 
-      findCh.channel_icon = "RiChatSmile2Line";
+      // If the user selects a certain role, the character-related content
+      // will not be cleared when clearing the conversation.
+      if (findCh.channel_prompt_name === "system") {
+        findCh.channel_name = "";
+        findCh.channel_icon = "RiChatSmile2Line";
+        findCh.channel_prompt = BASE_PROMPT;
+        findCh.channel_prompt_name = "system";
+      }
+
       findCh.chat_list = [];
-      findCh.channel_name = "";
-      findCh.channel_prompt = BASE_PROMPT;
       findCh.channel_cost = {
         tokens: 0,
         usd: 0,
@@ -206,6 +217,26 @@ export const useChannelStore = create<ChannelStore>((set) => ({
     });
 
     return chat_list;
+  },
+  updateCharacter: (item) => {
+    set((state) => {
+      const newList: ChannelListItem[] = JSON.parse(JSON.stringify(state.list));
+      const findCh = newList.find((item) => item.channel_id === state.activeId);
+      if (!findCh) return {};
+      findCh.channel_icon = item.icon as ChannelIcon;
+      findCh.channel_name = item.name;
+      findCh.channel_prompt_name = item.name;
+      findCh.channel_prompt = item.content;
+      findCh.channel_model = {
+        type: item.model_config.model_type,
+        name: item.model_config.model_name,
+      };
+      findCh.channel_context_length = item.model_config.context_length;
+
+      localStorage.setItem("channelList", JSON.stringify(newList));
+
+      return { list: newList };
+    });
   },
   sendGPT: (chat_list, channel_id) => {
     return new Promise((resolve, reject) => {
@@ -404,12 +435,6 @@ export const useChannelStore = create<ChannelStore>((set) => ({
             };
           }
 
-          const channel_model = findCh.channel_model;
-          const isPlus =
-            channel_model.type === "openai" &&
-            (channel_model.name === "gpt-3.5-turbo" ||
-              channel_model.name === "gpt-3.5-turbo-0613");
-
           const { usedTokens, usedUSD } = calcTokens(
             [
               { role: "system", content: findCh.channel_prompt },
@@ -418,8 +443,7 @@ export const useChannelStore = create<ChannelStore>((set) => ({
                 content: item.content,
               })),
             ],
-            findModelLabel.label,
-            isPlus
+            findModelLabel.label
           );
 
           findCh.channel_cost.tokens = usedTokens;
@@ -499,20 +523,12 @@ export const useChannelStore = create<ChannelStore>((set) => ({
           );
           if (!findCh) return {};
 
-          const channel_model = findCh.channel_model;
-
-          const isPlus =
-            channel_model.type === "openai" &&
-            (channel_model.name === "gpt-3.5-turbo" ||
-              channel_model.name === "gpt-3.5-turbo-0613");
-
           const { usedTokens, usedUSD } = calcTokens(
             [
               ...newParams.chat_list,
               { role: "assistant", content: findCh.channel_name },
             ],
-            params.findModelLabel.label,
-            isPlus
+            params.findModelLabel.label
           );
 
           findCh.channel_cost.function_tokens += usedTokens;
@@ -554,18 +570,11 @@ export const useChannelStore = create<ChannelStore>((set) => ({
           };
         }
 
-        const channel_model = findCh.channel_model;
-
         const LLMStore = useLLMStore.getState();
 
         const findModelLabel = (LLMStore as any)[
           findCh.channel_model.type
         ].models.find((item: any) => item.value === findCh?.channel_model.name);
-
-        const isPlus =
-          channel_model.type === "openai" &&
-          (channel_model.name === "gpt-3.5-turbo" ||
-            channel_model.name === "gpt-3.5-turbo-0613");
 
         const { usedTokens, usedUSD } = calcTokens(
           [
@@ -575,8 +584,7 @@ export const useChannelStore = create<ChannelStore>((set) => ({
               content: item.content,
             })),
           ],
-          findModelLabel.label,
-          isPlus
+          findModelLabel.label
         );
 
         findCh.channel_cost.tokens = usedTokens;

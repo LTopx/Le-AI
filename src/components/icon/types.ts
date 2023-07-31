@@ -71,7 +71,11 @@ export type IconType =
   | "check_fill"
   | "command_line"
   | "add_line"
-  | "menu_line";
+  | "menu_line"
+  | "star_line"
+  | "angel_fill"
+  | "unlock_line"
+  | "game_2_line";
 
 export interface IconProps {
   className?: string;

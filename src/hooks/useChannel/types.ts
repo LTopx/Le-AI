@@ -11,7 +11,11 @@ export type ChannelIcon =
   | "AiFillAlert"
   | "BsVectorPen"
   | "TbSailboat"
-  | "BsCodeSlash";
+  | "BsCodeSlash"
+  | "AngelFill"
+  | "UnlockLine"
+  | "DocumentLine"
+  | "GameLine";
 
 export interface ChannelCost {
   // Single session cost for storing current content
@@ -42,6 +46,7 @@ export interface ChannelListItem {
   channel_name: string;
   channel_model: ChannelModel;
   channel_prompt: string;
+  channel_prompt_name: string;
   channel_cost: ChannelCost;
   channel_loading_connect: boolean;
   channel_loading: boolean;

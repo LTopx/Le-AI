@@ -48,6 +48,15 @@
     "verification-1": "The sign in link is no longer valid.",
     "verification-2": "It may have been used already or it may have expired."
   },
+  "character": {
+    "all": "All",
+    "ai-character": "AI Characters",
+    "helper": "Assistant",
+    "hr": "HR",
+    "role-play": "Role-playing",
+    "translate": "Translate",
+    "writing": "Writing"
+  },
   "chat": {
     "canceled": "Canceled",
     "chat-setting": "Settings",
@@ -67,14 +76,17 @@
   },
   "common": {
     "add": "Add",
+    "apply": "Apply",
     "cancel": "Cancel",
+    "collect": "Collect",
     "create": "Create",
     "docs": "Docs",
     "ok": "OK",
     "please-enter": "Please enter",
     "premium": "L-GPT Premium",
     "service-error": "Service is having a hiccup, please try again later",
-    "tip": "Tip"
+    "tip": "Tip",
+    "todo": "Todo..."
   },
   "errorCode": {
     "20001": "Please log in first",
@@ -176,6 +188,7 @@
     "rule-2": "Each user can only submit a maximum of 5 pending prompts. After they are approved, you can continue to submit new prompts.",
     "rule-3": "If your submitted prompt fails to pass the review, the maintenance personnel have the right to delete it directly.",
     "start-conversation": "Start Conversation",
+    "system-role-placeholder": "Please enter System Role",
     "sure-delete": "Are you sure you want to delete",
     "title": "Prompt Title",
     "under-review": "Under review"
