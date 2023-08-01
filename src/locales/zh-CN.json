@@ -78,7 +78,9 @@
     "delete": "删除",
     "delete-chat": "删除会话内容",
     "delete-chat-tip": "你确认删除该对话内容？",
+    "edit-content": " 编辑聊天内容",
     "enter-message": "请输入会话内容",
+    "can-not-empty": "聊天内容不能为空",
     "stop-generate": "停止",
     "title": "标题",
     "type-message": "请输入聊天内容"

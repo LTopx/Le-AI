@@ -2,7 +2,7 @@
 
 ## v0.8.1
 
-> 2023-08-01
+> 2023-08-02
 
 ### Add
 
@@ -12,6 +12,7 @@
 - Added the ability to collect AI character templates
 - Added more AI character templates
 - Added import and export functions for AI character templates
+- Added support for editing chat content
 
 ### Changed
 

@@ -8,43 +8,57 @@ interface HandlerProps {
   content: string;
   onDelete: () => void;
   onRegenerate: () => void;
+  onEdit: () => void;
 }
 
 export default function Handler({
   content,
   onDelete,
   onRegenerate,
+  onEdit,
 }: HandlerProps) {
   const tChat = useTranslations("chat");
   const tCommon = useTranslations("common");
 
   return (
-    <div className="flex opacity-0 transition-opacity gap-1.5 group-hover:opacity-100">
-      <Button className="h-6 px-2" type="primary" outline size="sm" rounded>
-        <CopyIcon size={16} content={content} />
-      </Button>
-      <Confirm
-        title={tChat("delete-chat")}
-        content={tChat("delete-chat-tip")}
-        onOk={onDelete}
-        okText={tCommon("ok")}
-        cancelText={tCommon("cancel")}
-        type="danger"
-      >
-        <Button className="h-6 px-2" type="primary" size="sm" outline rounded>
-          <Icon icon="delete_2_line" size={16} />
+    <>
+      <div className="flex opacity-0 transition-opacity gap-1.5 group-hover:opacity-100">
+        <Button className="h-6 px-2" type="primary" outline size="sm" rounded>
+          <CopyIcon size={16} content={content} />
         </Button>
-      </Confirm>
-      <Button
-        className="h-6 px-2"
-        type="primary"
-        outline
-        size="sm"
-        rounded
-        onClick={onRegenerate}
-      >
-        <Icon icon="refresh_3_line" size={16} />
-      </Button>
-    </div>
+        <Button
+          className="h-6 px-2"
+          type="primary"
+          outline
+          size="sm"
+          rounded
+          onClick={onEdit}
+        >
+          <Icon icon="pencil_line" size={16} />
+        </Button>
+        <Confirm
+          title={tChat("delete-chat")}
+          content={tChat("delete-chat-tip")}
+          onOk={onDelete}
+          okText={tCommon("ok")}
+          cancelText={tCommon("cancel")}
+          type="danger"
+        >
+          <Button className="h-6 px-2" type="primary" size="sm" outline rounded>
+            <Icon icon="delete_2_line" size={16} />
+          </Button>
+        </Confirm>
+        <Button
+          className="h-6 px-2"
+          type="primary"
+          outline
+          size="sm"
+          rounded
+          onClick={onRegenerate}
+        >
+          <Icon icon="refresh_3_line" size={16} />
+        </Button>
+      </div>
+    </>
   );
 }
