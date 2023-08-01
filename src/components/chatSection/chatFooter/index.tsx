@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import { shallow } from "zustand/shallow";
 import { Button } from "@ltopx/lx-ui";
 import { isMobile, cn } from "@/lib";
 import { useChannelStore } from "@/hooks/useChannel";
@@ -35,10 +34,7 @@ export default function ChatFooter() {
     state.activeId,
     state.list,
   ]);
-  const [openai, azure] = useLLMStore(
-    (state) => [state.openai, state.azure],
-    shallow
-  );
+  const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
   const license_type = useUserInfoStore((state) => state.license_type);
 

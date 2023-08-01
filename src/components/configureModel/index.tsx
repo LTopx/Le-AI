@@ -1,5 +1,4 @@
 import React from "react";
-import { shallow } from "zustand/shallow";
 import { Select, Divider } from "@ltopx/lx-ui";
 import { useLLMStore } from "@/hooks/useLLM";
 import OpenAI from "./openai";
@@ -16,10 +15,7 @@ const renderLabel = (item: any) => {
 
 export default function ConfigureModel() {
   const [model, setModel] = React.useState<string>("");
-  const [openai, azure] = useLLMStore(
-    (state) => [state.openai, state.azure],
-    shallow
-  );
+  const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
 
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
 

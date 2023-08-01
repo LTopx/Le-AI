@@ -1,4 +1,5 @@
-import { create } from "zustand";
+import { createWithEqualityFn } from "zustand/traditional";
+import { shallow } from "zustand/shallow";
 
 type OpenStore = {
   settingOpen: boolean;
@@ -18,20 +19,23 @@ type OpenStore = {
   updateCharacterOpen: (characterOpen: boolean) => void;
 };
 
-export const useOpenStore = create<OpenStore>((set) => ({
-  settingOpen: false,
-  premiumOpen: false,
-  chargeTokenOpen: false,
-  mobileMenuOpen: false,
-  ttsSettingOpen: false,
-  chatSettingOpen: false,
-  characterOpen: false,
+export const useOpenStore = createWithEqualityFn<OpenStore>(
+  (set) => ({
+    settingOpen: false,
+    premiumOpen: false,
+    chargeTokenOpen: false,
+    mobileMenuOpen: false,
+    ttsSettingOpen: false,
+    chatSettingOpen: false,
+    characterOpen: false,
 
-  updateSettingOpen: (settingOpen) => set({ settingOpen }),
-  updatePremiumOpen: (premiumOpen) => set({ premiumOpen }),
-  updateChargeTokenOpen: (chargeTokenOpen) => set({ chargeTokenOpen }),
-  updateMobileMenuOpen: (mobileMenuOpen) => set({ mobileMenuOpen }),
-  updateTtsSettingOpen: (ttsSettingOpen) => set({ ttsSettingOpen }),
-  updateChatSettingOpen: (chatSettingOpen) => set({ chatSettingOpen }),
-  updateCharacterOpen: (characterOpen) => set({ characterOpen }),
-}));
+    updateSettingOpen: (settingOpen) => set({ settingOpen }),
+    updatePremiumOpen: (premiumOpen) => set({ premiumOpen }),
+    updateChargeTokenOpen: (chargeTokenOpen) => set({ chargeTokenOpen }),
+    updateMobileMenuOpen: (mobileMenuOpen) => set({ mobileMenuOpen }),
+    updateTtsSettingOpen: (ttsSettingOpen) => set({ ttsSettingOpen }),
+    updateChatSettingOpen: (chatSettingOpen) => set({ chatSettingOpen }),
+    updateCharacterOpen: (characterOpen) => set({ characterOpen }),
+  }),
+  shallow
+);

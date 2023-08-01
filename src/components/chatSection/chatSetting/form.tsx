@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { Select, Divider, Input, Tooltip } from "@ltopx/lx-ui";
 import { useLLMStore } from "@/hooks/useLLM";
 import { useChannelStore } from "@/hooks/useChannel";
@@ -60,15 +59,12 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
     const tCommon = useTranslations("common");
     const tPrompt = useTranslations("prompt");
 
-    const [openai, azure] = useLLMStore(
-      (state) => [state.openai, state.azure],
-      shallow
-    );
+    const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
     const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
-    const [activeId, list] = useChannelStore(
-      (state) => [state.activeId, state.list],
-      shallow
-    );
+    const [activeId, list] = useChannelStore((state) => [
+      state.activeId,
+      state.list,
+    ]);
 
     const updateList = useChannelStore((state) => state.updateList);
     const updateType = useModelCacheStore((state) => state.updateType);

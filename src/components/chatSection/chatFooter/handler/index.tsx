@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { Button, Confirm } from "@ltopx/lx-ui";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
@@ -18,14 +17,11 @@ export default function Handler() {
   const tMenu = useTranslations("menu");
   const tCommon = useTranslations("common");
 
-  const [activeId, list] = useChannelStore(
-    (state) => [state.activeId, state.list],
-    shallow
-  );
-  const [openai, azure] = useLLMStore(
-    (state) => [state.openai, state.azure],
-    shallow
-  );
+  const [activeId, list] = useChannelStore((state) => [
+    state.activeId,
+    state.list,
+  ]);
+  const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
   const license_type = useUserInfoStore((state) => state.license_type);
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { Modal, Confirm, Button } from "@ltopx/lx-ui";
 import { useOpenStore } from "@/hooks/useOpen";
 import { cn } from "@/lib";
@@ -13,10 +12,10 @@ export default function Setting() {
   const tSetting = useTranslations("setting");
   const tTTS = useTranslations("tts");
 
-  const [open, setOpen] = useOpenStore(
-    (state) => [state.settingOpen, state.updateSettingOpen],
-    shallow
-  );
+  const [open, setOpen] = useOpenStore((state) => [
+    state.settingOpen,
+    state.updateSettingOpen,
+  ]);
 
   const updateTtsSettingOpen = useOpenStore(
     (state) => state.updateTtsSettingOpen

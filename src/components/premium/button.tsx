@@ -1,6 +1,5 @@
 import React from "react";
 import { useSession } from "next-auth/react";
-import { shallow } from "zustand/shallow";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
 import { Button } from "@ltopx/lx-ui";
@@ -29,10 +28,10 @@ export default function PremiumBtn(props: PremiumBtnProps) {
   const tAuth = useTranslations("auth");
 
   const updatePremiumOpen = useOpenStore((state) => state.updatePremiumOpen);
-  const [freeTrialed, license_type] = useUserInfoStore(
-    (state) => [state.freeTrialed, state.license_type],
-    shallow
-  );
+  const [freeTrialed, license_type] = useUserInfoStore((state) => [
+    state.freeTrialed,
+    state.license_type,
+  ]);
 
   const onLogin = () => {
     updatePremiumOpen(false);

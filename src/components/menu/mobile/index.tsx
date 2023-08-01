@@ -1,5 +1,4 @@
 import React from "react";
-import { shallow } from "zustand/shallow";
 import { Drawer } from "@ltopx/lx-ui";
 import { useOpenStore } from "@/hooks/useOpen";
 import Logo from "@/components/site/logo";
@@ -8,10 +7,10 @@ import List from "./list";
 import Handler from "./handler";
 
 export default function MobileMenu() {
-  const [open, setOpen] = useOpenStore(
-    (state) => [state.mobileMenuOpen, state.updateMobileMenuOpen],
-    shallow
-  );
+  const [open, setOpen] = useOpenStore((state) => [
+    state.mobileMenuOpen,
+    state.updateMobileMenuOpen,
+  ]);
 
   const onClose = () => setOpen(false);
 

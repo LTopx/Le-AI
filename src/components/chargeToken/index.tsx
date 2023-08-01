@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { Modal, Tabs, Button, type TabsOption } from "@ltopx/lx-ui";
 import { useOpenStore } from "@/hooks/useOpen";
 import Icon from "@/components/icon";
@@ -10,10 +9,10 @@ type ChargeTokenTypes = "1" | "2";
 export default function ChargeToken() {
   const tRecharge = useTranslations("recharge");
 
-  const [open, setOpen] = useOpenStore(
-    (state) => [state.chargeTokenOpen, state.updateChargeTokenOpen],
-    shallow
-  );
+  const [open, setOpen] = useOpenStore((state) => [
+    state.chargeTokenOpen,
+    state.updateChargeTokenOpen,
+  ]);
   const [type, setType] = React.useState<ChargeTokenTypes>("1");
 
   const options: TabsOption[] = [

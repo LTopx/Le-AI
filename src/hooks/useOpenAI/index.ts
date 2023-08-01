@@ -1,4 +1,5 @@
-import { create } from "zustand";
+import { createWithEqualityFn } from "zustand/traditional";
+import { shallow } from "zustand/shallow";
 import type { OpenAIStore, OpenAI, Azure, Env } from "./types";
 
 const getStorage = (key: string) => {
@@ -11,38 +12,41 @@ const getStorage = (key: string) => {
   }
 };
 
-export const useOpenAIStore = create<OpenAIStore>((set) => ({
-  openai: {
-    apiKey: "",
-    proxy: "",
-    temperature: 1,
-    max_tokens: 2000,
-  },
-  azure: {
-    apiKey: "",
-    resourceName: "",
-    temperature: 1,
-    max_tokens: 2000,
-  },
-  env: {
-    OPENAI_API_KEY: "",
-    AZURE_API_KEY: "",
-  },
+export const useOpenAIStore = createWithEqualityFn<OpenAIStore>(
+  (set) => ({
+    openai: {
+      apiKey: "",
+      proxy: "",
+      temperature: 1,
+      max_tokens: 2000,
+    },
+    azure: {
+      apiKey: "",
+      resourceName: "",
+      temperature: 1,
+      max_tokens: 2000,
+    },
+    env: {
+      OPENAI_API_KEY: "",
+      AZURE_API_KEY: "",
+    },
 
-  updateOpenAI: (openai: OpenAI) => {
-    localStorage.setItem("openaiConfig", JSON.stringify(openai));
-    set({ openai });
-  },
+    updateOpenAI: (openai: OpenAI) => {
+      localStorage.setItem("openaiConfig", JSON.stringify(openai));
+      set({ openai });
+    },
 
-  updateAzure: (azure: Azure) => {
-    localStorage.setItem("azureConfig", JSON.stringify(azure));
-    set({ azure });
-  },
+    updateAzure: (azure: Azure) => {
+      localStorage.setItem("azureConfig", JSON.stringify(azure));
+      set({ azure });
+    },
 
-  updateEnv: (env: Env) => {
-    set({ env });
-  },
-}));
+    updateEnv: (env: Env) => {
+      set({ env });
+    },
+  }),
+  shallow
+);
 
 export const useOpenAIInit = () => {
   const updateOpenAI = useOpenAIStore((state) => state.updateOpenAI);

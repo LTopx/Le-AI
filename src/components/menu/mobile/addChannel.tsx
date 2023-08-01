@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { shallow } from "zustand/shallow";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "@ltopx/lx-ui";
@@ -12,10 +11,10 @@ export default function AddChannel() {
   const tMenu = useTranslations("menu");
   const tChat = useTranslations("chat");
 
-  const [list, addList] = useChannelStore(
-    (state) => [state.list, state.addList],
-    shallow
-  );
+  const [list, addList] = useChannelStore((state) => [
+    state.list,
+    state.addList,
+  ]);
   const license_type = useUserInfoStore((state) => state.license_type);
 
   const checkModel = useModelCacheStore((state) => state.checkModel);

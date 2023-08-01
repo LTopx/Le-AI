@@ -1,7 +1,6 @@
 import React from "react";
 import { useSession } from "next-auth/react";
 import { useTranslations, useFormatter } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { Confirm } from "@ltopx/lx-ui";
 import { useChannelStore } from "@/hooks/useChannel";
 import { cn } from "@/lib";
@@ -10,10 +9,10 @@ import MenuIcon from "../icon";
 
 export default function List() {
   const session = useSession();
-  const [activeId, channelList] = useChannelStore(
-    (state) => [state.activeId, state.list],
-    shallow
-  );
+  const [activeId, channelList] = useChannelStore((state) => [
+    state.activeId,
+    state.list,
+  ]);
   const deleteList = useChannelStore((state) => state.deleteList);
   const updateActiveId = useChannelStore((state) => state.updateActiveId);
   const formats = useFormatter();

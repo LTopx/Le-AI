@@ -1,4 +1,5 @@
-import { create } from "zustand";
+import { createWithEqualityFn } from "zustand/traditional";
+import { shallow } from "zustand/shallow";
 import type { Prompt } from "@prisma/client";
 
 export type IPrompt = Omit<
@@ -19,14 +20,17 @@ type PromptStore = {
   updateList: (list: IPrompt[]) => void;
 };
 
-export const usePromptStore = create<PromptStore>((set) => ({
-  list: [],
+export const usePromptStore = createWithEqualityFn<PromptStore>(
+  (set) => ({
+    list: [],
 
-  updateList: (list) => {
-    localStorage.setItem("promptList", JSON.stringify(list));
-    set({ list });
-  },
-}));
+    updateList: (list) => {
+      localStorage.setItem("promptList", JSON.stringify(list));
+      set({ list });
+    },
+  }),
+  shallow
+);
 
 export const usePromptInit = () => {
   const updateList = usePromptStore((state) => state.updateList);

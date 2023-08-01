@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { useRouter } from "next-intl/client";
 import { v4 as uuidv4 } from "uuid";
 import { useLLMStore } from "@/hooks/useLLM";
@@ -15,10 +14,7 @@ const CreateChat: React.FC<IProps> = ({ content }) => {
   const tShare = useTranslations("share");
   const router = useRouter();
 
-  const [openai, azure] = useLLMStore(
-    (state) => [state.openai, state.azure],
-    shallow
-  );
+  const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
 
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
 

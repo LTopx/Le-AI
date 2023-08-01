@@ -1,4 +1,5 @@
-import { create } from "zustand";
+import { createWithEqualityFn } from "zustand/traditional";
+import { shallow } from "zustand/shallow";
 import {
   SpeechConfig,
   SpeechSynthesizer,
@@ -30,54 +31,55 @@ interface TTSStore {
 const TTS_KEY = process.env.NEXT_PUBLIC_AZURE_TTS_KEY || "";
 const TTS_REGION = process.env.NEXT_PUBLIC_AZURE_TTS_REGION || "";
 
-export const useTTSStore = create<TTSStore>((set) => ({
-  voice: "zh-CN-XiaoxiaoNeural",
-  voices: [],
-  rate: "medium",
-  autoPlay: "0",
-  player: null,
-  config: null,
-  synth: null,
+export const useTTSStore = createWithEqualityFn<TTSStore>(
+  (set) => ({
+    voice: "zh-CN-XiaoxiaoNeural",
+    voices: [],
+    rate: "medium",
+    autoPlay: "0",
+    player: null,
+    config: null,
+    synth: null,
 
-  updateVoice: (voice) => {
-    localStorage.setItem("voice", voice);
-    set({ voice });
-  },
-  updateVoices: (voices) => {
-    localStorage.setItem("voices", JSON.stringify(voices));
-    set({ voices });
-  },
-  updateRate: (rate) => {
-    localStorage.setItem("voiceRate", rate);
-    set({ rate });
-  },
-  updateAutoPlay: (autoPlay) => {
-    localStorage.setItem("autoPlay", autoPlay);
-    set({ autoPlay });
-  },
-  pause: () => {
-    set((state) => {
-      state.player?.pause();
-      return {};
-    });
-  },
-  speak: (content, cb) => {
-    return new Promise((resolve, reject) => {
+    updateVoice: (voice) => {
+      localStorage.setItem("voice", voice);
+      set({ voice });
+    },
+    updateVoices: (voices) => {
+      localStorage.setItem("voices", JSON.stringify(voices));
+      set({ voices });
+    },
+    updateRate: (rate) => {
+      localStorage.setItem("voiceRate", rate);
+      set({ rate });
+    },
+    updateAutoPlay: (autoPlay) => {
+      localStorage.setItem("autoPlay", autoPlay);
+      set({ autoPlay });
+    },
+    pause: () => {
       set((state) => {
-        try {
-          state.player?.pause();
-          const player = new SpeakerAudioDestination();
-          set({ player });
+        state.player?.pause();
+        return {};
+      });
+    },
+    speak: (content, cb) => {
+      return new Promise((resolve, reject) => {
+        set((state) => {
+          try {
+            state.player?.pause();
+            const player = new SpeakerAudioDestination();
+            set({ player });
 
-          const audioConfig = AudioConfig.fromSpeakerOutput(player);
-          let config: SpeechConfig | null = state.config;
-          if (!config) {
-            config = SpeechConfig.fromSubscription(TTS_KEY, TTS_REGION);
-            set({ config });
-          }
+            const audioConfig = AudioConfig.fromSpeakerOutput(player);
+            let config: SpeechConfig | null = state.config;
+            if (!config) {
+              config = SpeechConfig.fromSubscription(TTS_KEY, TTS_REGION);
+              set({ config });
+            }
 
-          const synthesizer = new SpeechSynthesizer(config, audioConfig);
-          const ssml = `
+            const synthesizer = new SpeechSynthesizer(config, audioConfig);
+            const ssml = `
             <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
               <voice name="${state.voice}">
                 <prosody rate="${state.rate}">
@@ -87,22 +89,24 @@ export const useTTSStore = create<TTSStore>((set) => ({
             </speak>
           `;
 
-          synthesizer.speakSsmlAsync(ssml, (res: any) => {
-            resolve(res);
-            synthesizer?.close();
-          });
+            synthesizer.speakSsmlAsync(ssml, (res: any) => {
+              resolve(res);
+              synthesizer?.close();
+            });
 
-          player.onAudioEnd = () => {
-            cb?.();
-          };
-        } catch (error) {
-          reject(error);
-        }
-        return {};
+            player.onAudioEnd = () => {
+              cb?.();
+            };
+          } catch (error) {
+            reject(error);
+          }
+          return {};
+        });
       });
-    });
-  },
-}));
+    },
+  }),
+  shallow
+);
 
 export const useTTSInit = () => {
   const updateVoice = useTTSStore((state) => state.updateVoice);

@@ -15,6 +15,7 @@
 - Adjust the gpt-tokens calculation module, now able to correctly calculate all token consumption
 - Adjust the registration policy, now users will receive 10000 points upon registration
 - Optimize the display effect of the AI character template pop-up window
+- Adjust zustand api in accordance with official documentation
 
 ## v0.8.0
 

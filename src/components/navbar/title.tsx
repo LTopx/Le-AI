@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { cn } from "@/lib";
 import { useChannelStore } from "@/hooks/useChannel";
 import type { ChannelCost } from "@/hooks/useChannel/types";
@@ -13,15 +12,16 @@ export default function Title() {
 
   const tokenRef = React.useRef<any>(null);
 
-  const [activeId, channelList] = useChannelStore(
-    (state) => [state.activeId, state.list],
-    shallow
-  );
+  const [activeId, channelList] = useChannelStore((state) => [
+    state.activeId,
+    state.list,
+  ]);
 
-  const [openAIKey, azureKey, env] = useOpenAIStore(
-    (state) => [state.openai.apiKey, state.azure.apiKey, state.env],
-    shallow
-  );
+  const [openAIKey, azureKey, env] = useOpenAIStore((state) => [
+    state.openai.apiKey,
+    state.azure.apiKey,
+    state.env,
+  ]);
 
   const apiKey = React.useMemo(
     () => openAIKey || azureKey || env.OPENAI_API_KEY || env.AZURE_API_KEY,

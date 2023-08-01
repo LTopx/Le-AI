@@ -1,6 +1,5 @@
 import React from "react";
 import { useSession } from "next-auth/react";
-import { shallow } from "zustand/shallow";
 import { useFormatter, useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
 import { useDebounceFn } from "ahooks";
@@ -35,10 +34,10 @@ export default function ChatList() {
   const tErrorCode = useTranslations("errorCode");
   const tCommon = useTranslations("common");
 
-  const [activeId, list] = useChannelStore(
-    (state) => [state.activeId, state.list],
-    shallow
-  );
+  const [activeId, list] = useChannelStore((state) => [
+    state.activeId,
+    state.list,
+  ]);
   const azure = useLLMStore((state) => state.azure);
   const license_type = useUserInfoStore((state) => state.license_type);
 

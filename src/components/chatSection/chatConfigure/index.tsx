@@ -1,7 +1,6 @@
 import React from "react";
 import { motion, type Spring } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { Select, Button } from "@ltopx/lx-ui";
 import { useLLMStore } from "@/hooks/useLLM";
 import { useChannelStore } from "@/hooks/useChannel";
@@ -58,10 +57,7 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
 
   const [isShow, setIsShow] = React.useState(true);
 
-  const [openai, azure] = useLLMStore(
-    (state) => [state.openai, state.azure],
-    shallow
-  );
+  const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
   const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
 
   const options =

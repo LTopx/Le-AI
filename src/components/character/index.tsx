@@ -2,7 +2,6 @@ import React from "react";
 import { useTranslations, useLocale } from "next-intl";
 import toast from "react-hot-toast";
 import { Modal, Tabs, Button, Confirm, type TabsOption } from "@ltopx/lx-ui";
-import { shallow } from "zustand/shallow";
 import { useOpenStore } from "@/hooks/useOpen";
 import { useChannelStore } from "@/hooks/useChannel";
 import { cn } from "@/lib";
@@ -21,10 +20,10 @@ export default function Character() {
   const locale = useLocale();
   const myCharacterList = useCharacterStore((state) => state.list);
 
-  const [open, setOpen] = useOpenStore(
-    (state) => [state.characterOpen, state.updateCharacterOpen],
-    shallow
-  );
+  const [open, setOpen] = useOpenStore((state) => [
+    state.characterOpen,
+    state.updateCharacterOpen,
+  ]);
   const [activeTab, setActiveTab] = React.useState(
     "all" as TabsOption["value"]
   );

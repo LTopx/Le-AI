@@ -1,5 +1,4 @@
 import React from "react";
-import { shallow } from "zustand/shallow";
 import { useScrollToBottomStore } from "@/hooks/useScrollToBottom";
 import { useOpenAIStore } from "@/hooks/useOpenAI";
 import ChatList from "./chatList";
@@ -9,10 +8,11 @@ import ChatSetting from "./chatSetting";
 export default function ChatSection() {
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
-  const [openAIKey, azureKey, env] = useOpenAIStore(
-    (state) => [state.openai.apiKey, state.azure.apiKey, state.env],
-    shallow
-  );
+  const [openAIKey, azureKey, env] = useOpenAIStore((state) => [
+    state.openai.apiKey,
+    state.azure.apiKey,
+    state.env,
+  ]);
 
   const apiKey = React.useMemo(
     () => openAIKey || azureKey || env.OPENAI_API_KEY || env.AZURE_API_KEY,

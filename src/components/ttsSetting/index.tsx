@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { Modal, Button, Tooltip, Select, Slider, Switch } from "@ltopx/lx-ui";
 import { cn } from "@/lib";
 import { useOpenStore } from "@/hooks/useOpen";
@@ -23,10 +22,12 @@ export default function TTSSetting() {
     state.ttsSettingOpen,
     state.updateTtsSettingOpen,
   ]);
-  const [voice, voices, rate, autoPlay] = useTTSStore(
-    (state) => [state.voice, state.voices, state.rate, state.autoPlay],
-    shallow
-  );
+  const [voice, voices, rate, autoPlay] = useTTSStore((state) => [
+    state.voice,
+    state.voices,
+    state.rate,
+    state.autoPlay,
+  ]);
   const [loading, setLoading] = React.useState(false);
   const updateVoice = useTTSStore((state) => state.updateVoice);
   const updateVoices = useTTSStore((state) => state.updateVoices);

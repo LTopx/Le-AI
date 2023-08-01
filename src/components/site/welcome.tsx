@@ -1,15 +1,15 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { useOpenAIStore } from "@/hooks/useOpenAI";
 
 export default function Welcome() {
   const tWelcome = useTranslations("welcome");
 
-  const [openAIKey, azureKey, env] = useOpenAIStore(
-    (state) => [state.openai.apiKey, state.azure.apiKey, state.env],
-    shallow
-  );
+  const [openAIKey, azureKey, env] = useOpenAIStore((state) => [
+    state.openai.apiKey,
+    state.azure.apiKey,
+    state.env,
+  ]);
 
   const apiKey = React.useMemo(
     () => openAIKey || azureKey || env.OPENAI_API_KEY || env.AZURE_API_KEY,

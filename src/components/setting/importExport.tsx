@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslations, useFormatter } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { saveAs } from "file-saver";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
@@ -17,19 +16,19 @@ export default function ImportExport() {
 
   const tSetting = useTranslations("setting");
 
-  const [openai, azure] = useOpenAIStore(
-    (state) => [state.openai, state.azure],
-    shallow
-  );
-  const [activeId, list] = useChannelStore(
-    (state) => [state.activeId, state.list],
-    shallow
-  );
+  const [openai, azure] = useOpenAIStore((state) => [
+    state.openai,
+    state.azure,
+  ]);
+  const [activeId, list] = useChannelStore((state) => [
+    state.activeId,
+    state.list,
+  ]);
 
-  const [prompts, setPrompts] = usePromptStore(
-    (state) => [state.list, state.updateList],
-    shallow
-  );
+  const [prompts, setPrompts] = usePromptStore((state) => [
+    state.list,
+    state.updateList,
+  ]);
 
   const updateActiveId = useChannelStore((state) => state.updateActiveId);
   const updateList = useChannelStore((state) => state.updateList);

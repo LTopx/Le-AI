@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { Modal, Tabs, type TabsOption } from "@ltopx/lx-ui";
 import { useOpenStore } from "@/hooks/useOpen";
 import { cn } from "@/lib";
@@ -10,10 +9,10 @@ import PremiumBtn, { type LicenseTypes } from "./button";
 export default function Premium() {
   const tPremium = useTranslations("premium");
 
-  const [open, setOpen] = useOpenStore(
-    (state) => [state.premiumOpen, state.updatePremiumOpen],
-    shallow
-  );
+  const [open, setOpen] = useOpenStore((state) => [
+    state.premiumOpen,
+    state.updatePremiumOpen,
+  ]);
   const [type, setType] = React.useState<LicenseTypes>("premium");
   const options: TabsOption[] = [
     {

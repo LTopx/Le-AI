@@ -1,4 +1,5 @@
-import { create } from "zustand";
+import { createWithEqualityFn } from "zustand/traditional";
+import { shallow } from "zustand/shallow";
 import { v4 as uuidv4 } from "uuid";
 import { BASE_PROMPT } from "@/utils/constant";
 import { isUndefined } from "@/lib";
@@ -117,289 +118,253 @@ const getInitActiveId = (channelList: ChannelListItem[]) => {
   return "";
 };
 
-export const useChannelStore = create<ChannelStore>((set) => ({
-  activeId: "",
-  list: [],
-  abort: {},
+export const useChannelStore = createWithEqualityFn<ChannelStore>(
+  (set) => ({
+    activeId: "",
+    list: [],
+    abort: {},
 
-  updateActiveId: (activeId) => {
-    localStorage.setItem("activeId", activeId);
-    set({ activeId });
-  },
-  updateList: (list) => {
-    localStorage.setItem("channelList", JSON.stringify(list));
-    set({ list });
-  },
-  addList: (item) => {
-    set((state) => {
-      try {
-        const list = [item, ...state.list];
-        const activeId = item.channel_id;
-        localStorage.setItem("channelList", JSON.stringify(list));
-        localStorage.setItem("activeId", activeId);
-        return { list, activeId };
-      } catch (error) {
-        localStorage.setItem("channelList", JSON.stringify(state.list));
-        return { list: state.list };
-      }
-    });
-  },
-  deleteList: (id) => {
-    set((state) => {
-      if (state.list.length <= 1) {
-        const activeId = initChannelList[0].channel_id;
-        localStorage.setItem("channelList", JSON.stringify(initChannelList));
-        localStorage.setItem("activeId", activeId);
-        return { activeId, list: initChannelList };
-      } else {
-        const list = state.list.filter((item) => item.channel_id !== id);
-        localStorage.setItem("channelList", JSON.stringify(list));
-        if (id === state.activeId) {
-          const activeId = list[0].channel_id;
+    updateActiveId: (activeId) => {
+      localStorage.setItem("activeId", activeId);
+      set({ activeId });
+    },
+    updateList: (list) => {
+      localStorage.setItem("channelList", JSON.stringify(list));
+      set({ list });
+    },
+    addList: (item) => {
+      set((state) => {
+        try {
+          const list = [item, ...state.list];
+          const activeId = item.channel_id;
+          localStorage.setItem("channelList", JSON.stringify(list));
           localStorage.setItem("activeId", activeId);
           return { list, activeId };
+        } catch (error) {
+          localStorage.setItem("channelList", JSON.stringify(state.list));
+          return { list: state.list };
         }
-        return { list };
-      }
-    });
-  },
-  clearItem: () => {
-    set((state) => {
-      const newList: ChannelListItem[] = JSON.parse(JSON.stringify(state.list));
-      const findCh = newList.find((item) => item.channel_id === state.activeId);
-      if (!findCh) return {};
-
-      // If the user selects a certain role, the character-related content
-      // will not be cleared when clearing the conversation.
-      if (findCh.channel_prompt_name === "system") {
-        findCh.channel_name = "";
-        findCh.channel_icon = "RiChatSmile2Line";
-        findCh.channel_prompt = BASE_PROMPT;
-        findCh.channel_prompt_name = "system";
-      }
-
-      findCh.chat_list = [];
-      findCh.channel_cost = {
-        tokens: 0,
-        usd: 0,
-        function_tokens: 0,
-        function_usd: 0,
-        total_tokens: 0,
-        total_usd: 0,
-      };
-      findCh.channel_loading_connect = false;
-      findCh.channel_loading = false;
-
-      localStorage.setItem("channelList", JSON.stringify(newList));
-
-      return { list: newList };
-    });
-  },
-  addChatItem: (content) => {
-    let chat_list: ChatItem[] = [];
-
-    set((state) => {
-      const newList: ChannelListItem[] = JSON.parse(JSON.stringify(state.list));
-      const findCh = newList.find((item) => item.channel_id === state.activeId);
-      if (!findCh) return {};
-      findCh.chat_list.push({
-        id: uuidv4(),
-        role: "user",
-        time: String(+new Date()),
-        content,
       });
+    },
+    deleteList: (id) => {
+      set((state) => {
+        if (state.list.length <= 1) {
+          const activeId = initChannelList[0].channel_id;
+          localStorage.setItem("channelList", JSON.stringify(initChannelList));
+          localStorage.setItem("activeId", activeId);
+          return { activeId, list: initChannelList };
+        } else {
+          const list = state.list.filter((item) => item.channel_id !== id);
+          localStorage.setItem("channelList", JSON.stringify(list));
+          if (id === state.activeId) {
+            const activeId = list[0].channel_id;
+            localStorage.setItem("activeId", activeId);
+            return { list, activeId };
+          }
+          return { list };
+        }
+      });
+    },
+    clearItem: () => {
+      set((state) => {
+        const newList: ChannelListItem[] = JSON.parse(
+          JSON.stringify(state.list)
+        );
+        const findCh = newList.find(
+          (item) => item.channel_id === state.activeId
+        );
+        if (!findCh) return {};
 
-      chat_list = findCh.chat_list;
+        // If the user selects a certain role, the character-related content
+        // will not be cleared when clearing the conversation.
+        if (findCh.channel_prompt_name === "system") {
+          findCh.channel_name = "";
+          findCh.channel_icon = "RiChatSmile2Line";
+          findCh.channel_prompt = BASE_PROMPT;
+          findCh.channel_prompt_name = "system";
+        }
 
-      localStorage.setItem("channelList", JSON.stringify(newList));
+        findCh.chat_list = [];
+        findCh.channel_cost = {
+          tokens: 0,
+          usd: 0,
+          function_tokens: 0,
+          function_usd: 0,
+          total_tokens: 0,
+          total_usd: 0,
+        };
+        findCh.channel_loading_connect = false;
+        findCh.channel_loading = false;
 
-      return { list: newList };
-    });
+        localStorage.setItem("channelList", JSON.stringify(newList));
 
-    return chat_list;
-  },
-  updateCharacter: (item) => {
-    set((state) => {
-      const newList: ChannelListItem[] = JSON.parse(JSON.stringify(state.list));
-      const findCh = newList.find((item) => item.channel_id === state.activeId);
-      if (!findCh) return {};
-      findCh.channel_icon = item.icon as ChannelIcon;
-      findCh.channel_name = item.name;
-      findCh.channel_prompt_name = item.name;
-      findCh.channel_prompt = item.content;
-      findCh.channel_model = {
-        type: item.model_config.model_type,
-        name: item.model_config.model_name,
-      };
-      findCh.channel_context_length = item.model_config.context_length;
-
-      localStorage.setItem("channelList", JSON.stringify(newList));
-
-      return { list: newList };
-    });
-  },
-  sendGPT: (chat_list, channel_id) => {
-    return new Promise((resolve, reject) => {
-      let modelType: any;
-      let modelConfig: any;
-      let prompt: any;
-      let findCh: ChannelListItem | undefined;
-
-      const LLMStore = useLLMStore.getState();
-      const OpenAIStore = useOpenAIStore.getState();
-
-      const { decoder } = streamDecoder();
+        return { list: newList };
+      });
+    },
+    addChatItem: (content) => {
+      let chat_list: ChatItem[] = [];
 
       set((state) => {
         const newList: ChannelListItem[] = JSON.parse(
           JSON.stringify(state.list)
         );
-        findCh = newList.find((item) => item.channel_id === channel_id);
+        const findCh = newList.find(
+          (item) => item.channel_id === state.activeId
+        );
         if (!findCh) return {};
-        modelType = findCh.channel_model.type;
-        modelConfig = (OpenAIStore as any)[modelType];
-        prompt = findCh.channel_prompt || BASE_PROMPT;
-        if (!findCh.channel_prompt) findCh.channel_prompt = BASE_PROMPT;
-        findCh.channel_loading_connect = true;
-        findCh.channel_loading = true;
+        findCh.chat_list.push({
+          id: uuidv4(),
+          role: "user",
+          time: String(+new Date()),
+          content,
+        });
+
+        chat_list = findCh.chat_list;
 
         localStorage.setItem("channelList", JSON.stringify(newList));
 
         return { list: newList };
       });
 
-      if (!findCh) return;
-
-      const controller = new AbortController();
+      return chat_list;
+    },
+    updateCharacter: (item) => {
       set((state) => {
-        return { abort: { ...state.abort, [channel_id]: controller } };
+        const newList: ChannelListItem[] = JSON.parse(
+          JSON.stringify(state.list)
+        );
+        const findCh = newList.find(
+          (item) => item.channel_id === state.activeId
+        );
+        if (!findCh) return {};
+        findCh.channel_icon = item.icon as ChannelIcon;
+        findCh.channel_name = item.name;
+        findCh.channel_prompt_name = item.name;
+        findCh.channel_prompt = item.content;
+        findCh.channel_model = {
+          type: item.model_config.model_type,
+          name: item.model_config.model_name,
+        };
+        findCh.channel_context_length = item.model_config.context_length;
+
+        localStorage.setItem("channelList", JSON.stringify(newList));
+
+        return { list: newList };
       });
+    },
+    sendGPT: (chat_list, channel_id) => {
+      return new Promise((resolve, reject) => {
+        let modelType: any;
+        let modelConfig: any;
+        let prompt: any;
+        let findCh: ChannelListItem | undefined;
 
-      const fetchUrl = `/api/${modelType}`;
+        const LLMStore = useLLMStore.getState();
+        const OpenAIStore = useOpenAIStore.getState();
 
-      const findModelLabel = (LLMStore as any)[modelType].models.find(
-        (item: any) => item.value === findCh?.channel_model.name
-      );
+        const { decoder } = streamDecoder();
 
-      let params: any = {
-        model: findCh.channel_model.name,
-        modelLabel: findModelLabel.label,
-        temperature: modelConfig.temperature,
-        max_tokens: modelConfig.max_tokens,
-        prompt,
-      };
-      if (modelType === "openai") {
-        params.proxy = modelConfig.proxy;
-      } else if (modelType === "azure") {
-        params.resourceName = modelConfig.resourceName;
-      }
-
-      const sliceStart = chat_list.length - (1 + findCh.channel_context_length);
-
-      const arr = chat_list
-        .map((item) => ({
-          role: item.role,
-          content: item.content,
-        }))
-        .slice(sliceStart <= 0 ? 0 : sliceStart, chat_list.length);
-
-      params.chat_list = arr;
-
-      fetch(fetchUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: modelConfig.apiKey,
-        },
-        signal: controller.signal,
-        body: JSON.stringify(params),
-      }).then(async (response) => {
-        // loading connect end
         set((state) => {
           const newList: ChannelListItem[] = JSON.parse(
             JSON.stringify(state.list)
           );
           findCh = newList.find((item) => item.channel_id === channel_id);
           if (!findCh) return {};
-          findCh.channel_loading_connect = false;
+          modelType = findCh.channel_model.type;
+          modelConfig = (OpenAIStore as any)[modelType];
+          prompt = findCh.channel_prompt || BASE_PROMPT;
+          if (!findCh.channel_prompt) findCh.channel_prompt = BASE_PROMPT;
+          findCh.channel_loading_connect = true;
+          findCh.channel_loading = true;
 
           localStorage.setItem("channelList", JSON.stringify(newList));
 
           return { list: newList };
         });
 
-        if (!response.ok || !response.body) {
-          const errRes = await response.json();
+        if (!findCh) return;
 
+        const controller = new AbortController();
+        set((state) => {
+          return { abort: { ...state.abort, [channel_id]: controller } };
+        });
+
+        const fetchUrl = `/api/${modelType}`;
+
+        const findModelLabel = (LLMStore as any)[modelType].models.find(
+          (item: any) => item.value === findCh?.channel_model.name
+        );
+
+        let params: any = {
+          model: findCh.channel_model.name,
+          modelLabel: findModelLabel.label,
+          temperature: modelConfig.temperature,
+          max_tokens: modelConfig.max_tokens,
+          prompt,
+        };
+        if (modelType === "openai") {
+          params.proxy = modelConfig.proxy;
+        } else if (modelType === "azure") {
+          params.resourceName = modelConfig.resourceName;
+        }
+
+        const sliceStart =
+          chat_list.length - (1 + findCh.channel_context_length);
+
+        const arr = chat_list
+          .map((item) => ({
+            role: item.role,
+            content: item.content,
+          }))
+          .slice(sliceStart <= 0 ? 0 : sliceStart, chat_list.length);
+
+        params.chat_list = arr;
+
+        fetch(fetchUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: modelConfig.apiKey,
+          },
+          signal: controller.signal,
+          body: JSON.stringify(params),
+        }).then(async (response) => {
+          // loading connect end
           set((state) => {
             const newList: ChannelListItem[] = JSON.parse(
               JSON.stringify(state.list)
             );
             findCh = newList.find((item) => item.channel_id === channel_id);
             if (!findCh) return {};
-            findCh.channel_loading = false;
+            findCh.channel_loading_connect = false;
 
             localStorage.setItem("channelList", JSON.stringify(newList));
 
             return { list: newList };
           });
 
-          return reject(errRes);
-        }
+          if (!response.ok || !response.body) {
+            const errRes = await response.json();
 
-        await decoder(
-          response.body.getReader(),
-          (content: string) => {
             set((state) => {
               const newList: ChannelListItem[] = JSON.parse(
                 JSON.stringify(state.list)
               );
-              const findCh = newList.find(
-                (item) => item.channel_id === channel_id
-              );
+              findCh = newList.find((item) => item.channel_id === channel_id);
               if (!findCh) return {};
-              const lastItem = findCh.chat_list.at(-1);
-              if (!lastItem) return {};
-              if (lastItem.role === "user") {
-                findCh.chat_list.push({
-                  id: uuidv4(),
-                  role: "assistant",
-                  time: String(+new Date()),
-                  content,
-                });
-              } else {
-                lastItem.content += content;
-              }
-
-              useScrollToBottomStore.getState().scrollToBottom();
+              findCh.channel_loading = false;
 
               localStorage.setItem("channelList", JSON.stringify(newList));
 
               return { list: newList };
             });
-          },
-          (error: any) => {
-            reject(error);
+
+            return reject(errRes);
           }
-        );
 
-        set((state) => {
-          const newList: ChannelListItem[] = JSON.parse(
-            JSON.stringify(state.list)
-          );
-          findCh = newList.find((item) => item.channel_id === channel_id);
-          if (!findCh) return {};
-
-          const findLast = findCh.chat_list.at(-1);
-
-          if (
-            (useUserInfoStore.getState().license_type === "premium" ||
-              useUserInfoStore.getState().license_type === "team") &&
-            useTTSStore.getState().autoPlay !== "0" &&
-            findLast?.role === "assistant"
-          ) {
-            findLast.tts_loading = true;
-            useTTSStore.getState().speak(findLast.content, () => {
+          await decoder(
+            response.body.getReader(),
+            (content: string) => {
               set((state) => {
                 const newList: ChannelListItem[] = JSON.parse(
                   JSON.stringify(state.list)
@@ -408,22 +373,209 @@ export const useChannelStore = create<ChannelStore>((set) => ({
                   (item) => item.channel_id === channel_id
                 );
                 if (!findCh) return {};
-                const findChat = findCh.chat_list.find(
-                  (val) => val.id === findLast.id
-                );
-                if (!findChat) return {};
-                findChat.tts_loading = false;
+                const lastItem = findCh.chat_list.at(-1);
+                if (!lastItem) return {};
+                if (lastItem.role === "user") {
+                  findCh.chat_list.push({
+                    id: uuidv4(),
+                    role: "assistant",
+                    time: String(+new Date()),
+                    content,
+                  });
+                } else {
+                  lastItem.content += content;
+                }
+
+                useScrollToBottomStore.getState().scrollToBottom();
 
                 localStorage.setItem("channelList", JSON.stringify(newList));
 
                 return { list: newList };
               });
-            });
-          }
+            },
+            (error: any) => {
+              reject(error);
+            }
+          );
 
-          // end channel loading
-          findCh.channel_loading = false;
+          set((state) => {
+            const newList: ChannelListItem[] = JSON.parse(
+              JSON.stringify(state.list)
+            );
+            findCh = newList.find((item) => item.channel_id === channel_id);
+            if (!findCh) return {};
 
+            const findLast = findCh.chat_list.at(-1);
+
+            if (
+              (useUserInfoStore.getState().license_type === "premium" ||
+                useUserInfoStore.getState().license_type === "team") &&
+              useTTSStore.getState().autoPlay !== "0" &&
+              findLast?.role === "assistant"
+            ) {
+              findLast.tts_loading = true;
+              useTTSStore.getState().speak(findLast.content, () => {
+                set((state) => {
+                  const newList: ChannelListItem[] = JSON.parse(
+                    JSON.stringify(state.list)
+                  );
+                  const findCh = newList.find(
+                    (item) => item.channel_id === channel_id
+                  );
+                  if (!findCh) return {};
+                  const findChat = findCh.chat_list.find(
+                    (val) => val.id === findLast.id
+                  );
+                  if (!findChat) return {};
+                  findChat.tts_loading = false;
+
+                  localStorage.setItem("channelList", JSON.stringify(newList));
+
+                  return { list: newList };
+                });
+              });
+            }
+
+            // end channel loading
+            findCh.channel_loading = false;
+
+            if (!findCh.channel_cost) {
+              findCh.channel_cost = {
+                tokens: 0,
+                usd: 0,
+                function_tokens: 0,
+                function_usd: 0,
+                total_tokens: 0,
+                total_usd: 0,
+              };
+            }
+
+            const { usedTokens, usedUSD } = calcTokens(
+              [
+                { role: "system", content: findCh.channel_prompt },
+                ...findCh.chat_list.map((item) => ({
+                  role: item.role,
+                  content: item.content,
+                })),
+              ],
+              findModelLabel.label
+            );
+
+            findCh.channel_cost.tokens = usedTokens;
+            findCh.channel_cost.usd = Number(usedUSD.toFixed(5));
+
+            const total_tokens: any =
+              findCh.channel_cost.total_tokens + usedTokens;
+            const total_usd = findCh.channel_cost.total_usd + usedUSD;
+            findCh.channel_cost.total_tokens = parseInt(total_tokens);
+            findCh.channel_cost.total_usd = Number(total_usd.toFixed(5));
+
+            // get conversation title
+            if (!findCh.channel_name) {
+              const newParams = { ...params, chat_list: findCh.chat_list };
+              resolve({
+                channel_id,
+                newParams,
+                fetchUrl,
+                apiKey: modelConfig.apiKey,
+                findModelLabel,
+              } as any);
+            } else {
+              resolve();
+            }
+
+            localStorage.setItem("channelList", JSON.stringify(newList));
+
+            return { list: newList };
+          });
+        });
+      });
+    },
+    getChannelName: (params) => {
+      return new Promise((resolve, reject) => {
+        const { decoder } = streamDecoder();
+
+        const newParams = params.newParams;
+        newParams.chat_list = newParams.chat_list.map((item: any) => ({
+          role: item.role,
+          content: item.content,
+        }));
+
+        fetch(params.fetchUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: params.apiKey,
+          },
+          body: JSON.stringify(newParams),
+        }).then(async (response) => {
+          if (!response.ok || !response.body) return reject("error");
+          await decoder(
+            response.body.getReader(),
+            (content: string) => {
+              set((state) => {
+                const newList: ChannelListItem[] = JSON.parse(
+                  JSON.stringify(state.list)
+                );
+                const findCh = newList.find(
+                  (item) => item.channel_id === params.channel_id
+                );
+                if (!findCh) return {};
+                findCh.channel_name += content;
+                localStorage.setItem("channelList", JSON.stringify(newList));
+                return { list: newList };
+              });
+            },
+            (error) => reject(error)
+          );
+
+          set((state) => {
+            const newList: ChannelListItem[] = JSON.parse(
+              JSON.stringify(state.list)
+            );
+            const findCh = newList.find(
+              (item) => item.channel_id === params.channel_id
+            );
+            if (!findCh) return {};
+
+            const { usedTokens, usedUSD } = calcTokens(
+              [
+                ...newParams.chat_list,
+                { role: "assistant", content: findCh.channel_name },
+              ],
+              params.findModelLabel.label
+            );
+
+            findCh.channel_cost.function_tokens += usedTokens;
+            const function_usd = findCh.channel_cost.function_usd + usedUSD;
+            findCh.channel_cost.function_usd = Number(function_usd.toFixed(5));
+
+            const total_tokens: any =
+              findCh.channel_cost.total_tokens + usedTokens;
+            const total_usd = findCh.channel_cost.total_usd + usedUSD;
+            findCh.channel_cost.total_tokens = parseInt(total_tokens);
+            findCh.channel_cost.total_usd = Number(total_usd.toFixed(5));
+
+            resolve();
+
+            localStorage.setItem("channelList", JSON.stringify(newList));
+
+            return { list: newList };
+          });
+        });
+      });
+    },
+    cancelGPT: (channel_id) => {
+      set((state) => {
+        if (!state.abort[channel_id]) return {};
+        state.abort[channel_id].abort();
+        delete state.abort[channel_id];
+
+        const newList: ChannelListItem[] = JSON.parse(
+          JSON.stringify(state.list)
+        );
+        const findCh = newList.find((item) => item.channel_id === channel_id);
+        if (findCh) {
           if (!findCh.channel_cost) {
             findCh.channel_cost = {
               tokens: 0,
@@ -434,6 +586,14 @@ export const useChannelStore = create<ChannelStore>((set) => ({
               total_usd: 0,
             };
           }
+
+          const LLMStore = useLLMStore.getState();
+
+          const findModelLabel = (LLMStore as any)[
+            findCh.channel_model.type
+          ].models.find(
+            (item: any) => item.value === findCh?.channel_model.name
+          );
 
           const { usedTokens, usedUSD } = calcTokens(
             [
@@ -455,156 +615,18 @@ export const useChannelStore = create<ChannelStore>((set) => ({
           findCh.channel_cost.total_tokens = parseInt(total_tokens);
           findCh.channel_cost.total_usd = Number(total_usd.toFixed(5));
 
-          // get conversation title
-          if (!findCh.channel_name) {
-            const newParams = { ...params, chat_list: findCh.chat_list };
-            resolve({
-              channel_id,
-              newParams,
-              fetchUrl,
-              apiKey: modelConfig.apiKey,
-              findModelLabel,
-            } as any);
-          } else {
-            resolve();
-          }
-
-          localStorage.setItem("channelList", JSON.stringify(newList));
-
-          return { list: newList };
-        });
-      });
-    });
-  },
-  getChannelName: (params) => {
-    return new Promise((resolve, reject) => {
-      const { decoder } = streamDecoder();
-
-      const newParams = params.newParams;
-      newParams.chat_list = newParams.chat_list.map((item: any) => ({
-        role: item.role,
-        content: item.content,
-      }));
-
-      fetch(params.fetchUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: params.apiKey,
-        },
-        body: JSON.stringify(newParams),
-      }).then(async (response) => {
-        if (!response.ok || !response.body) return reject("error");
-        await decoder(
-          response.body.getReader(),
-          (content: string) => {
-            set((state) => {
-              const newList: ChannelListItem[] = JSON.parse(
-                JSON.stringify(state.list)
-              );
-              const findCh = newList.find(
-                (item) => item.channel_id === params.channel_id
-              );
-              if (!findCh) return {};
-              findCh.channel_name += content;
-              localStorage.setItem("channelList", JSON.stringify(newList));
-              return { list: newList };
-            });
-          },
-          (error) => reject(error)
-        );
-
-        set((state) => {
-          const newList: ChannelListItem[] = JSON.parse(
-            JSON.stringify(state.list)
-          );
-          const findCh = newList.find(
-            (item) => item.channel_id === params.channel_id
-          );
-          if (!findCh) return {};
-
-          const { usedTokens, usedUSD } = calcTokens(
-            [
-              ...newParams.chat_list,
-              { role: "assistant", content: findCh.channel_name },
-            ],
-            params.findModelLabel.label
-          );
-
-          findCh.channel_cost.function_tokens += usedTokens;
-          const function_usd = findCh.channel_cost.function_usd + usedUSD;
-          findCh.channel_cost.function_usd = Number(function_usd.toFixed(5));
-
-          const total_tokens: any =
-            findCh.channel_cost.total_tokens + usedTokens;
-          const total_usd = findCh.channel_cost.total_usd + usedUSD;
-          findCh.channel_cost.total_tokens = parseInt(total_tokens);
-          findCh.channel_cost.total_usd = Number(total_usd.toFixed(5));
-
-          resolve();
-
-          localStorage.setItem("channelList", JSON.stringify(newList));
-
-          return { list: newList };
-        });
-      });
-    });
-  },
-  cancelGPT: (channel_id) => {
-    set((state) => {
-      if (!state.abort[channel_id]) return {};
-      state.abort[channel_id].abort();
-      delete state.abort[channel_id];
-
-      const newList: ChannelListItem[] = JSON.parse(JSON.stringify(state.list));
-      const findCh = newList.find((item) => item.channel_id === channel_id);
-      if (findCh) {
-        if (!findCh.channel_cost) {
-          findCh.channel_cost = {
-            tokens: 0,
-            usd: 0,
-            function_tokens: 0,
-            function_usd: 0,
-            total_tokens: 0,
-            total_usd: 0,
-          };
+          findCh.channel_loading_connect = false;
+          findCh.channel_loading = false;
         }
 
-        const LLMStore = useLLMStore.getState();
+        localStorage.setItem("channelList", JSON.stringify(newList));
 
-        const findModelLabel = (LLMStore as any)[
-          findCh.channel_model.type
-        ].models.find((item: any) => item.value === findCh?.channel_model.name);
-
-        const { usedTokens, usedUSD } = calcTokens(
-          [
-            { role: "system", content: findCh.channel_prompt },
-            ...findCh.chat_list.map((item) => ({
-              role: item.role,
-              content: item.content,
-            })),
-          ],
-          findModelLabel.label
-        );
-
-        findCh.channel_cost.tokens = usedTokens;
-        findCh.channel_cost.usd = Number(usedUSD.toFixed(5));
-
-        const total_tokens: any = findCh.channel_cost.total_tokens + usedTokens;
-        const total_usd = findCh.channel_cost.total_usd + usedUSD;
-        findCh.channel_cost.total_tokens = parseInt(total_tokens);
-        findCh.channel_cost.total_usd = Number(total_usd.toFixed(5));
-
-        findCh.channel_loading_connect = false;
-        findCh.channel_loading = false;
-      }
-
-      localStorage.setItem("channelList", JSON.stringify(newList));
-
-      return { abort: state.abort, list: newList };
-    });
-  },
-}));
+        return { abort: state.abort, list: newList };
+      });
+    },
+  }),
+  shallow
+);
 
 export const useChannelInit = () => {
   const updateActiveId = useChannelStore((state) => state.updateActiveId);

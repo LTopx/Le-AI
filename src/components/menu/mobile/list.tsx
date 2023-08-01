@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslations, useFormatter } from "next-intl";
-import { shallow } from "zustand/shallow";
 import { Confirm } from "@ltopx/lx-ui";
 import { useChannelStore } from "@/hooks/useChannel";
 import { cn } from "@/lib";
@@ -15,10 +14,10 @@ export default function List({ onClose }: ListProps) {
   const tMenu = useTranslations("menu");
   const tCommon = useTranslations("common");
 
-  const [activeId, channelList] = useChannelStore(
-    (state) => [state.activeId, state.list],
-    shallow
-  );
+  const [activeId, channelList] = useChannelStore((state) => [
+    state.activeId,
+    state.list,
+  ]);
 
   const formats = useFormatter();
 
