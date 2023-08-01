@@ -75,7 +75,8 @@ export type IconType =
   | "star_line"
   | "angel_fill"
   | "unlock_line"
-  | "game_2_line";
+  | "game_2_line"
+  | "star_fill";
 
 export interface IconProps {
   className?: string;

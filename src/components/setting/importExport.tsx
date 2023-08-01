@@ -2,14 +2,13 @@ import React from "react";
 import { useTranslations, useFormatter } from "next-intl";
 import { saveAs } from "file-saver";
 import toast from "react-hot-toast";
-import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib";
 import { Button } from "@ltopx/lx-ui";
 import Icon from "@/components/icon";
 import { useOpenAIStore } from "@/hooks/useOpenAI";
 import { useChannelStore } from "@/hooks/useChannel";
-import { usePromptStore } from "@/hooks/usePrompt";
 import { useOpenStore } from "@/hooks/useOpen";
+import { useCharacterStore } from "@/hooks/useCharacter";
 
 export default function ImportExport() {
   const format = useFormatter();
@@ -25,16 +24,14 @@ export default function ImportExport() {
     state.list,
   ]);
 
-  const [prompts, setPrompts] = usePromptStore((state) => [
-    state.list,
-    state.updateList,
-  ]);
+  const characterList = useCharacterStore((state) => state.list);
 
   const updateActiveId = useChannelStore((state) => state.updateActiveId);
   const updateList = useChannelStore((state) => state.updateList);
   const updateOpenAI = useOpenAIStore((state) => state.updateOpenAI);
   const updateAzure = useOpenAIStore((state) => state.updateAzure);
   const updateSettingOpen = useOpenStore((state) => state.updateSettingOpen);
+  const importCharacterList = useCharacterStore((state) => state.importList);
 
   // ref
   const fileRef = React.useRef<any>(null);
@@ -43,11 +40,15 @@ export default function ImportExport() {
     const exportData = {
       configure: { openai, azure },
       messages: { activeId, list },
-      prompts: prompts.map((item) => ({
-        title: item.title,
+      characters: characterList.map((item) => ({
+        id: item.id,
         icon: item.icon,
+        type: item.type,
+        handle_type: item.handle_type,
+        name: item.name,
         desc: item.desc,
         content: item.content,
+        model_config: item.model_config,
       })),
     };
 
@@ -77,16 +78,8 @@ export default function ImportExport() {
           updateOpenAI(openai);
           updateAzure(azure);
         }
-
-        if (json.prompts?.length) {
-          const arr = json.prompts.map((item: any) => ({
-            id: uuidv4(),
-            title: item.title,
-            icon: item.icon,
-            desc: item.desc,
-            content: item.content,
-          }));
-          setPrompts([...prompts, ...arr]);
+        if (json.characters?.length) {
+          importCharacterList(json.characters);
         }
 
         updateSettingOpen(false);

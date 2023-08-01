@@ -9,6 +9,9 @@
 - Added AI Characters template function, built-in some common templates
 - AI character template has added a new customization feature, allowing users to customize and use templates according to their preferences.
 - Support for importing prompts in the form of url parameters
+- Added the ability to collect AI character templates
+- Added more AI character templates
+- Added import and export functions for AI character templates
 
 ### Changed
 

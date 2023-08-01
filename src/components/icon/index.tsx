@@ -76,9 +76,12 @@ import { Star_line } from "./star_line";
 import { Angel_fill } from "./angel_fill";
 import { Unlock_line } from "./unlock_line";
 import { Game_2_line } from "./game_2_line";
+import { Star_fill } from "./star_fill";
 
 const Icon: React.FC<IconProps> = (props) => {
   const { icon } = props;
+
+  if (icon === "star_fill") return <Star_fill {...props} />;
 
   if (icon === "game_2_line") return <Game_2_line {...props} />;
 

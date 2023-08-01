@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslations, useLocale } from "next-intl";
-import toast from "react-hot-toast";
+import { useDebounceFn } from "ahooks";
 import { Modal, Tabs, Button, Confirm, type TabsOption } from "@ltopx/lx-ui";
 import { useOpenStore } from "@/hooks/useOpen";
 import { useChannelStore } from "@/hooks/useChannel";
@@ -10,6 +10,8 @@ import { useCharacterStore } from "@/hooks/useCharacter";
 import MenuIcon from "../menu/icon";
 import Icon from "@/components/icon";
 import Create from "./create";
+
+type CharacterListItem = Character & { isCollected: boolean };
 
 export default function Character() {
   const tCharacter = useTranslations("character");
@@ -59,15 +61,39 @@ export default function Character() {
     },
   ];
 
-  const lists: Character[] = React.useMemo(() => {
-    if (activeTab === "all") return characters[locale as keyof Characters];
-    if (activeTab === "mine") return myCharacterList;
-    return characters[locale as keyof Characters].filter(
-      (item) => item.type === activeTab
-    );
+  const lists: CharacterListItem[] = React.useMemo(() => {
+    if (activeTab === "all") {
+      return characters[locale as keyof Characters].map((item) => {
+        const findMine = myCharacterList.find((i) => i.id === item.id);
+        return { ...item, isCollected: !!findMine };
+      });
+    }
+
+    if (activeTab === "mine") {
+      return myCharacterList.map((item) => ({ ...item, isCollected: true }));
+    }
+
+    return characters[locale as keyof Characters]
+      .filter((item) => item.type === activeTab)
+      .map((item) => {
+        const findMine = myCharacterList.find((i) => i.id === item.id);
+        return { ...item, isCollected: !!findMine };
+      });
   }, [activeTab, myCharacterList, locale]);
 
+  const { run: onCollect } = useDebounceFn(
+    (item: CharacterListItem) => {
+      if (item.isCollected) {
+        deleteCharacter(item.id);
+      } else {
+        addCharacter(item);
+      }
+    },
+    { wait: 500 }
+  );
+
   const updateCharacter = useChannelStore((state) => state.updateCharacter);
+  const addCharacter = useCharacterStore((state) => state.addList);
   const deleteCharacter = useCharacterStore((state) => state.deleteItem);
 
   const onClose = () => setOpen(false);
@@ -76,8 +102,6 @@ export default function Character() {
     updateCharacter(item);
     setOpen(false);
   };
-
-  const onCollect = () => toast.error(tCommon("todo"), { id: "todo" });
 
   const onAdd = () => createRef.current?.init();
 
@@ -180,10 +204,19 @@ export default function Character() {
                     <div className="flex-1">
                       <Button
                         size="sm"
-                        icon={<Icon icon="star_line" />}
-                        onClick={onCollect}
+                        icon={
+                          <Icon
+                            className={cn({
+                              "text-yellow-400": item.isCollected,
+                            })}
+                            icon={item.isCollected ? "star_fill" : "star_line"}
+                          />
+                        }
+                        onClick={() => onCollect(item)}
                       >
-                        {tCommon("collect")}
+                        {item.isCollected
+                          ? tCommon("collected")
+                          : tCommon("collect")}
                       </Button>
                     </div>
                   )}
