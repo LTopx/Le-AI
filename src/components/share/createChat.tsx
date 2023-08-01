@@ -42,6 +42,7 @@ const CreateChat: React.FC<IProps> = ({ content }) => {
         name: channel_model_name,
       },
       channel_prompt: content.channel_prompt || "",
+      channel_prompt_name: "system",
       channel_cost: {
         tokens: 0,
         usd: 0,

@@ -122,75 +122,82 @@ export default function Character() {
           {tCharacter("create")}
         </Button>
 
-        <div className="max-h-[50vh] grid gap-4 grid-cols-1 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {lists.map((item) => (
-            <div
-              key={item.id}
-              className={cn(
-                "flex flex-col h-48 p-3 select-none cursor-pointer rounded-md relative group",
-                "border dark:border-gray-500",
-                "transition-all hover:shadow-md"
-              )}
-            >
-              <div className="flex gap-2 items-center">
-                <div className="rounded-md flex bg-neutral-200 h-8 w-8 justify-center items-center dark:bg-neutral-500/80">
-                  <MenuIcon className="h-5 w-5" name={item.icon as any} />
+        {lists.length ? (
+          <div className="h-[50vh] grid gap-4 grid-cols-1 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {lists.map((item) => (
+              <div
+                key={item.id}
+                className={cn(
+                  "flex flex-col h-48 p-3 select-none cursor-pointer rounded-md relative group",
+                  "border dark:border-gray-500",
+                  "transition-all hover:shadow-md"
+                )}
+              >
+                <div className="flex gap-2 items-center">
+                  <div className="rounded-md flex bg-neutral-200 h-8 w-8 justify-center items-center dark:bg-neutral-500/80">
+                    <MenuIcon className="h-5 w-5" name={item.icon as any} />
+                  </div>
+                  <div className="font-semibold">{item.name}</div>
                 </div>
-                <div className="font-semibold">{item.name}</div>
-              </div>
-              <div className="flex-1 pt-3 pb-1 text-gray-500 overflow-y-auto dark:text-gray-400">
-                {item.desc}
-              </div>
-              <div className="flex h-7 text-gray-500 items-center dark:text-gray-400 group-hover:invisible">
-                <div className="border rounded-full flex h-6 text-xs px-3 items-center justify-center dark:border-gray-500">
-                  {tCharacter(item.type)}
+                <div className="flex-1 pt-3 pb-1 text-gray-500 overflow-y-auto dark:text-gray-400">
+                  {item.desc}
                 </div>
-              </div>
-              <div className="w-full px-3 bottom-3 left-0 gap-2 hidden absolute justify-center group-hover:flex">
-                <div className="flex-1">
-                  <Button
-                    size="sm"
-                    type="primary"
-                    icon={<Icon icon="add_line" />}
-                    onClick={() => onUse(item)}
-                  >
-                    {tCommon("apply")}
-                  </Button>
+                <div className="flex h-7 text-gray-500 items-center dark:text-gray-400 group-hover:invisible">
+                  <div className="border rounded-full flex h-6 text-xs px-3 items-center justify-center dark:border-gray-500">
+                    {tCharacter(item.type)}
+                  </div>
                 </div>
-
-                {activeTab === "mine" ? (
-                  <Confirm
-                    triggerClassName="flex-1"
-                    title={tCharacter("delete")}
-                    content={tCharacter("delete-tip")}
-                    onOk={() => onDelete(item.id)}
-                    okText={tCommon("ok")}
-                    cancelText={tCommon("cancel")}
-                    type="danger"
-                  >
-                    <Button
-                      size="sm"
-                      type="danger"
-                      icon={<Icon icon="delete_2_line" />}
-                    >
-                      {tCommon("delete")}
-                    </Button>
-                  </Confirm>
-                ) : (
+                <div className="w-full px-3 bottom-3 left-0 gap-2 hidden absolute justify-center group-hover:flex">
                   <div className="flex-1">
                     <Button
                       size="sm"
-                      icon={<Icon icon="star_line" />}
-                      onClick={onCollect}
+                      type="primary"
+                      icon={<Icon icon="add_line" />}
+                      onClick={() => onUse(item)}
                     >
-                      {tCommon("collect")}
+                      {tCommon("apply")}
                     </Button>
                   </div>
-                )}
+
+                  {activeTab === "mine" ? (
+                    <Confirm
+                      triggerClassName="flex-1"
+                      title={tCharacter("delete")}
+                      content={tCharacter("delete-tip")}
+                      onOk={() => onDelete(item.id)}
+                      okText={tCommon("ok")}
+                      cancelText={tCommon("cancel")}
+                      type="danger"
+                    >
+                      <Button
+                        size="sm"
+                        type="danger"
+                        icon={<Icon icon="delete_2_line" />}
+                      >
+                        {tCommon("delete")}
+                      </Button>
+                    </Confirm>
+                  ) : (
+                    <div className="flex-1">
+                      <Button
+                        size="sm"
+                        icon={<Icon icon="star_line" />}
+                        onClick={onCollect}
+                      >
+                        {tCommon("collect")}
+                      </Button>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="h-[50vh] flex gap-2 justify-center items-center">
+            <Icon icon="warning_fill" size={18} />
+            {tCommon("no-data")}
+          </div>
+        )}
       </Modal>
       <Create ref={createRef} />
     </>

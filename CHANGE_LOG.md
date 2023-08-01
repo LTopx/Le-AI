@@ -8,10 +8,13 @@
 
 - Added AI Characters template function, built-in some common templates
 - AI character template has added a new customization feature, allowing users to customize and use templates according to their preferences.
+- Support for importing prompts in the form of url parameters
 
 ### Changed
 
 - Adjust the gpt-tokens calculation module, now able to correctly calculate all token consumption
+- Adjust the registration policy, now users will receive 10000 points upon registration
+- Optimize the display effect of the AI character template pop-up window
 
 ## v0.8.0
 
