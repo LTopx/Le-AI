@@ -25,6 +25,7 @@
 - Adjust the registration policy, now users will receive 10000 points upon registration
 - Optimize the display effect of the AI character template pop-up window
 - Adjust zustand api in accordance with official documentation
+- Replace some Input to Textarea
 
 ## v0.8.0
 

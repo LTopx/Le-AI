@@ -34,7 +34,6 @@ const streamDecoder = () => {
     decoderDone = false;
 
     const handleFragment = (fragment: string) => {
-      console.log(fragment, "fragment");
       const lines = fragment.split("\n").filter((item) => item?.trim());
       for (const line of lines) {
         const message = line.replace(/^data: /, "");

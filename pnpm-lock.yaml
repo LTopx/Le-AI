@@ -9,8 +9,8 @@ dependencies:
     specifier: 11.11.2
     version: 11.11.2
   '@ltopx/lx-ui':
-    specifier: 0.1.8
-    version: 0.1.8(@babel/core@7.22.9)(@types/react-dom@18.2.7)(@types/react@18.2.18)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
+    specifier: 0.1.11
+    version: 0.1.11(@babel/core@7.22.9)(@types/react-dom@18.2.7)(@types/react@18.2.18)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
   '@next-auth/prisma-adapter':
     specifier: 1.0.7
     version: 1.0.7(@prisma/client@5.1.0)(next-auth@4.22.3)
@@ -1735,8 +1735,8 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
 
-  /@ltopx/lx-ui@0.1.8(@babel/core@7.22.9)(@types/react-dom@18.2.7)(@types/react@18.2.18)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3):
-    resolution: {integrity: sha512-mduPQfDg5ZK9/q8D6bKhA5HJuaAyfzveU/LTF+oFUMPz6iDqFjrrufqUCHy3BdN2dImy1T4rofDH+ibZtgKcfw==}
+  /@ltopx/lx-ui@0.1.11(@babel/core@7.22.9)(@types/react-dom@18.2.7)(@types/react@18.2.18)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3):
+    resolution: {integrity: sha512-RNuSV4gVi2dQOcMDsMczqxFnrxlxrpJkmLWpRO9bJGW3JOBQjPPbVx1XlcJKiB8eN58xAoYsoiJRqp/bKxdIww==}
     peerDependencies:
       react: '>=18.2.0'
       react-dom: '>=18.2.0'

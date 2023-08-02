@@ -2,7 +2,13 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
-import { Modal, Input, Select, type SelectOption } from "@ltopx/lx-ui";
+import {
+  Modal,
+  Input,
+  Select,
+  Textarea,
+  type SelectOption,
+} from "@ltopx/lx-ui";
 import MenuIcon from "@/components/menu/icon";
 import type { Character } from "@/lib/character";
 import { useCharacterStore } from "@/hooks/useCharacter";
@@ -197,7 +203,8 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
           <div className="text-sm text-black/90 mb-2 dark:text-white/90">
             {tCharacter("template-desc")}
           </div>
-          <Input
+          <Textarea
+            className="h-28"
             allowClear
             placeholder={tCommon("please-enter")}
             maxLength={40}
@@ -209,7 +216,8 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
           <div className="text-sm text-black/90 mb-2 dark:text-white/90">
             {tCharacter("template-content")}
           </div>
-          <Input
+          <Textarea
+            className="h-28"
             allowClear
             placeholder={tCommon("please-enter")}
             maxLength={40}

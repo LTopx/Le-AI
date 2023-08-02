@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Select, Divider, Input, Tooltip } from "@ltopx/lx-ui";
+import { Select, Divider, Input, Tooltip, Textarea } from "@ltopx/lx-ui";
 import { useLLMStore } from "@/hooks/useLLM";
 import { useChannelStore } from "@/hooks/useChannel";
 import type { ChannelListItem } from "@/hooks/useChannel/types";
@@ -203,7 +203,8 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
             <div className="text-sm text-black/90 dark:text-white/90 flex items-center gap-1 mb-2">
               System Role
             </div>
-            <Input
+            <Textarea
+              className="h-28"
               allowClear
               placeholder={tPrompt("system-role-placeholder")}
               value={formData.prompt}
