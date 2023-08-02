@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Button, Confirm } from "@ltopx/lx-ui";
+import { Button, Confirm, Tooltip } from "@ltopx/lx-ui";
 import Icon from "@/components/icon";
 import CopyIcon from "@/components/site/copyIcon";
 
@@ -23,19 +23,24 @@ export default function Handler({
   return (
     <>
       <div className="flex opacity-0 transition-opacity gap-1.5 group-hover:opacity-100">
-        <Button className="h-6 px-2" type="primary" outline size="sm" rounded>
-          <CopyIcon size={16} content={content} />
-        </Button>
-        <Button
-          className="h-6 px-2"
-          type="primary"
-          outline
-          size="sm"
-          rounded
-          onClick={onEdit}
-        >
-          <Icon icon="pencil_line" size={16} />
-        </Button>
+        <Tooltip title={tCommon("copy")}>
+          <Button className="h-6 px-2" type="primary" outline size="sm" rounded>
+            <CopyIcon size={16} content={content} />
+          </Button>
+        </Tooltip>
+        <Tooltip title={tChat("edit-content")}>
+          <Button
+            className="h-6 px-2"
+            type="primary"
+            outline
+            size="sm"
+            rounded
+            onClick={onEdit}
+          >
+            <Icon icon="pencil_line" size={16} />
+          </Button>
+        </Tooltip>
+
         <Confirm
           title={tChat("delete-chat")}
           content={tChat("delete-chat-tip")}
@@ -44,20 +49,30 @@ export default function Handler({
           cancelText={tCommon("cancel")}
           type="danger"
         >
-          <Button className="h-6 px-2" type="primary" size="sm" outline rounded>
-            <Icon icon="delete_2_line" size={16} />
-          </Button>
+          <Tooltip title={tChat("delete-chat")}>
+            <Button
+              className="h-6 px-2"
+              type="primary"
+              size="sm"
+              outline
+              rounded
+            >
+              <Icon icon="delete_2_line" size={16} />
+            </Button>
+          </Tooltip>
         </Confirm>
-        <Button
-          className="h-6 px-2"
-          type="primary"
-          outline
-          size="sm"
-          rounded
-          onClick={onRegenerate}
-        >
-          <Icon icon="refresh_3_line" size={16} />
-        </Button>
+        <Tooltip title={tCommon("retry")}>
+          <Button
+            className="h-6 px-2"
+            type="primary"
+            outline
+            size="sm"
+            rounded
+            onClick={onRegenerate}
+          >
+            <Icon icon="refresh_3_line" size={16} />
+          </Button>
+        </Tooltip>
       </div>
     </>
   );

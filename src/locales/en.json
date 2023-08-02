@@ -91,6 +91,7 @@
     "cancel": "Cancel",
     "collect": "Collect",
     "collected": " Collected",
+    "copy": "Copy",
     "create": "Create",
     "delete": "Delete",
     "docs": "Docs",
@@ -98,6 +99,7 @@
     "ok": "OK",
     "please-enter": "Please enter",
     "premium": "L-GPT Premium",
+    "retry": "Retry",
     "service-error": "Service is having a hiccup, please try again later",
     "tip": "Tip",
     "todo": "Todo..."

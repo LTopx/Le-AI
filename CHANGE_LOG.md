@@ -4,6 +4,10 @@
 
 > 2023-08-02
 
+### Fixed
+
+- Fixed the issue of not being able to pop up error messages when re-generating conversations fails
+
 ### Add
 
 - Added AI Characters template function, built-in some common templates
@@ -13,6 +17,7 @@
 - Added more AI character templates
 - Added import and export functions for AI character templates
 - Added support for editing chat content
+- Added text prompt information to the conversation content operation button area
 
 ### Changed
 

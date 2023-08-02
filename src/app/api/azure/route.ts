@@ -166,6 +166,7 @@ export async function POST(request: Request) {
       headers: {
         "Content-Type": "application/json",
         "api-key": Authorization,
+        "X-Accel-Buffering": "no",
       },
       method: "POST",
       body: JSON.stringify({

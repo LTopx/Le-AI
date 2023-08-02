@@ -120,7 +120,7 @@ export default function ChatList() {
     window.open("https://docs.ltopx.com/conversation-limits");
   };
 
-  const onRegenerate = (item: ChatItem) => {
+  const onRegenerate = async (item: ChatItem) => {
     const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
     const findCh = newList.find((item) => item.channel_id === activeId);
     if (!findCh) return;
@@ -142,7 +142,7 @@ export default function ChatList() {
     updateList(newList);
 
     try {
-      sendGPT(arr, activeId);
+      await sendGPT(arr, activeId);
 
       if (session.data) updateUserInfo(2000);
     } catch (errRes: any) {
