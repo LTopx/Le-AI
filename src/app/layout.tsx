@@ -6,7 +6,35 @@ export const metadata: Metadata = {
   title: "L-GPT",
   description:
     "L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
-  icons: "/logo.svg",
+  icons: {
+    icon: [
+      {
+        url: "/favicon.ico",
+        type: "image/x-icon",
+        sizes: "any",
+      },
+      {
+        url: "/favicon-96x96.png",
+        type: "image/png",
+        sizes: "96x96",
+      },
+      {
+        url: "/android-icon-192x192.png",
+        type: "image/png",
+        sizes: "192x192",
+      },
+    ],
+    apple: [
+      {
+        sizes: "152x152",
+        url: "/apple-icon-152x152.png",
+      },
+      {
+        sizes: "180x180",
+        url: "/apple-icon-180x180.png",
+      },
+    ],
+  },
   viewport: {
     height: "device-height",
     width: "device-width",

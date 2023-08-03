@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { useLocale } from "next-intl";
 import { useRouter } from "next-intl/client";
 import { cn } from "@/lib";
@@ -30,11 +31,12 @@ export default function Logo({
   return (
     <div
       className={cn(
-        "flex items-center gap-3",
+        "flex items-center gap-2",
         { "text-2xl": size === "base" },
         { "text-4xl": size === "large" }
       )}
     >
+      <Image src="/logo.png" alt="logo" width={38} height={38} />
       <div
         className="flex items-center gap-2 cursor-pointer select-none text-transparent font-extrabold"
         onClick={onClick}
@@ -50,7 +52,7 @@ export default function Logo({
       </div>
       {!!version && (
         <span
-          className="text-xs cursor-pointer font-semibold py-1.5 px-3 bg-slate-400/20 rounded-full tabular-nums"
+          className="text-xs cursor-pointer font-semibold ml-3 py-1.5 px-3 bg-slate-400/20 rounded-full tabular-nums"
           onClick={onCheckLog}
         >
           v{pkg.version}

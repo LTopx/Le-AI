@@ -18,6 +18,7 @@
 - Added import and export functions for AI character templates
 - Added support for editing chat content
 - Added text prompt information to the conversation content operation button area
+- Added project logo
 
 ### Changed
 

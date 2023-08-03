@@ -13,7 +13,7 @@ export default function PcMenu() {
         "bg-white dark:bg-slate-800"
       )}
     >
-      <div className="flex h-14 pl-4 items-center">
+      <div className="flex h-14 pl-1 items-center">
         <Logo disabled />
       </div>
       <AddChannel />
