@@ -19,6 +19,7 @@
 - Added support for editing chat content
 - Added text prompt information to the conversation content operation button area
 - Added project logo
+- Added opengraph-image and twitter-image
 
 ### Changed
 

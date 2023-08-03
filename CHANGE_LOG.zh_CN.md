@@ -19,6 +19,7 @@
 - 新增支持编辑聊天内容
 - 会话内容操作按钮区域新增文字提示信息
 - 新增项目 logo
+- 新增 opengraph-image 和 twitter-image
 
 ### 调整
 
