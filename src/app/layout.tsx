@@ -44,6 +44,23 @@ export const metadata: Metadata = {
     userScalable: false,
   },
   appleWebApp: { capable: true, title: "L-GPT" },
+  openGraph: {
+    title: "L-GPT | An AI Assitant Hub",
+    description:
+      "L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
+    url: "https://chat.ltopx.com",
+    siteName: "L-GPT",
+    locale: "zh_CN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "L-GPT | An AI Assitant Hub",
+    description:
+      "L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
+    site: "@peekbomb",
+    creator: "@peekbomb",
+  },
 };
 
 export default function RootLayout({
