@@ -52,6 +52,12 @@ export const metadata: Metadata = {
     siteName: "L-GPT",
     locale: "zh_CN",
     type: "website",
+    images: {
+      url: "https://chat.ltopx.com/twitter-image.png",
+      width: 1200,
+      height: 675,
+      alt: "L-GPT",
+    },
   },
   twitter: {
     card: "summary_large_image",
@@ -60,6 +66,7 @@ export const metadata: Metadata = {
       "L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
     site: "@peekbomb",
     creator: "@peekbomb",
+    images: ["https://chat.ltopx.com/twitter-image.png"],
   },
 };
 
