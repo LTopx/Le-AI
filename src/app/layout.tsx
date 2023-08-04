@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     locale: "zh_CN",
     type: "website",
     images: {
-      url: "https://chat.ltopx.com/opengraph-image.png",
+      url: "https://chat.ltopx.com/opengraph-image.png?v=1",
       width: 1200,
       height: 675,
       alt: "L-GPT",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     site: "@peekbomb",
     creator: "@peekbomb",
     images: {
-      url: "https://chat.ltopx.com/twitter-image.png",
+      url: "https://chat.ltopx.com/twitter-image.png?v=1",
       width: 1200,
       height: 675,
       alt: "L-GPT",
