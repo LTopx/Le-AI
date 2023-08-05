@@ -179,6 +179,8 @@ export default function ChatList() {
         errorMessage = tErrorCode("20002");
       } else if (errRes.error === 20009) {
         errorMessage = tErrorCode("20009");
+      } else if (errRes.error === 20010) {
+        errorMessage = tErrorCode("20010");
       } else if (errRes.error.code === "context_length_exceeded") {
         return toast(
           () => (

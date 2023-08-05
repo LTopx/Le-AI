@@ -1,5 +1,13 @@
 # L-GPT Change Log
 
+## v0.8.2
+
+> 2023-08-04
+
+### Add
+
+- Added error message prompt when NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME is not configured
+
 ## v0.8.1
 
 > 2023-08-03

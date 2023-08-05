@@ -113,7 +113,8 @@
     "20006": "Your license is already premium",
     "20007": "Validate licenses error",
     "20008": "Params error",
-    "20009": "The Model is not available for your current plan. Please upgrade to Premium or Team to unlock this feature"
+    "20009": "The Model is not available for your current plan. Please upgrade to Premium or Team to unlock this feature",
+    "20010": "Please configure Azure Resource Name first"
   },
   "menu": {
     "clear-all-conversation": "Clear Context",

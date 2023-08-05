@@ -1,5 +1,13 @@
 # L-GPT 更新日志
 
+## v0.8.2
+
+> 2023-08-04
+
+### 新增
+
+- 未配置 NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME 时的报错信息提示
+
 ## v0.8.1
 
 > 2023-08-03

@@ -106,7 +106,8 @@ export async function POST(request: Request) {
   const headersList = headers();
   const headerApiKey = headersList.get("Authorization");
   const ENV_API_KEY = process.env.NEXT_PUBLIC_AZURE_OPENAI_API_KEY;
-  const ENV_API_VERSION = process.env.NEXT_AZURE_OPENAI_API_VERSION;
+  const ENV_API_VERSION =
+    process.env.NEXT_AZURE_OPENAI_API_VERSION || "2023-07-01-preview";
 
   const {
     model,
@@ -155,6 +156,8 @@ export async function POST(request: Request) {
 
   const RESOURCE_NAME =
     resourceName || process.env.NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME;
+
+  if (!RESOURCE_NAME) return ResErr({ error: 20010 });
 
   const fetchURL = `https://${RESOURCE_NAME}.openai.azure.com/openai/deployments/${model}/chat/completions?api-version=${ENV_API_VERSION}`;
 
