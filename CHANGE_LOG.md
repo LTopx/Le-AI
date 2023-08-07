@@ -4,6 +4,10 @@
 
 > 2023-08-07
 
+### Fixed
+
+- Fixed the problem that AUTH_SECRET may be missing in the production environment
+
 ### Add
 
 - Added support for Azure GPT-4/GPT-4-32K

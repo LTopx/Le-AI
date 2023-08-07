@@ -65,7 +65,7 @@ if (
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers,
-  secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
+  secret: process.env.NEXT_PUBLIC_AUTH_SECRET || 'secret',
   callbacks: {
     async jwt({ token, trigger }) {
       const id = token.sub || token.id;
