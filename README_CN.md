@@ -1,50 +1,63 @@
-# L-GPT
+<h4 align="right"><strong><a href="https://github.com/tw93/MiaoYan/blob/master/README_EN.md">English</a></strong> | 中文</h4>
 
-帮助文档 https://docs.ltopx.com/zh-CN
+<p align="center">
+    <a href="https://chat.ltopx.com" target="_blank" rel="noopener noreferrer">
+        <img width="100" src="./public/favicon-96x96.png" alt="L-GPT" />
+    </a>
+</p>
 
-L-GPT 是一款开源的 ChatGPT Web App。通过整合各个大语言模型的开放 API，给用户提供高度聚合的帮助型 AI 服务。它不仅支持基础的会话功能，后续还将支持文本转语音、语音输入、解析文件、插件等更多功能，能够多方面的来提升效率。 [点击体验](https://gpt.ltopx.com)
+<h1 align="center">L-GPT</h1>
 
-欢迎加入：[TG 群](https://t.me/+7fLJJoGV_bJhYTk1)
+<p align="center">您的开源 AI 聚合服务助手，帮您效率UP UP~</p>
 
-<img src="./public/screenshots/tg.jpeg" width="200">
+<p align="center">
+<a href="https://github.com/LTopx/L-GPT/releases">
+  <img alt="GitHub release" src="https://img.shields.io/github/release/LTopx/L-GPT.svg?style=flat-square&include_prereleases" />
+</a>
+<a href="https://github.com/LTopx/L-GPT/commits">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/LTopx/L-GPT.svg?style=flat-square" />
+</a>
+<a href="https://twitter.com/peekbomb" target="_blank">
+  <img alt="twitter" src="https://img.shields.io/badge/follow-Ethan Liu-red?style=flat-square&logo=Twitter">
+</a>
+<a href="https://t.me/+7fLJJoGV_bJhYTk1" target="_blank">
+  <img alt="telegram" src="https://img.shields.io/badge/chat-telegram-blueviolet?style=flat-square&logo=Telegram">
+</a>
 
-## 预览
+<div align="center">
 
-<img src="./public/screenshots/screenshot-pc.png">
+[直接访问](https://chat.ltopx.com/) | [帮助文档](https://docs.ltopx.com/) | [反馈](https://github.com/LTopx/L-GPT/issues) | [TG 群](https://t.me/+7fLJJoGV_bJhYTk1) | [联系作者](https://goethan.cc/)
 
-<img src="./public/screenshots/screenshot-m.png">
+</div>
 
-## 重要通知
+<p align="center">
+  <img src="./public/screenshots/screenshot.png" height="500px">
+</p>
 
-最近 web 端更新较少，主要是在开发客户端的第一个版本。目前 UI 界面已经基本移植完成，当前支持使用自己的 API Key 进行会话。接下来会恢复 web 端的功能更新。
+## 功能特色
 
-以后功能会优先 web 端实现，然后同步移植到客户端，因此客户端的功能会比 web 端滞后一些。
+- 无需配置额外环境变量，可一键免费发布到 Vercel
+- 保证隐私安全，所有会话记录和系统各项配置均存储在浏览器本地
+- 响应式设计，暗黑模式，在不同设备上都有良好的体验
+- 支持语音朗读，可自定义不同音色和语速
+- 支持展示 markdown，支持代码高亮复制等操作
+- 支持 OpenAI 和 Azure OpenAI
+- 支持自定义角色模板，创造更多 AI 可能性
+- 支持 i18n 多语言国际化: English、简体中文
+- 了解更多，更多请查阅 [帮助文档](https://docs.ltopx.com/)
 
-- 尚不支持：登录、注册、分享会话、多语言等
-- 目前因为还未支持登录，因此只能配置自己的 API Key 进行会话
-- 客户端项目即将开源，敬请期待
-- 客户端第一个完整功能稳定版本预计 6 月底推出
+## 开发计划
 
-## 特性
-
-- 一键免费发布到 Vercel
-- 支持响应式，暗黑模式和 PWA
-- 安全，所有数据均基于本地存储
-- 支持 i18n
-- 支持 [Azure OpenAI Service](https://docs.ltopx.com/zh-CN/api-key-configure/azure)
-- 支持配置和使用自定义 prompt
-
-## 下一步计划
-
-- [x] 支持 Azure OpenAI
-- [x] 引入提示词以及提示词模板
-- [x] 聊天记录导入导出
-- [x] 账号系统
-- [x] 支持会话分享
 - [x] 支持自定义 prompt 仓库
-- [ ] 支持 GPT-4 和 Claude
-- [ ] 压缩上下文，节省聊天 token
+- [ ] 支持超长会话
+- [ ] 支持 Function call，实现更多功能
+- [ ] 支持接入 Midjourney 绘画
+- [ ] 支持 Claude API 以及更多大语言模型
 - [ ] 桌面版本开发
+
+## 一键部署
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/L-GPT)
 
 ## 发布到 Vercel
 

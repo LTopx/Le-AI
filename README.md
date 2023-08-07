@@ -8,8 +8,6 @@ L-GPT is an open-source project that integrates various large language models' o
 
 Welcome to：[Telegram](https://t.me/+7fLJJoGV_bJhYTk1)
 
-<img src="./public/screenshots/tg.jpeg" width="200">
-
 ## Preview
 
 <img src="./public/screenshots/screenshot-pc.png">
