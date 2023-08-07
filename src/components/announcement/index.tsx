@@ -30,7 +30,7 @@ export default function Announcement() {
       open={open}
       onClose={onClose}
       footer={
-        <div className="flex justify-end gap-2">
+        <div className="flex gap-2 justify-end">
           <Button type="primary" onClick={onClose}>
             {tCommon("ok")}
           </Button>
@@ -38,7 +38,7 @@ export default function Announcement() {
       }
     >
       <Image
-        src="https://docs.ltopx.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.8.1-1.c9dce942.png&w=1920&q=75"
+        src="https://docs.ltopx.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.8.2-1.c3022e94.png&w=1080&q=75"
         alt=""
         width={1920}
         height={800}
@@ -54,11 +54,10 @@ export default function Announcement() {
       </div>
       <ul
         role="list"
-        className="marker:text-sky-400 mt-3 list-disc pl-5 space-y-3 text-slate-500 max-h-[500px] overflow-y-auto"
+        className="list-disc space-y-3 mt-3 max-h-[500px] pl-5 text-slate-500 overflow-y-auto marker:text-sky-400"
       >
         <li>{tZLog("text1")}</li>
         <li>{tZLog("text2")}</li>
-        <li>{tZLog("text3")}</li>
         {/* <li>{tZLog("text4")}</li>
         <li>{tZLog("text5")}</li> */}
         {/* <div>

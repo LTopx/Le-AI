@@ -333,9 +333,8 @@
   },
   "zLog": {
     "full-log": "点击查看完整更新日志",
-    "title": "v0.8.1 更新公告 🔥🔥",
-    "text1": "Prompt功能部分回归，新增 AI 角色模板模板功能，内置部分常用模板",
-    "text2": "调整 gpt-tokens 计算模块，现在能够正确计算所有消耗的 token",
-    "text3": "接下来会继续增加自定义AI 角色模板功能，以及 prompt library 功能"
+    "title": "v0.8.2 更新公告 🔥🔥",
+    "text1": "现在支持 Azure GPT-4/GPT-4-32K了！！",
+    "text2": "调整环境变量相关代码逻辑"
   }
 }

@@ -1,166 +1,118 @@
-# L-GPT
+<h4 align="right">English | <strong><a href="https://github.com/LTopx/L-GPT/blob/main/README_CN.md">中文</a></strong></h4>
 
-English / [简体中文](./README_CN.md)
+<p align="center">
+    <a href="https://chat.ltopx.com" target="_blank" rel="noopener noreferrer">
+        <img width="100" src="./public/favicon-96x96.png" alt="L-GPT" />
+    </a>
+</p>
 
-Help Documentation https://docs.ltopx.com
+<h1 align="center">L-GPT</h1>
 
-L-GPT is an open-source project that integrates various large language models' open APIs to provide users with highly aggregated and helpful AI services. It not only supports basic conversation functions but will also support more features such as text-to-speech, speech input, file parsing, plugins, etc. in the future. It can improve learning, work, and life efficiency in many ways. [Demo](https://gpt.ltopx.com)
+<p align="center">Your open-source AI Assistant Hub, helping you boost efficiency UP UP~</p>
 
-Welcome to：[Telegram](https://t.me/+7fLJJoGV_bJhYTk1)
+<p align="center">
+<a href="https://github.com/LTopx/L-GPT/releases">
+  <img alt="GitHub release" src="https://img.shields.io/github/release/LTopx/L-GPT.svg?style=flat-square&include_prereleases" />
+</a>
+<a href="https://github.com/LTopx/L-GPT/commits">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/LTopx/L-GPT.svg?style=flat-square" />
+</a>
+<a href="https://twitter.com/peekbomb" target="_blank">
+  <img alt="twitter" src="https://img.shields.io/badge/follow-Ethan Liu-red?style=flat-square&logo=Twitter">
+</a>
+<a href="https://t.me/+7fLJJoGV_bJhYTk1" target="_blank">
+  <img alt="telegram" src="https://img.shields.io/badge/chat-telegram-blueviolet?style=flat-square&logo=Telegram">
+</a>
 
-## Preview
+<div align="center">
 
-<img src="./public/screenshots/screenshot-pc.png">
+[Demo](https://chat.ltopx.com/) | [Docs](https://docs.ltopx.com/) | [Q&A](https://docs.ltopx.com/faq) | [Change Log](https://docs.ltopx.com/change-log) | [Feedback](https://github.com/LTopx/L-GPT/issues) | [Telegram](https://t.me/+7fLJJoGV_bJhYTk1) | [Contact Me](https://goethan.cc/)
 
-<img src="./public/screenshots/screenshot-m.png">
+</div>
 
-## Attention
+<div align="center">
 
-Recently, there have been fewer updates on the web end, mainly focused on developing the first version of the client. Currently, the UI interface has been basically ported, and it supports using your own API Key for sessions.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/L-GPT)
 
-In the future, functions will be implemented on the web end first and then synchronized to the client, so the client's functions will lag behind the web end.
+</div>
 
-- Not yet supported: login, registration, sharing sessions, multi-language, etc.
-- Currently, only your own API Key can be configured for sessions because login is not yet supported.
-- The client project will be open source soon, so stay tuned.
-- The first stable version of the complete client functionality is expected to be released at the end of June.
+<p align="center">
+  <img src="./public/screenshots/screenshot.png" height="500px">
+</p>
 
-## Features
+## ✨ Demo
 
-- Deploy for free on Vercel
-- Responsive design and dark mode
-- Safe, all data based on local
-- Support i18n
-- Support [Azure OpenAI Service](https://docs.ltopx.com/api-key-configure/azure)
-- Support configuration and use of custom prompt
+Direct access: [https://chat.ltopx.com](https://chat.ltopx.com/)
 
-## Next
+Project documentation: [https://docs.ltopx.com](https://docs.ltopx.com/)
 
-- [x] Support Azure OpenAI
-- [x] Introduce prompt words and prompt word templates
-- [x] Chat record import and export
-- [x] Account System
-- [x] Support conversation sharing
-- [x] Support for customizing the prompt repository
-- [ ] Support GPT-4 and Claude
-- [ ] Compress context to save chat tokens
+## 🎯 Key Features
+
+- No need to configure additional environment variables, can be easily deployed to Vercel for free
+- Ensures privacy and security, all session records and system configurations are stored locally in the browser
+- Responsive design with dark mode, providing a great experience on different devices
+- Supports voice reading with customizable voices and speeds
+- Supports displaying markdown with code highlighting and copy operations
+- Supports OpenAI and Azure OpenAI
+- Supports custom role templates to create more AI possibilities
+- Supports i18n multilingual internationalization: English, Simplified Chinese
+- For more information, please refer to the [documentation](https://docs.ltopx.com/)
+
+## 📍 Development Plan
+
+- [x] Support custom prompt repository
+- [ ] Support long conversations
+- [ ] Support Function call for implementing more functionalities
+- [ ] Support integration of Midjourney drawing
+- [ ] Support Claude API and more large language models
 - [ ] Desktop version development
 
-## Deploy on Vercel
+## 💿 One-click Deployment
 
-Get your own website.
+Currently supports one-click deployment to Vercel.
 
-```bash
-# Configure Project
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/L-GPT)
 
-# Prefer using user-configured key.
-# If user hasn't configured, then use this key.
-# If neither are configured, it is not possible to use OpenAI API.
-# eg: sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-NEXT_PUBLIC_OPENAI_API_KEY=
+## 🪄 Local Development
 
-# Prefer using user-configured proxy address.
-# If the user hasn't configured, then use this proxy.
-# If none of these are being used, then connect directly to the Open AI official address: https://api.openai.com.
-NEXT_PUBLIC_OPENAI_API_PROXY=
+**0. Node Environment Requirements**
 
-# Set Your Azure OpenAI API key.
-NEXT_PUBLIC_AZURE_OPENAI_API_KEY=
+NodeJS >= 18
 
-# Set Your Azure OpenAI API resource name.
-NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME=
+**1. Install PNPM**
 
-# Azure OpenAI Service API Version
-NEXT_AZURE_OPENAI_API_VERSION=
-
-# set your own sentry dsn. if empty here, it will not report error to sentry
-NEXT_PUBLIC_SENTRY_DSN=
-
-
-# DATABASE_URL
-DATABASE_URL=
-
-# NEXT-AUTH Email Configure. https://next-auth.js.org/providers/email
-EMAIL_SERVER_HOST=
-EMAIL_SERVER_PORT=
-EMAIL_SERVER_USER=
-EMAIL_SERVER_PASSWORD=
-EMAIL_FROM=
-EMAIL_SECRET=
-
-# NEXT-AUTH Github Configure. https://next-auth.js.org/providers/github
-GITHUB_ID=
-GITHUB_SECRET=
-
-# NEXT-AUTH Google Configure. https://next-auth.js.org/providers/google
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-```
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Peek-A-Booo/L-GPT&env=NEXT_PUBLIC_OPENAI_API_KEY&env=NEXT_PUBLIC_OPENAI_API_PROXY&env=NEXT_PUBLIC_AZURE_OPENAI_API_KEY&env=NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME&env=NEXT_AZURE_OPENAI_API_VERSION&env=NEXT_PUBLIC_SENTRY_DSN&env=DATABASE_URL&env=EMAIL_SERVER_HOST&env=EMAIL_SERVER_PORT&env=EMAIL_SERVER_USER&env=EMAIL_SERVER_PASSWORD&env=EMAIL_FROM&env=EMAIL_SECRET&env=GITHUB_ID&env=GITHUB_SECRET&env=GOOGLE_CLIENT_ID&env=GOOGLE_CLIENT_SECRET)
-
-## Running Local
-
-**1. Clone Repo**
-
-```bash
-git clone https://github.com/Peek-A-Booo/L-GPT.git
-```
-
-**2. PNPM**
-
-If you are not install `pnpm`, you can install it by running the following command.
+If you have not previously installed or used `pnpm`, you can install it by running the following command.
 
 ```bash
 npm install pnpm -g
 ```
 
-**3. Install Dependencies**
+**2. Install Dependencies**
 
 ```bash
 pnpm i
 ```
 
-**4. Configure Environment Variables**
+**3. Configure Environment Variables**
 
-Renamed .env.local.demo to .env.local and configure it according to requirements.
+Rename .evn.local.demo to .env.local
 
-**5. Run App**
+**4. Run the Project**
 
 ```bash
 pnpm dev
 ```
 
-**6. Build App**
+**5. Build the Project**
 
 ```bash
 pnpm build && pnpm start
 ```
 
-## Configuration
+## More Optional Environment Variables
 
-You can configure the following environment variables.
+Refer to the documentation: [https://docs.ltopx.com](https://docs.ltopx.com/develop/env)
 
-| Environment Variable                     | Desc                                                                                                | Required | Default                  |
-| ---------------------------------------- | --------------------------------------------------------------------------------------------------- | -------- | ------------------------ |
-| `NEXT_PUBLIC_OPENAI_API_KEY`             | your OpenAI API Key                                                                                 | false    |                          |
-| `NEXT_PUBLIC_OPENAI_API_PROXY`           | your OpenAI API proxy server                                                                        | false    | `https://api.openai.com` |
-| `NEXT_PUBLIC_AZURE_OPENAI_API_KEY`       | your Azure OpenAI API Key. [View Example](https://docs.ltopx.com/api-key-configure/azure)           | false    |                          |
-| `NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME` | your Azure OpenAI API resource name. [View Example](https://docs.ltopx.com/api-key-configure/azure) | false    |                          |
-| `NEXT_AZURE_OPENAI_API_VERSION`          | your Azure OpenAI API Version. [View Example](https://docs.ltopx.com/api-key-configure/azure)       | true     | 2023-05-15               |
-| `NEXT_PUBLIC_SENTRY_DSN`                 | your sentry dsn. If empty, it will not report error to sentry                                       | false    |                          |
-| `DATABASE_URL`                           | postgresql database address                                                                         | true     |                          |
-| `EMAIL_SERVER_HOST`                      | next-auth email server host                                                                         | true     |                          |
-| `EMAIL_SERVER_PORT`                      | next-auth email server port                                                                         | true     |                          |
-| `EMAIL_SERVER_USER`                      | next-auth email server user                                                                         | true     |                          |
-| `EMAIL_SERVER_PASSWORD`                  | next-auth email server password                                                                     | true     |                          |
-| `EMAIL_FROM`                             | next-auth email from                                                                                | false    |                          |
-| `EMAIL_SECRET`                           | next-auth email secret                                                                              | true     |                          |
-| `GITHUB_ID`                              | next-auth github id                                                                                 | true     |                          |
-| `GITHUB_SECRET`                          | next-auth github secret                                                                             | true     |                          |
-| `GOOGLE_CLIENT_ID`                       | next-auth google client id                                                                          | true     |                          |
-| `GOOGLE_CLIENT_SECRET`                   | next-auth google client secret                                                                      | true     |                          |
+## License
 
-## Contact
-
-Any questions, please feel free to join our Telegram group or contact us on [Twitter](https://twitter.com/peekbomb).
+[GUN](./LICENSE)

@@ -333,9 +333,8 @@
   },
   "zLog": {
     "full-log": "Click to view the full update log",
-    "title": "v0.8.1 Released 🔥🔥",
-    "text1": "The Prompt function is back, with the addition of AI role template functionality and built-in commonly used templates.",
-    "text2": "Adjusted the gpt-tokens calculation module to correctly calculate all consumed tokens now.",
-    "text3": "Next, we will continue to add custom AI role template functionality and prompt library features."
+    "title": "v0.8.2 Released 🔥🔥",
+    "text1": "Added support for Azure GPT-4/GPT-4-32K",
+    "text2": "Adjust the code logic related to environment variable."
   }
 }

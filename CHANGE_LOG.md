@@ -16,6 +16,8 @@
 ### Changed
 
 - Adjust the environment variable configuration and related code logic, now you can deploy with one click without any environment variables
+- Adjust readme documentation
+- Adjust the environment variable sample document .env.local.demo
 
 ## v0.8.1
 
