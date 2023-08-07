@@ -115,4 +115,4 @@ pnpm build && pnpm start
 
 ## 协议
 
-[GUN](./LICENSE)
+[GNU](https://github.com/LTopx/L-GPT/blob/main/LICENSE)

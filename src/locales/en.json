@@ -335,6 +335,7 @@
     "full-log": "Click to view the full update log",
     "title": "v0.8.2 Released 🔥🔥",
     "text1": "Added support for Azure GPT-4/GPT-4-32K",
-    "text2": "Adjust the code logic related to environment variable."
+    "text2": "Adjust the code logic related to environment variable.",
+    "text3": "New contact information for the author. Blog address:"
   }
 }

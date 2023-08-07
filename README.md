@@ -115,4 +115,4 @@ Refer to the documentation: [https://docs.ltopx.com](https://docs.ltopx.com/deve
 
 ## License
 
-[GUN](./LICENSE)
+[GNU](https://github.com/LTopx/L-GPT/blob/main/LICENSE)

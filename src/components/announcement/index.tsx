@@ -57,6 +57,12 @@ export default function Announcement() {
         className="list-disc space-y-3 mt-3 max-h-[500px] pl-5 text-slate-500 overflow-y-auto marker:text-sky-400"
       >
         <li>{tZLog("text1")}</li>
+        <li>
+          {tZLog("text3")}{" "}
+          <a href="https://goethan.cc" className="text-sky-400 hover:underline">
+            https://goethan.cc
+          </a>
+        </li>
         <li>{tZLog("text2")}</li>
         {/* <li>{tZLog("text4")}</li>
         <li>{tZLog("text5")}</li> */}
