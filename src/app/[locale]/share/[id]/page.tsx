@@ -13,6 +13,7 @@ import ChatContent from "@/components/chatSection/chatContent";
 import type { Share } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { redis } from "@/lib/redis";
+import { checkRedis } from "@/lib/checkEnv";
 
 const UserFill = ({
   size,
@@ -61,8 +62,12 @@ async function getShareData(id: Share["id"]) {
 
   if (!shareRes) return { content: null, viewsCount: 0 };
 
-  const viewsCount: number | null = await redis.get(id);
-  await redis.set(id, viewsCount ? Number(viewsCount) + 1 : 1);
+  let viewsCount: number | null = null;
+
+  if (checkRedis()) {
+    viewsCount = await redis.get(id);
+    await redis.set(id, viewsCount ? Number(viewsCount) + 1 : 1);
+  }
 
   return { content: shareRes, viewsCount: viewsCount ? viewsCount : 1 };
 }

@@ -8,6 +8,7 @@ import { Button, Input, Divider } from "@ltopx/lx-ui";
 import toast from "react-hot-toast";
 import { cn } from "@/lib";
 import Icon from "@/components/icon";
+import { checkGithub, checkGoogle, checkEmail } from "@/lib/checkEnv";
 
 export default function AuthForm() {
   const router = useRouter();
@@ -81,58 +82,66 @@ export default function AuthForm() {
         {tAuth("continue-gpt")}
       </div>
       <div className="flex flex-col mt-8 gap-2">
-        <Button
-          className="select-none"
-          size="lg"
-          icon={
-            <Icon
-              className="text-black dark:text-white"
-              icon="github_line"
-              size={16}
-            />
-          }
-          loading={loadingGithub}
-          onClick={onGithubLogin}
-        >
-          {tAuth("continue-with-github")}
-        </Button>
-        <Button
-          className="select-none"
-          size="lg"
-          icon={<Icon icon="google_line" size={16} />}
-          loading={loadingGoogle}
-          onClick={onGoogleLogin}
-        >
-          {tAuth("continue-with-google")}
-        </Button>
-      </div>
-      <Divider className="my-8">
-        <span className="text-sm">{tAuth("or")}</span>
-      </Divider>
-      <div className="flex flex-col gap-4">
-        <div>
-          <div className="font-medium mb-1 text-[13px]">
-            {tAuth("email-address")}
-          </div>
-          <Input
-            ref={inputRef}
+        {checkGithub() && (
+          <Button
+            className="select-none"
             size="lg"
-            placeholder={tAuth("input-email")}
-            allowClear
-            value={email}
-            onChange={setEmail}
-            onEnter={onLogin}
-          />
-        </div>
-        <Button
-          type="primary"
-          size="lg"
-          loading={loadingEmial}
-          onClick={onLogin}
-        >
-          {tAuth("continue")}
-        </Button>
+            icon={
+              <Icon
+                className="text-black dark:text-white"
+                icon="github_line"
+                size={16}
+              />
+            }
+            loading={loadingGithub}
+            onClick={onGithubLogin}
+          >
+            {tAuth("continue-with-github")}
+          </Button>
+        )}
+        {checkGoogle() && (
+          <Button
+            className="select-none"
+            size="lg"
+            icon={<Icon icon="google_line" size={16} />}
+            loading={loadingGoogle}
+            onClick={onGoogleLogin}
+          >
+            {tAuth("continue-with-google")}
+          </Button>
+        )}
       </div>
+      {checkEmail() && (checkGithub() || checkGoogle()) && (
+        <Divider className="my-8">
+          <span className="text-sm">{tAuth("or")}</span>
+        </Divider>
+      )}
+      {checkEmail() && (
+        <div className="flex flex-col gap-4">
+          <div>
+            <div className="font-medium mb-1 text-[13px]">
+              {tAuth("email-address")}
+            </div>
+            <Input
+              ref={inputRef}
+              size="lg"
+              placeholder={tAuth("input-email")}
+              allowClear
+              value={email}
+              onChange={setEmail}
+              onEnter={onLogin}
+            />
+          </div>
+          <Button
+            type="primary"
+            size="lg"
+            loading={loadingEmial}
+            onClick={onLogin}
+          >
+            {tAuth("continue")}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

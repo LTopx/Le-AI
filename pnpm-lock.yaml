@@ -13,7 +13,7 @@ dependencies:
     version: 0.1.11(@babel/core@7.22.9)(@types/react-dom@18.2.7)(@types/react@18.2.18)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
   '@next-auth/prisma-adapter':
     specifier: 1.0.7
-    version: 1.0.7(@prisma/client@5.1.1)(next-auth@4.22.3)
+    version: 1.0.7(@prisma/client@5.1.1)(next-auth@4.22.4)
   '@prisma/client':
     specifier: 5.1.1
     version: 5.1.1(prisma@5.1.1)
@@ -27,8 +27,8 @@ dependencies:
     specifier: 8.0.1
     version: 8.0.1
   '@types/node':
-    specifier: 20.4.7
-    version: 20.4.7
+    specifier: 20.4.8
+    version: 20.4.8
   '@types/react':
     specifier: 18.2.18
     version: 18.2.18
@@ -78,14 +78,14 @@ dependencies:
     specifier: 2.0.1
     version: 2.0.1
   microsoft-cognitiveservices-speech-sdk:
-    specifier: 1.30.1
-    version: 1.30.1
+    specifier: 1.31.0
+    version: 1.31.0
   next:
     specifier: 13.4.12
     version: 13.4.12(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
   next-auth:
-    specifier: 4.22.3
-    version: 4.22.3(next@13.4.12)(nodemailer@6.9.4)(react-dom@18.2.0)(react@18.2.0)
+    specifier: 4.22.4
+    version: 4.22.4(next@13.4.12)(nodemailer@6.9.4)(react-dom@18.2.0)(react@18.2.0)
   next-intl:
     specifier: 2.19.1
     version: 2.19.1(next@13.4.12)(react@18.2.0)
@@ -135,8 +135,8 @@ dependencies:
     specifier: 9.0.0
     version: 9.0.0
   zustand:
-    specifier: 4.4.0
-    version: 4.4.0(@types/react@18.2.18)(react@18.2.0)
+    specifier: 4.4.1
+    version: 4.4.1(@types/react@18.2.18)(react@18.2.0)
 
 devDependencies:
   '@tailwindcss/typography':
@@ -1922,14 +1922,14 @@ packages:
       '@napi-rs/simple-git-win32-x64-msvc': 0.1.8
     dev: false
 
-  /@next-auth/prisma-adapter@1.0.7(@prisma/client@5.1.1)(next-auth@4.22.3):
+  /@next-auth/prisma-adapter@1.0.7(@prisma/client@5.1.1)(next-auth@4.22.4):
     resolution: {integrity: sha512-Cdko4KfcmKjsyHFrWwZ//lfLUbcLqlyFqjd/nYE2m3aZ7tjMNUjpks47iw7NTCnXf+5UWz5Ypyt1dSs1EP5QJw==}
     peerDependencies:
       '@prisma/client': '>=2.26.0 || >=3'
       next-auth: ^4
     dependencies:
       '@prisma/client': 5.1.1(prisma@5.1.1)
-      next-auth: 4.22.3(next@13.4.12)(nodemailer@6.9.4)(react-dom@18.2.0)(react@18.2.0)
+      next-auth: 4.22.4(next@13.4.12)(nodemailer@6.9.4)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@next/env@13.4.12:
@@ -3336,13 +3336,13 @@ packages:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: false
 
-  /@types/node@20.4.7:
-    resolution: {integrity: sha512-bUBrPjEry2QUTsnuEjzjbS7voGWCc30W0qzgMf90GPeDGFRakvrz47ju+oqDAKCXLUCe39u57/ORMl/O/04/9g==}
+  /@types/node@20.4.8:
+    resolution: {integrity: sha512-0mHckf6D2DiIAzh8fM8f3HQCvMKDpK94YQ0DSVkfWTG9BZleYIWudw9cJxX8oCk9bM+vAkDyujDV6dmKHbvQpg==}
 
   /@types/nodemailer@6.4.9:
     resolution: {integrity: sha512-XYG8Gv+sHjaOtUpiuytahMy2mM3rectgroNbs6R3djZEKmPNiIJwe9KqOJBGzKKnNZNKvnuvmugBgpq3w/S0ig==}
     dependencies:
-      '@types/node': 20.4.7
+      '@types/node': 20.4.8
     dev: true
 
   /@types/parse-json@4.0.0:
@@ -6990,8 +6990,8 @@ packages:
       braces: 3.0.2
       picomatch: 2.3.1
 
-  /microsoft-cognitiveservices-speech-sdk@1.30.1:
-    resolution: {integrity: sha512-pR/abkc55hvUOG1TSmJ79Mt+A+/9R5TVeuvMaJCcvHYroIPVdG5eXqzIiZNxuy5P0x+YICYnPSOQMoHyPgtN1Q==}
+  /microsoft-cognitiveservices-speech-sdk@1.31.0:
+    resolution: {integrity: sha512-wmNi0XoGtQwRoI2To6QSrGHVW0d8WfhJwXtE2nk48l4YkBiDqdPV2tdSXFHRrdv3uwr/+THip45H91Fllpm8qA==}
     dependencies:
       agent-base: 6.0.2
       bent: 7.3.12
@@ -7082,8 +7082,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /next-auth@4.22.3(next@13.4.12)(nodemailer@6.9.4)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-XAgy9xV3J2eJOXrQhmxdjV6MLM29ibm6WtMXc3KY6IPZeApf+SuBuPvlqCUfbu5YsAzlg9WSw6u01dChTfeZOA==}
+  /next-auth@4.22.4(next@13.4.12)(nodemailer@6.9.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-VMI6pq3z4BfvFeCZHBkYtRYa0qqGTYAi2yy3hWCB78KkN1YsSAsOLSssd4oGrQBj0z/0zg2VLzn9tSJ14AtmWw==}
     peerDependencies:
       next: ^12.2.5 || ^13
       nodemailer: ^6.6.5
@@ -9243,8 +9243,8 @@ packages:
       tslib: 2.3.0
     dev: false
 
-  /zustand@4.4.0(@types/react@18.2.18)(react@18.2.0):
-    resolution: {integrity: sha512-2dq6wq4dSxbiPTamGar0NlIG/av0wpyWZJGeQYtUOLegIUvhM2Bf86ekPlmgpUtS5uR7HyetSiktYrGsdsyZgQ==}
+  /zustand@4.4.1(@types/react@18.2.18)(react@18.2.0):
+    resolution: {integrity: sha512-QCPfstAS4EBiTQzlaGP1gmorkh/UL1Leaj2tdj+zZCZ/9bm0WS7sI2wnfD5lpOszFqWJ1DcPnGoY8RDL61uokw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       '@types/react': '>=16.8'

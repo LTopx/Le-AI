@@ -2,8 +2,9 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import type { DropdownOption } from "@ltopx/lx-ui";
-import { cn } from "@/lib";
 import { useOpenStore } from "@/hooks/useOpen";
+import { cn } from "@/lib";
+import { checkAuth } from "@/lib/checkEnv";
 import Icon from "@/components/icon";
 import Tokens from "@/components/site/tokens";
 import LicenseActivate from "./licenseActivate";
@@ -22,14 +23,15 @@ export default function Handler() {
 
   const updateSettingOpen = useOpenStore((state) => state.updateSettingOpen);
 
+  const height = React.useMemo(() => {
+    if (session.data) return "h-[12rem]";
+    if (!checkAuth()) return "h-[6rem]";
+    return "h-[9rem]";
+  }, [session.data]);
+
   return (
-    <div
-      className={cn("flex flex-col border-t gap-1 pt-1", {
-        "h-[12rem]": session.data,
-        "h-[9rem]": !session.data,
-      })}
-    >
-      <LicenseActivate />
+    <div className={cn("flex flex-col border-t gap-1 pt-1", height)}>
+      {checkAuth() && <LicenseActivate />}
       <a
         className={cn(
           "h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors",

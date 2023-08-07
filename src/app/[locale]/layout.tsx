@@ -32,7 +32,10 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={inter.className} suppressHydrationWarning>
       <Script src="/disableSafariScalable.js" />
-      {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
+      {!!(
+        process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL &&
+        process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID
+      ) && (
         <script
           async
           src={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}

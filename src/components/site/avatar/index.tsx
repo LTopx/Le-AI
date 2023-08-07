@@ -8,8 +8,8 @@ import { useRouter, usePathname } from "next-intl/client";
 import { Dropdown, Button, type DropdownOption } from "@ltopx/lx-ui";
 import { useUserInfoStore } from "@/hooks/useUserInfo";
 import { useOpenStore } from "@/hooks/useOpen";
+import { checkAuth } from "@/lib/checkEnv";
 import Icon from "@/components/icon";
-import Btn from "./button";
 
 export default function Avatar() {
   const session = useSession();
@@ -110,7 +110,7 @@ export default function Avatar() {
           value: "logout",
         },
       ];
-    } else {
+    } else if (checkAuth()) {
       base = [
         ...base,
         { type: "seperate", value: "seperate_1" },

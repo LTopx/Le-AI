@@ -14,6 +14,7 @@ import { useOpenStore } from "@/hooks/useOpen";
 import { useUserInfoStore } from "@/hooks/useUserInfo";
 import { cn, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/calcTokens/gpt-tokens";
+import { checkAuth, checkTTS } from "@/lib/checkEnv";
 import Icon from "@/components/icon";
 import Avatar from "./avatar";
 import Handler from "./handler";
@@ -152,9 +153,11 @@ export default function ChatList() {
           () => (
             <div className="flex gap-4 items-center">
               {tRes("10001")}
-              <Button type="primary" onClick={onLogin}>
-                {tAuth("log-in")}
-              </Button>
+              {checkAuth() && (
+                <Button type="primary" onClick={onLogin}>
+                  {tAuth("log-in")}
+                </Button>
+              )}
             </div>
           ),
           { duration: 5000 }
@@ -304,7 +307,7 @@ export default function ChatList() {
                 )}
               >
                 <ChatContent data={item} />
-                {item.role === "assistant" && (
+                {item.role === "assistant" && checkTTS() && (
                   <ChatTTS
                     data={item}
                     onRead={() =>

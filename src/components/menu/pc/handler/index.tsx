@@ -2,8 +2,9 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import type { DropdownOption } from "@ltopx/lx-ui";
 import Icon from "@/components/icon";
-import { cn } from "@/lib";
 import { useOpenStore } from "@/hooks/useOpen";
+import { cn } from "@/lib";
+import { checkAuth } from "@/lib/checkEnv";
 import Tokens from "@/components/site/tokens";
 import LicenseActivate from "./licenseActivate";
 import ToggleTheme from "./toggleTheme";
@@ -21,7 +22,7 @@ export default function Handler() {
 
   return (
     <div className="border-t flex flex-col pt-2 gap-1 dark:border-white/20">
-      <LicenseActivate />
+      {checkAuth() && <LicenseActivate />}
       <a
         className={cn(
           "hover:bg-gray-200/60 h-11 rounded-lg transition-colors text-sm cursor-pointer flex items-center gap-2 px-2",

@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/utils/plugin/auth";
 import { redirect } from "next/navigation";
+import { authOptions } from "@/utils/plugin/auth";
+import { checkAuth } from "@/lib/checkEnv";
 
 export default async function AuthenticationLayout({
   children,
@@ -9,7 +10,7 @@ export default async function AuthenticationLayout({
 }) {
   const session = await getServerSession(authOptions);
 
-  if (session?.user) return redirect("/");
+  if (session?.user || !checkAuth()) return redirect("/");
 
   return <>{children}</>;
 }

@@ -11,6 +11,7 @@ import { useUserInfoStore } from "@/hooks/useUserInfo";
 import { useOpenStore } from "@/hooks/useOpen";
 import { useScrollToBottomStore } from "@/hooks/useScrollToBottom";
 import { useLLMStore } from "@/hooks/useLLM";
+import { checkAuth } from "@/lib/checkEnv";
 import Handler from "./handler";
 import Inputarea from "./inputArea";
 
@@ -124,9 +125,11 @@ export default function ChatFooter() {
           () => (
             <div className="flex gap-4 items-center">
               {tRes("10001")}
-              <Button type="primary" onClick={onLogin}>
-                {tAuth("log-in")}
-              </Button>
+              {checkAuth() && (
+                <Button type="primary" onClick={onLogin}>
+                  {tAuth("log-in")}
+                </Button>
+              )}
             </div>
           ),
           { duration: 5000 }

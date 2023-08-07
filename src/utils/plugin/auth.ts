@@ -10,45 +10,51 @@ const providers: NextAuthOptions["providers"] = [];
 
 // EmailProvider
 if (
-  process.env.EMAIL_SERVER_HOST &&
-  process.env.EMAIL_SERVER_PORT &&
-  process.env.EMAIL_SERVER_USER &&
-  process.env.EMAIL_SERVER_PASSWORD &&
-  process.env.EMAIL_FROM
+  process.env.NEXT_PUBLIC_EMAIL_SERVER_HOST &&
+  process.env.NEXT_PUBLIC_EMAIL_SERVER_PORT &&
+  process.env.NEXT_PUBLIC_EMAIL_SERVER_USER &&
+  process.env.NEXT_PUBLIC_EMAIL_SERVER_PASSWORD &&
+  process.env.NEXT_PUBLIC_EMAIL_FROM
 ) {
   providers.push(
     EmailProvider({
       server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT as any,
+        host: process.env.NEXT_PUBLIC_EMAIL_SERVER_HOST,
+        port: process.env.NEXT_PUBLIC_EMAIL_SERVER_PORT as any,
         auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
+          user: process.env.NEXT_PUBLIC_EMAIL_SERVER_USER,
+          pass: process.env.NEXT_PUBLIC_EMAIL_SERVER_PASSWORD,
         },
       },
-      from: process.env.EMAIL_FROM,
+      from: process.env.NEXT_PUBLIC_EMAIL_FROM,
       sendVerificationRequest,
     })
   );
 }
 
 // GithubProvider
-if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
+if (
+  process.env.NEXT_PUBLIC_GITHUB_ID &&
+  process.env.NEXT_PUBLIC_GITHUB_SECRET
+) {
   providers.push(
     GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: process.env.NEXT_PUBLIC_GITHUB_ID,
+      clientSecret: process.env.NEXT_PUBLIC_GITHUB_SECRET,
       allowDangerousEmailAccountLinking: true,
     })
   );
 }
 
 // GoogleProvider
-if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+if (
+  process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID &&
+  process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
+) {
   providers.push(
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
       httpOptions: {
         timeout: 40000,
       },
@@ -59,7 +65,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers,
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
   callbacks: {
     async jwt({ token, trigger }) {
       const id = token.sub || token.id;

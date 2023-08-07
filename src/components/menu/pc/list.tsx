@@ -4,6 +4,7 @@ import { useTranslations, useFormatter } from "next-intl";
 import { Confirm } from "@ltopx/lx-ui";
 import { useChannelStore } from "@/hooks/useChannel";
 import { cn } from "@/lib";
+import { checkAuth } from "@/lib/checkEnv";
 import Icon from "@/components/icon";
 import MenuIcon from "../icon";
 
@@ -25,13 +26,14 @@ export default function List() {
     updateActiveId(id);
   };
 
+  const height = React.useMemo(() => {
+    if (session.data) return "h-[calc(100vh-19rem)]";
+    if (!checkAuth()) return "h-[calc(100vh-13rem)]";
+    return "h-[calc(100vh-16rem)]";
+  }, [session.data]);
+
   return (
-    <div
-      className={cn("overflow-y-auto scroll-smooth", {
-        "h-[calc(100vh-19rem)]": session.data,
-        "h-[calc(100vh-16rem)]": !session.data,
-      })}
-    >
+    <div className={cn("overflow-y-auto scroll-smooth", height)}>
       {channelList.map((channel) => (
         <div
           key={channel.channel_id}

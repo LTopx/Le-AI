@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { Modal, Confirm, Button } from "@ltopx/lx-ui";
 import { useOpenStore } from "@/hooks/useOpen";
 import { cn } from "@/lib";
+import { checkTTS } from "@/lib/checkEnv";
 import Icon from "@/components/icon";
 import ApiKey from "./apiKey";
 import ImportExport from "./importExport";
@@ -62,17 +63,19 @@ export default function Setting() {
       </div>
       <ImportExport />
       <SendMessageType />
-      <div
-        className={cn(
-          "flex items-center justify-between py-2 px-1 border-b",
-          "border-slate-100 dark:border-neutral-500/60"
-        )}
-      >
-        <div className="text-sm">{tTTS("azure-tts")}</div>
-        <Button type="primary" onClick={() => updateTtsSettingOpen(true)}>
-          <Icon icon="settings_3_line" size={18} />
-        </Button>
-      </div>
+      {checkTTS() && (
+        <div
+          className={cn(
+            "flex items-center justify-between py-2 px-1 border-b",
+            "border-slate-100 dark:border-neutral-500/60"
+          )}
+        >
+          <div className="text-sm">{tTTS("azure-tts")}</div>
+          <Button type="primary" onClick={() => updateTtsSettingOpen(true)}>
+            <Icon icon="settings_3_line" size={18} />
+          </Button>
+        </div>
+      )}
     </Modal>
   );
 }

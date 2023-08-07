@@ -2,11 +2,16 @@
 
 ## v0.8.2
 
-> 2023-08-04
+> 2023-08-07
 
 ### Add
 
+- Added support for Azure GPT-4/GPT-4-32K
 - Added error message prompt when NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME is not configured
+
+### Changed
+
+- Adjust the environment variable configuration and related code logic, now you can deploy with one click without any environment variables
 
 ## v0.8.1
 

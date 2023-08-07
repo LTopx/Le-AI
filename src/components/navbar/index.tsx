@@ -4,6 +4,7 @@ import Title from "./title";
 import Avatar from "@/components/site/avatar";
 import Icon from "@/components/icon";
 import { useOpenStore } from "@/hooks/useOpen";
+import { checkAuth } from "@/lib/checkEnv";
 
 export default function Navbar() {
   const updateMobileMenuOpen = useOpenStore(
@@ -28,14 +29,17 @@ export default function Navbar() {
       </div>
       <Title />
       <div className="absolute top-0 right-3 h-full flex items-center gap-3">
-        <div>
-          <Icon
-            icon="gift_fill"
-            size={30}
-            className="text-orange-400 dark:text-orange-500 cursor-pointer"
-            onClick={() => updatePremiumOpen(true)}
-          />
-        </div>
+        {/* If you haven't logged in, there is no point in displaying anything here. */}
+        {checkAuth() && (
+          <div>
+            <Icon
+              icon="gift_fill"
+              size={30}
+              className="text-orange-400 dark:text-orange-500 cursor-pointer"
+              onClick={() => updatePremiumOpen(true)}
+            />
+          </div>
+        )}
         <Avatar />
       </div>
     </div>
