@@ -6,7 +6,7 @@
 
 ### 新增
 
-- 新增 function calling 支持
+- 新增 function calling 支持.
 - 新增插件系统
 - 新增支持谷歌搜索，在遇到超出 AI 模型训练日期的问题时能够调用谷歌 api 进行搜索并返回结果
 
