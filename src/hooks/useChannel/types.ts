@@ -51,5 +51,6 @@ export interface ChannelListItem {
   channel_loading_connect: boolean;
   channel_loading: boolean;
   channel_context_length: number;
+  channel_plugins: string[];
   chat_list: ChatItem[];
 }

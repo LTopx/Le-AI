@@ -29,6 +29,8 @@ type ChannelStore = {
   sendGPT: (chat_list: ChatItem[], channel_id: string) => Promise<void>;
   getChannelName: (params: any) => Promise<void>;
   cancelGPT: (channel_id: string) => void;
+  updatePlugin: (channel_id: string, plugins: string[]) => void;
+  resetPlugin: (name: string) => void;
 };
 
 export const initChannelList: ChannelListItem[] = [
@@ -53,6 +55,7 @@ export const initChannelList: ChannelListItem[] = [
     channel_loading_connect: false,
     channel_loading: false,
     channel_context_length: 8,
+    channel_plugins: [],
     chat_list: [],
   },
 ];
@@ -97,6 +100,8 @@ const getInitChannelList = () => {
           if (isUndefined(item.channel_context_length)) {
             item.channel_context_length = 8;
           }
+
+          item.channel_plugins = item.channel_plugins || [];
 
           return item;
         }
@@ -320,6 +325,7 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           temperature: modelConfig.temperature,
           max_tokens: modelConfig.max_tokens,
           prompt,
+          plugins: findCh.channel_plugins,
         };
         if (modelType === "openai") {
           params.proxy = modelConfig.proxy;
@@ -641,6 +647,35 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
         localStorage.setItem("channelList", JSON.stringify(newList));
 
         return { abort: state.abort, list: newList };
+      });
+    },
+    updatePlugin: (channel_id, plugins) => {
+      set((state) => {
+        const newList: ChannelListItem[] = JSON.parse(
+          JSON.stringify(state.list)
+        );
+        const findCh = newList.find((item) => item.channel_id === channel_id);
+        if (!findCh) return {};
+        findCh.channel_plugins = plugins;
+
+        localStorage.setItem("channelList", JSON.stringify(newList));
+
+        return { list: newList };
+      });
+    },
+    resetPlugin: (plugin_name) => {
+      set((state) => {
+        const newList: ChannelListItem[] = JSON.parse(
+          JSON.stringify(state.list)
+        );
+
+        newList.forEach((item) => {
+          item.channel_plugins = item.channel_plugins.filter(
+            (item) => item !== plugin_name
+          );
+        });
+
+        return { list: newList };
       });
     },
   }),

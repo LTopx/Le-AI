@@ -14,6 +14,7 @@ import ChargeToken from "@/components/chargeToken";
 import Welcome from "@/components/site/welcome";
 import ChatSection from "@/components/chatSection";
 import TTSSetting from "@/components/ttsSetting";
+import Plugin from "@/components/plugin";
 import LoadingPage from "@/components/loadingPage";
 import { cn } from "@/lib";
 
@@ -31,6 +32,7 @@ export default function Home() {
       <ChargeToken />
       <TTSSetting />
       <Character />
+      <Plugin />
       <section
         className={cn(
           "transition-colors h-full w-full relative md:w-[calc(100vw-17.5rem)]",

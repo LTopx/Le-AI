@@ -1,10 +1,18 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Select, Divider, Input, Tooltip, Textarea } from "@ltopx/lx-ui";
+import {
+  Select,
+  Divider,
+  Input,
+  Tooltip,
+  Textarea,
+  Switch,
+} from "@ltopx/lx-ui";
 import { useLLMStore } from "@/hooks/useLLM";
 import { useChannelStore } from "@/hooks/useChannel";
 import type { ChannelListItem } from "@/hooks/useChannel/types";
 import { useModelCacheStore } from "@/hooks/useModelCache";
+import { usePluginStore } from "@/hooks/usePlugin";
 import { cn, isUndefined } from "@/lib";
 import Icon from "@/components/icon";
 
@@ -18,6 +26,7 @@ interface IConversationSettings {
   model_value: string;
   context_length: string;
   prompt: string;
+  plugins: string[];
 }
 
 const lengthOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) => ({
@@ -58,6 +67,7 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
     const tChat = useTranslations("chat");
     const tCommon = useTranslations("common");
     const tPrompt = useTranslations("prompt");
+    const tPlugin = useTranslations("plugin");
 
     const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
     const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
@@ -65,8 +75,14 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
       state.activeId,
       state.list,
     ]);
+    const [google_search] = usePluginStore((state) => [state.google_search]);
+
+    const count = React.useMemo(() => {
+      return Number(!!google_search.enable);
+    }, [google_search.enable]);
 
     const updateList = useChannelStore((state) => state.updateList);
+    const updatePlugin = useChannelStore((state) => state.updatePlugin);
     const updateType = useModelCacheStore((state) => state.updateType);
     const updateName = useModelCacheStore((state) => state.updateName);
 
@@ -78,6 +94,7 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
       model_value: "",
       context_length: "8",
       prompt: "",
+      plugins: [],
     });
 
     const getModelOptions = (type: string) => {
@@ -107,22 +124,15 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
       });
     };
 
-    React.useImperativeHandle(forwardedRef, () => ({
-      submit() {
-        const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
-        const findCh = newList.find((item) => item.channel_id === activeId);
-        if (!findCh) return;
-        findCh.channel_name = formData.name;
-        findCh.channel_model.type = formData.model_type;
-        findCh.channel_model.name = formData.model_value;
-        findCh.channel_context_length = Number(formData.context_length);
-        findCh.channel_prompt = formData.prompt;
-        updateList(newList);
-        updateType(formData.model_type);
-        updateName(formData.model_value);
-        onClose();
-      },
-    }));
+    const onToggle = (value: boolean, key: string) => {
+      let plugins: string[] = [];
+      if (value) {
+        plugins = [...formData.plugins, key];
+      } else {
+        plugins = formData.plugins.filter((item) => item !== key);
+      }
+      onChangeForm(plugins, "plugins");
+    };
 
     React.useEffect(() => {
       const findCh = list.find((item) => item.channel_id === activeId);
@@ -132,6 +142,7 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
         channel_model,
         channel_context_length,
         channel_prompt,
+        channel_plugins,
       } = findCh;
       let context_length = "8";
       if (!isUndefined(channel_context_length)) {
@@ -144,12 +155,31 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
         // default is 8
         context_length,
         prompt: channel_prompt,
+        plugins: channel_plugins,
       });
       getModelOptions(findCh.channel_model.type);
     }, []);
 
+    React.useImperativeHandle(forwardedRef, () => ({
+      submit() {
+        const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
+        const findCh = newList.find((item) => item.channel_id === activeId);
+        if (!findCh) return;
+        findCh.channel_name = formData.name;
+        findCh.channel_model.type = formData.model_type;
+        findCh.channel_model.name = formData.model_value;
+        findCh.channel_context_length = Number(formData.context_length);
+        findCh.channel_prompt = formData.prompt;
+        findCh.channel_plugins = formData.plugins;
+        updateList(newList);
+        updateType(formData.model_type);
+        updateName(formData.model_value);
+        onClose();
+      },
+    }));
+
     return (
-      <>
+      <div className="max-h-[500px] overflow-y-auto">
         <div>
           <Select
             className="w-full"
@@ -201,7 +231,7 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
           </div>
           <div className="flex flex-col">
             <div className="text-sm text-black/90 dark:text-white/90 flex items-center gap-1 mb-2">
-              System Role
+              {tPrompt("system-prompt")}
             </div>
             <Textarea
               className="h-28"
@@ -211,8 +241,45 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
               onChange={(value) => onChangeForm(value, "prompt")}
             />
           </div>
+          <div className="flex flex-col">
+            <div className="text-sm text-black/90 dark:text-white/90 flex items-center gap-1 mb-2">
+              <span>{tPlugin("config")}</span>
+              <span>
+                ({formData.plugins.length}/{count})
+              </span>
+            </div>
+            <div className="rounded-md p-2 bg-lx-color-fill-2 dark:bg-lx-color-fill-2-dark flex flex-col gap-1.5">
+              {count ? (
+                <>
+                  {google_search.enable && (
+                    <div
+                      className={cn(
+                        "bg-white dark:bg-zinc-800 rounded-md py-2 px-3 flex items-center justify-between",
+                        "border dark:border-zinc-600"
+                      )}
+                    >
+                      <div className="flex gap-1.5 items-center">
+                        <Icon icon="google_line" size={18} />
+                        <span className="text-[13px] font-medium">
+                          {tPlugin("google-search")}
+                        </span>
+                      </div>
+                      <Switch
+                        className="h-4 w-8"
+                        thumbClassName="w-3 h-3 translate-x-0.5 data-[state=checked]:translate-x-[18px]"
+                        checked={formData.plugins.includes("google_search")}
+                        onChange={(value) => onToggle(value, "google_search")}
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="text-xs">{tPlugin("activate")}</div>
+              )}
+            </div>
+          </div>
         </div>
-      </>
+      </div>
     );
   }
 );

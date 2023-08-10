@@ -114,6 +114,8 @@ export default function ChatFooter() {
           content: tPrompt("get-title"),
         });
         delete newParams.prompt;
+        // No need to call the plugin function when retrieving the channel name.
+        delete newParams.plugins;
         await getChannelName({ ...cloneRes });
       }
 

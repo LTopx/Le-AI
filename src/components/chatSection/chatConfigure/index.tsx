@@ -11,6 +11,7 @@ import { cn } from "@/lib";
 import Icon from "@/components/icon";
 import PremiumBtn from "./premiumBtn";
 import MenuIcon from "@/components/menu/icon";
+import Plugin from "./plugin";
 
 interface ChatConfigureProps {
   list: ChannelListItem[];
@@ -163,7 +164,7 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
         <div className="flex justify-center mt-5">
           <div
             className={cn(
-              "w-80 max-w-[calc(100vw-2rem)] dark:bg-[hsla(0,0%,100%,0.08)]",
+              "w-96 max-w-[calc(100vw-2rem)] dark:bg-[hsla(0,0%,100%,0.08)]",
               "flex flex-col items-center justify-between shadow-sm text-xs gap-2 px-4 py-3",
               "dark:text-[hsla(0,0%,100%,0.9)]",
               "border border-[rgb(229,230,235)] dark:border-[hsla(0,0%,100%,0.08)]",
@@ -172,18 +173,19 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
             )}
             onClick={() => updateCharacterOpen(true)}
           >
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <MenuIcon
                 className="w-4 h-4"
                 name={channel.channel_icon as ChannelIcon}
               />
               <div>{channel.channel_prompt_name}</div>
             </div>
-            <div className="text-gray-600 dark:text-[hsla(0,0%,100%,0.9)] max-h-[300px] overflow-y-auto">
+            <div className="text-gray-600 dark:text-[hsla(0,0%,100%,0.9)] max-h-[150px] overflow-y-auto">
               {channel.channel_prompt}
             </div>
           </div>
         </div>
+        <Plugin channel={channel} />
       </motion.div>
     </div>
   );

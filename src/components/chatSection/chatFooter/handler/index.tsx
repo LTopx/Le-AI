@@ -95,10 +95,7 @@ export default function Handler() {
     toast.error(tChat("canceled"), { id: "cancel_chat" });
   };
 
-  const onClear = () => {
-    console.log(124124);
-    clearItem();
-  };
+  const onClear = () => clearItem();
 
   if (findChannel?.channel_loading) {
     return (

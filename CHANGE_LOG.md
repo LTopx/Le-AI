@@ -1,5 +1,15 @@
 # L-GPT Change Log
 
+## v0.8.3
+
+> 2023-08-11
+
+### Add
+
+- Added function calling support
+- Added plugin system
+- Added support for Google search, which can call the Google API to search and return results when encountering problems that exceed the AI model training date
+
 ## v0.8.2
 
 > 2023-08-07

@@ -12,6 +12,7 @@ import SendMessageType from "./sendMessageType";
 export default function Setting() {
   const tSetting = useTranslations("setting");
   const tTTS = useTranslations("tts");
+  const tPlugin = useTranslations("plugin");
 
   const [open, setOpen] = useOpenStore((state) => [
     state.settingOpen,
@@ -20,6 +21,10 @@ export default function Setting() {
 
   const updateTtsSettingOpen = useOpenStore(
     (state) => state.updateTtsSettingOpen
+  );
+
+  const updatePluginSettingOpen = useOpenStore(
+    (state) => state.updatePluginSettingOpen
   );
 
   const onClose = () => setOpen(false);
@@ -76,6 +81,17 @@ export default function Setting() {
           </Button>
         </div>
       )}
+      <div
+        className={cn(
+          "flex items-center justify-between py-2 px-1 border-b",
+          "border-slate-100 dark:border-neutral-500/60"
+        )}
+      >
+        <div className="text-sm">{tPlugin("config")}</div>
+        <Button type="primary" onClick={() => updatePluginSettingOpen(true)}>
+          <Icon icon="settings_3_line" size={18} />
+        </Button>
+      </div>
     </Modal>
   );
 }

@@ -6,7 +6,7 @@ import { cn } from "@/lib";
 import type { ChannelModel } from "@/hooks/useChannel/types";
 
 export interface AvatarProps {
-  role: "user" | "assistant" | "system";
+  role: "user" | "assistant" | "system" | "function";
   model?: ChannelModel;
   user?: any;
 }

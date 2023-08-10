@@ -95,6 +95,7 @@
     "create": "Create",
     "delete": "Delete",
     "docs": "Docs",
+    "enabled": "Enbaled",
     "no-data": "No Data",
     "ok": "OK",
     "please-enter": "Please enter",
@@ -128,6 +129,20 @@
     "new-conversation": "New Conversation",
     "setting": "Setting",
     "to-top": "Pin to top"
+  },
+  "plugin": {
+    "activate": "Please enable the plugin first.",
+    "api-key": "Google Search API KEY",
+    "check-configure": "Check how to configure.",
+    "config": "Plugin Configuration",
+    "enable-google-search": "Enable Google Search",
+    "engine-id": "Google Search engine ID",
+    "google-search": "Google Search",
+    "google-search-free": "During the testing period, you can use it for free without configuring an ID and API KEY.",
+    "introduction": "Google Search Introduction",
+    "introduction-1": "This plugin allows the AI assistant to search for information in real-time from the internet using Google. Note: You will need to have a Google API key and a Google Custom Search Engine ID in order to use this plugin.",
+    "introduction-2": "Example: When did Twitter change its name to 'X'? How is the weather in Chengdu now?",
+    "plugins": "Plugins"
   },
   "premium": {
     "activate": "Activate",
@@ -205,6 +220,7 @@
     "rule-2": "Each user can only submit a maximum of 5 pending prompts. After they are approved, you can continue to submit new prompts.",
     "rule-3": "If your submitted prompt fails to pass the review, the maintenance personnel have the right to delete it directly.",
     "start-conversation": "Start Conversation",
+    "system-prompt": "System Prompt",
     "system-role-placeholder": "Please enter System Role",
     "sure-delete": "Are you sure you want to delete",
     "title": "Prompt Title",
@@ -333,9 +349,9 @@
   },
   "zLog": {
     "full-log": "Click to view the full update log",
-    "title": "v0.8.2 Released 🔥🔥",
-    "text1": "Added support for Azure GPT-4/GPT-4-32K",
-    "text2": "Adjust the code logic related to environment variable.",
-    "text3": "New contact information for the author. Blog address:"
+    "title": "v0.8.3 Released 🔥🔥",
+    "text1": "Added support for Google search, which can call the Google API to search and return results when encountering problems that exceed the AI model training date",
+    "text2": "Added function calling support",
+    "text3": "Added plugin system"
   }
 }

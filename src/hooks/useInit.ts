@@ -8,6 +8,7 @@ import { useModelCacheInit } from "./useModelCache";
 import { usePromptInit } from "./usePrompt";
 import { useTTSInit } from "./useTTS";
 import { useCharacterInit } from "./useCharacter";
+import { usePluginInit } from "./usePlugin";
 
 type Init = {
   isInit: boolean;
@@ -31,6 +32,7 @@ export const useInit = () => {
   const initPrompt = usePromptInit();
   const initTTS = useTTSInit();
   const initCharacter = useCharacterInit();
+  const initPlugin = usePluginInit();
 
   React.useEffect(() => {
     initChannel();
@@ -40,6 +42,7 @@ export const useInit = () => {
     initPrompt();
     initTTS();
     initCharacter();
+    initPlugin();
     init();
   }, []);
 

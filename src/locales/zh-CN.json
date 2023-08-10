@@ -95,6 +95,7 @@
     "create": "新 增",
     "delete": "删除",
     "docs": "帮助文档",
+    "enabled": "已启用",
     "no-data": "暂无数据",
     "ok": "确 定",
     "please-enter": "请输入",
@@ -128,6 +129,20 @@
     "new-conversation": "新会话",
     "setting": "设置",
     "to-top": "置顶"
+  },
+  "plugin": {
+    "activate": "请先启用插件",
+    "api-key": "谷歌搜索 API KEY",
+    "check-configure": "点击查看如何配置",
+    "config": "插件配置",
+    "enable-google-search": "启用谷歌搜索",
+    "engine-id": "谷歌搜索 引擎 ID",
+    "google-search": "谷歌搜索",
+    "google-search-free": "测试期间可免费试用，无需配置 ID 和 API KEY",
+    "introduction": "谷歌搜索简介",
+    "introduction-1": "这个插件允许AI助手实时从互联网上使用Google搜索来查找信息。注意：您需要拥有一个Google API密钥和一个Google自定义搜索引擎ID才能使用此插件。",
+    "introduction-2": "示例用法：Twitter 是何时改名为'X'的？现在成都天气如何？",
+    "plugins": "插件"
   },
   "premium": {
     "activate": "点击激活",
@@ -205,6 +220,7 @@
     "rule-2": "每位用户最多只能提交5个待审核的prompt。待审核通过后，您可以继续提交新的prompt。",
     "rule-3": "一旦您提交的prompt审核失败，维护人员有权直接删除该prompt。",
     "start-conversation": "开始会话",
+    "system-prompt": "系统 Prompt",
     "system-role-placeholder": "请输入 System Role",
     "sure-delete": "确认删除",
     "title": "Prompt 标题",
@@ -333,9 +349,9 @@
   },
   "zLog": {
     "full-log": "点击查看完整更新日志",
-    "title": "v0.8.2 更新公告 🔥🔥",
-    "text1": "现在支持 Azure GPT-4/GPT-4-32K了！！",
-    "text2": "调整环境变量相关代码逻辑",
-    "text3": "新增联系作者方式。Blog地址："
+    "title": "v0.8.3 更新公告 🔥🔥",
+    "text1": "新增支持谷歌搜索！！在遇到超出 AI 模型训练日期的问题时能够调用谷歌 api 进行搜索并返回结果",
+    "text2": "新增 Function calling 支持",
+    "text3": "新增插件系统"
   }
 }

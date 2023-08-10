@@ -9,6 +9,7 @@ type OpenStore = {
   ttsSettingOpen: boolean;
   chatSettingOpen: boolean;
   characterOpen: boolean;
+  pluginSettingOpen: boolean;
 
   updateSettingOpen: (settingOpen: boolean) => void;
   updatePremiumOpen: (premiumOpen: boolean) => void;
@@ -17,6 +18,7 @@ type OpenStore = {
   updateTtsSettingOpen: (ttsSettingOpen: boolean) => void;
   updateChatSettingOpen: (chatSettingOpen: boolean) => void;
   updateCharacterOpen: (characterOpen: boolean) => void;
+  updatePluginSettingOpen: (pluginSettingOpen: boolean) => void;
 };
 
 export const useOpenStore = createWithEqualityFn<OpenStore>(
@@ -28,6 +30,7 @@ export const useOpenStore = createWithEqualityFn<OpenStore>(
     ttsSettingOpen: false,
     chatSettingOpen: false,
     characterOpen: false,
+    pluginSettingOpen: false,
 
     updateSettingOpen: (settingOpen) => set({ settingOpen }),
     updatePremiumOpen: (premiumOpen) => set({ premiumOpen }),
@@ -36,6 +39,7 @@ export const useOpenStore = createWithEqualityFn<OpenStore>(
     updateTtsSettingOpen: (ttsSettingOpen) => set({ ttsSettingOpen }),
     updateChatSettingOpen: (chatSettingOpen) => set({ chatSettingOpen }),
     updateCharacterOpen: (characterOpen) => set({ characterOpen }),
+    updatePluginSettingOpen: (pluginSettingOpen) => set({ pluginSettingOpen }),
   }),
   shallow
 );

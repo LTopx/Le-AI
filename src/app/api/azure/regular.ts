@@ -1,14 +1,20 @@
-import { headers } from "next/headers";
-import { getServerSession } from "next-auth/next";
-import { calcTokens } from "@/lib/calcTokens";
-import { authOptions } from "@/utils/plugin/auth";
+import { ResErr, isUndefined } from "@/lib";
 import type { supportModelType } from "@/lib/calcTokens/gpt-tokens";
 import { prisma } from "@/lib/prisma";
-import { ResErr, isUndefined } from "@/lib";
-import { PREMIUM_MODELS } from "@/hooks/useLLM";
+import { calcTokens } from "@/lib/calcTokens";
 import { BASE_PRICE } from "@/utils/constant";
-import { regular } from "./regular";
-import { function_call } from "./function_call";
+
+interface IRegular {
+  messages: any[];
+  fetchURL: string;
+  Authorization: string;
+  temperature?: number;
+  max_tokens?: number;
+  modelLabel: supportModelType;
+  session: any;
+  headerApiKey?: string | null;
+  prompt?: string;
+}
 
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -38,9 +44,7 @@ const stream = async (
   while (true) {
     let resultText = "";
     let { value, done } = await reader.read();
-    if (done) {
-      break;
-    }
+    if (done) break;
 
     content += decoder.decode(value);
     buffer += decoder.decode(value, { stream: true }); // stream: true is important here,fix the bug of incomplete line
@@ -101,94 +105,17 @@ const stream = async (
   await writer.close();
 };
 
-export async function POST(request: Request) {
-  const session = await getServerSession(authOptions);
-  const headersList = headers();
-  const headerApiKey = headersList.get("Authorization");
-  const ENV_API_KEY = process.env.NEXT_PUBLIC_AZURE_OPENAI_API_KEY;
-  const ENV_API_VERSION =
-    process.env.NEXT_AZURE_OPENAI_API_VERSION || "2023-07-01-preview";
-
-  const {
-    model,
-    modelLabel,
-    temperature,
-    max_tokens,
-    prompt,
-    resourceName,
-    chat_list,
-    plugins,
-  } = await request.json();
-
-  /**
-   * If not logged in, only the locally configured API Key can be used.
-   */
-  if (!session && !headerApiKey) return ResErr({ error: 10001 });
-
-  // Logging in without your own key means using the author's key.
-  // At this point, you need to check the token balance of the current account first.
-  if (!headerApiKey) {
-    const user = await prisma.user.findUnique({
-      where: { id: session?.user.id },
-    });
-    if (!user) return ResErr({ error: 20002 });
-
-    // audit user license
-    if (
-      user.license_type !== "premium" &&
-      user.license_type !== "team" &&
-      PREMIUM_MODELS.includes(modelLabel)
-    ) {
-      return ResErr({ error: 20009 });
-    }
-
-    const { availableTokens } = user;
-    if (availableTokens <= 0) return ResErr({ error: 10005 });
-  }
-
-  // first use local
-  // then use env configuration
-  // or empty
-  const Authorization = headerApiKey || ENV_API_KEY || "";
-
-  if (!Authorization) return ResErr({ error: 10002 });
-
-  if (!ENV_API_VERSION) return ResErr({ error: 10004 });
-
-  const RESOURCE_NAME =
-    resourceName || process.env.NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME;
-
-  if (!RESOURCE_NAME) return ResErr({ error: 20010 });
-
-  const fetchURL = `https://${RESOURCE_NAME}.openai.azure.com/openai/deployments/${model}/chat/completions?api-version=${ENV_API_VERSION}`;
-
-  const messages = [...chat_list];
-
-  // Without using plugins, we will proceed with a regular conversation.
-  if (!plugins?.length) {
-    return await regular({
-      messages,
-      fetchURL,
-      Authorization,
-      temperature,
-      max_tokens,
-      modelLabel,
-      session,
-      prompt,
-    });
-  }
-
-  return await function_call({
-    plugins,
-    fetchURL,
-    Authorization,
-    temperature,
-    max_tokens,
-    modelLabel,
-    messages,
-    session,
-  });
-
+export const regular = async ({
+  messages,
+  fetchURL,
+  Authorization,
+  temperature,
+  max_tokens,
+  modelLabel,
+  session,
+  headerApiKey,
+  prompt,
+}: IRegular) => {
   if (prompt) messages.unshift({ role: "system", content: prompt });
 
   try {
@@ -201,14 +128,18 @@ export async function POST(request: Request) {
       method: "POST",
       body: JSON.stringify({
         frequency_penalty: 0,
-        max_tokens: isUndefined(max_tokens) ? 2000 : max_tokens,
-        messages,
         presence_penalty: 0,
-        stop: null,
         stream: true,
         temperature: isUndefined(temperature) ? 1 : temperature,
+        max_tokens: isUndefined(max_tokens) ? 2000 : max_tokens,
+        messages,
+        stop: null,
       }),
     });
+
+    if (response.status !== 200) {
+      return new Response(response.body, { status: 500 });
+    }
 
     const { readable, writable } = new TransformStream();
     stream(
@@ -224,4 +155,4 @@ export async function POST(request: Request) {
     console.log(error, "openai error");
     return ResErr({ msg: error?.message || "Error" });
   }
-}
+};
