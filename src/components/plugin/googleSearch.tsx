@@ -9,9 +9,7 @@ export default function GoogleSearch() {
   const tPlugin = useTranslations("plugin");
   const tCommon = useTranslations("common");
 
-  const { enable, engine_id, api_key } = usePluginStore(
-    (state) => state.google_search
-  );
+  const { enable, api_key } = usePluginStore((state) => state.google_search);
 
   const updateGoogleSearch = usePluginStore(
     (state) => state.updateGoogleSearch
@@ -19,28 +17,28 @@ export default function GoogleSearch() {
   const resetPlugin = useChannelStore((state) => state.resetPlugin);
 
   const onChangeEnable = (value: boolean) => {
-    // if (value && (!engine_id?.trim() || !api_key?.trim())) {
+    // if (value &&  !api_key?.trim()) {
     //   return console.log("请先配置");
     // }
     if (!value) resetPlugin("google_search");
     onChange("enable", value);
   };
 
-  const onChange = (key: "enable" | "engine_id" | "api_key", value: any) => {
-    const params: any = { enable, engine_id, api_key };
+  const onChange = (key: "enable" | "api_key", value: any) => {
+    const params: any = { enable, api_key };
     params[key] = value;
     updateGoogleSearch(params);
   };
 
   return (
-    <div className="border dark:border-gray-500 p-3 rounded-md flex flex-col gap-3">
-      <div className="flex items-center gap-2">
+    <div className="border rounded-md flex flex-col p-3 gap-3 dark:border-gray-500">
+      <div className="flex gap-2 items-center">
         <Switch checked={enable} onChange={onChangeEnable} />
         <span>{tPlugin("enable-google-search")}</span>
       </div>
       <div className="text-green-400">{tPlugin("google-search-free")}</div>
       <div>
-        <div className="mb-1 text-sm">{tPlugin("introduction")}</div>
+        <div className="text-sm mb-1">{tPlugin("introduction")}</div>
         <ul
           className={cn(
             "bg-sky-50 dark:bg-sky-900",
@@ -62,16 +60,7 @@ export default function GoogleSearch() {
         </ul>
       </div>
       <div>
-        <div className="mb-1 text-sm">{tPlugin("engine-id")}</div>
-        <Input
-          allowClear
-          placeholder={tCommon("please-enter")}
-          value={engine_id}
-          onChange={(value) => onChange("engine_id", value)}
-        />
-      </div>
-      <div>
-        <div className="mb-1 text-sm">{tPlugin("api-key")}</div>
+        <div className="text-sm mb-1">{tPlugin("api-key")}</div>
         <Input
           allowClear
           placeholder={tCommon("please-enter")}

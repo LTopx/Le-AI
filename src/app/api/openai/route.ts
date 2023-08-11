@@ -18,11 +18,13 @@ const getEnvProxyUrl = () => {
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const headersList = headers();
-  const headerApiKey = headersList.get("Authorization");
+  const headerApiKey = headersList.get("Authorization") || "";
   const NEXT_PUBLIC_OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 
   const {
+    // model 用于接口发送给 OpenAI 或者其他大语言模型的请求参数
     model,
+    // modelLabel 用于 Token 计算
     modelLabel,
     proxy: proxyUrl,
     temperature,
@@ -69,18 +71,21 @@ export async function POST(request: Request) {
 
   const messages = [...chat_list];
 
+  const userId = session?.user.id;
+
   // Without using plugins, we will proceed with a regular conversation.
   if (!plugins?.length) {
     return await regular({
+      prompt,
       messages,
       fetchURL,
       Authorization,
       model,
+      modelLabel,
       temperature,
       max_tokens,
-      modelLabel,
-      session,
-      prompt,
+      userId,
+      headerApiKey,
     });
   }
 
@@ -89,10 +94,11 @@ export async function POST(request: Request) {
     fetchURL,
     Authorization,
     model,
+    modelLabel,
     temperature,
     max_tokens,
-    modelLabel,
     messages,
-    session,
+    userId,
+    headerApiKey,
   });
 }

@@ -136,11 +136,10 @@
     "check-configure": "点击查看如何配置",
     "config": "插件配置",
     "enable-google-search": "启用谷歌搜索",
-    "engine-id": "谷歌搜索 引擎 ID",
     "google-search": "谷歌搜索",
-    "google-search-free": "测试期间可免费试用，无需配置 ID 和 API KEY",
+    "google-search-free": "测试期间可免费试用，无需配置 API KEY",
     "introduction": "谷歌搜索简介",
-    "introduction-1": "这个插件允许AI助手实时从互联网上使用Google搜索来查找信息。注意：您需要拥有一个Google API密钥和一个Google自定义搜索引擎ID才能使用此插件。",
+    "introduction-1": "这个插件允许AI助手实时从互联网上使用Google搜索 API 来查找信息。",
     "introduction-2": "示例用法：Twitter 是何时改名为'X'的？现在成都天气如何？",
     "plugins": "插件"
   },

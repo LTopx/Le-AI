@@ -136,11 +136,10 @@
     "check-configure": "Check how to configure.",
     "config": "Plugin Configuration",
     "enable-google-search": "Enable Google Search",
-    "engine-id": "Google Search engine ID",
     "google-search": "Google Search",
-    "google-search-free": "During the testing period, you can use it for free without configuring an ID and API KEY.",
+    "google-search-free": "During the testing period, you can use it for free without configuring API KEY.",
     "introduction": "Google Search Introduction",
-    "introduction-1": "This plugin allows the AI assistant to search for information in real-time from the internet using Google. Note: You will need to have a Google API key and a Google Custom Search Engine ID in order to use this plugin.",
+    "introduction-1": "This plugin allows the AI assistant to search for information in real-time from the internet using the Google Search API.",
     "introduction-2": "Example: When did Twitter change its name to 'X'? How is the weather in Chengdu now?",
     "plugins": "Plugins"
   },

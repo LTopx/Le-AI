@@ -1,6 +1,5 @@
 type GoogleSearch = {
   enable: boolean;
-  engine_id: string;
   api_key: string;
 };
 

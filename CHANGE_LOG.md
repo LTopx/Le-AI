@@ -2,11 +2,12 @@
 
 ## v0.8.3
 
-> 2023-08-11
+> 2023-08-12
 
 ### Fixed
 
 - Fixed mobile session content obscuring the bottom input box
+- Refactored function calling invocation logic and fixed bugs
 
 ### Add
 
@@ -17,6 +18,7 @@
 ### Changed
 
 - Adjusted the text input box for editing chat content to Textarea
+- Replaced Google search with [Serper API](https://serper.dev/), which is easier to configure
 
 ## v0.8.2
 

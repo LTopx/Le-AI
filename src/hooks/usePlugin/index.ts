@@ -16,7 +16,6 @@ export const usePluginStore = createWithEqualityFn<PluginStore>(
   (set) => ({
     google_search: {
       enable: false,
-      engine_id: "",
       api_key: "",
     },
 
@@ -36,7 +35,6 @@ export const usePluginInit = () => {
   const init = () => {
     const local_google_search = getStorage("google_search") || {
       enable: false,
-      engine_id: "",
       api_key: "",
     };
 
