@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { Modal, Input } from "@ltopx/lx-ui";
+import { Modal, Textarea } from "@ltopx/lx-ui";
 import type { ChatItem } from "@/hooks/useChannel/types";
 import { useChannelStore } from "@/hooks/useChannel";
 
@@ -46,7 +46,8 @@ const ChatEdit = React.forwardRef((_, forwardedRef) => {
       onClose={onClose}
       onOk={onOk}
     >
-      <Input
+      <Textarea
+        className="h-72"
         allowClear
         placeholder={tCommon("please-enter")}
         value={value}

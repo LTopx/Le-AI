@@ -4,11 +4,19 @@
 
 > 2023-08-11
 
+### Fixed
+
+- Fixed mobile session content obscuring the bottom input box
+
 ### Add
 
 - Added function calling support
 - Added plugin system
 - Added support for Google search, which can call the Google API to search and return results when encountering problems that exceed the AI model training date
+
+### Changed
+
+- Adjusted the text input box for editing chat content to Textarea
 
 ## v0.8.2
 

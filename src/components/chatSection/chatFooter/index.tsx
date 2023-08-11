@@ -185,25 +185,23 @@ export default function ChatFooter() {
   }, [activeId]);
 
   return (
-    <>
-      <div
-        className={cn(
-          "bg-gradient-to-b from-transparent w-full px-5 pb-5 bottom-0 left-0 absolute",
-          "via-gray-100 to-gray-100",
-          "dark:via-neutral-900 dark:to-neutral-900"
-        )}
-      >
-        <Handler />
-        <div className="flex">
-          <Inputarea
-            ref={inputRef}
-            value={inputValue}
-            loading={loadingChannel}
-            onChange={setInputValue}
-            onSubmit={sendMessage}
-          />
-        </div>
+    <div
+      className={cn(
+        "bg-gradient-to-b from-transparent w-full px-5 pb-5 bottom-0 left-0 absolute z-50",
+        "via-gray-100 to-gray-100",
+        "dark:via-neutral-900 dark:to-neutral-900"
+      )}
+    >
+      <Handler />
+      <div className="flex">
+        <Inputarea
+          ref={inputRef}
+          value={inputValue}
+          loading={loadingChannel}
+          onChange={setInputValue}
+          onSubmit={sendMessage}
+        />
       </div>
-    </>
+    </div>
   );
 }
