@@ -61,10 +61,10 @@ Project documentation: [https://docs.ltopx.com](https://docs.ltopx.com/)
 ## 📍 Development Plan
 
 - [x] Support custom prompt repository
+- [x] Support Function call for implementing more functionalities
+- [x] Support for large language model APIs such as Claude, PaLM, and Llama 2.
 - [ ] Support long conversations
-- [ ] Support Function call for implementing more functionalities
 - [ ] Support integration of Midjourney drawing
-- [ ] Support Claude API and more large language models
 - [ ] Desktop version development
 
 ## 💿 One-click Deployment
