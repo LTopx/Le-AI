@@ -1,6 +1,6 @@
 import { createWithEqualityFn } from "zustand/traditional";
 import { shallow } from "zustand/shallow";
-import type { OpenAIStore, OpenAI, Azure, Env } from "./types";
+import type { OpenAIStore, OpenAI, Azure, OpenRouter, Env } from "./types";
 
 const getStorage = (key: string) => {
   const localStore = localStorage.getItem(key);
@@ -18,13 +18,18 @@ export const useOpenAIStore = createWithEqualityFn<OpenAIStore>(
       apiKey: "",
       proxy: "",
       temperature: 1,
-      max_tokens: 2000,
+      max_tokens: 1000,
     },
     azure: {
       apiKey: "",
       resourceName: "",
       temperature: 1,
-      max_tokens: 2000,
+      max_tokens: 1000,
+    },
+    openRouter: {
+      apiKey: "",
+      temperature: 1,
+      max_tokens: 1000,
     },
     env: {
       OPENAI_API_KEY: "",
@@ -41,6 +46,11 @@ export const useOpenAIStore = createWithEqualityFn<OpenAIStore>(
       set({ azure });
     },
 
+    updateOpenRouter: (openRouter: OpenRouter) => {
+      localStorage.setItem("openRouterConfig", JSON.stringify(openRouter));
+      set({ openRouter });
+    },
+
     updateEnv: (env: Env) => {
       set({ env });
     },
@@ -51,6 +61,7 @@ export const useOpenAIStore = createWithEqualityFn<OpenAIStore>(
 export const useOpenAIInit = () => {
   const updateOpenAI = useOpenAIStore((state) => state.updateOpenAI);
   const updateAzure = useOpenAIStore((state) => state.updateAzure);
+  const updateOpenRouter = useOpenAIStore((state) => state.updateOpenRouter);
   const updateEnv = useOpenAIStore((state) => state.updateEnv);
 
   const init = () => {
@@ -58,16 +69,22 @@ export const useOpenAIInit = () => {
       apiKey: "",
       proxy: "",
       temperature: 1,
-      max_tokens: 2000,
+      max_tokens: 1000,
     };
     const localAzureConfig = getStorage("azureConfig") || {
       apiKey: "",
       resourceName: "",
       temperature: 1,
-      max_tokens: 2000,
+      max_tokens: 1000,
+    };
+    const localOpenRouterConfig = getStorage("openRouterConfig") || {
+      apiKey: "",
+      temperature: 1,
+      max_tokens: 1000,
     };
     updateOpenAI(localOpenAIConfig);
     updateAzure(localAzureConfig);
+    updateOpenRouter(localOpenRouterConfig);
     updateEnv({
       OPENAI_API_KEY: process.env.NEXT_PUBLIC_OPENAI_API_KEY || "",
       AZURE_API_KEY: process.env.NEXT_PUBLIC_AZURE_OPENAI_API_KEY || "",

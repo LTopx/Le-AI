@@ -3,6 +3,7 @@ import { Select, Divider } from "@ltopx/lx-ui";
 import { useLLMStore } from "@/hooks/useLLM";
 import OpenAI from "./openai";
 import Azure from "./azure";
+import OpenRouter from "./openRouter";
 
 const renderLabel = (item: any) => {
   return (
@@ -15,9 +16,16 @@ const renderLabel = (item: any) => {
 
 export default function ConfigureModel() {
   const [model, setModel] = React.useState<string>("");
-  const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
+  const [openai, azure, openRouter] = useLLMStore((state) => [
+    state.openai,
+    state.azure,
+    state.openRouter,
+  ]);
 
-  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
+  const LLMOptions = React.useMemo(
+    () => [openai, azure, openRouter],
+    [openai, azure, openRouter]
+  );
 
   const findLLM = LLMOptions.find((item) => item.value === model);
 
@@ -38,6 +46,7 @@ export default function ConfigureModel() {
       <Divider>{findLLM?.ico_big}</Divider>
       {model === LLMOptions[0].value && <OpenAI />}
       {model === LLMOptions[1].value && <Azure />}
+      {model === LLMOptions[2].value && <OpenRouter />}
     </>
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Button, Confirm } from "@ltopx/lx-ui";
 import toast from "react-hot-toast";
@@ -21,8 +22,15 @@ export default function Handler() {
     state.activeId,
     state.list,
   ]);
-  const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
-  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
+  const [openai, azure, openRouter] = useLLMStore((state) => [
+    state.openai,
+    state.azure,
+    state.openRouter,
+  ]);
+  const LLMOptions = React.useMemo(
+    () => [openai, azure, openRouter],
+    [openai, azure, openRouter]
+  );
   const license_type = useUserInfoStore((state) => state.license_type);
 
   const updateChatSettingOpen = useOpenStore(
@@ -67,6 +75,18 @@ export default function Handler() {
     }
 
     if (type === "azure") return <Icon icon="azure" size={16} />;
+
+    if (type === "openRouter") {
+      if (name.includes("google/palm")) {
+        return <Image src="/palm.webp" alt="PaLM" width={16} height={16} />;
+      }
+      if (name.includes("anthropic/claude")) {
+        return <Image src="/claude.webp" alt="Claude" width={16} height={16} />;
+      }
+      if (name.includes("meta-llama")) {
+        return <div>🦙</div>;
+      }
+    }
 
     return null;
   };

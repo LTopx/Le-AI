@@ -29,7 +29,7 @@ const fetchAzureOpenAI = async ({
       presence_penalty: 0,
       stream: true,
       temperature: isUndefined(temperature) ? 1 : temperature,
-      max_tokens: isUndefined(max_tokens) ? 2000 : max_tokens,
+      max_tokens: isUndefined(max_tokens) ? 1000 : max_tokens,
       messages,
       stop: null,
     }),

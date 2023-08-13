@@ -3,6 +3,7 @@ import React from "react";
 export type Model = {
   label: string;
   value: string;
+  icon?: React.ReactNode;
   premium?: boolean;
 };
 
@@ -17,6 +18,7 @@ export type ModelConfig = {
 export type LLMStore = {
   openai: ModelConfig;
   azure: ModelConfig;
+  openRouter: ModelConfig;
 
   updateAzure: (models: Model[]) => void;
 };

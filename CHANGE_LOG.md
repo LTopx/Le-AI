@@ -2,23 +2,27 @@
 
 ## v0.8.3
 
-> 2023-08-12
+> 2023-08-13
 
 ### Fixed
 
 - Fixed mobile session content obscuring the bottom input box
 - Refactored function calling invocation logic and fixed bugs
+- Fixed the "drift" of the drop-down selection box when selecting a new session model
 
 ### Add
 
 - Added function calling support
 - Added plugin system
 - Added support for Google search, which can call the Google API to search and return results when encountering problems that exceed the AI model training date
+- Introduced OpenRouter to support Claude, PaLM2, Llama 2 and other models
 
 ### Changed
 
 - Adjusted the text input box for editing chat content to Textarea
 - Replaced Google search with [Serper API](https://serper.dev/), which is easier to configure
+- All models use openai gpt-3.5-turbo to get conversation titles, saving token consumption
+- When using the models provided by OpenRouter, the plugins are hidden because they do not support plugins at this time
 
 ## v0.8.2
 

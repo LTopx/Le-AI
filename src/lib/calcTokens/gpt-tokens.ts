@@ -42,31 +42,21 @@ interface MessageItem {
 }
 
 export class GPTTokens {
-  constructor(options: { model: supportModelType; messages: MessageItem[] }) {
-    const { model, messages } = options;
+  constructor(options: {
+    model: supportModelType;
+    messages: MessageItem[];
+    promptTokenRatio: number;
+    completionTokenRatio: number;
+  }) {
+    const { model, messages, promptTokenRatio, completionTokenRatio } = options;
 
     if (!GPTTokens.supportModels.includes(model))
       throw new Error(`Model ${model} is not supported`);
 
-    if (model === "gpt-3.5-turbo")
-      this.warning(
-        `${model} may update over time. Returning num tokens assuming gpt-3.5-turbo-0613`
-      );
-    if (model === "gpt-3.5-turbo-16k")
-      this.warning(
-        `${model} may update over time. Returning num tokens assuming gpt-3.5-turbo-16k-0613`
-      );
-    if (model === "gpt-4")
-      this.warning(
-        `${model} may update over time. Returning num tokens assuming gpt-4-0613`
-      );
-    if (model === "gpt-4-32k")
-      this.warning(
-        `${model} may update over time. Returning num tokens assuming gpt-4-32k-0613`
-      );
-
     this.model = model;
     this.messages = messages;
+    this.promptTokenRatio = promptTokenRatio;
+    this.completionTokenRatio = completionTokenRatio;
   }
 
   public static readonly supportModels: supportModelType[] = [
@@ -85,6 +75,8 @@ export class GPTTokens {
 
   public readonly model;
   public readonly messages;
+  public readonly promptTokenRatio;
+  public readonly completionTokenRatio;
 
   // https://openai.com/pricing/
   // gpt-3.5-turbo 4K context
@@ -152,12 +144,12 @@ export class GPTTokens {
         this.model
       )
     ) {
-      const promptUSD = new Decimal(this.promptUsedTokens).mul(
-        this.gpt3_5_turboPromptTokenUnit
-      );
-      const completionUSD = new Decimal(this.completionUsedTokens).mul(
-        this.gpt3_5_turboCompletionTokenUnit
-      );
+      const promptUSD = new Decimal(this.promptUsedTokens)
+        .mul(this.gpt3_5_turboPromptTokenUnit)
+        .mul(this.promptTokenRatio);
+      const completionUSD = new Decimal(this.completionUsedTokens)
+        .mul(this.gpt3_5_turboCompletionTokenUnit)
+        .mul(this.completionTokenRatio);
 
       price = promptUSD.add(completionUSD).toNumber();
     }

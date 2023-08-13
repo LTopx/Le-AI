@@ -53,7 +53,7 @@ export const function_call = async ({
 }: IFunctionCall & { plugins: fn_call[] }) => {
   try {
     const temperature = isUndefined(p_temperature) ? 1 : p_temperature;
-    const max_tokens = isUndefined(p_max_tokens) ? 2000 : p_max_tokens;
+    const max_tokens = isUndefined(p_max_tokens) ? 1000 : p_max_tokens;
 
     const response = await fetchAzureOpenAI({
       fetchURL,

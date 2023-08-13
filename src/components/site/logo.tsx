@@ -16,17 +16,25 @@ export default function Logo({
   const router = useRouter();
   const locale = useLocale();
 
+  const [isNew, setNew] = React.useState(false);
+
   const onClick = () => {
     if (disabled) return;
     router.push("/");
   };
 
   const onCheckLog = () => {
+    localStorage.setItem("is_new_version", pkg.version);
     const version = pkg.version.replace(/\./g, "");
     const localePath = locale === "zh-CN" ? "zh-CN/" : "";
     const url = `https://docs.ltopx.com/${localePath}change-log#v${version}`;
     window.open(url);
   };
+
+  React.useEffect(() => {
+    const is_new_version = localStorage.getItem("is_new_version");
+    if (pkg.version !== is_new_version) setNew(true);
+  }, []);
 
   return (
     <div
@@ -52,10 +60,15 @@ export default function Logo({
       </div>
       {!!version && (
         <span
-          className="text-xs cursor-pointer font-semibold ml-3 py-1.5 px-3 bg-slate-400/20 rounded-full tabular-nums"
+          className="text-xs cursor-pointer font-semibold ml-3 py-1.5 px-3 bg-slate-400/20 rounded-full tabular-nums relative"
           onClick={onCheckLog}
         >
           v{pkg.version}
+          {isNew && (
+            <div className="absolute bg-red-400 text-white rounded-full py-0.5 px-1 -right-6 -top-1.5">
+              New
+            </div>
+          )}
         </span>
       )}
     </div>

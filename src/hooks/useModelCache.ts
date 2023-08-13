@@ -27,8 +27,8 @@ export const useModelCacheStore = create<ModelCache>((set) => ({
     set((state) => {
       if (!state.model_type || !state.model_name) return {};
 
-      const { openai, azure } = useLLMStore.getState();
-      const LLMOptions = [openai, azure];
+      const { openai, azure, openRouter } = useLLMStore.getState();
+      const LLMOptions = [openai, azure, openRouter];
       const findModelType = LLMOptions.find(
         (item) => item.value === state.model_type
       );

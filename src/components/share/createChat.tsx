@@ -14,9 +14,15 @@ const CreateChat: React.FC<IProps> = ({ content }) => {
   const tShare = useTranslations("share");
   const router = useRouter();
 
-  const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
-
-  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
+  const [openai, azure, openRouter] = useLLMStore((state) => [
+    state.openai,
+    state.azure,
+    state.openRouter,
+  ]);
+  const LLMOptions = React.useMemo(
+    () => [openai, azure, openRouter],
+    [openai, azure, openRouter]
+  );
 
   const init = (content: any) => {
     const localChannelList = localStorage.getItem("channelList");

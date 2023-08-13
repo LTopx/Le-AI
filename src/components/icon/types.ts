@@ -78,7 +78,8 @@ export type IconType =
   | "game_2_line"
   | "star_fill"
   | "pencil_line"
-  | "plugin_2_line";
+  | "plugin_2_line"
+  | "open_router";
 
 export interface IconProps {
   className?: string;

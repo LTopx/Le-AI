@@ -46,7 +46,10 @@ const renderLabel = (item: any) => {
 const renderModelLabel = (item: any) => {
   return (
     <div className="flex gap-4 items-center">
-      <span>{item.label}</span>
+      <div className="flex items-center gap-1.5">
+        {!!item.icon && <span>{item.icon}</span>}
+        <span>{item.label}</span>
+      </div>
       {!!item.premium && (
         <span
           className={cn(
@@ -55,7 +58,7 @@ const renderModelLabel = (item: any) => {
             "dark:border-orange-500 dark:text-orange-500 dark:bg-orange-50/90"
           )}
         >
-          PREMIUM
+          PRO
         </span>
       )}
     </div>
@@ -69,8 +72,15 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
     const tPrompt = useTranslations("prompt");
     const tPlugin = useTranslations("plugin");
 
-    const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
-    const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
+    const [openai, azure, openRouter] = useLLMStore((state) => [
+      state.openai,
+      state.azure,
+      state.openRouter,
+    ]);
+    const LLMOptions = React.useMemo(
+      () => [openai, azure, openRouter],
+      [openai, azure, openRouter]
+    );
     const [activeId, list] = useChannelStore((state) => [
       state.activeId,
       state.list,

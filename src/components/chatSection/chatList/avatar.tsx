@@ -39,6 +39,35 @@ function renderAssistantIcon(model?: ChannelModel) {
       </div>
     );
   }
+  if (type === "openRouter") {
+    if (model.name.includes("anthropic")) {
+      return (
+        <div>
+          <Image
+            className="rounded-full"
+            src="/claude.webp"
+            alt="Claude"
+            width={32}
+            height={32}
+          />
+        </div>
+      );
+    }
+    if (model.name.includes("google/palm")) {
+      return (
+        <div className="bg-neutral-200 dark:bg-neutral-600 flex h-8 w-8 rounded-full justify-center items-center">
+          <Image src="/palm.webp" alt="PaLM" width={28} height={28} />
+        </div>
+      );
+    }
+    if (model.name.includes("meta-llama")) {
+      return (
+        <div className="bg-neutral-200 dark:bg-neutral-600 flex h-8 w-8 rounded-full justify-center items-center">
+          🦙
+        </div>
+      );
+    }
+  }
 
   return null;
 }

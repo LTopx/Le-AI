@@ -12,6 +12,12 @@ export type Azure = {
   max_tokens: number;
 };
 
+export type OpenRouter = {
+  apiKey: string;
+  temperature: number;
+  max_tokens: number;
+};
+
 export type Env = {
   OPENAI_API_KEY: string;
   AZURE_API_KEY: string;
@@ -20,8 +26,11 @@ export type Env = {
 export type OpenAIStore = {
   openai: OpenAI;
   azure: Azure;
+  openRouter: OpenRouter;
   env: Env;
+
   updateOpenAI: (openai: OpenAI) => void;
   updateAzure: (azure: Azure) => void;
+  updateOpenRouter: (openRouter: OpenRouter) => void;
   updateEnv: (env: Env) => void;
 };

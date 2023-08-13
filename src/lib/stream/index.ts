@@ -23,8 +23,50 @@ interface StreamProps {
   fetchFn?: any;
 }
 
+interface ICalcTokens {
+  userId?: string;
+  headerApiKey?: string;
+  messages: any[];
+  content: string;
+  modelLabel: supportModelType;
+}
+
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+const calculateTokens = async ({
+  userId,
+  headerApiKey,
+  messages,
+  content,
+  modelLabel,
+}: ICalcTokens) => {
+  // If use own key, no need to calculate tokens
+  if (userId && !headerApiKey) {
+    const final = [...messages, { role: "assistant", content }];
+
+    const { usedTokens, usedUSD } = calcTokens(final, modelLabel);
+
+    const findUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (findUser) {
+      const costTokens = findUser.costTokens + usedTokens;
+      const costUSD = Number((findUser.costUSD + usedUSD).toFixed(5));
+      const availableTokens =
+        findUser.availableTokens - Math.ceil(usedUSD * BASE_PRICE);
+
+      await prisma.user.update({
+        where: { id: userId },
+        data: {
+          costTokens,
+          costUSD,
+          availableTokens,
+        },
+      });
+    }
+  }
 };
 
 export const stream = async ({
@@ -104,30 +146,13 @@ export const stream = async ({
   }
 
   // If use own key, no need to calculate tokens
-  if (userId && !headerApiKey) {
-    const final = [...messages, { role: "assistant", content: tokenContext }];
-
-    const { usedTokens, usedUSD } = calcTokens(final, modelLabel);
-
-    const findUser = await prisma.user.findUnique({
-      where: { id: userId },
-    });
-    if (findUser) {
-      const costTokens = findUser.costTokens + usedTokens;
-      const costUSD = Number((findUser.costUSD + usedUSD).toFixed(5));
-      const availableTokens =
-        findUser.availableTokens - Math.ceil(usedUSD * BASE_PRICE);
-
-      await prisma.user.update({
-        where: { id: userId },
-        data: {
-          costTokens,
-          costUSD,
-          availableTokens,
-        },
-      });
-    }
-  }
+  await calculateTokens({
+    userId,
+    headerApiKey,
+    messages,
+    content: tokenContext,
+    modelLabel,
+  });
 
   if (!is_function_call) {
     if (streamBuffer) await writer.write(encoder.encode(streamBuffer));
@@ -205,34 +230,13 @@ export const stream = async ({
     }
 
     // If use own key, no need to calculate tokens
-    if (userId && !headerApiKey) {
-      const final = [
-        ...messages,
-        { role: "assistant", content: function_call_resultContent },
-      ];
-
-      const { usedTokens, usedUSD } = calcTokens(final, modelLabel);
-
-      const findUser = await prisma.user.findUnique({
-        where: { id: userId },
-      });
-
-      if (findUser) {
-        const costTokens = findUser.costTokens + usedTokens;
-        const costUSD = Number((findUser.costUSD + usedUSD).toFixed(5));
-        const availableTokens =
-          findUser.availableTokens - Math.ceil(usedUSD * BASE_PRICE);
-
-        await prisma.user.update({
-          where: { id: userId },
-          data: {
-            costTokens,
-            costUSD,
-            availableTokens,
-          },
-        });
-      }
-    }
+    await calculateTokens({
+      userId,
+      headerApiKey,
+      messages: newMessages,
+      content: function_call_resultContent,
+      modelLabel,
+    });
 
     if (function_call_streamBuffer) {
       await writer.write(encoder.encode(function_call_streamBuffer));

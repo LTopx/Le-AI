@@ -36,7 +36,10 @@ const renderLabel = (item: any) => {
 const renderModelLabel = (item: any) => {
   return (
     <div className="flex gap-4 items-center">
-      <span>{item.label}</span>
+      <div className="flex items-center gap-1.5">
+        {!!item.icon && <span>{item.icon}</span>}
+        <span>{item.label}</span>
+      </div>
       {!!item.premium && (
         <span
           className={cn(
@@ -45,7 +48,7 @@ const renderModelLabel = (item: any) => {
             "dark:border-orange-500 dark:text-orange-500 dark:bg-orange-50/90"
           )}
         >
-          PREMIUM
+          PRO
         </span>
       )}
     </div>
@@ -57,9 +60,17 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
   const tCommon = useTranslations("common");
 
   const [isShow, setIsShow] = React.useState(true);
+  const [isAnimation, setIsAnimation] = React.useState(false);
 
-  const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
-  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
+  const [openai, azure, openRouter] = useLLMStore((state) => [
+    state.openai,
+    state.azure,
+    state.openRouter,
+  ]);
+  const LLMOptions = React.useMemo(
+    () => [openai, azure, openRouter],
+    [openai, azure, openRouter]
+  );
 
   const options =
     LLMOptions.find((item) => item.value === channel.channel_model.type)
@@ -111,10 +122,12 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
   return (
     <div className="flex flex-col h-full w-full pt-16 pb-24 top-0 left-0 gap-1 absolute">
       <motion.div
-        className="mx-auto"
+        className={cn("mx-auto", { "pointer-events-none": isAnimation })}
         initial={{ opacity: 0.0001, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={softBouncePrest}
+        onAnimationStart={() => setIsAnimation(true)}
+        onAnimationComplete={() => setIsAnimation(false)}
       >
         <div
           className={cn(
@@ -185,7 +198,9 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
             </div>
           </div>
         </div>
-        <Plugin channel={channel} />
+        {channel.channel_model.type !== "openRouter" && (
+          <Plugin channel={channel} />
+        )}
       </motion.div>
     </div>
   );

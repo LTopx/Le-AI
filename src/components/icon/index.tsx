@@ -79,9 +79,12 @@ import { Game_2_line } from "./game_2_line";
 import { Star_fill } from "./star_fill";
 import { Pencil_line } from "./pencil_line";
 import { Plugin_2_line } from "./plugin_2_line";
+import { Open_Router } from "./open_router";
 
 const Icon: React.FC<IconProps> = (props) => {
   const { icon } = props;
+
+  if (icon === "open_router") return <Open_Router {...props} />;
 
   if (icon === "plugin_2_line") return <Plugin_2_line {...props} />;
 

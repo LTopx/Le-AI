@@ -35,8 +35,15 @@ export default function ChatFooter() {
     state.activeId,
     state.list,
   ]);
-  const [openai, azure] = useLLMStore((state) => [state.openai, state.azure]);
-  const LLMOptions = React.useMemo(() => [openai, azure], [openai, azure]);
+  const [openai, azure, openRouter] = useLLMStore((state) => [
+    state.openai,
+    state.azure,
+    state.openRouter,
+  ]);
+  const LLMOptions = React.useMemo(
+    () => [openai, azure, openRouter],
+    [openai, azure, openRouter]
+  );
   const license_type = useUserInfoStore((state) => state.license_type);
 
   // ref
@@ -121,6 +128,7 @@ export default function ChatFooter() {
 
       if (session.data) updateUserInfo(2000);
     } catch (errRes: any) {
+      console.log(errRes, "errRes");
       let errorMessage = "error";
       if (errRes.error === 10001) {
         return toast(

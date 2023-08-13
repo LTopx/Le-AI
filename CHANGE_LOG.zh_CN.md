@@ -2,23 +2,27 @@
 
 ## v0.8.3
 
-> 2023-08-12
+> 2023-08-13
 
 ### 修复
 
 - 修复移动端会话内容遮挡底部输入框的问题
 - 重构 function calling 的调用逻辑，修复 bug
+- 修复新会话选择模型时，下拉选择框出现“漂移”的情况
 
 ### 新增
 
 - 新增 function calling 支持.
 - 新增插件系统
 - 新增支持谷歌搜索，在遇到超出 AI 模型训练日期的问题时能够调用谷歌 api 进行搜索并返回结果
+- 引入 OpenRouter，支持 Claude、PaLM2、Llama 2 等模型
 
 ### 调整
 
 - 调整编辑聊天内容的文本输入框为 Textarea
 - 将谷歌搜索 由官方 API 更换为 [Serper API](https://serper.dev/)，配置更方便
+- 各个模型在获取会话标题时统一使用 openai gpt-3.5-turbo，节省 token 消耗
+- 在使用 OpenRouter 提供的模型时，隐藏插件，因为他们暂不支持插件
 
 ## v0.8.2
 

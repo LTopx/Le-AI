@@ -327,6 +327,7 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           prompt,
           plugins: findCh.channel_plugins,
         };
+
         if (modelType === "openai") {
           params.proxy = modelConfig.proxy;
         } else if (modelType === "azure") {
@@ -519,18 +520,21 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
     getChannelName: (params) => {
       return new Promise((resolve, reject) => {
         const { decoder } = streamDecoder();
+        const OpenAIStore = useOpenAIStore.getState();
 
         const newParams = params.newParams;
+        newParams.model = "gpt-3.5-turbo";
+        newParams.modelLabel = "gpt-3.5-turbo";
         newParams.chat_list = newParams.chat_list.map((item: any) => ({
           role: item.role,
           content: item.content,
         }));
 
-        fetch(params.fetchUrl, {
+        fetch("/api/openai", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: params.apiKey,
+            Authorization: OpenAIStore.openai.apiKey,
           },
           body: JSON.stringify(newParams),
         }).then(async (response) => {
