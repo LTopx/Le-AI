@@ -9,6 +9,7 @@
 - Fixed mobile session content obscuring the bottom input box
 - Refactored function calling invocation logic and fixed bugs
 - Fixed the "drift" of the drop-down selection box when selecting a new session model
+- Fix the issue of squeezed avatars in the conversation list.
 
 ### Add
 

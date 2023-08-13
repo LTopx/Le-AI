@@ -19,10 +19,13 @@ function renderAssistantIcon(model?: ChannelModel) {
   if (type === "openai") {
     return (
       <div
-        className={cn("rounded-full flex h-8 w-8 justify-center items-center", {
-          "bg-[#20a37f]": name.startsWith("gpt-3"),
-          "bg-[#a26bf7]": name.startsWith("gpt-4"),
-        })}
+        className={cn(
+          "rounded-full flex flex-shrink-0 h-8 w-8 justify-center items-center",
+          {
+            "bg-[#20a37f]": name.startsWith("gpt-3"),
+            "bg-[#a26bf7]": name.startsWith("gpt-4"),
+          }
+        )}
       >
         <div className="h-8 w-8 flex justify-center items-center">
           <Icon icon="openai" size={20} className="text-white" />
@@ -32,7 +35,7 @@ function renderAssistantIcon(model?: ChannelModel) {
   }
   if (type === "azure") {
     return (
-      <div className="rounded-full flex bg-sky-200/70 h-8 w-8 justify-center items-center">
+      <div className="rounded-full flex flex-shrink-0 bg-sky-200/70 h-8 w-8 justify-center items-center">
         <div className="h-8 w-8 flex justify-center items-center">
           <Icon icon="azure" size={20} className="text-white" />
         </div>
@@ -42,7 +45,7 @@ function renderAssistantIcon(model?: ChannelModel) {
   if (type === "openRouter") {
     if (model.name.includes("anthropic")) {
       return (
-        <div>
+        <div className="w-8 h-8 flex-shrink-0">
           <Image
             className="rounded-full"
             src="/claude.webp"
@@ -55,14 +58,14 @@ function renderAssistantIcon(model?: ChannelModel) {
     }
     if (model.name.includes("google/palm")) {
       return (
-        <div className="bg-neutral-200 dark:bg-neutral-600 flex h-8 w-8 rounded-full justify-center items-center">
+        <div className="bg-neutral-200 dark:bg-neutral-600 flex flex-shrink-0 h-8 w-8 rounded-full justify-center items-center">
           <Image src="/palm.webp" alt="PaLM" width={28} height={28} />
         </div>
       );
     }
     if (model.name.includes("meta-llama")) {
       return (
-        <div className="bg-neutral-200 dark:bg-neutral-600 flex h-8 w-8 rounded-full justify-center items-center">
+        <div className="bg-neutral-200 dark:bg-neutral-600 flex flex-shrink-0 h-8 w-8 rounded-full justify-center items-center">
           🦙
         </div>
       );
@@ -85,7 +88,7 @@ export default function Avatar(props: AvatarProps) {
     return (
       <div
         className={cn(
-          "rounded-full flex h-8 w-8 justify-center items-center",
+          "rounded-full flex h-8 w-8 flex-shrink-0 justify-center items-center",
           "bg-black/25 dark:bg-slate-50"
         )}
       >
