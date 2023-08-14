@@ -270,6 +270,14 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           name: item.model_config.model_name,
         };
         findCh.channel_context_length = item.model_config.context_length;
+        if (item.welcome && !findCh.chat_list.length) {
+          findCh.chat_list.push({
+            id: uuidv4(),
+            role: "assistant",
+            time: String(+new Date()),
+            content: item.welcome,
+          });
+        }
 
         localStorage.setItem("channelList", JSON.stringify(newList));
 

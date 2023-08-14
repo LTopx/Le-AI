@@ -95,7 +95,7 @@ export default function Premium() {
             </div>
             <div>
               <span className="bg-clip-text bg-license-premium font-semibold text-transparent text-3xl">
-                $9.99
+                $12.99
               </span>
               <span className="ml-1 text-zinc-500 line-through">$26.99</span>
             </div>
@@ -155,6 +155,14 @@ export default function Premium() {
                   className="left-0 text-green-400 absolute"
                 />
                 {tPremium("premium-7")}
+              </div>
+              <div className="flex pl-6 text-neutral-600 gap-2 items-center relative dark:text-neutral-600">
+                <Icon
+                  icon="check_circle_fill"
+                  size={18}
+                  className="left-0 text-green-400 absolute"
+                />
+                {tPremium("premium-8")}
               </div>
             </div>
           </div>

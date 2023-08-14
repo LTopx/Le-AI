@@ -29,6 +29,7 @@ export const useCharacterStore = create<CharacterStore>((set) => ({
           name: item.name,
           desc: item.desc,
           content: item.content,
+          welcome: item.welcome || "",
           model_config: item.model_config,
         },
       ];
@@ -58,6 +59,7 @@ export const useCharacterStore = create<CharacterStore>((set) => ({
         name: item.name,
         desc: item.desc,
         content: item.content,
+        welcome: item.welcome || "",
         model_config: item.model_config,
       }));
 

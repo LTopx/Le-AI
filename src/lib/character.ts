@@ -31,6 +31,8 @@ export interface Character {
   name: string;
   desc: string;
   content: string;
+  // Welcome message
+  welcome?: string;
   model_config: ModalConfig;
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslations } from "next-intl";
+import { Tooltip } from "@ltopx/lx-ui";
 import type { DropdownOption } from "@ltopx/lx-ui";
 import Icon from "@/components/icon";
 import { useOpenStore } from "@/hooks/useOpen";
@@ -16,6 +17,7 @@ export const languages: DropdownOption[] = [
 ];
 
 export default function Handler() {
+  const tCommon = useTranslations("common");
   const tMenu = useTranslations("menu");
 
   const updateSettingOpen = useOpenStore((state) => state.updateSettingOpen);
@@ -23,18 +25,47 @@ export default function Handler() {
   return (
     <div className="border-t flex flex-col pt-2 gap-1 dark:border-white/20">
       {checkAuth() && <LicenseActivate />}
-      <a
-        className={cn(
-          "hover:bg-gray-200/60 h-11 rounded-lg transition-colors text-sm cursor-pointer flex items-center gap-2 px-2",
-          "dark:hover:bg-slate-700/70 hover:text-sky-400"
-        )}
-        href="https://t.me/+7fLJJoGV_bJhYTk1"
-        target="_blank"
-      >
-        <Icon icon="telegram_fill" size={18} className="text-[#3aa9ea]" />
-        {tMenu("join-tg")}
-      </a>
       <Tokens />
+      <div
+        className={cn(
+          "h-11 transition-colors text-sm flex items-center gap-2 px-2"
+        )}
+      >
+        <Tooltip
+          title={tMenu("join-tg")}
+          triggerClassName={cn(
+            "flex-1 flex justify-center items-center h-6 cursor-pointer rounded-md transition-colors",
+            "hover:bg-gray-200/60 dark:hover:bg-slate-700/70"
+          )}
+        >
+          <div
+            onClick={() =>
+              window.open("https://t.me/+7fLJJoGV_bJhYTk1", "_blank")
+            }
+          >
+            <Icon icon="telegram_fill" size={18} className="text-[#3aa9ea]" />
+          </div>
+        </Tooltip>
+
+        <div className="flex-1 flex justify-center px-2 border-l border-r">
+          <a
+            className="hover:underline transition-colors hover:text-sky-500"
+            href="/privacy"
+            target="_blank"
+          >
+            {tCommon("privacy")}
+          </a>
+        </div>
+        <div className="flex-1 flex justify-center">
+          <a
+            className="hover:underline transition-colors hover:text-sky-500"
+            href="https://goethan.cc"
+            target="_blank"
+          >
+            {tCommon("contact-me")}
+          </a>
+        </div>
+      </div>
       <div className="flex h-11 items-center justify-center">
         <div className="flex flex-1 justify-center">
           <a

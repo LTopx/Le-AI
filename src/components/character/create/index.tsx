@@ -7,8 +7,10 @@ import {
   Input,
   Select,
   Textarea,
+  Tooltip,
   type SelectOption,
 } from "@ltopx/lx-ui";
+import Icon from "@/components/icon";
 import MenuIcon from "@/components/menu/icon";
 import type { Character } from "@/lib/character";
 import { useCharacterStore } from "@/hooks/useCharacter";
@@ -18,6 +20,7 @@ interface ICharacter {
   icon: Character["icon"];
   desc: Character["desc"];
   content: Character["content"];
+  welcome: Character["welcome"];
   model_config: Character["model_config"];
 }
 
@@ -91,6 +94,7 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
     icon: "RiChatSmile2Line",
     desc: "",
     content: "",
+    welcome: "",
     model_config: {
       model_type: "openai",
       model_name: "gpt-3.5-turbo-16k",
@@ -137,6 +141,7 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
       name: formData.name,
       desc: formData.desc,
       content: formData.content,
+      welcome: formData.welcome,
       model_config: {
         model_type: "openai",
         model_name: "gpt-3.5-turbo-16k",
@@ -155,6 +160,7 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
         icon: "RiChatSmile2Line",
         desc: "",
         content: "",
+        welcome: "",
         model_config: {
           model_type: "openai",
           model_name: "gpt-3.5-turbo-16k",
@@ -225,22 +231,23 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
             onChange={(value) => onChangeForm(value, "content")}
           />
         </div>
-      </div>
-      {/* <Divider />
-      <div className="flex flex-col gap-4">
         <div className="flex flex-col">
-          <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tCharacter("template-name")}
+          <div className="text-sm text-black/90 mb-2 dark:text-white/90 flex items-center gap-1">
+            {tCharacter("welcome-message")}
+            <Tooltip title={tCharacter("welcome-message-tip")}>
+              <Icon icon="question_line" size={18} />
+            </Tooltip>
           </div>
-          <Input
+          <Textarea
+            className="h-20"
             allowClear
             placeholder={tCommon("please-enter")}
             maxLength={40}
-            value={formData.name}
-            onChange={(value) => onChangeForm(value, "name")}
+            value={formData.welcome}
+            onChange={(value) => onChangeForm(value, "welcome")}
           />
         </div>
-      </div> */}
+      </div>
     </Modal>
   );
 });

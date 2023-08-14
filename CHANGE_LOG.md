@@ -1,5 +1,17 @@
 # L-GPT Change Log
 
+## v0.8.4
+
+> 2023-08-14
+
+### Add
+
+- Support for configuring welcome messages has been added to the character template, serving as the default first sentence of a conversation.
+
+### Changed
+
+- Support for importing and exporting configurations of OpenRouter.
+
 ## v0.8.3
 
 > 2023-08-13

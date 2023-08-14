@@ -15,9 +15,10 @@ export default function ImportExport() {
 
   const tSetting = useTranslations("setting");
 
-  const [openai, azure] = useOpenAIStore((state) => [
+  const [openai, azure, openRouter] = useOpenAIStore((state) => [
     state.openai,
     state.azure,
+    state.openRouter,
   ]);
   const [activeId, list] = useChannelStore((state) => [
     state.activeId,
@@ -30,6 +31,7 @@ export default function ImportExport() {
   const updateList = useChannelStore((state) => state.updateList);
   const updateOpenAI = useOpenAIStore((state) => state.updateOpenAI);
   const updateAzure = useOpenAIStore((state) => state.updateAzure);
+  const updateOpenRouter = useOpenAIStore((state) => state.updateOpenRouter);
   const updateSettingOpen = useOpenStore((state) => state.updateSettingOpen);
   const importCharacterList = useCharacterStore((state) => state.importList);
 
@@ -38,7 +40,7 @@ export default function ImportExport() {
 
   const onExport = () => {
     const exportData = {
-      configure: { openai, azure },
+      configure: { openai, azure, openRouter },
       messages: { activeId, list },
       characters: characterList.map((item) => ({
         id: item.id,
@@ -48,6 +50,7 @@ export default function ImportExport() {
         name: item.name,
         desc: item.desc,
         content: item.content,
+        welcome: item.welcome || "",
         model_config: item.model_config,
       })),
     };
@@ -74,9 +77,10 @@ export default function ImportExport() {
           }
         }
         if (json.configure) {
-          const { openai, azure } = json.configure;
+          const { openai, azure, openRouter } = json.configure;
           updateOpenAI(openai);
           updateAzure(azure);
+          updateOpenRouter(openRouter);
         }
         if (json.characters?.length) {
           importCharacterList(json.characters);
