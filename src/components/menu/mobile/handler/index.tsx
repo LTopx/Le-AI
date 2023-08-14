@@ -20,6 +20,7 @@ export default function Handler() {
   const session = useSession();
 
   const tMenu = useTranslations("menu");
+  const tCommon = useTranslations("common");
 
   const updateSettingOpen = useOpenStore((state) => state.updateSettingOpen);
 
@@ -32,19 +33,43 @@ export default function Handler() {
   return (
     <div className={cn("flex flex-col border-t gap-1 pt-1", height)}>
       {checkAuth() && <LicenseActivate />}
-      <a
-        className={cn(
-          "h-11 rounded-md text-sm cursor-pointer flex items-center gap-2 px-2 transition-colors",
-          "hover:bg-gray-200/60 text-black/90",
-          "dark:hover:bg-slate-700/70 dark:text-white/90"
-        )}
-        href="https://t.me/+7fLJJoGV_bJhYTk1"
-        target="_blank"
-      >
-        <Icon icon="telegram_fill" size={16} className="text-[#3aa9ea]" />
-        {tMenu("join-tg")}
-      </a>
       <Tokens mobile />
+      <div
+        className={cn(
+          "h-11 transition-colors text-sm flex items-center gap-2 px-2"
+        )}
+      >
+        <div
+          className={cn(
+            "flex-1 flex justify-center items-center h-6 cursor-pointer rounded-md transition-colors",
+            "hover:bg-gray-200/60 dark:hover:bg-slate-700/70"
+          )}
+          onClick={() =>
+            window.open("https://t.me/+7fLJJoGV_bJhYTk1", "_blank")
+          }
+        >
+          <Icon icon="telegram_fill" size={18} className="text-[#3aa9ea]" />
+        </div>
+
+        <div className="flex-1 flex justify-center px-2 border-l border-r">
+          <a
+            className="hover:underline transition-colors hover:text-sky-500"
+            href="https://docs.ltopx.com/privacy"
+            target="_blank"
+          >
+            {tCommon("privacy")}
+          </a>
+        </div>
+        <div className="flex-1 flex justify-center">
+          <a
+            className="hover:underline transition-colors hover:text-sky-500"
+            href="https://goethan.cc"
+            target="_blank"
+          >
+            {tCommon("contact-me")}
+          </a>
+        </div>
+      </div>
       <div className="flex h-[43px] items-center justify-center">
         <div className="flex flex-1 justify-center">
           <a

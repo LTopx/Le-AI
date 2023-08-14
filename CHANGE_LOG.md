@@ -7,6 +7,7 @@
 ### Add
 
 - Support for configuring welcome messages has been added to the character template, serving as the default first sentence of a conversation.
+- Add privacy policy and contact information.
 
 ### Changed
 

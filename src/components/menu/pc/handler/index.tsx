@@ -50,7 +50,7 @@ export default function Handler() {
         <div className="flex-1 flex justify-center px-2 border-l border-r">
           <a
             className="hover:underline transition-colors hover:text-sky-500"
-            href="/privacy"
+            href="https://docs.ltopx.com/privacy"
             target="_blank"
           >
             {tCommon("privacy")}
