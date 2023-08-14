@@ -96,7 +96,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
     return (
       <div
         className={cn(
-          "bg-white hover:border-sky-400 flex-1 border rounded-md transition-colors relative pr-5",
+          "bg-white hover:border-sky-400 flex-1 border rounded-xl transition-colors relative pr-5",
           "dark:bg-neutral-900/90 dark:border-neutral-700 dark:backdrop-blur-sm",
           {
             "border-sky-400 dark:border-sky-400/90 shadow": isFocus,
