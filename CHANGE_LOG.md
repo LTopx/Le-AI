@@ -2,16 +2,18 @@
 
 ## v0.8.4
 
-> 2023-08-14
+> 2023-08-16
 
 ### Add
 
 - Support for configuring welcome messages has been added to the character template, serving as the default first sentence of a conversation.
 - Add privacy policy and contact information.
+- Added cloud synchronization function, which can synchronize conversation content to the cloud for easy synchronization between different devices.
 
 ### Changed
 
 - Support for importing and exporting configurations of OpenRouter.
+- Adjust the layout of the bottom left menu.
 
 ## v0.8.3
 

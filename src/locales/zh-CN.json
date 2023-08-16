@@ -48,6 +48,23 @@
     "verification-1": "登录链接已失效。",
     "verification-2": "它可能已经被使用了，或者已经过期了。"
   },
+  "backup": {
+    "backup": "备份",
+    "backup-options": "备份、同步选项",
+    "backup-tips": "暂时只支持全量备份。",
+    "encryption-key": "加密密钥",
+    "encryption-key-check-fail": "加密密钥必须是 16 位字符",
+    "enter-encryption-key": "请输入您的加密密钥",
+    "introduction": "基本介绍",
+    "learn-more": "更多详情请点击了解",
+    "restore": "恢复",
+    "restore-fail": "数据恢复失败，请输入正确的加密密钥重试",
+    "restore-success": "数据恢复成功",
+    "rule-1": "L-GPT 不会自动同步你的任何信息，包括但不限于会话、配置信息以及各种 API密钥。",
+    "rule-2": "所有的数据都默认存储在浏览器和设备本地。",
+    "rule-3": "当使用备份和云同步功能时，L-GPT将采用您提供的本地加密密钥对数据进行AES加密解密。",
+    "rule-4": "请务必妥善保管好您的密钥。如遗忘密钥则没有任何办法能够正确找回您备份的数据。"
+  },
   "character": {
     "all": "所有类别",
     "ai-character": "AI 角色模板",
@@ -90,10 +107,11 @@
   "common": {
     "add": "新 增",
     "apply": "使用",
+    "backup-sync": "备份和云同步",
     "cancel": "取 消",
     "collect": "收藏",
     "collected": " 已收藏",
-    "contact-me": "联系我",
+    "contact": "联系我",
     "copy": "复制",
     "create": "新 增",
     "delete": "删除",
@@ -101,11 +119,13 @@
     "enabled": "已启用",
     "no-data": "暂无数据",
     "ok": "确 定",
+    "operation-successful": "操作成功",
     "please-enter": "请输入",
     "premium": "L-GPT 高级版",
-    "privacy": "隐私协议",
+    "privacy": "隐私",
     "retry": "重试",
     "service-error": "服务开小差啦，请稍后再试",
+    "theme": "主题",
     "tip": "提示",
     "todo": "待开发..."
   },
@@ -118,8 +138,10 @@
     "20006": " 您已经是高级会员了",
     "20007": "密钥校验失败",
     "20008": "参数错误",
-    "20009": "您当前的计划无法使用该模型。请升级到高级版或团队版以解锁此功能。",
-    "20010": "请先配置Azure Resource Name"
+    "20009": "您当前的计划无法使用此功能。请升级到高级版或团队版以解锁。",
+    "20010": "请先配置Azure Resource Name",
+    "20011": "备份数据最大不能超过 1MB",
+    "20012": "没有查询到您的备份数据"
   },
   "menu": {
     "clear-all-conversation": "清空会话",
@@ -127,7 +149,6 @@
     "delete": "删除",
     "delete-this-conversation": "删除会话",
     "delete-conversation": "你确认删除该会话?",
-    "join-tg": "加入 Telegram",
     "messages": "条会话",
     "new-chat": "新建会话",
     "new-conversation": "新会话",

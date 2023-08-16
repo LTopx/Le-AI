@@ -48,6 +48,23 @@
     "verification-1": "The sign in link is no longer valid.",
     "verification-2": "It may have been used already or it may have expired."
   },
+  "backup": {
+    "backup": "Backup",
+    "backup-options": "Backup and synchronization options",
+    "backup-tips": "Currently, only full backups are supported.",
+    "encryption-key": "Encryption Key",
+    "encryption-key-check-fail": "The encryption key must be 16 characters long.",
+    "enter-encryption-key": "Please enter your encryption key.",
+    "introduction": "Introduction",
+    "learn-more": "Click to learn more",
+    "restore": "Restore",
+    "restore-fail": "Data recovery failed. Please enter the correct encryption key and try again.",
+    "restore-success": "Data recovery successful.",
+    "rule-1": "L-GPT will not automatically synchronize any of your information. This includes but is not limited to sessions, configuration details, and various API keys.",
+    "rule-2": "All data is automatically stored in the browser and local device.",
+    "rule-3": "When using the backup and cloud sync features, L-GPT will use the local encryption key provided by you to encrypt and decrypt the data using AES.",
+    "rule-4": "Please make sure to keep your key safe. If you forget the key, there is no way to recover your backed-up data correctly."
+  },
   "character": {
     "all": "All",
     "ai-character": "AI Characters",
@@ -90,10 +107,11 @@
   "common": {
     "add": "Add",
     "apply": "Apply",
+    "backup-sync": "Backup & Sync",
     "cancel": "Cancel",
-    "collect": "Collect",
+    "collect": "Collect me",
     "collected": " Collected",
-    "contact-me": "Contact",
+    "contact": "Contact",
     "copy": "Copy",
     "create": "Create",
     "delete": "Delete",
@@ -101,11 +119,13 @@
     "enabled": "Enbaled",
     "no-data": "No Data",
     "ok": "OK",
+    "operation-successful": "Operation successful.",
     "please-enter": "Please enter",
     "premium": "L-GPT Premium",
     "privacy": "Privacy",
     "retry": "Retry",
     "service-error": "Service is having a hiccup, please try again later",
+    "theme": "Theme",
     "tip": "Tip",
     "todo": "Todo..."
   },
@@ -118,8 +138,10 @@
     "20006": "Your license is already premium",
     "20007": "Validate licenses error",
     "20008": "Params error",
-    "20009": "The Model is not available for your current plan. Please upgrade to Premium or Team to unlock this feature",
-    "20010": "Please configure Azure Resource Name first"
+    "20009": "Your current plan does not have access to this feature. Please upgrade to the Premium or Team version to unlock it.",
+    "20010": "Please configure Azure Resource Name first",
+    "20011": "The maximum size for data backup should not exceed 1MB.",
+    "20012": "No backup data found for your query."
   },
   "menu": {
     "clear-all-conversation": "Clear Context",
@@ -127,7 +149,6 @@
     "delete": "Delete",
     "delete-this-conversation": "Delete conversation",
     "delete-conversation": "Are you sure delete this conversation?",
-    "join-tg": "Join Telegram",
     "messages": "messages",
     "new-chat": "New Chat",
     "new-conversation": "New Conversation",
