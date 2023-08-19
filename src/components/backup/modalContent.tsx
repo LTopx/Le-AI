@@ -7,8 +7,9 @@ import { useFetchError } from "@/hooks/useFetchError";
 import { useOpenAIStore } from "@/hooks/useOpenAI";
 import { useChannelStore } from "@/hooks/useChannel";
 import { useCharacterStore } from "@/hooks/useCharacter";
+import { useUserInfoStore } from "@/hooks/useUserInfo";
 import { syncStore } from "@/store/sync";
-import { FREE_SYNC_SIZE } from "@/utils/constant";
+import { FREE_SYNC_SIZE, PRO_SYNC_SIZE } from "@/utils/constant";
 
 interface IProps {
   onClose: () => void;
@@ -33,6 +34,7 @@ export default function ModalContent({ onClose }: IProps) {
     state.list,
   ]);
   const characterList = useCharacterStore((state) => state.list);
+  const license_type = useUserInfoStore((state) => state.license_type);
   const syncSize = syncStore((state) => state.size);
   const [loadingBackup, setLoadingBackup] = React.useState(false);
   const [loadingRestore, setLoadingRestore] = React.useState(false);
@@ -45,9 +47,12 @@ export default function ModalContent({ onClose }: IProps) {
   const importCharacterList = useCharacterStore((state) => state.importList);
   const updateSyncSize = syncStore((state) => state.updateSize);
 
+  const isFree = license_type !== "premium" && license_type !== "team";
+  const totalSize = isFree ? FREE_SYNC_SIZE : PRO_SYNC_SIZE;
+
   const syncUsage = React.useMemo(() => {
-    return (syncSize / FREE_SYNC_SIZE) * 100;
-  }, [syncSize]);
+    return (syncSize / totalSize) * 100;
+  }, [syncSize, isFree]);
 
   const getSyncSize = async () => {
     if (syncSize) return;
@@ -199,15 +204,17 @@ export default function ModalContent({ onClose }: IProps) {
           <div>{tBackup("usage")}</div>
           <div className="flex gap-1">
             <div>
-              {syncSize} KB / {FREE_SYNC_SIZE} KB
+              {syncSize} KB / {totalSize} KB
             </div>
-            <a
-              className="text-sky-400 dark:text-sky-500 hover:underline cursor-pointer"
-              href="https://docs.ltopx.com/features/cloud-synchronous"
-              target="_blank"
-            >
-              (Free)
-            </a>
+            {isFree && (
+              <a
+                className="text-sky-400 dark:text-sky-500 hover:underline cursor-pointer"
+                href="https://docs.ltopx.com/features/cloud-synchronous"
+                target="_blank"
+              >
+                (Free)
+              </a>
+            )}
           </div>
         </div>
         <Progress
