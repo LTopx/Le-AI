@@ -2,7 +2,7 @@
 
 ## v0.8.4
 
-> 2023-08-16
+> 2023-08-19
 
 ### Add
 
@@ -14,6 +14,8 @@
 
 - Support for importing and exporting configurations of OpenRouter.
 - Adjust the layout of the bottom left menu.
+- Adjust the model permissions provided by OpenRouter to free.
+- Adjust the cloud backup quota, free users can back up 50KB of data.
 
 ## v0.8.3
 

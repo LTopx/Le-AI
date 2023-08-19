@@ -51,6 +51,7 @@ const calculateTokens = async ({
     const findUser = await prisma.user.findUnique({
       where: { id: userId },
     });
+
     if (findUser) {
       const costTokens = findUser.costTokens + usedTokens;
       const costUSD = Number((findUser.costUSD + usedUSD).toFixed(5));

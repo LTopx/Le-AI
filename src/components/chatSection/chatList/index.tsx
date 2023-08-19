@@ -118,7 +118,7 @@ export default function ChatList() {
   };
 
   const onExceeded = () => {
-    window.open("https://docs.ltopx.com/conversation-limits");
+    window.open("https://docs.ltopx.com/faq");
   };
 
   const onRegenerate = async (item: ChatItem) => {

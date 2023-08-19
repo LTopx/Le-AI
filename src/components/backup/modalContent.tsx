@@ -1,12 +1,14 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { Input, Button } from "@ltopx/lx-ui";
+import { Input, Button, Progress } from "@ltopx/lx-ui";
 import { encrypt, decrypt } from "@/lib";
 import { useFetchError } from "@/hooks/useFetchError";
 import { useOpenAIStore } from "@/hooks/useOpenAI";
 import { useChannelStore } from "@/hooks/useChannel";
 import { useCharacterStore } from "@/hooks/useCharacter";
+import { syncStore } from "@/store/sync";
+import { FREE_SYNC_SIZE } from "@/utils/constant";
 
 interface IProps {
   onClose: () => void;
@@ -31,6 +33,7 @@ export default function ModalContent({ onClose }: IProps) {
     state.list,
   ]);
   const characterList = useCharacterStore((state) => state.list);
+  const syncSize = syncStore((state) => state.size);
   const [loadingBackup, setLoadingBackup] = React.useState(false);
   const [loadingRestore, setLoadingRestore] = React.useState(false);
 
@@ -40,6 +43,18 @@ export default function ModalContent({ onClose }: IProps) {
   const updateAzure = useOpenAIStore((state) => state.updateAzure);
   const updateOpenRouter = useOpenAIStore((state) => state.updateOpenRouter);
   const importCharacterList = useCharacterStore((state) => state.importList);
+  const updateSyncSize = syncStore((state) => state.updateSize);
+
+  const syncUsage = React.useMemo(() => {
+    return (syncSize / FREE_SYNC_SIZE) * 100;
+  }, [syncSize]);
+
+  const getSyncSize = async () => {
+    if (syncSize) return;
+    const res = await fetch("/api/sync/size").then((res) => res.json());
+    const size = ((res.data.size || 0) / 1024).toFixed(2);
+    updateSyncSize(Number(size));
+  };
 
   // The verification must be a 16-character string.
   const checkKey = (key: string) => {
@@ -93,6 +108,8 @@ export default function ModalContent({ onClose }: IProps) {
           return toast.error(catchError(res), { id: "sync_error" });
         }
         toast.success(tCommon("operation-successful"), { id: "sync_success" });
+        const size = ((res.data.size || 0) / 1024).toFixed(2);
+        updateSyncSize(Number(size));
         onClose();
       })
       .finally(() => {
@@ -152,6 +169,10 @@ export default function ModalContent({ onClose }: IProps) {
       });
   };
 
+  React.useEffect(() => {
+    getSyncSize();
+  }, []);
+
   return (
     <div className="flex flex-col gap-3">
       <div>
@@ -160,8 +181,7 @@ export default function ModalContent({ onClose }: IProps) {
           <ul className="list-disc space-y-2 pl-5 text-slate-500 dark:text-slate-300 marker:text-sky-400">
             <li>{tBackup("rule-1")}</li>
             <li>{tBackup("rule-2")}</li>
-            <li>{tBackup("rule-3")}</li>
-            <li className="text-rose-400">{tBackup("rule-4")}</li>
+            <li className="text-rose-400">{tBackup("rule-3")}</li>
           </ul>
           <div className="flex">
             <Button
@@ -173,6 +193,28 @@ export default function ModalContent({ onClose }: IProps) {
             </Button>
           </div>
         </div>
+      </div>
+      <div>
+        <div className="mb-1 text-sm flex justify-between">
+          <div>{tBackup("usage")}</div>
+          <div className="flex gap-1">
+            <div>
+              {syncSize} KB / {FREE_SYNC_SIZE} KB
+            </div>
+            <a
+              className="text-sky-400 dark:text-sky-500 hover:underline cursor-pointer"
+              href="https://docs.ltopx.com/features/cloud-synchronous"
+              target="_blank"
+            >
+              (Free)
+            </a>
+          </div>
+        </div>
+        <Progress
+          type="danger"
+          value={syncUsage}
+          className="bg-emerald-400 dark:bg-emerald-500"
+        />
       </div>
       <div>
         <div className="mb-1 text-sm">{tBackup("encryption-key")}</div>
@@ -188,7 +230,7 @@ export default function ModalContent({ onClose }: IProps) {
       <div>
         <div className="mb-1 text-sm">{tBackup("backup-options")}</div>
         {/* <Input allowClear /> */}
-        <div>{tBackup("backup-tips")}。</div>
+        <div>{tBackup("backup-tips")}</div>
       </div>
       <div className="flex gap-2">
         <Button

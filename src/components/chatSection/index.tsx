@@ -8,15 +8,21 @@ import ChatSetting from "./chatSetting";
 export default function ChatSection() {
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
-  const [openAIKey, azureKey, env] = useOpenAIStore((state) => [
+  const [openAIKey, azureKey, openRouterKey, env] = useOpenAIStore((state) => [
     state.openai.apiKey,
     state.azure.apiKey,
+    state.openRouter.apiKey,
     state.env,
   ]);
 
   const apiKey = React.useMemo(
-    () => openAIKey || azureKey || env.OPENAI_API_KEY || env.AZURE_API_KEY,
-    [openAIKey, azureKey, env]
+    () =>
+      openAIKey ||
+      azureKey ||
+      openRouterKey ||
+      env.OPENAI_API_KEY ||
+      env.AZURE_API_KEY,
+    [openAIKey, azureKey, openRouterKey, env]
   );
 
   const updateScrollEle = useScrollToBottomStore(

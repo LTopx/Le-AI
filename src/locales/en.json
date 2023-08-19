@@ -60,10 +60,10 @@
     "restore": "Restore",
     "restore-fail": "Data recovery failed. Please enter the correct encryption key and try again.",
     "restore-success": "Data recovery successful.",
-    "rule-1": "L-GPT will not automatically synchronize any of your information. This includes but is not limited to sessions, configuration details, and various API keys.",
-    "rule-2": "All data is automatically stored in the browser and local device.",
-    "rule-3": "When using the backup and cloud sync features, L-GPT will use the local encryption key provided by you to encrypt and decrypt the data using AES.",
-    "rule-4": "Please make sure to keep your key safe. If you forget the key, there is no way to recover your backed-up data correctly."
+    "rule-1": "L-GPT does not automatically sync any of your information, and all data is stored locally on the browser and device by default.",
+    "rule-2": "When using the backup and cloud sync features, L-GPT will use the local encryption key provided by you to encrypt and decrypt the data using AES.",
+    "rule-3": "If the key is lost, there is no way to correctly retrieve your backed-up data.",
+    "usage": "Usage"
   },
   "character": {
     "all": "All",
@@ -141,7 +141,8 @@
     "20009": "Your current plan does not have access to this feature. Please upgrade to the Premium or Team version to unlock it.",
     "20010": "Please configure Azure Resource Name first",
     "20011": "The maximum size for data backup should not exceed 1MB.",
-    "20012": "No backup data found for your query."
+    "20012": "No backup data found for your query.",
+    "20013": "Your current backup capacity limit is 50 KB. Please upgrade to the Premium or Team version to increase the capacity limit."
   },
   "menu": {
     "clear-all-conversation": "Clear Context",
@@ -374,9 +375,9 @@
   },
   "zLog": {
     "full-log": "Click to view the full update log",
-    "title": "v0.8.3 Released 🔥🔥",
-    "text1": "Added support for Google search, which can call the Google API to search and return results when encountering problems that exceed the AI model training date",
-    "text2": "Added function calling support",
-    "text3": "Added plugin system"
+    "title": "v0.8.4 Released 🔥🔥",
+    "text1": "Newly added cloud synchronization function, which allows the synchronization of conversation content to the cloud, making it convenient to synchronize between different devices.",
+    "text2": "Adjust the model permissions provided by OpenRouter to 'free'.",
+    "text3": "Role template now supports adding configuration for welcome messages, which will be the default first sentence in a conversation."
   }
 }

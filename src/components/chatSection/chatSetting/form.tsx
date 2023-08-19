@@ -92,7 +92,6 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
     }, [google_search.enable]);
 
     const updateList = useChannelStore((state) => state.updateList);
-    const updatePlugin = useChannelStore((state) => state.updatePlugin);
     const updateType = useModelCacheStore((state) => state.updateType);
     const updateName = useModelCacheStore((state) => state.updateName);
 

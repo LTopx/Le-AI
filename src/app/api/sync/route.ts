@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/utils/plugin/auth";
 import { prisma } from "@/lib/prisma";
 import { ResErr, ResSuccess } from "@/lib";
+import { FREE_SYNC_SIZE, PRO_SYNC_SIZE } from "@/utils/constant";
 
 // restore
 export async function GET() {
@@ -15,11 +16,6 @@ export async function GET() {
     });
 
     if (!user) return ResErr({ error: 20002 });
-
-    // audit user license
-    if (user.license_type !== "premium" && user.license_type !== "team") {
-      return ResErr({ error: 20009 });
-    }
 
     const find = await prisma.backup.findFirst({
       where: { userId: session?.user.id },
@@ -47,19 +43,23 @@ export async function POST(request: Request) {
 
     if (!user) return ResErr({ error: 20002 });
 
-    // audit user license
-    if (user.license_type !== "premium" && user.license_type !== "team") {
-      return ResErr({ error: 20009 });
-    }
+    const maxSize =
+      user.license_type === "premium" || user.license_type === "team"
+        ? PRO_SYNC_SIZE
+        : FREE_SYNC_SIZE;
 
     const { content } = await request.json();
 
-    const contentSize: any = await prisma.$queryRaw`
-    SELECT pg_column_size(${content}) AS string_size;
-  `;
+    const contentStringSize: any = await prisma.$queryRaw`
+      SELECT pg_column_size(${content}) AS string_size;
+    `;
 
-    // The maximum cannot exceed 1MB.
-    if (contentSize[0].string_size / 1024 / 1024 > 1) {
+    const contentSize = contentStringSize[0].string_size;
+
+    if (contentSize / 1024 > maxSize) {
+      if (user.license_type !== "premium" && user.license_type !== "team") {
+        return ResErr({ error: 20013 });
+      }
       return ResErr({ error: 20011 });
     }
 
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
       });
     }
 
-    return ResSuccess();
+    return ResSuccess({ data: { size: contentSize } });
   } catch (error) {
     console.log(error, "backup error");
     return ResErr({ msg: "backup error" });
