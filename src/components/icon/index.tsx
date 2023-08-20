@@ -81,19 +81,18 @@ import { Pencil_line } from "./pencil_line";
 import { Plugin_2_line } from "./plugin_2_line";
 import { Open_Router } from "./open_router";
 import { Cloud_fill } from "./cloud_fill";
-import { Safety_certificate_fill } from "./safety_certificate_fill";
 import { Contacts_line } from "./contacts_line";
 import { Cloud_line } from "./cloud_line";
+import { Safe_alert_line } from "./safe_alert_line";
 
 const Icon: React.FC<IconProps> = (props) => {
   const { icon } = props;
 
+  if (icon === "safe_alert_line") return <Safe_alert_line {...props} />;
+
   if (icon === "cloud_line") return <Cloud_line {...props} />;
 
   if (icon === "contacts_line") return <Contacts_line {...props} />;
-
-  if (icon === "safety_certificate_fill")
-    return <Safety_certificate_fill {...props} />;
 
   if (icon === "cloud_fill") return <Cloud_fill {...props} />;
 

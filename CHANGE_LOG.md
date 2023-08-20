@@ -1,5 +1,13 @@
 # L-GPT Change Log
 
+## v0.8.5
+
+> 2023-08-20
+
+### Add
+
+- Added support for one-click clearing of conversations
+
 ## v0.8.4
 
 > 2023-08-19

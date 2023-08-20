@@ -88,6 +88,8 @@
   "chat": {
     "canceled": "已取消",
     "chat-setting": "会话设置",
+    "clear-conversation": "清空会话",
+    "clear-conversation-tip": "你确认清空所有会话？",
     "clear-current-conversation": "确认清空当前会话内容？",
     "conversation-limit": "免费用户最多只能创建10个会话",
     "conversation-setting": "会话设置",

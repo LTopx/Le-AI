@@ -19,7 +19,7 @@ export default function SettingMenus() {
   const options: DropdownOption[] = [
     {
       label: (
-        <div className="flex items-center w-[92px] justify-between">
+        <div className="flex items-center w-[100px] justify-between">
           {nowTheme === "light" ? (
             <Icon icon="moon_fill" size={20} />
           ) : (
@@ -32,8 +32,8 @@ export default function SettingMenus() {
     },
     {
       label: (
-        <div className="flex items-center w-[92px] justify-between">
-          <Icon icon="safety_certificate_fill" size={20} />
+        <div className="flex items-center w-[100px] justify-between">
+          <Icon icon="safe_alert_line" size={20} />
           <div>{tCommon("privacy")}</div>
         </div>
       ),
@@ -41,7 +41,7 @@ export default function SettingMenus() {
     },
     {
       label: (
-        <div className="flex items-center w-[92px] justify-between">
+        <div className="flex items-center w-[100px] justify-between">
           <Icon icon="contacts_line" size={18} />
           <div>{tCommon("contact")}</div>
         </div>
@@ -50,7 +50,7 @@ export default function SettingMenus() {
     },
     {
       label: (
-        <div className="flex items-center w-[92px] justify-between">
+        <div className="flex items-center w-[100px] justify-between">
           <Icon icon="telegram_fill" size={18} className="text-[#3aa9ea]" />
           <div>Telegram</div>
         </div>
@@ -59,7 +59,7 @@ export default function SettingMenus() {
     },
     {
       label: (
-        <div className="flex items-center w-[92px] justify-between">
+        <div className="flex items-center w-[100px] justify-between">
           <Icon icon="settings_3_line" size={20} />
           <div>{tMenu("setting")}</div>
         </div>

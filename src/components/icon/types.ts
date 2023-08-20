@@ -81,9 +81,9 @@ export type IconType =
   | "plugin_2_line"
   | "open_router"
   | "cloud_fill"
-  | "safety_certificate_fill"
   | "contacts_line"
-  | "cloud_line";
+  | "cloud_line"
+  | "safe_alert_line";
 
 export interface IconProps {
   className?: string;

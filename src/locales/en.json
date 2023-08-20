@@ -88,6 +88,8 @@
   "chat": {
     "canceled": "Canceled",
     "chat-setting": "Settings",
+    "clear-conversation": "Clear Conversation",
+    "clear-conversation-tip": "Are you sure you want to clear all conversations?",
     "clear-current-conversation": "Are you sure to clear the current conversation?",
     "conversation-limit": "Free users can only create up to 10 sessions",
     "conversation-setting": "Conversation Setting",

@@ -1,15 +1,17 @@
 import React from "react";
-import { Button } from "@ltopx/lx-ui";
 import { useTranslations } from "next-intl";
+import { Button, Confirm } from "@ltopx/lx-ui";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
-import { useChannelStore, initChannelList } from "@/hooks/useChannel";
 import { useUserInfoStore } from "@/hooks/useUserInfo";
+import { useChannelStore, initChannelList } from "@/hooks/useChannel";
 import { useModelCacheStore } from "@/hooks/useModelCache";
+import Icon from "@/components/icon";
 
 export default function AddChannel() {
   const tMenu = useTranslations("menu");
   const tChat = useTranslations("chat");
+  const tCommon = useTranslations("common");
 
   const [list, addList] = useChannelStore((state) => [
     state.list,
@@ -18,6 +20,7 @@ export default function AddChannel() {
   const license_type = useUserInfoStore((state) => state.license_type);
 
   const checkModel = useModelCacheStore((state) => state.checkModel);
+  const clearList = useChannelStore((state) => state.clearList);
 
   const onChannelAdd = () => {
     if (
@@ -38,14 +41,33 @@ export default function AddChannel() {
   };
 
   return (
-    <Button
-      className="mb-2"
-      block
-      type="primary"
-      size="lg"
-      onClick={onChannelAdd}
-    >
-      {tMenu("new-chat")}
-    </Button>
+    <div className="flex gap-1">
+      <Button
+        className="mb-2"
+        block
+        type="primary"
+        size="lg"
+        onClick={onChannelAdd}
+      >
+        {tMenu("new-chat")}
+      </Button>
+
+      <Confirm
+        triggerClassName="flex-1"
+        title={tChat("clear-conversation")}
+        content={tChat("clear-conversation-tip")}
+        onOk={clearList}
+        okText={tCommon("ok")}
+        cancelText={tCommon("cancel")}
+        type="danger"
+      >
+        <Button
+          className="px-3"
+          size="lg"
+          type="danger"
+          icon={<Icon icon="delete_2_line" size={18} />}
+        />
+      </Confirm>
+    </div>
   );
 }

@@ -22,6 +22,7 @@ type ChannelStore = {
   updateContent: (id: string, content: string) => void;
   updateList: (list: ChannelListItem[]) => void;
   addList: (item: ChannelListItem) => void;
+  clearList: () => void;
   deleteList: (id: string) => void;
   clearItem: () => void;
   addChatItem: (content: string) => ChatItem[];
@@ -168,6 +169,14 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           localStorage.setItem("channelList", JSON.stringify(state.list));
           return { list: state.list };
         }
+      });
+    },
+    clearList: () => {
+      set(() => {
+        const activeId = initChannelList[0].channel_id;
+        localStorage.setItem("channelList", JSON.stringify(initChannelList));
+        localStorage.setItem("activeId", activeId);
+        return { activeId, list: initChannelList };
       });
     },
     deleteList: (id) => {

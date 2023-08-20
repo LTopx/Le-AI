@@ -2,7 +2,7 @@ import React from "react";
 import { Drawer } from "@ltopx/lx-ui";
 import { useOpenStore } from "@/hooks/useOpen";
 import Logo from "@/components/site/logo";
-import AddChannel from "./addChannel";
+import AddChannel from "../addChannel";
 import List from "./list";
 import Handler from "./handler";
 

@@ -82,6 +82,7 @@ export default function OpenAI() {
             className="w-22 md:w-28"
             type="primary"
             icon={<Icon icon="check_line" />}
+            disabled
             loading={loading}
             onClick={onCheck}
           >
