@@ -10,6 +10,7 @@ import Tokens from "@/components/site/tokens";
 import LicenseActivate from "./licenseActivate";
 import LanguageSelect from "./languageSelect";
 import SettingMenus from "./settingMenus";
+import Notice from "../../notice";
 
 export const languages: DropdownOption[] = [
   { label: "🇨🇳 简体中文", value: "zh-CN" },
@@ -25,6 +26,7 @@ export default function Handler() {
     <div className="border-t flex flex-col pt-2 gap-1 dark:border-white/20">
       {checkAuth() && <LicenseActivate />}
       <Tokens />
+      <Notice />
       <div className="flex h-11 items-center justify-center">
         <div className="flex flex-1 justify-center">
           <a

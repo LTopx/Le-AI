@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { nextui } from "@nextui-org/theme";
 
 const config: Config = {
   presets: [require("@ltopx/lx-ui/dist/presets")],
@@ -8,6 +9,8 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@ltopx/lx-ui/dist/**/*.{mjs,js,ts,jsx,tsx,mdx}",
+    // single component styles
+    "./node_modules/@nextui-org/theme/dist/components/table.js",
   ],
   theme: {
     extend: {
@@ -81,7 +84,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography"), nextui()],
 };
 
 export default config;

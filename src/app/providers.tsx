@@ -3,6 +3,7 @@
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import { NextIntlClientProvider, type AbstractIntlMessages } from "next-intl";
+import { NextUIProvider } from "@nextui-org/system";
 
 export default function Providers({
   children,
@@ -15,11 +16,13 @@ export default function Providers({
 }) {
   return (
     <SessionProvider>
-      <ThemeProvider attribute="class">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </ThemeProvider>
+      <NextUIProvider>
+        <ThemeProvider attribute="class">
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </ThemeProvider>
+      </NextUIProvider>
     </SessionProvider>
   );
 }

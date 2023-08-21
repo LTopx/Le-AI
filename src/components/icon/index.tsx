@@ -84,9 +84,12 @@ import { Cloud_fill } from "./cloud_fill";
 import { Contacts_line } from "./contacts_line";
 import { Cloud_line } from "./cloud_line";
 import { Safe_alert_line } from "./safe_alert_line";
+import { Bell_ringing_line } from "./bell_ringing_line";
 
 const Icon: React.FC<IconProps> = (props) => {
   const { icon } = props;
+
+  if (icon === "bell_ringing_line") return <Bell_ringing_line {...props} />;
 
   if (icon === "safe_alert_line") return <Safe_alert_line {...props} />;
 

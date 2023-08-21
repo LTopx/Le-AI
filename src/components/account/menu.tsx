@@ -22,20 +22,15 @@ export default function Menu() {
       value: "account",
       path: "/account",
     },
-    // {
-    //   label: t("teams"),
-    //   value: "team",
-    //   path: "/account/team",
-    // },
     {
       label: tAccount("user-info"),
       value: "info",
       path: "/account/info",
     },
     {
-      label: tAccount("key-manage"),
-      value: "key",
-      path: "/account/key",
+      label: tAccount("token-manage"),
+      value: "token",
+      path: "/account/token",
     },
   ];
 
@@ -45,7 +40,7 @@ export default function Menu() {
   };
 
   return (
-    <div className="w-60">
+    <div className="w-52">
       {menuItems.map((item) => (
         <div
           key={item.value}

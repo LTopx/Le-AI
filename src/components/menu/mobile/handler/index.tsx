@@ -10,6 +10,7 @@ import Tokens from "@/components/site/tokens";
 import LicenseActivate from "./licenseActivate";
 import LanguageSelect from "../../pc/handler/languageSelect";
 import SettingMenus from "../../pc/handler/settingMenus";
+import Notice from "../../notice";
 
 export default function Handler() {
   const session = useSession();
@@ -19,15 +20,16 @@ export default function Handler() {
   const updateBackupOpen = useOpenStore((state) => state.updateBackupOpen);
 
   const height = React.useMemo(() => {
-    if (session.data) return "h-[9rem]";
-    if (!checkAuth()) return "h-[3rem]";
-    return "h-[6rem]";
+    if (session.data) return "h-[12rem]";
+    if (!checkAuth()) return "h-[6rem]";
+    return "h-[9rem]";
   }, [session.data]);
 
   return (
     <div className={cn("flex flex-col border-t gap-1 pt-1", height)}>
       {checkAuth() && <LicenseActivate />}
       <Tokens mobile />
+      <Notice />
       <div className="flex h-[43px] items-center justify-center">
         <div className="flex flex-1 justify-center">
           <a
