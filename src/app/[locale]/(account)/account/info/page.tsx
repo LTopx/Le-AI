@@ -82,7 +82,7 @@ export default function UserInfo() {
   }, [session?.user]);
 
   return (
-    <div>
+    <>
       <div className="text-2xl font-semibold">{tAccount("user-info")}</div>
       <div className="text-sm mt-4 mb-8">{tAccount("account-tip")}</div>
       <div className="p-6 border rounded-md dark:border-neutral-600">
@@ -122,6 +122,6 @@ export default function UserInfo() {
           </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 }

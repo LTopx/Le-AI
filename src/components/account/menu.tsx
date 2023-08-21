@@ -14,11 +14,11 @@ export interface MenuItemProps {
 export default function Menu() {
   const pathname = usePathname();
   const router = useRouter();
-  const t = useTranslations("account");
+  const tAccount = useTranslations("account");
 
   const menuItems: MenuItemProps[] = [
     {
-      label: t("usage"),
+      label: tAccount("usage"),
       value: "account",
       path: "/account",
     },
@@ -28,9 +28,14 @@ export default function Menu() {
     //   path: "/account/team",
     // },
     {
-      label: t("user-info"),
+      label: tAccount("user-info"),
       value: "info",
       path: "/account/info",
+    },
+    {
+      label: tAccount("key-manage"),
+      value: "key",
+      path: "/account/key",
     },
   ];
 
