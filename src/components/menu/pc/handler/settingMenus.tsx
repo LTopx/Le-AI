@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
-import { Dropdown, DropdownOption } from "@ltopx/lx-ui";
+import { Dropdown, type DropdownOption } from "@ltopx/lx-ui";
 import { cn } from "@/lib";
 import { useOpenStore } from "@/hooks/useOpen";
 import Icon from "@/components/icon";

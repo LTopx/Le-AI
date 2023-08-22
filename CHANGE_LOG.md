@@ -2,13 +2,14 @@
 
 ## v0.8.5
 
-> 2023-08-21
+> 2023-08-23
 
 ### Add
 
 - Added support for one-click clearing of conversations
 - Added token management page
 - Added important announcement prompt on the left menu
+- Added token management related interfaces and database data construction
 
 ## v0.8.4
 

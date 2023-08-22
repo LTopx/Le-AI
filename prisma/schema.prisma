@@ -85,7 +85,8 @@ model ApiTokens {
   used_quota  Int       @default(0)
   // -1: no limit
   total_quota Int       @default(0)
-  expired_at  DateTime?
+  // not exist means it never expires.
+  expire      DateTime?
   userId      String
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime  @default(now())
