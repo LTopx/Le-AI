@@ -4,6 +4,10 @@
 
 > 2023-08-23
 
+### Fixed
+
+- Fixed the issue of being unable to use when not logged in but configured with an API KEY
+
 ### Add
 
 - Added support for one-click session clearing

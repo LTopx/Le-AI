@@ -44,49 +44,51 @@ export async function POST(request: Request) {
   let leai_used_quota = 0;
   let leai_userId = "";
 
-  if (!headerApiKey) {
-    user = await prisma.user.findUnique({
-      where: { id: session?.user.id },
-    });
-  } else if (headerApiKey.startsWith("leai-")) {
-    leaiApiKey = headerApiKey;
-    if (!API_KEY) return ResErr({ error: 20019 });
+  if (!headerApiKey || headerApiKey.startsWith("leai-")) {
+    if (!headerApiKey) {
+      user = await prisma.user.findUnique({
+        where: { id: session?.user.id },
+      });
+    } else if (headerApiKey.startsWith("leai-")) {
+      leaiApiKey = headerApiKey;
+      if (!API_KEY) return ResErr({ error: 20019 });
 
-    const apiToken = await prisma.apiTokens.findUnique({
-      where: { key: leaiApiKey },
-    });
-    if (!apiToken) return ResErr({ error: 20015 });
-    const { userId, status, used_quota, total_quota, expire } = apiToken;
-    leai_used_quota = used_quota;
-    leai_userId = userId;
-    if (!status) return ResErr({ error: 20016 });
+      const apiToken = await prisma.apiTokens.findUnique({
+        where: { key: leaiApiKey },
+      });
+      if (!apiToken) return ResErr({ error: 20015 });
+      const { userId, status, used_quota, total_quota, expire } = apiToken;
+      leai_used_quota = used_quota;
+      leai_userId = userId;
+      if (!status) return ResErr({ error: 20016 });
 
-    if (total_quota !== -1 && total_quota - used_quota <= 0) {
-      return ResErr({ error: 20017 });
+      if (total_quota !== -1 && total_quota - used_quota <= 0) {
+        return ResErr({ error: 20017 });
+      }
+
+      if (expire) {
+        if (+new Date() > +new Date(expire)) return ResErr({ error: 20018 });
+      }
+
+      user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
     }
 
-    if (expire) {
-      if (+new Date() > +new Date(expire)) return ResErr({ error: 20018 });
+    if (!user) return ResErr({ error: 20002 });
+
+    // audit user license
+    if (
+      user.license_type !== "premium" &&
+      user.license_type !== "team" &&
+      PREMIUM_MODELS.includes(modelLabel)
+    ) {
+      return ResErr({ error: 20009 });
     }
 
-    user = await prisma.user.findUnique({
-      where: { id: userId },
-    });
+    const { availableTokens } = user;
+    if (availableTokens <= 0) return ResErr({ error: 10005 });
   }
-
-  if (!user) return ResErr({ error: 20002 });
-
-  // audit user license
-  if (
-    user.license_type !== "premium" &&
-    user.license_type !== "team" &&
-    PREMIUM_MODELS.includes(modelLabel)
-  ) {
-    return ResErr({ error: 20009 });
-  }
-
-  const { availableTokens } = user;
-  if (availableTokens <= 0) return ResErr({ error: 10005 });
 
   let Authorization = "";
   // If you use the leai API key, you will need an environment variable key.
