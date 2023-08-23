@@ -35,7 +35,6 @@ export default function ChatList() {
   const tRecharge = useTranslations("recharge");
   const tPremium = useTranslations("premium");
   const tErrorCode = useTranslations("errorCode");
-  const tCommon = useTranslations("common");
 
   const chatEditRef = React.useRef<any>(null);
   const { catchError } = useFetchError();
@@ -180,12 +179,6 @@ export default function ChatList() {
           ),
           { duration: 5000 }
         );
-      } else if (errRes.error === 20002) {
-        errorMessage = tErrorCode("20002");
-      } else if (errRes.error === 20009) {
-        errorMessage = tErrorCode("20009");
-      } else if (errRes.error === 20010) {
-        errorMessage = tErrorCode("20010");
       } else if (errRes.error.code === "context_length_exceeded") {
         return toast(
           () => (

@@ -11,6 +11,7 @@ import LicenseActivate from "./licenseActivate";
 import LanguageSelect from "./languageSelect";
 import SettingMenus from "./settingMenus";
 import Notice from "../../notice";
+import Github from "./github";
 
 export const languages: DropdownOption[] = [
   { label: "🇨🇳 简体中文", value: "zh-CN" },
@@ -28,19 +29,7 @@ export default function Handler() {
       <Tokens />
       <Notice />
       <div className="flex h-11 items-center justify-center">
-        <div className="flex flex-1 justify-center">
-          <a
-            href="https://github.com/Peek-A-Booo/L-GPT"
-            target="_blank"
-            className={cn(
-              "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
-              "hover:bg-gray-200/60",
-              "dark:hover:bg-slate-700/70"
-            )}
-          >
-            <Icon icon="github_line" size={18} />
-          </a>
-        </div>
+        <Github />
         <LanguageSelect />
         <Tooltip
           title={tCommon("backup-sync")}

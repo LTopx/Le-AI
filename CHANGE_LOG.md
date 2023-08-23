@@ -2,11 +2,12 @@
 
 ## v0.8.5
 
-> 2023-08-23
+> 2023-08-24
 
 ### Fixed
 
 - Fixed the issue of being unable to use when not logged in but configured with an API KEY
+- Fixing invalid links.
 
 ### Add
 
@@ -15,6 +16,10 @@
 - Added important announcement prompt in the left-side menu
 - Self-built token integration logic for OpenAI, Azure OpenAI, and OpenRouter interfaces
 - Added support for configuring Le-AI API Key
+
+### Changed
+
+- Adjusted some code structure
 
 ## v0.8.4
 

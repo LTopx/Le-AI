@@ -24,8 +24,6 @@ export default function ChatFooter() {
   const tAuth = useTranslations("auth");
   const tRecharge = useTranslations("recharge");
   const tPremium = useTranslations("premium");
-  const tErrorCode = useTranslations("errorCode");
-  const tCommon = useTranslations("common");
   const tPrompt = useTranslations("prompt");
 
   const router = useRouter();
@@ -83,9 +81,7 @@ export default function ChatFooter() {
     }
   };
 
-  const onExceeded = () => {
-    window.open("https://docs.ltopx.com/conversation-limits");
-  };
+  const onExceeded = () => window.open("https://docs.ltopx.com/faq");
 
   const send = async () => {
     if (loadingChannel) return;
