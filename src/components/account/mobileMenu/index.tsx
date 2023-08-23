@@ -40,15 +40,15 @@ const MobileMenu: React.FC = () => {
       value: "account",
       path: "/account",
     },
-    // {
-    //   label: t("teams"),
-    //   value: "team",
-    //   path: "/account/team",
-    // },
     {
       label: tAccount("user-info"),
       value: "info",
       path: "/account/info",
+    },
+    {
+      label: tAccount("token-manage"),
+      value: "token",
+      path: "/account/token",
     },
   ];
 

@@ -31,7 +31,7 @@ export default function ManageToken() {
     return [
       {
         label: (
-          <div className="flex w-16 items-center justify-between">
+          <div className="flex w-[74px] items-center justify-between">
             <Icon icon="copy_2_line" size={18} />
             <div>{tCommon("copy")}</div>
           </div>
@@ -40,7 +40,7 @@ export default function ManageToken() {
       },
       {
         label: (
-          <div className="flex w-16 items-center justify-between">
+          <div className="flex w-[74px] items-center justify-between">
             <Icon icon="pencil_2_line" size={18} />
             <div>{tCommon("edit")}</div>
           </div>
@@ -49,7 +49,7 @@ export default function ManageToken() {
       },
       {
         label: (
-          <div className="flex w-16 items-center justify-between">
+          <div className="flex w-[74px] items-center justify-between">
             <Icon icon={status ? "stop_fill" : "play_fill"} size={18} />
             <div>{status ? tCommon("disable") : tCommon("enable")}</div>
           </div>
@@ -58,7 +58,7 @@ export default function ManageToken() {
       },
       {
         label: (
-          <div className="flex w-16 items-center justify-between">
+          <div className="flex w-[74px] items-center justify-between">
             <Icon icon="delete_2_line" size={18} />
             <div>{tCommon("delete")}</div>
           </div>

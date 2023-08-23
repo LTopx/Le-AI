@@ -63,6 +63,7 @@
 - [x] 支持自定义 prompt 仓库
 - [x] 支持 Function call，实现更多功能
 - [x] 支持 Claude、PaLM、Llama 2 等大语言模型 API
+- [x] 支持分发 key 在未登录的状态下使用
 - [ ] 支持超长会话
 - [ ] 支持接入 Midjourney 绘画
 - [ ] 桌面版本开发

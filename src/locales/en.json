@@ -18,7 +18,7 @@
     "token-enabled": "Enabled",
     "token-expire": "Expiration date",
     "token-expire-tip": "The expiration time of the token cannot be earlier than the current time.",
-    "token-expire-unlimited": "Never expires.",
+    "token-expire-unlimited": "Never expires",
     "token-limit": "Limit",
     "token-manage": "Token Management",
     "token-manage-tip": "Manage your tokens.",

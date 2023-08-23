@@ -63,6 +63,7 @@ Project documentation: [https://docs.ltopx.com](https://docs.ltopx.com/)
 - [x] Support custom prompt repository
 - [x] Support Function call for implementing more functionalities
 - [x] Support for large language model APIs such as Claude, PaLM, and Llama 2.
+- [x] Support distributing keys for use in an unauthenticated state.
 - [ ] Support long conversations
 - [ ] Support integration of Midjourney drawing
 - [ ] Desktop version development
