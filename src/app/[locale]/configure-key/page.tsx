@@ -16,6 +16,8 @@ export default function ConfigureKey() {
 
   const tSetting = useTranslations("setting");
 
+  if (!isInit) return <LoadingPage />;
+
   const options: TabsOption[] = [
     {
       label: "Le-AI",
@@ -28,8 +30,6 @@ export default function ConfigureKey() {
       children: <ConfigureModel />,
     },
   ];
-
-  if (!isInit) return <LoadingPage />;
 
   return (
     <>

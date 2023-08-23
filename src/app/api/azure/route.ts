@@ -7,6 +7,16 @@ import { PREMIUM_MODELS } from "@/hooks/useLLM";
 import { regular } from "./regular";
 import { function_call } from "./function_call";
 
+export async function OPTIONS() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "*",
+    },
+  });
+}
+
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const headersList = headers();

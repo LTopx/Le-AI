@@ -5,6 +5,16 @@ import { prisma } from "@/lib/prisma";
 import { ResErr } from "@/lib";
 import { regular } from "./regular";
 
+export async function OPTIONS() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "*",
+    },
+  });
+}
+
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const headersList = headers();

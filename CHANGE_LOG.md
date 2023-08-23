@@ -8,6 +8,7 @@
 
 - Fixed the issue of being unable to use when not logged in but configured with an API KEY
 - Fixing invalid links.
+- Fixing the cross-domain issue with the chatgpt interface.
 
 ### Add
 
