@@ -6,10 +6,10 @@
 
 ### Add
 
-- Added support for one-click clearing of conversations
-- Added token management page
-- Added important announcement prompt on the left menu
-- Added token management related interfaces and database data construction
+- Added support for one-click session clearing
+- Added logic and database table construction for token management page
+- Added important announcement prompt in the left-side menu
+- Self-built token integration logic for OpenAI, Azure OpenAI, and OpenRouter interfaces
 
 ## v0.8.4
 

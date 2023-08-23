@@ -33,38 +33,75 @@ export async function POST(request: Request) {
    */
   if (!session && !headerApiKey) return ResErr({ error: 10001 });
 
+  let user;
+  let leaiApiKey = "";
+  let leai_used_quota = 0;
+  let leai_userId = "";
+
   // Logging in without your own key means using the author's key.
   // At this point, you need to check the token balance of the current account first.
   if (!headerApiKey) {
-    const user = await prisma.user.findUnique({
+    user = await prisma.user.findUnique({
       where: { id: session?.user.id },
     });
-    if (!user) return ResErr({ error: 20002 });
+  } else if (headerApiKey.startsWith("leai-")) {
+    leaiApiKey = headerApiKey;
+    if (!ENV_API_KEY) return ResErr({ error: 20019 });
 
-    // audit user license
-    if (
-      user.license_type !== "premium" &&
-      user.license_type !== "team" &&
-      PREMIUM_MODELS.includes(modelLabel)
-    ) {
-      return ResErr({ error: 20009 });
+    const apiToken = await prisma.apiTokens.findUnique({
+      where: { key: leaiApiKey },
+    });
+    if (!apiToken) return ResErr({ error: 20015 });
+    const { userId, status, used_quota, total_quota, expire } = apiToken;
+    leai_used_quota = used_quota;
+    leai_userId = userId;
+    if (!status) return ResErr({ error: 20016 });
+    if (total_quota !== -1 && total_quota - used_quota <= 0) {
+      return ResErr({ error: 20017 });
     }
 
-    const { availableTokens } = user;
-    if (availableTokens <= 0) return ResErr({ error: 10005 });
+    if (expire) {
+      if (+new Date() > +new Date(expire)) return ResErr({ error: 20018 });
+    }
+
+    user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
   }
 
-  // first use local
-  // then use env configuration
-  // or empty
-  const Authorization = headerApiKey || ENV_API_KEY || "";
+  if (!user) return ResErr({ error: 20002 });
+
+  // audit user license
+  if (
+    user.license_type !== "premium" &&
+    user.license_type !== "team" &&
+    PREMIUM_MODELS.includes(modelLabel)
+  ) {
+    return ResErr({ error: 20009 });
+  }
+
+  const { availableTokens } = user;
+  if (availableTokens <= 0) return ResErr({ error: 10005 });
+
+  let Authorization = "";
+  // If you use the leai API key, you will need an environment variable key.
+  if (leaiApiKey) {
+    Authorization = ENV_API_KEY || "";
+  } else {
+    Authorization = headerApiKey || ENV_API_KEY || "";
+  }
 
   if (!Authorization) return ResErr({ error: 10002 });
 
   if (!ENV_API_VERSION) return ResErr({ error: 10004 });
 
-  const RESOURCE_NAME =
-    resourceName || process.env.NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME;
+  let RESOURCE_NAME = "";
+  if (leaiApiKey) {
+    RESOURCE_NAME = process.env.NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME || "";
+  } else {
+    RESOURCE_NAME =
+      resourceName || process.env.NEXT_PUBLIC_AZURE_OPENAI_RESOURCE_NAME || "";
+  }
 
   if (!RESOURCE_NAME) return ResErr({ error: 20010 });
 
@@ -87,6 +124,9 @@ export async function POST(request: Request) {
       max_tokens,
       userId,
       headerApiKey,
+      leaiApiKey,
+      leai_used_quota,
+      leai_userId,
     });
   }
 
@@ -100,5 +140,8 @@ export async function POST(request: Request) {
     messages,
     userId,
     headerApiKey,
+    leaiApiKey,
+    leai_used_quota,
+    leai_userId,
   });
 }

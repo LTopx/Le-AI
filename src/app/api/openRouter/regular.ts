@@ -8,6 +8,9 @@ interface IRegular extends IFetchOpenRouter {
   modelLabel: supportModelType;
   userId?: string;
   headerApiKey?: string;
+  leaiApiKey?: string;
+  leai_used_quota?: number;
+  leai_userId?: string;
 }
 
 const fetchOpenRouter = async ({
@@ -47,6 +50,9 @@ export const regular = async ({
   max_tokens,
   userId,
   headerApiKey,
+  leaiApiKey,
+  leai_used_quota,
+  leai_userId,
 }: IRegular) => {
   if (prompt) messages.unshift({ role: "system", content: prompt });
 
@@ -74,6 +80,9 @@ export const regular = async ({
       messages,
       model,
       modelLabel,
+      leaiApiKey,
+      leai_used_quota,
+      leai_userId,
     });
 
     return new Response(readable, response);

@@ -168,7 +168,12 @@
     "20011": "The maximum size for data backup should not exceed 1MB.",
     "20012": "No backup data found for your query.",
     "20013": "Your current backup capacity limit is 50 KB. Please upgrade to the Premium or Team version to increase the capacity limit.",
-    "20014": "Currently, the maximum number of tokens that can be created is three."
+    "20014": "Currently, the maximum number of tokens that can be created is three.",
+    "20015": "Your token is incorrect, please check it.",
+    "20016": "Please enable the token first.",
+    "20017": "The current token limit has been exhausted.",
+    "20018": "The current token has expired.",
+    "20019": "API_KEY environment variable not configured."
   },
   "menu": {
     "clear-all-conversation": "Clear Context",

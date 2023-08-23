@@ -12,6 +12,7 @@ import { useOpenStore } from "@/hooks/useOpen";
 import { useScrollToBottomStore } from "@/hooks/useScrollToBottom";
 import { useLLMStore } from "@/hooks/useLLM";
 import { checkAuth } from "@/lib/checkEnv";
+import { useFetchError } from "@/hooks/useFetchError";
 import Handler from "./handler";
 import Inputarea from "./inputArea";
 
@@ -28,6 +29,7 @@ export default function ChatFooter() {
   const tPrompt = useTranslations("prompt");
 
   const router = useRouter();
+  const { catchError } = useFetchError();
 
   // data
   const [inputValue, setInputValue] = React.useState<string>("");
@@ -128,7 +130,6 @@ export default function ChatFooter() {
 
       if (session.data) updateUserInfo(2000);
     } catch (errRes: any) {
-      console.log(errRes, "errRes");
       let errorMessage = "error";
       if (errRes.error === 10001) {
         return toast(
@@ -160,12 +161,6 @@ export default function ChatFooter() {
           ),
           { duration: 5000 }
         );
-      } else if (errRes.error === 20002) {
-        errorMessage = tErrorCode("20002");
-      } else if (errRes.error === 20009) {
-        errorMessage = tErrorCode("20009");
-      } else if (errRes.error === 20010) {
-        errorMessage = tErrorCode("20010");
       } else if (errRes.error.code === "context_length_exceeded") {
         return toast(
           () => (
@@ -180,7 +175,7 @@ export default function ChatFooter() {
         );
       } else {
         errorMessage =
-          errRes.msg || errRes.error?.message || tCommon("service-error");
+          errRes.msg || errRes.error?.message || catchError(errRes);
       }
       toast.error(errorMessage, { duration: 4000 });
       return;

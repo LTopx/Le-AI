@@ -15,6 +15,7 @@ import { useUserInfoStore } from "@/hooks/useUserInfo";
 import { cn, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/calcTokens/gpt-tokens";
 import { checkAuth, checkTTS } from "@/lib/checkEnv";
+import { useFetchError } from "@/hooks/useFetchError";
 import Icon from "@/components/icon";
 import Avatar from "./avatar";
 import Handler from "./handler";
@@ -37,6 +38,7 @@ export default function ChatList() {
   const tCommon = useTranslations("common");
 
   const chatEditRef = React.useRef<any>(null);
+  const { catchError } = useFetchError();
 
   const [activeId, list] = useChannelStore((state) => [
     state.activeId,
@@ -198,7 +200,7 @@ export default function ChatList() {
         );
       } else {
         errorMessage =
-          errRes.msg || errRes.error?.message || tCommon("service-error");
+          errRes.msg || errRes.error?.message || catchError(errRes);
       }
       toast.error(errorMessage, { duration: 4000 });
       return;
