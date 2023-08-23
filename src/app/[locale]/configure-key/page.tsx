@@ -2,18 +2,32 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Button } from "@ltopx/lx-ui";
+import { Button, Tabs, type TabsOption } from "@ltopx/lx-ui";
 import { useInit } from "@/hooks/useInit";
 import { cn } from "@/lib";
 import Logo from "@/components/site/logo";
 import Avatar from "@/components/site/avatar";
 import ConfigureModel from "@/components/configureModel";
+import LeAi from "@/components/configureModel/leAi";
 import LoadingPage from "@/components/loadingPage";
 
 export default function ConfigureKey() {
   const isInit = useInit();
 
   const tSetting = useTranslations("setting");
+
+  const options: TabsOption[] = [
+    {
+      label: "Le-AI",
+      value: "1",
+      children: <LeAi />,
+    },
+    {
+      label: tSetting("official-model"),
+      value: "2",
+      children: <ConfigureModel />,
+    },
+  ];
 
   if (!isInit) return <LoadingPage />;
 
@@ -47,7 +61,7 @@ export default function ConfigureKey() {
               {tSetting("configuration-learn-more")}
             </Button>
           </div>
-          <ConfigureModel />
+          <Tabs itemsFull options={options} defaultActiveTab="1" />
         </div>
       </div>
     </>

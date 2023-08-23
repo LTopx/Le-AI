@@ -14,6 +14,7 @@
 - 新增令牌管理页面相关逻辑和数据库表构建
 - 新增左侧菜单重要公告提示
 - 自构建令牌打通 OpenAI、Azure OpenAI、OpenRouter 接口逻辑
+- 新增支持配置 Le-AI API Key
 
 ## v0.8.4
 

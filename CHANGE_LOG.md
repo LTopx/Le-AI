@@ -14,6 +14,7 @@
 - Added logic and database table construction for token management page
 - Added important announcement prompt in the left-side menu
 - Self-built token integration logic for OpenAI, Azure OpenAI, and OpenRouter interfaces
+- Added support for configuring Le-AI API Key
 
 ## v0.8.4
 

@@ -78,7 +78,7 @@ export default function OpenAI() {
             value={openai.apiKey}
             onChange={(value) => onChange(value, "apiKey")}
           />
-          <Button
+          {/* <Button
             className="w-22 md:w-28"
             type="primary"
             icon={<Icon icon="check_line" />}
@@ -87,7 +87,7 @@ export default function OpenAI() {
             onClick={onCheck}
           >
             {tSetting("check")}
-          </Button>
+          </Button> */}
         </div>
         {checkStatus === "success" && (
           <div className="bg-sky-200 rounded-md mt-2 py-1 px-3 text-sm text-black/80">

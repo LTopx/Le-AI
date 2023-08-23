@@ -10,8 +10,9 @@ import { function_call } from "./function_call";
 const getEnvProxyUrl = () => {
   const API_PROXY = process.env.NEXT_PUBLIC_OPENAI_API_PROXY;
   if (!API_PROXY) return "";
-  if (API_PROXY[API_PROXY.length - 1] === "/")
+  if (API_PROXY[API_PROXY.length - 1] === "/") {
     return API_PROXY.slice(0, API_PROXY.length - 1);
+  }
   return API_PROXY;
 };
 

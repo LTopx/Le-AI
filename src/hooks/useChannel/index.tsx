@@ -302,6 +302,7 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
 
         const LLMStore = useLLMStore.getState();
         const OpenAIStore = useOpenAIStore.getState();
+        const leAIKey = OpenAIStore.leAIKey;
 
         const { decoder } = streamDecoder();
 
@@ -367,7 +368,7 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: modelConfig.apiKey,
+            Authorization: leAIKey || modelConfig.apiKey,
           },
           signal: controller.signal,
           body: JSON.stringify(params),
@@ -538,6 +539,7 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
       return new Promise((resolve, reject) => {
         const { decoder } = streamDecoder();
         const OpenAIStore = useOpenAIStore.getState();
+        const leAIKey = OpenAIStore.leAIKey;
 
         const newParams = params.newParams;
         newParams.model = "gpt-3.5-turbo";
@@ -551,7 +553,7 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: OpenAIStore.openai.apiKey,
+            Authorization: leAIKey || OpenAIStore.openai.apiKey,
           },
           body: JSON.stringify(newParams),
         }).then(async (response) => {
