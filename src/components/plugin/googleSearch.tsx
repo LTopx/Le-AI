@@ -51,7 +51,7 @@ export default function GoogleSearch() {
           <li>
             <a
               className="text-sky-500 hover:underline"
-              href="https://docs.ltopx.com/features/plugin"
+              href="https://docs.le-ai.app/features/plugin"
               target="_blank"
             >
               {tPlugin("check-configure")}

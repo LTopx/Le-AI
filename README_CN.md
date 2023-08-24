@@ -26,7 +26,7 @@
 
 <div align="center">
 
-[直接访问](https://le-ai.app/) | [帮助文档](https://docs.ltopx.com/) | [常见问题](https://docs.ltopx.com/faq) | [更新日志](https://docs.ltopx.com/change-log) | [反馈](https://github.com/LTopx/Le-AI/issues) | [TG 群](https://t.me/+7fLJJoGV_bJhYTk1) | [联系作者](https://goethan.cc/)
+[直接访问](https://le-ai.app/) | [帮助文档](https://docs.le-ai.app/) | [常见问题](https://docs.le-ai.app/faq) | [更新日志](https://docs.le-ai.app/change-log) | [反馈](https://github.com/LTopx/Le-AI/issues) | [TG 群](https://t.me/+7fLJJoGV_bJhYTk1) | [联系作者](https://goethan.cc/)
 
 </div>
 
@@ -42,7 +42,7 @@
 
 直接访问：[https://le-ai.app](https://le-ai.app/)
 
-项目帮助文档：[https://docs.ltopx.com](https://docs.ltopx.com/)
+项目帮助文档：[https://docs.le-ai.app](https://docs.le-ai.app/)
 
 ## 🎯 功能特色
 
@@ -54,7 +54,7 @@
 - 支持 OpenAI 和 Azure OpenAI
 - 支持自定义角色模板，创造更多 AI 可能性
 - 支持 i18n 多语言国际化: English、简体中文
-- 了解更多，更多请查阅 [帮助文档](https://docs.ltopx.com/)
+- 了解更多，更多请查阅 [帮助文档](https://docs.le-ai.app/)
 
 ## 📍 开发计划
 
@@ -110,7 +110,7 @@ pnpm build && pnpm start
 
 ## 更多可选环境变量
 
-参考文档：[https://docs.ltopx.com](https://docs.ltopx.com/develop/env)
+参考文档：[https://docs.le-ai.app](https://docs.le-ai.app/develop/env)
 
 ## 协议
 

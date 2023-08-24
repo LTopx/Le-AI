@@ -168,7 +168,7 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
             outline
             size="sm"
             type="success"
-            onClick={() => window.open("https://docs.ltopx.com", "_blank")}
+            onClick={() => window.open("https://docs.le-ai.app", "_blank")}
             icon={<Icon icon="document_line" size={18} />}
           >
             {tCommon("docs")}

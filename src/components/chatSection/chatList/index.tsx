@@ -119,7 +119,7 @@ export default function ChatList() {
   };
 
   const onExceeded = () => {
-    window.open("https://docs.ltopx.com/faq");
+    window.open("https://docs.le-ai.app/faq");
   };
 
   const onRegenerate = async (item: ChatItem) => {

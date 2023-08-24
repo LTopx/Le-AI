@@ -153,7 +153,7 @@ export default function Avatar() {
         await signOut({ callbackUrl: "/" });
         break;
       case "documentation":
-        window.open("https://docs.ltopx.com");
+        window.open("https://docs.le-ai.app");
         break;
       case "license":
         if (pathname !== "/") return;

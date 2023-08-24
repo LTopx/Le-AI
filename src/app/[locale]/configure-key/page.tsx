@@ -55,7 +55,7 @@ export default function ConfigureKey() {
           <div className="my-2 flex justify-center">
             <Button
               type="link"
-              href="https://docs.ltopx.com/api-key-configure"
+              href="https://docs.le-ai.app/api-key-configure"
               target="_blank"
             >
               {tSetting("configuration-learn-more")}

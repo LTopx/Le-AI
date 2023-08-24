@@ -190,7 +190,7 @@ export default function ModalContent({ onClose }: IProps) {
           </ul>
           <div className="flex">
             <Button
-              href="https://docs.ltopx.com/features/cloud-synchronous"
+              href="https://docs.le-ai.app/features/cloud-synchronous"
               target="_blank"
               type="link"
             >
@@ -209,7 +209,7 @@ export default function ModalContent({ onClose }: IProps) {
             {isFree && (
               <a
                 className="text-sky-400 dark:text-sky-500 hover:underline cursor-pointer"
-                href="https://docs.ltopx.com/features/cloud-synchronous"
+                href="https://docs.le-ai.app/features/cloud-synchronous"
                 target="_blank"
               >
                 (Free)

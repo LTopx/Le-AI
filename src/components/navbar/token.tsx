@@ -108,7 +108,7 @@ const Token = React.forwardRef<any, TokenProps>(({ cost }, forwardedRef) => {
           <Button
             className="pl-0"
             type="link"
-            href="https://docs.ltopx.com/token"
+            href="https://docs.le-ai.app/token"
             target="_blank"
           >
             {tToken("learn-more")}

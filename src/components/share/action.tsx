@@ -115,7 +115,7 @@ const Action = React.forwardRef((_, forwardedRef) => {
         <div>❌❌ {tShare("share-delete-tip")}</div>
         <div>
           <a
-            href="https://docs.ltopx.com/token"
+            href="https://docs.le-ai.app/token"
             target="_blank"
             className="mx-0.5 text-sm transition-colors text-sky-500 hover:text-sky-400"
           >

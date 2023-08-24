@@ -21,6 +21,7 @@
 ### Changed
 
 - Adjust the project name: L-GPT => Le-AI
+- Adjust all the copy and related links within the project regarding L-GPT.
 - Adjusted some code structure
 - Add the Le-AI API Key to the logic for determining whether the key is configured.
 
@@ -323,7 +324,7 @@
 ### Add
 
 - Add a scheduled service to clear useless conversation shares older than 7 days.
-- Adding a link to the [Le-AI documentation](https://docs.ltopx.com) for navigation.
+- Adding a link to the [Le-AI documentation](https://docs.le-ai.app) for navigation.
 
 ### Fixed
 

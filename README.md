@@ -26,7 +26,7 @@
 
 <div align="center">
 
-[Demo](https://le-ai.app/) | [Docs](https://docs.ltopx.com/) | [Q&A](https://docs.ltopx.com/faq) | [Change Log](https://docs.ltopx.com/change-log) | [Feedback](https://github.com/LTopx/Le-AI/issues) | [Telegram](https://t.me/+7fLJJoGV_bJhYTk1) | [Contact Me](https://goethan.cc/)
+[Demo](https://le-ai.app/) | [Docs](https://docs.le-ai.app/) | [Q&A](https://docs.le-ai.app/faq) | [Change Log](https://docs.le-ai.app/change-log) | [Feedback](https://github.com/LTopx/Le-AI/issues) | [Telegram](https://t.me/+7fLJJoGV_bJhYTk1) | [Contact Me](https://goethan.cc/)
 
 </div>
 
@@ -42,7 +42,7 @@
 
 Direct access: [https://le-ai.app](https://le-ai.app/)
 
-Project documentation: [https://docs.ltopx.com](https://docs.ltopx.com/)
+Project documentation: [https://docs.le-ai.app](https://docs.le-ai.app/)
 
 ## 🎯 Key Features
 
@@ -54,7 +54,7 @@ Project documentation: [https://docs.ltopx.com](https://docs.ltopx.com/)
 - Supports OpenAI and Azure OpenAI
 - Supports custom role templates to create more AI possibilities
 - Supports i18n multilingual internationalization: English, Simplified Chinese
-- For more information, please refer to the [documentation](https://docs.ltopx.com/)
+- For more information, please refer to the [documentation](https://docs.le-ai.app/)
 
 ## 📍 Development Plan
 
@@ -110,7 +110,7 @@ pnpm build && pnpm start
 
 ## More Optional Environment Variables
 
-Refer to the documentation: [https://docs.ltopx.com](https://docs.ltopx.com/develop/env)
+Refer to the documentation: [https://docs.le-ai.app](https://docs.le-ai.app/develop/env)
 
 ## License
 

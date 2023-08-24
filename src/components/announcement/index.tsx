@@ -16,8 +16,8 @@ export default function Announcement() {
 
   const url =
     locale === "zh-CN"
-      ? "https://docs.ltopx.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.8.4-1-zh-CN.b45cbba3.png&w=1080&q=75"
-      : "https://docs.ltopx.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.8.4-1-en.b530893e.png&w=1080&q=75";
+      ? "https://docs.le-ai.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.8.4-1-zh-CN.b45cbba3.png&w=1080&q=75"
+      : "https://docs.le-ai.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.8.4-1-en.b530893e.png&w=1080&q=75";
 
   const onClose = () => {
     localStorage.setItem("announcement_version", pkg.version);
@@ -50,7 +50,7 @@ export default function Announcement() {
           <Button
             type="link"
             target="_blank"
-            href="https://docs.ltopx.com/change-log"
+            href="https://docs.le-ai.app/change-log"
           >
             {tZLog("full-log")}
           </Button>

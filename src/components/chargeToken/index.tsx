@@ -140,7 +140,7 @@ export default function ChargeToken() {
         </Button>
       </div>
       <div className="mt-2 flex">
-        <Button type="link" target="_blank" href="https://docs.ltopx.com/token">
+        <Button type="link" target="_blank" href="https://docs.le-ai.app/token">
           {tRecharge("learn-more-about-token")}
         </Button>
       </div>

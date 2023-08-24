@@ -81,7 +81,7 @@ export default function ChatFooter() {
     }
   };
 
-  const onExceeded = () => window.open("https://docs.ltopx.com/faq");
+  const onExceeded = () => window.open("https://docs.le-ai.app/faq");
 
   const send = async () => {
     if (loadingChannel) return;

@@ -72,7 +72,7 @@ export default function SettingMenus() {
     if (value === "theme") {
       setTheme(nowTheme === "light" ? "dark" : "light");
     } else if (value === "privacy") {
-      window.open("https://docs.ltopx.com/privacy");
+      window.open("https://docs.le-ai.app/privacy");
     } else if (value === "contact") {
       window.open("https://goethan.cc");
     } else if (value === "telegram") {

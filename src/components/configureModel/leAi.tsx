@@ -24,7 +24,7 @@ export default function LeAi() {
       <div className="text-sm text-[hsl(240,3.8%,46.1%)]">
         {tSetting("leai-api-tip")}{" "}
         <a
-          href="https://docs.ltopx.com/api-key-configure/le-ai"
+          href="https://docs.le-ai.app/api-key-configure/le-ai"
           className="text-sky-400 hover:text-sky-500 transition-colors hover:underline"
           target="_blank"
         >
