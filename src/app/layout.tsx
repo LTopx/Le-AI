@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "L-GPT",
+  title: "Le-AI",
   description:
-    "L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
+    "Le-AI is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
   icons: {
     icon: [
       {
@@ -43,34 +43,34 @@ export const metadata: Metadata = {
     maximumScale: 1,
     userScalable: false,
   },
-  appleWebApp: { capable: true, title: "L-GPT" },
+  appleWebApp: { capable: true, title: "Le-AI" },
   openGraph: {
-    title: "L-GPT | An AI Assitant Hub",
+    title: "Le-AI | An AI Assitant Hub",
     description:
-      "L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
-    url: "https://chat.ltopx.com",
-    siteName: "L-GPT",
+      "Le-AI is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
+    url: "https://le-ai.app",
+    siteName: "Le-AI",
     locale: "zh_CN",
     type: "website",
     images: {
-      url: "https://chat.ltopx.com/opengraph-image.png?v=1",
+      url: "https://le-ai.app/opengraph-image.png?v=2",
       width: 1200,
       height: 675,
-      alt: "L-GPT",
+      alt: "Le-AI",
     },
   },
   twitter: {
     card: "summary_large_image",
-    title: "L-GPT | An AI Assitant Hub",
+    title: "Le-AI | An AI Assitant Hub",
     description:
-      "L-GPT is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
+      "Le-AI is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
     site: "@peekbomb",
     creator: "@peekbomb",
     images: {
-      url: "https://chat.ltopx.com/twitter-image.png?v=1",
+      url: "https://le-ai.app/twitter-image.png?v=2",
       width: 1200,
       height: 675,
-      alt: "L-GPT",
+      alt: "Le-AI",
     },
   },
 };

@@ -1,4 +1,4 @@
-# L-GPT 更新日志
+# Le-AI 更新日志
 
 ## v0.8.5
 
@@ -20,6 +20,7 @@
 
 ### 调整
 
+- 调整项目名称：L-GPT => Le-AI
 - 调整部分代码结构
 - 判断是否配置 key 的逻辑把 Le-AI API Key 加上了
 
@@ -236,7 +237,7 @@
 
 ### 修复
 
-- 修复 Github 登录时点击取消返回页面显示有误的问题 [#2](https://github.com/Peek-A-Booo/L-GPT/issues/2)
+- 修复 Github 登录时点击取消返回页面显示有误的问题 [#2](https://github.com/LTopx/Le-AI/issues/2)
 
 ### 新增
 
@@ -322,7 +323,7 @@
 ### 新增
 
 - 添加清除 7 天之前无用的会话分享的定时服务
-- 添加跳转 [L-GPT 文档链接](https://docs.ltopx.com)
+- 添加跳转 [Le-AI 文档链接](https://docs.ltopx.com)
 
 ### 修复
 

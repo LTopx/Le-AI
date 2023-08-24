@@ -95,7 +95,7 @@ const Action = React.forwardRef((_, forwardedRef) => {
       const baseURL =
         process.env.NODE_ENV === "development"
           ? "http://localhost:3000"
-          : "https://chat.ltopx.com";
+          : "https://le-ai.app";
       setShareLink(`${baseURL}/share/${id}`);
       setOpen(true);
     },

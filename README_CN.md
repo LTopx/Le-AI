@@ -1,21 +1,21 @@
-<h4 align="right"><strong><a href="https://github.com/LTopx/L-GPT/blob/main/README.md">English</a></strong> | 中文</h4>
+<h4 align="right"><strong><a href="https://github.com/LTopx/Le-AI/blob/main/README.md">English</a></strong> | 中文</h4>
 
 <p align="center">
-    <a href="https://chat.ltopx.com" target="_blank" rel="noopener noreferrer">
-        <img width="100" src="./public/favicon-96x96.png" alt="L-GPT" />
+    <a href="https://le-ai.app" target="_blank" rel="noopener noreferrer">
+        <img width="100" src="./public/favicon-96x96.png" alt="Le-AI" />
     </a>
 </p>
 
-<h1 align="center">L-GPT</h1>
+<h1 align="center">Le-AI</h1>
 
 <p align="center">您的开源 AI 聚合服务助手，帮您效率UP UP~</p>
 
 <p align="center">
-<a href="https://github.com/LTopx/L-GPT/releases">
-  <img alt="GitHub release" src="https://img.shields.io/github/release/LTopx/L-GPT.svg?style=flat-square&include_prereleases" />
+<a href="https://github.com/LTopx/Le-AI/releases">
+  <img alt="GitHub release" src="https://img.shields.io/github/release/LTopx/Le-AI.svg?style=flat-square&include_prereleases" />
 </a>
-<a href="https://github.com/LTopx/L-GPT/commits">
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/LTopx/L-GPT.svg?style=flat-square" />
+<a href="https://github.com/LTopx/Le-AI/commits">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/LTopx/Le-AI.svg?style=flat-square" />
 </a>
 <a href="https://twitter.com/peekbomb" target="_blank">
   <img alt="twitter" src="https://img.shields.io/badge/follow-Ethan Liu-red?style=flat-square&logo=Twitter">
@@ -26,23 +26,21 @@
 
 <div align="center">
 
-[直接访问](https://chat.ltopx.com/) | [帮助文档](https://docs.ltopx.com/) | [常见问题](https://docs.ltopx.com/faq) | [更新日志](https://docs.ltopx.com/change-log) | [反馈](https://github.com/LTopx/L-GPT/issues) | [TG 群](https://t.me/+7fLJJoGV_bJhYTk1) | [联系作者](https://goethan.cc/)
+[直接访问](https://le-ai.app/) | [帮助文档](https://docs.ltopx.com/) | [常见问题](https://docs.ltopx.com/faq) | [更新日志](https://docs.ltopx.com/change-log) | [反馈](https://github.com/LTopx/Le-AI/issues) | [TG 群](https://t.me/+7fLJJoGV_bJhYTk1) | [联系作者](https://goethan.cc/)
 
 </div>
 
 <div align="center">
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/L-GPT)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/Le-AI)
 
 </div>
 
-<p align="center">
-  <img src="./public/screenshots/screenshot.png" height="500px">
-</p>
+![cover](./public/screenshots/screenshot.png)
 
 ## ✨ Demo
 
-直接访问：[https://chat.ltopx.com](https://chat.ltopx.com/)
+直接访问：[https://le-ai.app](https://le-ai.app/)
 
 项目帮助文档：[https://docs.ltopx.com](https://docs.ltopx.com/)
 
@@ -72,7 +70,7 @@
 
 目前支持一键部署到 Vercel。
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/L-GPT)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/Le-AI)
 
 ## 🪄 本地开发
 
@@ -116,4 +114,4 @@ pnpm build && pnpm start
 
 ## 协议
 
-[GNU](https://github.com/LTopx/L-GPT/blob/main/LICENSE)
+[GNU](https://github.com/LTopx/Le-AI/blob/main/LICENSE)

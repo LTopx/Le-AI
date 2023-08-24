@@ -76,7 +76,7 @@ export default function PremiumBtn(props: PremiumBtnProps) {
         >
           {license_type === "premium"
             ? tPremium("premium-already")
-            : `${tPremium("buy")} L-GPT ${tPremium("premium")}`}
+            : `${tPremium("buy")} Le-AI ${tPremium("premium")}`}
         </Button>
       </div>
     );

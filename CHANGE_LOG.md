@@ -1,4 +1,4 @@
-# L-GPT Change Log
+# Le-AI Change Log
 
 ## v0.8.5
 
@@ -20,6 +20,7 @@
 
 ### Changed
 
+- Adjust the project name: L-GPT => Le-AI
 - Adjusted some code structure
 - Add the Le-AI API Key to the logic for determining whether the key is configured.
 
@@ -236,7 +237,7 @@
 
 ### Fixed
 
-- Fix the issue where the page displays incorrectly when clicking Cancel during Github login [#2](https://github.com/Peek-A-Booo/L-GPT/issues/2)
+- Fix the issue where the page displays incorrectly when clicking Cancel during Github login [#2](https://github.com/LTopx/Le-AI/issues/2)
 
 ### Add
 
@@ -322,7 +323,7 @@
 ### Add
 
 - Add a scheduled service to clear useless conversation shares older than 7 days.
-- Adding a link to the [L-GPT documentation](https://docs.ltopx.com) for navigation.
+- Adding a link to the [Le-AI documentation](https://docs.ltopx.com) for navigation.
 
 ### Fixed
 

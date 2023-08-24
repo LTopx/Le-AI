@@ -23,7 +23,7 @@ export default function ChargeToken() {
         <div className="border rounded-md max-h-[calc(100vh-400px)] p-4 box-border overflow-y-auto relative dark:border-neutral-200/40">
           <div>
             <div className="flex font-semibold text-2xl gap-2">
-              <span className="dark:text-neutral-300">L-GPT Points 1</span>
+              <span className="dark:text-neutral-300">Le-AI Points 1</span>
             </div>
             <div>
               <span className="bg-clip-text bg-license-premium font-semibold text-transparent text-3xl">
@@ -72,7 +72,7 @@ export default function ChargeToken() {
         <div className="border rounded-md max-h-[calc(100vh-400px)] p-4 box-border overflow-y-auto relative dark:border-neutral-200/40">
           <div>
             <div className="flex font-semibold text-2xl gap-2">
-              <span className="dark:text-neutral-300">L-GPT Points 2</span>
+              <span className="dark:text-neutral-300">Le-AI Points 2</span>
             </div>
             <div>
               <span className="bg-clip-text bg-license-premium font-semibold text-transparent text-3xl">

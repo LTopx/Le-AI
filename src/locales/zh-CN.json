@@ -46,7 +46,7 @@
     "configuration-1": "服务器配置有误。",
     "configuration-2": "查看服务器日志获取更多信息。",
     "continue": "继续",
-    "continue-gpt": "继续使用 L-GPT",
+    "continue-gpt": "继续使用 Le-AI",
     "continue-with-github": "使用 Github 登录",
     "continue-with-google": "使用 Google 登录",
     "documentation": "文档",
@@ -79,8 +79,8 @@
     "restore": "恢复",
     "restore-fail": "数据恢复失败，请输入正确的加密密钥重试",
     "restore-success": "数据恢复成功",
-    "rule-1": "L-GPT 不会自动同步你的任何信息，所有的数据都默认存储在浏览器和设备本地。",
-    "rule-2": "当使用备份和云同步功能时，L-GPT将采用您提供的本地加密密钥对数据进行AES加密解密。",
+    "rule-1": "Le-AI 不会自动同步你的任何信息，所有的数据都默认存储在浏览器和设备本地。",
+    "rule-2": "当使用备份和云同步功能时，Le-AI将采用您提供的本地加密密钥对数据进行AES加密解密。",
     "rule-3": "若密钥遗失，则没有任何办法能够正确找回您备份的数据。",
     "usage": "使用情况"
   },
@@ -147,7 +147,7 @@
     "ok": "确 定",
     "operation-successful": "操作成功",
     "please-enter": "请输入",
-    "premium": "L-GPT 高级版",
+    "premium": "Le-AI 高级版",
     "privacy": "隐私",
     "retry": "重试",
     "service-error": "服务开小差啦，请稍后再试",
@@ -209,7 +209,7 @@
     "buy-for-you": "点击购买",
     "coming-soon": "即将推出",
     "enter-license-key": "请输入您的许可证秘钥",
-    "enter-license-key-to-lock-features": "请输入您的 L-GPT 许可证秘钥来解锁所有功能。",
+    "enter-license-key-to-lock-features": "请输入您的 Le-AI 许可证秘钥来解锁所有功能。",
     "free": "免费版",
     "free-1": "赠送 1.5W 点数试用额度",
     "free-2": "基础聊天功能",
@@ -221,10 +221,10 @@
     "get-free-trial": "获取免费试用",
     "get-more-token": "获取更多点数?",
     "gift-code-used-success": "礼品码使用成功",
-    "learn-more-license": "了解更多关于L-GPT License的信息...",
-    "license": "L-GPT 许可证",
-    "license-activate": "L-GPT 许可证激活",
-    "license-key-activated": "L-GPT 许可证激活成功！",
+    "learn-more-license": "了解更多关于Le-AI License的信息...",
+    "license": "Le-AI 许可证",
+    "license-activate": "Le-AI 许可证激活",
+    "license-key-activated": "Le-AI 许可证激活成功！",
     "more-license": "查看更多许可",
     "not-have-one": "没有许可证秘钥?",
     "premium": "高级版",
@@ -242,7 +242,7 @@
     "team-2": "作为团队管理员",
     "team-3": "支持团队管理",
     "team-4": "更多功能即将推出",
-    "tokens-recharged": "L-GPT 点数充值成功！"
+    "tokens-recharged": "Le-AI 点数充值成功！"
   },
   "prompt": {
     "add-prompt": "新增 Prompt",
@@ -285,7 +285,7 @@
     "under-review": "待审核"
   },
   "recharge": {
-    "learn-more-about-token": "了解更多关于L-GPT 点数的信息...",
+    "learn-more-about-token": "了解更多关于Le-AI 点数的信息...",
     "no-expiration-date": "没有过期时间，用完为止",
     "pkg": "充值包",
     "pkg-1-desc-1": "166W 点数 (≈ 125W 字, GPT-3.5)",
@@ -296,7 +296,7 @@
     "tokens-recharge": "点数充值"
   },
   "responseErr": {
-    "10001": "请先登录或自行配置API Key来使用L-GPT",
+    "10001": "请先登录或自行配置API Key来使用Le-AI",
     "10002": "API Key缺失，请检查配置或联系开发人员",
     "10003": "语言模型参数错误",
     "10004": "请先配置Azure API Version",
@@ -346,7 +346,7 @@
     "get-apiKey": "点击此处获取API Key",
     "import-success": "数据导入成功!",
     "leai-api-key-error": "Le-AI API Key 是由 leai- 打头的字符串",
-    "leai-api-tip": "Le-AI API Key 是由 L-GPT 生成的密钥令牌。配置后，可以直接替换官方模型的 API Key 使用。",
+    "leai-api-tip": "Le-AI API Key 是由 Le-AI 生成的密钥令牌。配置后，可以直接替换官方模型的 API Key 使用。",
     "llm-configuration": "大语言模型配置",
     "max-tokens": "单次回复限制",
     "max-tokens-tip": "设置每个模型响应的令牌数量限制。这些令牌在提示(包括系统消息、示例、消息历史记录和用户查询)和模型响应之间共享。一个令牌大约是典型英文文本的 4 个字符。",
@@ -367,7 +367,7 @@
     "sure-delete-deployment": "你确认删除该部署？",
     "temperature": "随机性",
     "temperature-tip": "较高的数值会使输出更随机，而较低的数值会使输出更加聚焦和确定性更强。",
-    "title": "L-GPT 设置"
+    "title": "Le-AI 设置"
   },
   "token": {
     "conversation-cost": "会话成本",
@@ -411,7 +411,7 @@
   },
   "zLog": {
     "full-log": "点击查看完整更新日志",
-    "menu-notice": "L-GPT客户端即将推出",
+    "menu-notice": "Le-AI客户端即将推出",
     "title": "v0.8.4 更新公告 🔥🔥",
     "text1": "新增云同步功能，可以同步会话内容到云端，方便在不同设备之间同步",
     "text2": "调整 OpenRouter 提供的模型权限为 free",

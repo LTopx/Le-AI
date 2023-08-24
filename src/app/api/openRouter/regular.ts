@@ -25,8 +25,8 @@ const fetchOpenRouter = async ({
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${Authorization}`,
-      "HTTP-Referer": "https://chat.ltopx.com",
-      "X-Title": "L-GPT",
+      "HTTP-Referer": "https://le-ai.app",
+      "X-Title": "Le-AI",
     },
     method: "POST",
     body: JSON.stringify({

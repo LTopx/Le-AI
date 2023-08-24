@@ -41,7 +41,7 @@ const Activate = React.forwardRef((_, forwardedRef) => {
       return inputRef.current?.focus();
     }
 
-    const params = { license_key: licenseKey, instance_name: "L-GPT" };
+    const params = { license_key: licenseKey, instance_name: "Le-AI" };
     setLoading(true);
     fetch("/api/licenses/activate", {
       method: "POST",

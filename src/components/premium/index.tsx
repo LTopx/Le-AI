@@ -22,7 +22,7 @@ export default function Premium() {
         <div className="border rounded-md max-h-[calc(100vh-400px)] p-4 box-border overflow-y-auto relative dark:border-neutral-200/40">
           <div>
             <div className="flex font-semibold text-2xl gap-2">
-              <span>L-GPT</span>
+              <span>Le-AI</span>
               <span>{tPremium("free")}</span>
             </div>
             <div className="flex flex-col mt-2 text-sm gap-2">
@@ -88,7 +88,7 @@ export default function Premium() {
         >
           <div>
             <div className="flex font-semibold text-2xl gap-2">
-              <span className="dark:text-neutral-600">L-GPT</span>
+              <span className="dark:text-neutral-600">Le-AI</span>
               <span className="bg-clip-text bg-license-premium text-transparent">
                 {tPremium("premium")}
               </span>
@@ -186,7 +186,7 @@ export default function Premium() {
         >
           <div>
             <div className="flex font-semibold text-2xl gap-2">
-              <span className="dark:text-neutral-600">L-GPT</span>
+              <span className="dark:text-neutral-600">Le-AI</span>
               <span className="bg-clip-text bg-license-team text-transparent">
                 {tPremium("team")}
               </span>

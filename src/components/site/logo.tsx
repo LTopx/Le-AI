@@ -50,7 +50,7 @@ export default function Logo({
         onClick={onClick}
       >
         <span className="bg-clip-text animate-flow bg-logo bg-[size:400%]">
-          L-GPT
+          Le-AI
         </span>
         {!!share && (
           <span className="bg-clip-text bg-share-ico animate-flow bg-[size:400%]">

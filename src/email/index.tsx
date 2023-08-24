@@ -12,7 +12,7 @@ export async function sendVerificationRequest(
   const result = await transport.sendMail({
     to: identifier,
     from: provider.from,
-    subject: `Sign in to L-GPT`,
+    subject: `Sign in to Le-AI`,
     text: text({ url, host }),
     html: render(<Email url={url} />),
   });
@@ -24,5 +24,5 @@ export async function sendVerificationRequest(
 
 /** Email Text body (fallback for email clients that don't render HTML, e.g. feature phones) */
 function text({ url, host }: { url: string; host: string }) {
-  return `Sign in to L-GPT ${host}\n${url}\n\n`;
+  return `Sign in to Le-AI ${host}\n${url}\n\n`;
 }
