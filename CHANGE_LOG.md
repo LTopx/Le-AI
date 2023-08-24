@@ -21,6 +21,7 @@
 ### Changed
 
 - Adjusted some code structure
+- Add the Le-AI API Key to the logic for determining whether the key is configured.
 
 ## v0.8.4
 

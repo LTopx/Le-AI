@@ -5,21 +5,25 @@ import { useOpenAIStore } from "@/hooks/useOpenAI";
 export default function Welcome() {
   const tWelcome = useTranslations("welcome");
 
-  const [openAIKey, azureKey, openRouterKey, env] = useOpenAIStore((state) => [
-    state.openai.apiKey,
-    state.azure.apiKey,
-    state.openRouter.apiKey,
-    state.env,
-  ]);
+  const [openAIKey, azureKey, openRouterKey, leAIKey, env] = useOpenAIStore(
+    (state) => [
+      state.openai.apiKey,
+      state.azure.apiKey,
+      state.openRouter.apiKey,
+      state.leAIKey,
+      state.env,
+    ]
+  );
 
   const apiKey = React.useMemo(
     () =>
       openAIKey ||
       azureKey ||
       openRouterKey ||
+      leAIKey ||
       env.OPENAI_API_KEY ||
       env.AZURE_API_KEY,
-    [openAIKey, azureKey, openRouterKey, env]
+    [openAIKey, azureKey, openRouterKey, leAIKey, env]
   );
 
   if (apiKey) return null;
