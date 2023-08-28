@@ -44,6 +44,7 @@ export const metadata: Metadata = {
     userScalable: false,
   },
   appleWebApp: { capable: true, title: "Le-AI" },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_METABASE_URL as string),
   openGraph: {
     title: "Le-AI | An AI Assitant Hub",
     description:

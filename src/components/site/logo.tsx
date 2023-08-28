@@ -44,9 +44,9 @@ export default function Logo({
         { "text-4xl": size === "large" }
       )}
     >
-      <Image src="/logo.png" alt="logo" width={38} height={38} />
+      <Image src="/logo.png" alt="logo" width={30} height={30} />
       <div
-        className="flex items-center gap-2 cursor-pointer select-none text-transparent font-extrabold"
+        className="flex font-extrabold text-transparent gap-2 items-center cursor-pointer select-none"
         onClick={onClick}
       >
         <span className="bg-clip-text animate-flow bg-logo bg-[size:400%]">
