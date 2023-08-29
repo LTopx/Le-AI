@@ -18,7 +18,7 @@ const AuthVerify: React.FC = () => {
         )}
       >
         <Logo disabled size="large" />
-        <div className="font-medium text-2xl">{tAuth("check-email")}</div>
+        <div className="font-medium text-2xl">{tAuth("check-mail")}</div>
         <div>{tAuth("sign-in-link")}</div>
       </div>
 

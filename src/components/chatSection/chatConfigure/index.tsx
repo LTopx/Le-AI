@@ -56,8 +56,7 @@ const renderModelLabel = (item: any) => {
 };
 
 export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
-  const tPrompt = useTranslations("prompt");
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
 
   const [isShow, setIsShow] = React.useState(true);
   const [isAnimation, setIsAnimation] = React.useState(false);
@@ -147,7 +146,7 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
             />
             <div className="flex mt-4 gap-4 items-center">
               <div className="text-sm text-black/90 dark:text-white/90">
-                {tPrompt("model")}
+                {tGlobal("model")}
               </div>
               <div className="flex-1">
                 <Select
@@ -171,7 +170,7 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
             onClick={() => window.open("https://docs.le-ai.app", "_blank")}
             icon={<Icon icon="document_line" size={18} />}
           >
-            {tCommon("docs")}
+            {tGlobal("docs")}
           </Button>
         </div>
         <div className="flex justify-center mt-5">

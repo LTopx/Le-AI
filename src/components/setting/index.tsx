@@ -11,7 +11,7 @@ import ImportExport from "./importExport";
 import SendMessageType from "./sendMessageType";
 
 export default function Setting() {
-  const tSetting = useTranslations("setting");
+  const tGlobal = useTranslations("global");
   const tTTS = useTranslations("tts");
   const tPlugin = useTranslations("plugin");
 
@@ -38,7 +38,7 @@ export default function Setting() {
 
   return (
     <Modal
-      title={tSetting("title")}
+      title={`Le-AI ${tGlobal("setting")}`}
       open={open}
       onClose={onClose}
       footer={null}

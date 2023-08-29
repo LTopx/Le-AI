@@ -7,7 +7,7 @@ import Activate from "@/components/premium/activate";
 export default function LicenseActivate() {
   const activateRef = React.useRef<any>(null);
 
-  const tPremium = useTranslations("premium");
+  const tGlobal = useTranslations("global");
 
   const onActivate = () => activateRef.current?.init();
 
@@ -22,7 +22,7 @@ export default function LicenseActivate() {
         )}
       >
         <Icon icon="key_2_line" size={16} />
-        {tPremium("license-activate")}
+        {tGlobal("license-activate")}
       </div>
       <Activate ref={activateRef} />
     </>

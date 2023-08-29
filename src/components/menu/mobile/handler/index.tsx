@@ -15,7 +15,7 @@ import Notice from "../../notice";
 export default function Handler() {
   const session = useSession();
 
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
 
   const updateBackupOpen = useOpenStore((state) => state.updateBackupOpen);
 
@@ -46,7 +46,7 @@ export default function Handler() {
         </div>
         <LanguageSelect mobile />
         <Tooltip
-          title={tCommon("backup-sync")}
+          title={tGlobal("backup-sync")}
           triggerClassName="flex flex-1 justify-center"
         >
           <div

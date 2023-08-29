@@ -14,6 +14,7 @@ interface IPluginProps {
 
 export default function Plugin({ channel }: IPluginProps) {
   const tPlugin = useTranslations("plugin");
+  const tGlobal = useTranslations("global");
 
   const [google_search] = usePluginStore((state) => [state.google_search]);
 
@@ -50,7 +51,7 @@ export default function Plugin({ channel }: IPluginProps) {
         <div className="flex items-center gap-1.5 mb-2">
           <Icon icon="plugin_2_line" />
           <div className="text-gray-600 dark:text-[hsla(0,0%,100%,0.9)] max-h-[300px] overflow-y-auto">
-            {tPlugin("plugins")} ({channel.channel_plugins.length}/{count})
+            {tGlobal("plugins")} ({channel.channel_plugins.length}/{count})
           </div>
         </div>
         <div className="absolute right-2 top-2.5">
@@ -89,7 +90,7 @@ export default function Plugin({ channel }: IPluginProps) {
             )}
           </div>
         ) : (
-          <div>{tPlugin("activate")}</div>
+          <div>{tPlugin("enable-first")}</div>
         )}
       </div>
     </div>

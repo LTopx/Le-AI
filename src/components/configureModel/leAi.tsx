@@ -5,8 +5,8 @@ import { Input } from "@ltopx/lx-ui";
 import { useOpenAIStore } from "@/hooks/useOpenAI";
 
 export default function LeAi() {
-  const tSetting = useTranslations("setting");
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
+  const tConfigure = useTranslations("configure");
 
   const leAIKey = useOpenAIStore((state) => state.leAIKey);
 
@@ -14,7 +14,7 @@ export default function LeAi() {
 
   const onBlur = () => {
     if (leAIKey && !leAIKey.startsWith("leai-")) {
-      toast.error(tSetting("leai-api-key-error"));
+      toast.error(tConfigure("leai-api-key-error"));
       updateLeAIKey("");
     }
   };
@@ -22,20 +22,20 @@ export default function LeAi() {
   return (
     <div className="flex flex-col gap-3">
       <div className="text-sm text-[hsl(240,3.8%,46.1%)]">
-        {tSetting("leai-api-tip")}{" "}
+        {tConfigure("leai-api-tip")}{" "}
         <a
           href="https://docs.le-ai.app/api-key-configure/le-ai"
           className="text-sky-400 hover:text-sky-500 transition-colors hover:underline"
           target="_blank"
         >
-          {tCommon("learn-more")}
+          {tGlobal("learn-more")}
         </a>
       </div>
       <div>
         <div className="mb-1 text-sm">Le-AI API Key</div>
         <Input
           allowClear
-          placeholder={tSetting("set-leai-api-key")}
+          placeholder={tConfigure("set-leai-api-key")}
           type="password"
           value={leAIKey}
           onChange={updateLeAIKey}

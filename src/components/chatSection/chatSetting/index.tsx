@@ -5,8 +5,8 @@ import { useOpenStore } from "@/hooks/useOpen";
 import ChatSettingForm from "./form";
 
 export default function ChatSetting() {
+  const tGlobal = useTranslations("global");
   const tChat = useTranslations("chat");
-  const tCommon = useTranslations("common");
 
   const formRef = React.useRef<any>(null);
 
@@ -24,8 +24,8 @@ export default function ChatSetting() {
       title={tChat("conversation-setting")}
       open={open}
       maskClosable={false}
-      okText={tCommon("ok")}
-      cancelText={tCommon("cancel")}
+      okText={tGlobal("ok-spacing")}
+      cancelText={tGlobal("cancel-spacing")}
       onClose={onClose}
       onOk={onSubmit}
     >

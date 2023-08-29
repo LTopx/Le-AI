@@ -20,7 +20,7 @@ export interface ChatInputRef {
 
 const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
   ({ className, loading, value, onChange, onSubmit }, forwardedRef) => {
-    const tChat = useTranslations("chat");
+    const tGlobal = useTranslations("global");
     const sendMessageType = useConfigStore((state) => state.sendMessageType);
 
     // data
@@ -107,7 +107,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
         <textarea
           className="bg-transparent rounded-md h-full outline-none text-sm w-full max-h-56 py-3 px-4 resize-none block"
           ref={inputRef}
-          placeholder={tChat("type-message")}
+          placeholder={tGlobal("type-message")}
           rows={1}
           onInput={onInput}
           value={value}

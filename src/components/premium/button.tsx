@@ -24,8 +24,8 @@ export default function PremiumBtn(props: PremiumBtnProps) {
   const router = useRouter();
   const session = useSession();
 
+  const tGlobal = useTranslations("global");
   const tPremium = useTranslations("premium");
-  const tAuth = useTranslations("auth");
 
   const updatePremiumOpen = useOpenStore((state) => state.updatePremiumOpen);
   const [freeTrialed, license_type] = useUserInfoStore((state) => [
@@ -42,7 +42,7 @@ export default function PremiumBtn(props: PremiumBtnProps) {
     return (
       <div className="flex justify-center mt-3">
         <Button type="primary" onClick={onLogin}>
-          {tAuth("log-in-first")}
+          {tGlobal("sign-in")}
         </Button>
       </div>
     );
@@ -76,7 +76,7 @@ export default function PremiumBtn(props: PremiumBtnProps) {
         >
           {license_type === "premium"
             ? tPremium("premium-already")
-            : `${tPremium("buy")} Le-AI ${tPremium("premium")}`}
+            : `${tPremium("buy")} Le-AI ${tGlobal("premium")}`}
         </Button>
       </div>
     );
@@ -86,7 +86,7 @@ export default function PremiumBtn(props: PremiumBtnProps) {
     return (
       <div className="flex justify-center mt-3">
         <Button type="primary" disabled>
-          {tPremium("coming-soon")}...
+          {tGlobal("coming-soon")}...
         </Button>
       </div>
     );

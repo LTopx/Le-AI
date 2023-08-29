@@ -15,8 +15,8 @@ const mapRate = (rate: TTSRate) => {
 };
 
 export default function TTSSetting() {
+  const tGlobal = useTranslations("global");
   const tTTS = useTranslations("tts");
-  const tCommon = useTranslations("common");
 
   const [open, setOpen] = useOpenStore((state) => [
     state.ttsSettingOpen,
@@ -85,7 +85,7 @@ export default function TTSSetting() {
       onClose={onClose}
       footer={
         <Button type="primary" onClick={onClose}>
-          {tCommon("ok")}
+          {tGlobal("ok-spacing")}
         </Button>
       }
     >

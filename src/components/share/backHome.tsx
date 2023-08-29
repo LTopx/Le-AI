@@ -8,7 +8,7 @@ import { Button } from "@ltopx/lx-ui";
 
 const BackHome: React.FC = () => {
   const router = useRouter();
-  const t = useTranslations("share");
+  const tGlobal = useTranslations("global");
   const [loading, setLoading] = React.useState(false);
 
   const onClick = () => {
@@ -24,7 +24,7 @@ const BackHome: React.FC = () => {
       onClick={onClick}
       size="lg"
     >
-      {t("back-home")}
+      {tGlobal("return-to-homepage")}
     </Button>
   );
 };

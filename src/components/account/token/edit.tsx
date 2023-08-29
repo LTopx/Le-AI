@@ -24,8 +24,8 @@ interface FormData {
 
 const EditToken = React.forwardRef<any, EditTokenProps>(
   ({ onLoad }, forwardedRef) => {
+    const tGlobal = useTranslations("global");
     const tAccount = useTranslations("account");
-    const tCommon = useTranslations("common");
 
     const [open, setOpen] = React.useState(false);
     const [type, setType] = React.useState<"add" | "edit">("add");
@@ -38,13 +38,15 @@ const EditToken = React.forwardRef<any, EditTokenProps>(
       total_quota: 0,
     });
 
+    const nameRef = React.useRef<any>(null);
+
     const options: TabsOption[] = [
       {
-        label: tAccount("token-quota-limited"),
+        label: tAccount("quota-limited"),
         value: "limited",
       },
       {
-        label: tAccount("token-quota-unlimited"),
+        label: tAccount("quota-unlimited"),
         value: "unlimited",
       },
     ];
@@ -62,13 +64,14 @@ const EditToken = React.forwardRef<any, EditTokenProps>(
 
     const onOk = async () => {
       if (!formData.name?.trim()) {
-        return toast.error(tAccount("token-name-needed"), {
-          id: "token-name-needed",
+        nameRef.current?.focus();
+        return toast.error(tGlobal("please-enter"), {
+          id: "please-enter",
         });
       }
       if (formData.expire && +new Date(formData.expire) < +new Date()) {
-        return toast.error(tAccount("token-expire-tip"), {
-          id: "token-expire-tip",
+        return toast.error(tAccount("token-expire"), {
+          id: "token-expire",
         });
       }
       const params: any = {
@@ -86,7 +89,7 @@ const EditToken = React.forwardRef<any, EditTokenProps>(
         if (res.error) {
           return toast.error(catchError(res), { id: "token_error" });
         }
-        toast.success(tCommon("operation-successful"));
+        toast.success(tGlobal("operation-successful"));
         onClose();
         onLoad();
       } finally {
@@ -121,41 +124,40 @@ const EditToken = React.forwardRef<any, EditTokenProps>(
 
     return (
       <Modal
-        title={
-          type === "add" ? tAccount("token-add") : tAccount("token-update")
-        }
+        title={type === "add" ? tGlobal("create") : tGlobal("edit")}
         maskClosable={false}
         open={open}
         onClose={onClose}
         footer={
           <div className="flex gap-2 justify-end">
-            <Button onClick={onClose}>{tCommon("cancel")}</Button>
+            <Button onClick={onClose}>{tGlobal("cancel-spacing")}</Button>
             <Button type="primary" loading={loadingAdd} onClick={onOk}>
-              {tCommon("ok")}
+              {tGlobal("ok-spacing")}
             </Button>
           </div>
         }
       >
         <div className="flex flex-col gap-3">
           <div>
-            <div className="text-sm mb-1">{tAccount("token-name")}</div>
+            <div className="text-sm mb-1">{tGlobal("name")}</div>
             <Input
+              ref={nameRef}
               allowClear
-              placeholder={tCommon("please-enter")}
+              placeholder={tGlobal("please-enter")}
               value={formData.name}
               onChange={(value) => onChangeForm("name", value)}
               maxLength={15}
             />
           </div>
           <div>
-            <div className="text-sm mb-1">{tAccount("token-expire")}</div>
+            <div className="text-sm mb-1">{tAccount("expire-date")}</div>
             <DatePicker
               value={formData.expire}
               onChange={(value) => onChangeForm("expire", value)}
             />
           </div>
           <div>
-            <div className="text-sm mb-1">{tAccount("token-limit")}</div>
+            <div className="text-sm mb-1">{tGlobal("limit")}</div>
             <Tabs
               itemsFull
               options={options}
@@ -165,7 +167,7 @@ const EditToken = React.forwardRef<any, EditTokenProps>(
             <Input
               type="number"
               allowClear
-              placeholder={tCommon("please-enter")}
+              placeholder={tGlobal("please-enter")}
               disabled={activeTab === "unlimited"}
               value={formData.total_quota}
               onChange={(value) => onChangeForm("total_quota", value)}

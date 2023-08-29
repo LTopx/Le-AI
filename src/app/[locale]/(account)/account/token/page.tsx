@@ -19,8 +19,8 @@ import Icon from "@/components/icon";
 
 export default function ManageToken() {
   const format = useFormatter();
+  const tGlobal = useTranslations("global");
   const tAccount = useTranslations("account");
-  const tCommon = useTranslations("common");
 
   const editTokenRef = React.useRef<any>(null);
 
@@ -33,7 +33,7 @@ export default function ManageToken() {
         label: (
           <div className="flex w-[74px] items-center justify-between">
             <Icon icon="copy_2_line" size={18} />
-            <div>{tCommon("copy")}</div>
+            <div>{tGlobal("copy")}</div>
           </div>
         ),
         value: "copy",
@@ -42,7 +42,7 @@ export default function ManageToken() {
         label: (
           <div className="flex w-[74px] items-center justify-between">
             <Icon icon="pencil_2_line" size={18} />
-            <div>{tCommon("edit")}</div>
+            <div>{tGlobal("edit")}</div>
           </div>
         ),
         value: "edit",
@@ -51,7 +51,7 @@ export default function ManageToken() {
         label: (
           <div className="flex w-[74px] items-center justify-between">
             <Icon icon={status ? "stop_fill" : "play_fill"} size={18} />
-            <div>{status ? tCommon("disable") : tCommon("enable")}</div>
+            <div>{status ? tGlobal("disable") : tGlobal("enable")}</div>
           </div>
         ),
         value: "toggle_status",
@@ -60,7 +60,7 @@ export default function ManageToken() {
         label: (
           <div className="flex w-[74px] items-center justify-between">
             <Icon icon="delete_2_line" size={18} />
-            <div>{tCommon("delete")}</div>
+            <div>{tGlobal("delete")}</div>
           </div>
         ),
         value: "delete",
@@ -86,7 +86,9 @@ export default function ManageToken() {
   const onSelect = async (item: any, type: string) => {
     if (type === "copy") {
       copy(item.key);
-      toast.success(tCommon("copy-success"), { id: "copy-success" });
+      toast.success(tGlobal("operation-successful"), {
+        id: "operation-successful",
+      });
     } else if (type === "toggle_status") {
       setLoading(true);
       try {
@@ -100,7 +102,7 @@ export default function ManageToken() {
         if (res.error) {
           return toast.error(catchError(res), { id: "toggle_status_error" });
         }
-        toast.success(tCommon("operation-successful"));
+        toast.success(tGlobal("operation-successful"));
         getData();
       } finally {
         setLoading(false);
@@ -117,7 +119,7 @@ export default function ManageToken() {
         if (res.error) {
           return toast.error(catchError(res), { id: "delete_error" });
         }
-        toast.success(tCommon("operation-successful"));
+        toast.success(tGlobal("operation-successful"));
         getData();
       } finally {
         setLoading(false);
@@ -134,11 +136,11 @@ export default function ManageToken() {
   return (
     <>
       <div>
-        <div className="font-semibold text-2xl">{tAccount("token-manage")}</div>
+        <div className="font-semibold text-2xl">{tGlobal("token")}</div>
         <div className="flex my-4 text-sm justify-between items-center">
           <div>{tAccount("token-manage-tip")}</div>
           <Button type="primary" onClick={onAdd}>
-            {tCommon("add")}
+            {tGlobal("create")}
           </Button>
         </div>
         <Table
@@ -148,13 +150,13 @@ export default function ManageToken() {
           }}
         >
           <TableHeader>
-            <TableColumn>{tAccount("token-name")}</TableColumn>
-            <TableColumn>{tAccount("token-status")}</TableColumn>
-            <TableColumn>{tAccount("token-usage")}</TableColumn>
-            <TableColumn>{tAccount("token-remain")}</TableColumn>
-            <TableColumn>{tAccount("token-create-time")}</TableColumn>
-            <TableColumn>{tAccount("token-expire")}</TableColumn>
-            <TableColumn>{tAccount("token-action")}</TableColumn>
+            <TableColumn>{tGlobal("name")}</TableColumn>
+            <TableColumn>{tGlobal("status")}</TableColumn>
+            <TableColumn>{tGlobal("usage")}</TableColumn>
+            <TableColumn>{tGlobal("remain")}</TableColumn>
+            <TableColumn>{tGlobal("create-time")}</TableColumn>
+            <TableColumn>{tGlobal("expire-date")}</TableColumn>
+            <TableColumn>{tGlobal("action")}</TableColumn>
           </TableHeader>
           <TableBody
             isLoading={loading}
@@ -163,7 +165,7 @@ export default function ManageToken() {
                 <Icon icon="loading_line" size={18} className="animate-spin" />
               </div>
             }
-            emptyContent={tCommon("no-data")}
+            emptyContent={tGlobal("no-data")}
           >
             {list.map((item) => (
               <TableRow key={item.key}>
@@ -175,15 +177,13 @@ export default function ManageToken() {
                     type={item.status ? "success" : "danger"}
                     outline
                   >
-                    {item.status
-                      ? tAccount("token-enabled")
-                      : tAccount("token-disabled")}
+                    {item.status ? tGlobal("enabled") : tGlobal("disabled")}
                   </Button>
                 </TableCell>
                 <TableCell className="text-center">{item.used_quota}</TableCell>
                 <TableCell className="text-center">
                   {item.total_quota === -1
-                    ? tAccount("token-quota-unlimited")
+                    ? tGlobal("unlimited")
                     : item.total_quota - item.used_quota}
                 </TableCell>
                 <TableCell className="whitespace-nowrap">
@@ -206,7 +206,7 @@ export default function ManageToken() {
                         minute: "numeric",
                         second: "numeric",
                       })
-                    : tAccount("token-expire-unlimited")}
+                    : tGlobal("forever")}
                 </TableCell>
                 <TableCell>
                   <Dropdown

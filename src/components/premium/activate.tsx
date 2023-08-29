@@ -8,7 +8,9 @@ import { useUserInfoStore } from "@/hooks/useUserInfo";
 import { useOpenStore } from "@/hooks/useOpen";
 
 const Activate = React.forwardRef((_, forwardedRef) => {
+  const tGlobal = useTranslations("global");
   const tPremium = useTranslations("premium");
+
   const { catchError } = useFetchError();
 
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -37,7 +39,7 @@ const Activate = React.forwardRef((_, forwardedRef) => {
     if (loading) return;
 
     if (!licenseKey?.trim()) {
-      toast.error(tPremium("enter-license-key"), { id: "enter-license-key" });
+      toast.error(tGlobal("please-enter"), { id: "enter-license-key" });
       return inputRef.current?.focus();
     }
 
@@ -98,7 +100,7 @@ const Activate = React.forwardRef((_, forwardedRef) => {
         <Input
           ref={inputRef}
           size="lg"
-          placeholder={tPremium("enter-license-key")}
+          placeholder={tGlobal("please-enter")}
           allowClear
           value={licenseKey}
           onChange={setLicenseKey}
@@ -115,7 +117,7 @@ const Activate = React.forwardRef((_, forwardedRef) => {
           </span>
         </div>
         <div className="text-sm mb-2 flex gap-4">
-          <span>{tPremium("get-more-token")}</span>
+          <span>{tPremium("get-more-points")}</span>
           <span
             onClick={onChargeToken}
             className="text-sky-400 cursor-pointer transition-colors hover:underline hover:text-sky-500 flex items-center gap-1"

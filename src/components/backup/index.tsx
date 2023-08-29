@@ -6,7 +6,7 @@ import { useOpenStore } from "@/hooks/useOpen";
 import ModalContent from "./modalContent";
 
 export default function Backup() {
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
 
   const [open, setOpen] = useOpenStore((state) => [
     state.backupOpen,
@@ -20,7 +20,7 @@ export default function Backup() {
       title={
         <div className="flex items-center gap-2">
           <Icon icon="cloud_fill" size={24} className="text-sky-400" />
-          {tCommon("backup-sync")}
+          {tGlobal("backup-sync")}
         </div>
       }
       maskClosable={false}

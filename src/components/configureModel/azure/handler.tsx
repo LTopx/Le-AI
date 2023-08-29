@@ -6,7 +6,7 @@ import { useLLMStore } from "@/hooks/useLLM";
 import type { Model } from "@/hooks/useLLM/types";
 
 const Handler = React.forwardRef((_, forwardedRef) => {
-  const tSetting = useTranslations("setting");
+  const tGlobal = useTranslations("global");
 
   const azureModels = useLLMStore((state) => state.azure.models);
   const [open, setOpen] = React.useState(false);
@@ -22,7 +22,7 @@ const Handler = React.forwardRef((_, forwardedRef) => {
   const onSubmit = () => {
     if (!deploymentName?.trim()) {
       inputRef.current?.focus();
-      return toast.error(tSetting("enter-deployment-name"), {
+      return toast.error(tGlobal("please-enter"), {
         id: "empty_name",
       });
     }
@@ -45,7 +45,7 @@ const Handler = React.forwardRef((_, forwardedRef) => {
 
   return (
     <Modal
-      title={tSetting("edit-deployment")}
+      title={tGlobal("edit")}
       maskClosable={false}
       open={open}
       onClose={onClose}
@@ -60,12 +60,11 @@ const Handler = React.forwardRef((_, forwardedRef) => {
         </div>
         <div>
           <div className="text-sm mb-1">
-            {tSetting("deployment-name")}{" "}
-            <span className="text-red-500">*</span>
+            {tGlobal("name")} <span className="text-red-500">*</span>
           </div>
           <Input
             ref={inputRef}
-            placeholder={tSetting("enter-deployment-name")}
+            placeholder={tGlobal("please-enter")}
             maxLength={30}
             allowClear
             value={deploymentName}

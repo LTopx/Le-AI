@@ -14,7 +14,8 @@ import LoadingPage from "@/components/loadingPage";
 export default function ConfigureKey() {
   const isInit = useInit();
 
-  const tSetting = useTranslations("setting");
+  const tConfigure = useTranslations("configure");
+  const tGlobal = useTranslations("global");
 
   if (!isInit) return <LoadingPage />;
 
@@ -25,7 +26,7 @@ export default function ConfigureKey() {
       children: <LeAi />,
     },
     {
-      label: tSetting("official-model"),
+      label: tGlobal("official-model"),
       value: "2",
       children: <ConfigureModel />,
     },
@@ -50,7 +51,7 @@ export default function ConfigureKey() {
           )}
         >
           <div className="flex justify-center text-lg font-semibold">
-            {tSetting("llm-configuration")}
+            {tConfigure("model-configure")}
           </div>
           <div className="my-2 flex justify-center">
             <Button
@@ -58,7 +59,7 @@ export default function ConfigureKey() {
               href="https://docs.le-ai.app/api-key-configure"
               target="_blank"
             >
-              {tSetting("configuration-learn-more")}
+              {tConfigure("model-configure-know-more")}
             </Button>
           </div>
           <Tabs itemsFull options={options} defaultActiveTab="1" />

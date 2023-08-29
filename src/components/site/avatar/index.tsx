@@ -16,7 +16,7 @@ export default function Avatar() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const tAuth = useTranslations("auth");
+  const tGlobal = useTranslations("global");
   const tPremium = useTranslations("premium");
 
   const [loading, setLoading] = React.useState(false);
@@ -33,7 +33,7 @@ export default function Avatar() {
         label: (
           <div className="flex gap-2 items-center">
             <Icon icon="document_line" />
-            {tAuth("documentation")}
+            {tGlobal("docs")}
           </div>
         ),
         value: "documentation",
@@ -57,7 +57,7 @@ export default function Avatar() {
             <div className="flex gap-2 items-center">
               <Icon icon="vip_3_line" />
               <span className="bg-clip-text bg-license-premium text-transparent">
-                {tPremium("premium")}
+                {tGlobal("premium")}
               </span>
             </div>
           ),
@@ -95,7 +95,7 @@ export default function Avatar() {
           label: (
             <div className="flex gap-2 items-center">
               <Icon icon="user_3_line" />
-              {tAuth("account-center")}
+              {tGlobal("account-center")}
             </div>
           ),
           value: "account",
@@ -104,7 +104,7 @@ export default function Avatar() {
           label: (
             <div className="flex gap-2 items-center">
               <Icon icon="exit_line" />
-              {tAuth("log-out")}
+              {tGlobal("log-out")}
             </div>
           ),
           value: "logout",
@@ -118,7 +118,7 @@ export default function Avatar() {
           label: (
             <div className="flex gap-2 items-center">
               <Icon icon="entrance_line" />
-              {tAuth("log-in")}
+              {tGlobal("sign-in")}
             </div>
           ),
           value: "login",

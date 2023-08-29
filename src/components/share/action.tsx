@@ -7,8 +7,9 @@ import { cn } from "@/lib";
 import Icon from "../icon";
 
 const Action = React.forwardRef((_, forwardedRef) => {
+  const tGlobal = useTranslations("global");
   const tShare = useTranslations("share");
-  const tCommon = useTranslations("common");
+
   const { copy } = useClipboard();
 
   const [open, setOpen] = React.useState(false);
@@ -30,7 +31,7 @@ const Action = React.forwardRef((_, forwardedRef) => {
       label: (
         <div className="flex gap-2 items-center">
           <Icon icon="twitter_fill" size={16} className="text-[#379bf0]" />
-          {tShare("share-to-twitter")}
+          {tShare("share-to-x")}
         </div>
       ),
       value: "twitter",
@@ -66,7 +67,7 @@ const Action = React.forwardRef((_, forwardedRef) => {
           body: JSON.stringify({ id: shareId.current }),
         }).then((res) => res.json());
         if (res.error) {
-          return toast.error(tCommon("service-error"), { id: "delete-error" });
+          return toast.error(tGlobal("service-error"), { id: "delete-error" });
         }
         toast.success(tShare("share-remove-success"), { id: "delete-success" });
         onClose();
@@ -83,7 +84,7 @@ const Action = React.forwardRef((_, forwardedRef) => {
       }).then((res) => res.json());
       setLoading(false);
       if (res.error) {
-        return toast.error(tCommon("service-error"), { id: "update-error" });
+        return toast.error(tGlobal("service-error"), { id: "update-error" });
       }
       toast.success(tShare("share-update-success"), { id: "update-success" });
     }
@@ -119,7 +120,7 @@ const Action = React.forwardRef((_, forwardedRef) => {
             target="_blank"
             className="mx-0.5 text-sm transition-colors text-sky-500 hover:text-sky-400"
           >
-            {tShare("learn-more")}
+            {tGlobal("learn-more")}
           </a>
         </div>
       </div>
@@ -137,7 +138,7 @@ const Action = React.forwardRef((_, forwardedRef) => {
             icon={<Icon icon="external_link_line" />}
             onClick={() => onLink("open")}
           >
-            {tShare("open")}
+            {tGlobal("open")}
           </Button>
         </div>
         {loading ? (

@@ -17,7 +17,7 @@ export default function ChatTTS({
   onPause,
   onTTSSetting,
 }: ChatTTSProps) {
-  const tTTS = useTranslations("tts");
+  const tGlobal = useTranslations("global");
 
   return (
     <div className="flex mt-2 items-center">
@@ -42,7 +42,7 @@ export default function ChatTTS({
         type="link"
         onClick={onTTSSetting}
       >
-        {tTTS("setting-icon")}
+        {tGlobal("setting")}
       </Button>
     </div>
   );

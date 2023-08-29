@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const Continue: React.FC<IProps> = ({ id }) => {
-  const tShare = useTranslations("share");
+  const tGlobal = useTranslations("global");
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
 
@@ -28,7 +28,7 @@ const Continue: React.FC<IProps> = ({ id }) => {
       loading={loading}
       onClick={onContinue}
     >
-      {tShare("continue-conversation")}
+      {tGlobal("continue-conversation")}
     </Button>
   );
 };

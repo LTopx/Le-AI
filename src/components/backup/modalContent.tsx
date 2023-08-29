@@ -17,7 +17,7 @@ interface IProps {
 
 export default function ModalContent({ onClose }: IProps) {
   const tBackup = useTranslations("backup");
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
 
   const { catchError } = useFetchError();
 
@@ -65,13 +65,13 @@ export default function ModalContent({ onClose }: IProps) {
   const checkKey = (key: string) => {
     if (!key?.trim()) {
       inputRef.current?.focus();
-      toast.error(tBackup("enter-encryption-key"), { id: "no-key" });
+      toast.error(tGlobal("please-enter"), { id: "no-key" });
       return false;
     }
 
     if (key?.trim()?.length !== 16) {
       inputRef.current?.focus();
-      toast.error(tBackup("encryption-key-check-fail"), { id: "key-error" });
+      toast.error(tBackup("key-length-error"), { id: "key-error" });
       return false;
     }
 
@@ -112,7 +112,7 @@ export default function ModalContent({ onClose }: IProps) {
         if (res.error) {
           return toast.error(catchError(res), { id: "sync_error" });
         }
-        toast.success(tCommon("operation-successful"), { id: "sync_success" });
+        toast.success(tGlobal("operation-successful"), { id: "sync_success" });
         const size = ((res.data.size || 0) / 1024).toFixed(2);
         updateSyncSize(Number(size));
         onClose();
@@ -137,7 +137,7 @@ export default function ModalContent({ onClose }: IProps) {
         const decryptContent = decrypt(res.data, key);
 
         if (!decryptContent) {
-          return toast.error(tBackup("restore-fail"), { id: "sync_error" });
+          return toast.error(tGlobal("operation-failed"), { id: "sync_error" });
         }
 
         let json;
@@ -145,7 +145,7 @@ export default function ModalContent({ onClose }: IProps) {
         try {
           json = JSON.parse(decryptContent);
         } catch {
-          return toast.error(tBackup("restore-fail"), { id: "sync_error" });
+          return toast.error(tGlobal("operation-failed"), { id: "sync_error" });
         }
 
         if (json.messages) {
@@ -166,7 +166,7 @@ export default function ModalContent({ onClose }: IProps) {
           importCharacterList(json.characters);
         }
 
-        toast.success(tBackup("restore-success"), { id: "sync_success" });
+        toast.success(tGlobal("operation-successful"), { id: "sync_success" });
         onClose();
       })
       .finally(() => {
@@ -181,7 +181,7 @@ export default function ModalContent({ onClose }: IProps) {
   return (
     <div className="flex flex-col gap-3">
       <div>
-        <div className="mb-1 text-sm">{tBackup("introduction")}</div>
+        <div className="mb-1 text-sm">{tGlobal("introduction")}</div>
         <div>
           <ul className="list-disc space-y-2 pl-5 text-slate-500 dark:text-slate-300 marker:text-sky-400">
             <li>{tBackup("rule-1")}</li>
@@ -194,14 +194,14 @@ export default function ModalContent({ onClose }: IProps) {
               target="_blank"
               type="link"
             >
-              {tBackup("learn-more")}
+              {tGlobal("learn-more")}
             </Button>
           </div>
         </div>
       </div>
       <div>
         <div className="mb-1 text-sm flex justify-between">
-          <div>{tBackup("usage")}</div>
+          <div>{tGlobal("usage")}</div>
           <div className="flex gap-1">
             <div>
               {syncSize} KB / {totalSize} KB
@@ -224,20 +224,18 @@ export default function ModalContent({ onClose }: IProps) {
         />
       </div>
       <div>
-        <div className="mb-1 text-sm">{tBackup("encryption-key")}</div>
+        <div className="mb-1 text-sm">{tBackup("key")}</div>
         <Input
           ref={inputRef}
           allowClear
           maxLength={16}
-          placeholder={tCommon("please-enter")}
+          placeholder={tGlobal("please-enter")}
           value={key}
           onChange={setKey}
         />
       </div>
       <div>
-        <div className="mb-1 text-sm">{tBackup("backup-options")}</div>
-        {/* <Input allowClear /> */}
-        <div>{tBackup("backup-tips")}</div>
+        <div className="mb-1 text-sm">{tBackup("operation-options")}</div>
       </div>
       <div className="flex gap-2">
         <Button
@@ -246,7 +244,7 @@ export default function ModalContent({ onClose }: IProps) {
           disabled={loadingRestore}
           onClick={onBackup}
         >
-          {tBackup("backup")}
+          {tGlobal("backup")}
         </Button>
         <Button
           type="primary"
@@ -254,7 +252,7 @@ export default function ModalContent({ onClose }: IProps) {
           disabled={loadingBackup}
           onClick={onRestore}
         >
-          {tBackup("restore")}
+          {tGlobal("restore")}
         </Button>
       </div>
     </div>

@@ -9,9 +9,8 @@ import { useModelCacheStore } from "@/hooks/useModelCache";
 import Icon from "@/components/icon";
 
 export default function AddChannel() {
-  const tMenu = useTranslations("menu");
+  const tGlobal = useTranslations("global");
   const tChat = useTranslations("chat");
-  const tCommon = useTranslations("common");
 
   const [list, addList] = useChannelStore((state) => [
     state.list,
@@ -49,16 +48,16 @@ export default function AddChannel() {
         size="lg"
         onClick={onChannelAdd}
       >
-        {tMenu("new-chat")}
+        {tChat("new-chat")}
       </Button>
 
       <Confirm
         triggerClassName="flex-1"
-        title={tChat("clear-conversation")}
-        content={tChat("clear-conversation-tip")}
+        title={tChat("clear-context")}
+        content={tChat("clear-all-context")}
         onOk={clearList}
-        okText={tCommon("ok")}
-        cancelText={tCommon("cancel")}
+        okText={tGlobal("ok-spacing")}
+        cancelText={tGlobal("cancel-spacing")}
         type="danger"
       >
         <Button

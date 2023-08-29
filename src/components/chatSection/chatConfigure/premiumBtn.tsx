@@ -10,7 +10,7 @@ export default function PremiumBtn() {
   const session = useSession();
   const license_type = useUserInfoStore((state) => state.license_type);
 
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
 
   const updatePremiumOpen = useOpenStore((state) => state.updatePremiumOpen);
 
@@ -32,7 +32,7 @@ export default function PremiumBtn() {
       icon={<Icon icon="gift_fill" size={18} />}
       onClick={() => updatePremiumOpen(true)}
     >
-      {tCommon("premium")}
+      {tGlobal("premium")}
     </Button>
   );
 }

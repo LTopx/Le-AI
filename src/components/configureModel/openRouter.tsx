@@ -7,16 +7,17 @@ import type { OpenRouter } from "@/hooks/useOpenAI/types";
 import { cn } from "@/lib";
 
 export default function OpenRouter() {
-  const tSetting = useTranslations("setting");
+  const tGlobal = useTranslations("global");
+  const tConfigure = useTranslations("configure");
 
   const openRouter = useOpenAIStore((state) => state.openRouter);
 
   const updateOpenRouter = useOpenAIStore((state) => state.updateOpenRouter);
 
   const mapTemperature = (value: number) => {
-    if (value === 0) return tSetting("deterministic");
-    if (value === 0.5) return tSetting("neutral");
-    if (value === 1) return tSetting("random");
+    if (value === 0) return tConfigure("deterministic");
+    if (value === 0.5) return tConfigure("neutral");
+    if (value === 1) return tConfigure("random");
     return "";
   };
 
@@ -34,7 +35,7 @@ export default function OpenRouter() {
             target="_blank"
             className="text-xs text-sky-400 cursor-pointer transition-colors hover:underline hover:text-sky-500"
           >
-            ({tSetting("get-apiKey")})
+            ({tConfigure("get-apiKey")})
           </a>
         </div>
         <div className="flex gap-2 w-full">
@@ -42,7 +43,7 @@ export default function OpenRouter() {
             className="w-full"
             type="password"
             allowClear
-            placeholder={tSetting("set-api-key") as string}
+            placeholder={tGlobal("please-enter")}
             value={openRouter.apiKey}
             onChange={(value) => onChange(value, "apiKey")}
           />
@@ -50,8 +51,8 @@ export default function OpenRouter() {
       </div>
       <div>
         <div className="mb-1 text-sm flex items-center gap-2">
-          {tSetting("temperature")}
-          <Tooltip title={tSetting("temperature-tip")}>
+          {tConfigure("temperature")}
+          <Tooltip title={tConfigure("temperature-tip")}>
             <Icon icon="question_line" size={18} />
           </Tooltip>
         </div>
@@ -75,8 +76,8 @@ export default function OpenRouter() {
       </div>
       <div>
         <div className="mb-1 text-sm flex items-center gap-2">
-          {tSetting("max-tokens")}
-          <Tooltip title={tSetting("max-tokens-tip")}>
+          {tConfigure("max-tokens")}
+          <Tooltip title={tConfigure("max-tokens-tip")}>
             <Icon icon="question_line" size={18} />
           </Tooltip>
         </div>
@@ -86,7 +87,7 @@ export default function OpenRouter() {
           min={1}
           max={1025}
           step={1}
-          placeholder={tSetting("set-temperature") as string}
+          placeholder={tGlobal("please-enter")}
           value={openRouter.max_tokens}
           onChange={(value) => onChange(value, "max_tokens")}
         />

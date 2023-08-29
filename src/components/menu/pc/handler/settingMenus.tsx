@@ -9,8 +9,7 @@ import Icon from "@/components/icon";
 export default function SettingMenus() {
   const { theme, setTheme } = useTheme();
 
-  const tCommon = useTranslations("common");
-  const tMenu = useTranslations("menu");
+  const tGlobal = useTranslations("global");
 
   const [nowTheme, setNowTheme] = React.useState(theme);
 
@@ -25,7 +24,7 @@ export default function SettingMenus() {
           ) : (
             <Icon icon="sun_line" size={20} />
           )}
-          <div>{tCommon("theme")}</div>
+          <div>{tGlobal("theme")}</div>
         </div>
       ),
       value: "theme",
@@ -34,7 +33,7 @@ export default function SettingMenus() {
       label: (
         <div className="flex items-center w-[100px] justify-between">
           <Icon icon="safe_alert_line" size={20} />
-          <div>{tCommon("privacy")}</div>
+          <div>{tGlobal("privacy")}</div>
         </div>
       ),
       value: "privacy",
@@ -43,7 +42,7 @@ export default function SettingMenus() {
       label: (
         <div className="flex items-center w-[100px] justify-between">
           <Icon icon="contacts_line" size={18} />
-          <div>{tCommon("contact")}</div>
+          <div>{tGlobal("contact")}</div>
         </div>
       ),
       value: "contact",
@@ -61,7 +60,7 @@ export default function SettingMenus() {
       label: (
         <div className="flex items-center w-[100px] justify-between">
           <Icon icon="settings_3_line" size={20} />
-          <div>{tMenu("setting")}</div>
+          <div>{tGlobal("setting")}</div>
         </div>
       ),
       value: "setting",

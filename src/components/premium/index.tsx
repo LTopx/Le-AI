@@ -7,6 +7,7 @@ import Icon from "@/components/icon";
 import PremiumBtn, { type LicenseTypes } from "./button";
 
 export default function Premium() {
+  const tGlobal = useTranslations("global");
   const tPremium = useTranslations("premium");
 
   const [open, setOpen] = useOpenStore((state) => [
@@ -77,7 +78,7 @@ export default function Premium() {
       ),
     },
     {
-      label: tPremium("premium"),
+      label: tGlobal("premium"),
       value: "premium",
       children: (
         <div
@@ -88,9 +89,8 @@ export default function Premium() {
         >
           <div>
             <div className="flex font-semibold text-2xl gap-2">
-              <span className="dark:text-neutral-600">Le-AI</span>
               <span className="bg-clip-text bg-license-premium text-transparent">
-                {tPremium("premium")}
+                {tGlobal("premium")}
               </span>
             </div>
             <div>

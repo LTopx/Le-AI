@@ -67,9 +67,8 @@ const renderModelLabel = (item: any) => {
 
 const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
   ({ onClose }, forwardedRef) => {
+    const tGlobal = useTranslations("global");
     const tChat = useTranslations("chat");
-    const tCommon = useTranslations("common");
-    const tPrompt = useTranslations("prompt");
     const tPlugin = useTranslations("plugin");
 
     const [openai, azure, openRouter] = useLLMStore((state) => [
@@ -200,7 +199,7 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
           />
           <div className="flex flex-col mt-4">
             <div className="text-sm text-black/90 dark:text-white/90 mb-2">
-              {tPrompt("model")}
+              {tGlobal("model")}
             </div>
             <Select
               className="w-full"
@@ -215,12 +214,12 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
         <div className="flex flex-col gap-4">
           <div className="flex flex-col">
             <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-              {tChat("title")}
+              {tGlobal("title")}
             </div>
             <Input
               allowClear
               maxLength={30}
-              placeholder={tCommon("please-enter") as string}
+              placeholder={tGlobal("please-enter") as string}
               value={formData.name}
               onChange={(value) => onChangeForm(value, "name")}
             />
@@ -240,12 +239,12 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
           </div>
           <div className="flex flex-col">
             <div className="text-sm text-black/90 dark:text-white/90 flex items-center gap-1 mb-2">
-              {tPrompt("system-prompt")}
+              {tGlobal("system-prompt")}
             </div>
             <Textarea
               className="h-28"
               allowClear
-              placeholder={tPrompt("system-role-placeholder")}
+              placeholder={tGlobal("please-enter")}
               value={formData.prompt}
               onChange={(value) => onChangeForm(value, "prompt")}
             />
@@ -283,7 +282,7 @@ const ChatSettingForm = React.forwardRef<any, ChatSettingFormProps>(
                   )}
                 </>
               ) : (
-                <div className="text-xs">{tPlugin("activate")}</div>
+                <div className="text-xs">{tPlugin("enable-first")}</div>
               )}
             </div>
           </div>

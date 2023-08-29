@@ -12,6 +12,7 @@ import { checkGithub, checkGoogle, checkEmail } from "@/lib/checkEnv";
 
 export default function AuthForm() {
   const router = useRouter();
+  const tGlobal = useTranslations("global");
   const tAuth = useTranslations("auth");
 
   const inputRef = React.useRef<any>(null);
@@ -35,7 +36,7 @@ export default function AuthForm() {
     if (loadingEmial) return;
 
     if (!email?.trim()) {
-      toast.error(tAuth("input-email"), { id: "email" });
+      toast.error(tGlobal("please-enter"), { id: "email" });
       inputRef.current?.focus();
       return;
     }
@@ -113,7 +114,7 @@ export default function AuthForm() {
       </div>
       {checkEmail() && (checkGithub() || checkGoogle()) && (
         <Divider className="my-8">
-          <span className="text-sm">{tAuth("or")}</span>
+          <span className="text-sm">{tGlobal("or")}</span>
         </Divider>
       )}
       {checkEmail() && (
@@ -125,7 +126,7 @@ export default function AuthForm() {
             <Input
               ref={inputRef}
               size="lg"
-              placeholder={tAuth("input-email")}
+              placeholder={tGlobal("please-enter")}
               allowClear
               value={email}
               onChange={setEmail}
@@ -138,7 +139,7 @@ export default function AuthForm() {
             loading={loadingEmial}
             onClick={onLogin}
           >
-            {tAuth("continue")}
+            {tGlobal("continue")}
           </Button>
         </div>
       )}

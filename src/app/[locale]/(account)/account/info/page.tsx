@@ -13,9 +13,9 @@ interface UserInfo {
 }
 
 export default function UserInfo() {
+  const tGlobal = useTranslations("global");
+
   const { data: session, update } = useSession();
-  const tAccount = useTranslations("account");
-  const tCommon = useTranslations("common");
 
   const [loading, setLoading] = React.useState(false);
   const [userInfo, setUserInfo] = React.useState<UserInfo>({
@@ -34,7 +34,7 @@ export default function UserInfo() {
 
   const onSave = () => {
     if (!userInfo.name?.trim()) {
-      return toast.error(tAccount("name-placeholder"), { id: "input-name" });
+      return toast.error(tGlobal("please-enter"), { id: "input-name" });
     }
 
     const params = {
@@ -50,23 +50,25 @@ export default function UserInfo() {
       .then(async (response) => {
         if (!response.ok) {
           const res = await response.json();
-          return toast.error(res.msg || tCommon("service-error"), {
+          return toast.error(res.msg || tGlobal("service-error"), {
             id: "service-error",
           });
         }
         const res = await response.json();
         if (res.error) {
-          return toast.error(res.msg || tCommon("service-error"), {
+          return toast.error(res.msg || tGlobal("service-error"), {
             id: "service-error",
           });
         }
 
-        toast.success(tAccount("save-success"), { id: "save-success" });
+        toast.success(tGlobal("operation-successful"), {
+          id: "operation-successful",
+        });
         // update session
         update();
       })
       .catch(() => {
-        toast.error(tCommon("service-error"), { id: "service-error" });
+        toast.error(tGlobal("service-error"), { id: "service-error" });
       })
       .finally(() => {
         setLoading(false);
@@ -83,34 +85,28 @@ export default function UserInfo() {
 
   return (
     <>
-      <div className="text-2xl font-semibold">{tAccount("user-info")}</div>
-      <div className="text-sm mt-4 mb-8">{tAccount("account-tip")}</div>
+      <div className="text-2xl font-semibold mb-8">{tGlobal("user-info")}</div>
       <div className="p-6 border rounded-md dark:border-neutral-600">
         <div className="mb-5">
-          <div className="text-sm mb-1.5">{tAccount("email")}</div>
-          <Input
-            disabled
-            placeholder={tAccount("email-placeholder")}
-            allowClear
-            value={userInfo.email}
-          />
+          <div className="text-sm mb-1.5">{tGlobal("mail")}</div>
+          <Input disabled value={userInfo.email} />
         </div>
         <div className="mb-5">
           <div className="text-sm mb-1.5">
-            {tAccount("name")}
+            {tGlobal("nickname")}
             <span className="text-rose-500"> *</span>
           </div>
           <Input
-            placeholder={tAccount("name-placeholder")}
+            placeholder={tGlobal("please-enter")}
             allowClear
             value={userInfo.name}
             onChange={(value) => onchange(value, "name")}
           />
         </div>
         <div className="mb-5">
-          <div className="text-sm mb-1.5">{tAccount("avatar")}</div>
+          <div className="text-sm mb-1.5">{tGlobal("avatar")}</div>
           <Input
-            placeholder={tAccount("avatar-placeholder")}
+            placeholder={tGlobal("please-enter")}
             allowClear
             value={userInfo.image}
             onChange={(value) => onchange(value, "image")}
@@ -118,7 +114,7 @@ export default function UserInfo() {
         </div>
         <div className="flex">
           <Button type="primary" loading={loading} onClick={onSave}>
-            {tAccount("save")}
+            {tGlobal("save")}
           </Button>
         </div>
       </div>

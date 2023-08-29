@@ -7,8 +7,8 @@ import { useTranslations, useLocale } from "next-intl";
 import pkg from "../../../package.json";
 
 export default function Announcement() {
+  const tGlobal = useTranslations("global");
   const tZLog = useTranslations("zLog");
-  const tCommon = useTranslations("common");
 
   const locale = useLocale();
 
@@ -39,7 +39,7 @@ export default function Announcement() {
       footer={
         <div className="flex gap-2 justify-end">
           <Button type="primary" onClick={onClose}>
-            {tCommon("ok")}
+            {tGlobal("ok-spacing")}
           </Button>
         </div>
       }

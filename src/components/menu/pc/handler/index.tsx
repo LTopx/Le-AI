@@ -19,7 +19,7 @@ export const languages: DropdownOption[] = [
 ];
 
 export default function Handler() {
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
 
   const updateBackupOpen = useOpenStore((state) => state.updateBackupOpen);
 
@@ -32,7 +32,7 @@ export default function Handler() {
         <Github />
         <LanguageSelect />
         <Tooltip
-          title={tCommon("backup-sync")}
+          title={tGlobal("backup-sync")}
           triggerClassName="flex flex-1 justify-center"
         >
           <div

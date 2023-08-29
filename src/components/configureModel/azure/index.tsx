@@ -10,7 +10,8 @@ import { cn } from "@/lib";
 import Handler from "./handler";
 
 export default function Azure() {
-  const tSetting = useTranslations("setting");
+  const tGlobal = useTranslations("global");
+  const tConfigure = useTranslations("configure");
 
   const azure = useOpenAIStore((state) => state.azure);
   const azureModels = useLLMStore((state) => state.azure.models);
@@ -20,9 +21,9 @@ export default function Azure() {
   const updateAzure = useOpenAIStore((state) => state.updateAzure);
 
   const mapTemperature = (value: number) => {
-    if (value === 0) return tSetting("deterministic");
-    if (value === 0.5) return tSetting("neutral");
-    if (value === 1) return tSetting("random");
+    if (value === 0) return tConfigure("deterministic");
+    if (value === 0.5) return tConfigure("neutral");
+    if (value === 1) return tConfigure("random");
     return "";
   };
 
@@ -43,7 +44,7 @@ export default function Azure() {
               target="_blank"
               className="text-xs text-sky-400 cursor-pointer transition-colors hover:underline hover:text-sky-500"
             >
-              ({tSetting("get-apiKey")})
+              ({tConfigure("get-apiKey")})
             </a>
           </div>
           <div className="flex gap-2 w-full">
@@ -51,25 +52,25 @@ export default function Azure() {
               className="w-full"
               type="password"
               allowClear
-              placeholder={tSetting("set-api-key") as string}
+              placeholder={tGlobal("please-enter")}
               value={azure.apiKey}
               onChange={(value) => onChange(value, "apiKey")}
             />
           </div>
         </div>
         <div>
-          <div className="mb-1 text-sm">{tSetting("resource-name")}</div>
+          <div className="mb-1 text-sm">{tConfigure("resource-name")}</div>
           <Input
             allowClear
-            placeholder={tSetting("set-resource-name") as string}
+            placeholder={tGlobal("please-enter")}
             value={azure.resourceName}
             onChange={(value) => onChange(value, "resourceName")}
           />
         </div>
         <div>
           <div className="mb-1 text-sm flex items-center gap-2">
-            {tSetting("temperature")}
-            <Tooltip title={tSetting("temperature-tip")}>
+            {tConfigure("temperature")}
+            <Tooltip title={tConfigure("temperature-tip")}>
               <Icon icon="question_line" size={18} />
             </Tooltip>
           </div>
@@ -93,8 +94,8 @@ export default function Azure() {
         </div>
         <div>
           <div className="mb-1 text-sm flex items-center gap-2">
-            {tSetting("max-tokens")}
-            <Tooltip title={tSetting("max-tokens-tip")}>
+            {tConfigure("max-tokens")}
+            <Tooltip title={tConfigure("max-tokens-tip")}>
               <Icon icon="question_line" size={18} />
             </Tooltip>
           </div>
@@ -103,7 +104,7 @@ export default function Azure() {
             min={1}
             max={4097}
             step={1}
-            placeholder={tSetting("set-temperature") as string}
+            placeholder={tGlobal("please-enter")}
             value={azure.max_tokens}
             onChange={(value) => onChange(value, "max_tokens")}
           />
@@ -111,7 +112,7 @@ export default function Azure() {
         <Divider />
         <div>
           <div className="mb-3 text-sm flex items-center justify-between">
-            <div>{tSetting("deployments")}</div>
+            <div>{tGlobal("deployments")}</div>
           </div>
           <div className="flex flex-col gap-2">
             {azureModels.map((item) => (
@@ -125,7 +126,7 @@ export default function Azure() {
                 )}
               >
                 <div className="flex gap-1 max-w-[50%] whitespace-nowrap">
-                  <div>{tSetting("name")}:</div>
+                  <div>{tGlobal("name")}:</div>
                   <div className="overflow-hidden text-ellipsis">
                     {item.value}
                   </div>

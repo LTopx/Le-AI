@@ -14,21 +14,21 @@ export interface MenuItemProps {
 export default function Menu() {
   const pathname = usePathname();
   const router = useRouter();
-  const tAccount = useTranslations("account");
+  const tGlobal = useTranslations("global");
 
   const menuItems: MenuItemProps[] = [
     {
-      label: tAccount("usage"),
+      label: tGlobal("usage"),
       value: "account",
       path: "/account",
     },
     {
-      label: tAccount("user-info"),
+      label: tGlobal("user-info"),
       value: "info",
       path: "/account/info",
     },
     {
-      label: tAccount("token-manage"),
+      label: tGlobal("token"),
       value: "token",
       path: "/account/token",
     },

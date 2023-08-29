@@ -1,8 +1,8 @@
 # Le-AI Change Log
 
-## v0.8.5
+## v0.9.0
 
-> 2023-08-29
+> 2023-08-30
 
 ### Fixed
 
@@ -26,6 +26,7 @@
 - Adjusted some code structure
 - Add the Le-AI API Key to the logic for determining whether the key is configured.
 - Adjusted the user credential expiration time to 14 days.
+- Refactor and streamline global multilingual configuration.
 
 ## v0.8.4
 

@@ -5,7 +5,7 @@ import { cn } from "@/lib";
 import Icon from "@/components/icon";
 
 export default function ResetData() {
-  const tSetting = useTranslations("setting");
+  const tGlobal = useTranslations("global");
 
   const onResetData = () => {
     localStorage.clear();
@@ -19,12 +19,14 @@ export default function ResetData() {
         "border-slate-100 dark:border-neutral-500/60"
       )}
     >
-      <div className="text-sm">{tSetting("reset-data")}</div>
+      <div className="text-sm">{tGlobal("reset-data")}</div>
       <Confirm
-        title={tSetting("reset-data")}
-        content={tSetting("reset-data-tip")}
+        title={tGlobal("reset-data")}
+        content={tGlobal("reset-data-tip")}
         type="danger"
         onOk={onResetData}
+        okText={tGlobal("ok-spacing")}
+        cancelText={tGlobal("cancel-spacing")}
       >
         <Button type="danger">
           <Icon icon="delete_2_line" size={18} />

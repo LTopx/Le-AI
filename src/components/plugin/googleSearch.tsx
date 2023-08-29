@@ -6,8 +6,8 @@ import { usePluginStore } from "@/hooks/usePlugin";
 import { useChannelStore } from "@/hooks/useChannel";
 
 export default function GoogleSearch() {
+  const tGlobal = useTranslations("global");
   const tPlugin = useTranslations("plugin");
-  const tCommon = useTranslations("common");
 
   const { enable, api_key } = usePluginStore((state) => state.google_search);
 
@@ -38,7 +38,7 @@ export default function GoogleSearch() {
       </div>
       <div className="text-green-400">{tPlugin("google-search-free")}</div>
       <div>
-        <div className="text-sm mb-1">{tPlugin("introduction")}</div>
+        <div className="text-sm mb-1">{tGlobal("introduction")}</div>
         <ul
           className={cn(
             "bg-sky-50 dark:bg-sky-900",
@@ -54,16 +54,16 @@ export default function GoogleSearch() {
               href="https://docs.le-ai.app/features/plugin"
               target="_blank"
             >
-              {tPlugin("check-configure")}
+              {tGlobal("learn-more")}
             </a>
           </li>
         </ul>
       </div>
       <div>
-        <div className="text-sm mb-1">{tPlugin("api-key")}</div>
+        <div className="text-sm mb-1">{tPlugin("serper-api-key")}</div>
         <Input
           allowClear
-          placeholder={tCommon("please-enter")}
+          placeholder={tGlobal("please-enter")}
           value={api_key}
           onChange={(value) => onChange("api_key", value)}
         />

@@ -15,7 +15,7 @@ type CharacterListItem = Character & { isCollected: boolean };
 
 export default function Character() {
   const tCharacter = useTranslations("character");
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
 
   const createRef = React.useRef<any>(null);
 
@@ -32,7 +32,7 @@ export default function Character() {
 
   const options: TabsOption[] = [
     {
-      label: tCharacter("all"),
+      label: tGlobal("all"),
       value: "all",
     },
     {
@@ -52,7 +52,7 @@ export default function Character() {
       value: "writing",
     },
     {
-      label: tCharacter("translate"),
+      label: tGlobal("translate"),
       value: "translate",
     },
     {
@@ -132,7 +132,7 @@ export default function Character() {
               icon={<Icon icon="add_line" />}
               onClick={onAdd}
             >
-              {tCharacter("create")}
+              {tGlobal("create")}
             </Button>
           }
         />
@@ -142,7 +142,7 @@ export default function Character() {
           icon={<Icon icon="add_line" />}
           onClick={onAdd}
         >
-          {tCharacter("create")}
+          {tGlobal("create")}
         </Button>
 
         {lists.length ? (
@@ -178,18 +178,18 @@ export default function Character() {
                       icon={<Icon icon="add_line" />}
                       onClick={() => onUse(item)}
                     >
-                      {tCommon("apply")}
+                      {tGlobal("apply")}
                     </Button>
                   </div>
 
                   {activeTab === "mine" ? (
                     <Confirm
                       triggerClassName="flex-1"
-                      title={tCharacter("delete")}
-                      content={tCharacter("delete-tip")}
+                      title={tGlobal("delete")}
+                      content={tGlobal("delete-tip")}
                       onOk={() => onDelete(item.id)}
-                      okText={tCommon("ok")}
-                      cancelText={tCommon("cancel")}
+                      okText={tGlobal("ok-spacing")}
+                      cancelText={tGlobal("cancel-spacing")}
                       type="danger"
                     >
                       <Button
@@ -197,7 +197,7 @@ export default function Character() {
                         type="danger"
                         icon={<Icon icon="delete_2_line" />}
                       >
-                        {tCommon("delete")}
+                        {tGlobal("delete")}
                       </Button>
                     </Confirm>
                   ) : (
@@ -215,8 +215,8 @@ export default function Character() {
                         onClick={() => onCollect(item)}
                       >
                         {item.isCollected
-                          ? tCommon("collected")
-                          : tCommon("collect")}
+                          ? tGlobal("collected")
+                          : tGlobal("collect")}
                       </Button>
                     </div>
                   )}
@@ -227,7 +227,7 @@ export default function Character() {
         ) : (
           <div className="h-[50vh] flex gap-2 justify-center items-center">
             <Icon icon="warning_fill" size={18} />
-            {tCommon("no-data")}
+            {tGlobal("no-data")}
           </div>
         )}
       </Modal>

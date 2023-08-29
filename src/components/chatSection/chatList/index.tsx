@@ -29,12 +29,10 @@ export default function ChatList() {
   const session = useSession();
   const router = useRouter();
 
-  const tTTS = useTranslations("tts");
-  const tRes = useTranslations("responseErr");
-  const tAuth = useTranslations("auth");
-  const tRecharge = useTranslations("recharge");
+  const tGlobal = useTranslations("global");
+  const tCode = useTranslations("code");
+  const tPoints = useTranslations("points");
   const tPremium = useTranslations("premium");
-  const tErrorCode = useTranslations("errorCode");
 
   const chatEditRef = React.useRef<any>(null);
   const { catchError } = useFetchError();
@@ -153,10 +151,10 @@ export default function ChatList() {
         return toast(
           () => (
             <div className="flex gap-4 items-center">
-              {tRes("10001")}
+              {tCode("10001")}
               {checkAuth() && (
                 <Button type="primary" onClick={onLogin}>
-                  {tAuth("log-in")}
+                  {tGlobal("sign-in")}
                 </Button>
               )}
             </div>
@@ -164,16 +162,16 @@ export default function ChatList() {
           { duration: 5000 }
         );
       } else if (errRes.error === 10002) {
-        errorMessage = tRes("10002");
+        errorMessage = tCode("10002");
       } else if (errRes.error === 10004) {
-        errorMessage = tRes("10004");
+        errorMessage = tCode("10004");
       } else if (errRes.error === 10005) {
         return toast(
           () => (
             <div className="flex gap-4 items-center">
-              {tRes("10005")}
+              {tCode("10005")}
               <Button type="primary" onClick={onRecharge}>
-                {license_type ? tRecharge("recharge") : tPremium("free-trial")}
+                {license_type ? tPoints("recharge") : tPremium("free-trial")}
               </Button>
             </div>
           ),
@@ -183,9 +181,9 @@ export default function ChatList() {
         return toast(
           () => (
             <div className="flex gap-4 items-center">
-              {tRes("context_length_exceeded")}
+              {tGlobal("context-length-exceeded")}
               <Button type="primary" onClick={onExceeded}>
-                {tRes("learn-more")}
+                {tGlobal("learn-more")}
               </Button>
             </div>
           ),
@@ -204,7 +202,9 @@ export default function ChatList() {
 
   const onRead = (item: ChatItem, channel_id: string) => {
     if (license_type !== "premium" && license_type !== "team") {
-      return toast.error(tTTS("auth-error"), { id: "license_type_error" });
+      return toast.error(tGlobal("license-check-error"), {
+        id: "license_type_error",
+      });
     }
 
     const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));

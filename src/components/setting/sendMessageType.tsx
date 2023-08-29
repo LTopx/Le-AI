@@ -6,7 +6,7 @@ import { sendMessageTypes } from "@/utils/constant";
 import { useConfigStore, type ConfigStore } from "@/hooks/useConfig";
 
 export default function SendMessageType() {
-  const tSetting = useTranslations("setting");
+  const tGlobal = useTranslations("global");
 
   const sendMessageType = useConfigStore((state) => state.sendMessageType);
   const [plat, setPlat] = React.useState<Platform>("windows");
@@ -30,7 +30,7 @@ export default function SendMessageType() {
         "border-slate-100 dark:border-neutral-500/60"
       )}
     >
-      <div className="text-sm">{tSetting("send-message")}</div>
+      <div className="text-sm">{tGlobal("send-message")}</div>
       <Select
         className="w-40"
         options={sendMessageTypes(plat)}

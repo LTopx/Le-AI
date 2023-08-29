@@ -6,8 +6,8 @@ import GoogleSearch from "./googleSearch";
 import Icon from "@/components/icon";
 
 export default function PluginSetting() {
+  const tGlobal = useTranslations("global");
   const tPlugin = useTranslations("plugin");
-  const tCommon = useTranslations("common");
 
   const [activeTab, setActiveTab] = React.useState("google_search");
 
@@ -29,16 +29,16 @@ export default function PluginSetting() {
       children: <GoogleSearch />,
     },
     {
-      label: tCommon("todo"),
+      label: `${tGlobal("todo")}...`,
       value: "todo",
-      children: <div>{tCommon("todo")}</div>,
+      children: <div>{tGlobal("todo")}...</div>,
     },
   ];
 
   return (
     <div>
       <div className="mb-2">
-        {tCommon("enabled")}: {count}
+        {tGlobal("enabled")}: {count}
       </div>
       <Tabs
         itemsFull

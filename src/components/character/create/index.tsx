@@ -85,8 +85,8 @@ const renderLabel = (row: any) => {
 };
 
 const CreateCharacter = React.forwardRef((_, forwardedRef) => {
+  const tGlobal = useTranslations("global");
   const tCharacter = useTranslations("character");
-  const tCommon = useTranslations("common");
 
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState<ICharacter>({
@@ -102,6 +102,10 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
     },
   });
 
+  const nameRef = React.useRef<any>(null);
+  const descRef = React.useRef<any>(null);
+  const contentRef = React.useRef<any>(null);
+
   const onClose = () => setOpen(false);
 
   const onChangeForm = (value: any, key: keyof ICharacter) => {
@@ -116,22 +120,18 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
 
   const onOk = () => {
     if (!formData.name) {
-      return toast.error(
-        `${tCommon("please-enter")} ${tCharacter("template-name")}`,
-        { id: "enter-name" }
-      );
+      nameRef.current?.focus();
+      return toast.error(tGlobal("please-enter"), {
+        id: "enter-name",
+      });
     }
     if (!formData.desc) {
-      return toast.error(
-        `${tCommon("please-enter")} ${tCharacter("template-desc")}`,
-        { id: "enter-desc" }
-      );
+      descRef.current?.focus();
+      return toast.error(tGlobal("please-enter"), { id: "enter-desc" });
     }
     if (!formData.content) {
-      return toast.error(
-        `${tCommon("please-enter")} ${tCharacter("template-content")}`,
-        { id: "enter-content" }
-      );
+      contentRef.current?.focus();
+      return toast.error(tGlobal("please-enter"), { id: "enter-content" });
     }
     const params: Character = {
       id: uuidv4(),
@@ -149,7 +149,7 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
       },
     };
     addList(params);
-    toast.success(tCharacter("create-success"));
+    toast.success(tGlobal("operation-successful"));
     setOpen(false);
   };
 
@@ -173,22 +173,23 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
 
   return (
     <Modal
-      title={tCharacter("create")}
+      title={tGlobal("create")}
       open={open}
       maskClosable={false}
-      okText={tCommon("ok")}
-      cancelText={tCommon("cancel")}
+      okText={tGlobal("ok-spacing")}
+      cancelText={tGlobal("cancel-spacing")}
       onClose={onClose}
       onOk={onOk}
     >
       <div className="flex flex-col gap-4">
         <div className="flex flex-col">
           <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tCharacter("template-name")}
+            {tGlobal("name")}
           </div>
           <Input
+            ref={nameRef}
             allowClear
-            placeholder={tCommon("please-enter")}
+            placeholder={tGlobal("please-enter")}
             maxLength={40}
             value={formData.name}
             onChange={(value) => onChangeForm(value, "name")}
@@ -196,7 +197,7 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
         </div>
         <div className="flex flex-col">
           <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tCharacter("template-icon")}
+            {tGlobal("icon")}
           </div>
           <Select
             options={options}
@@ -207,12 +208,13 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
         </div>
         <div className="flex flex-col">
           <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tCharacter("template-desc")}
+            {tGlobal("desc")}
           </div>
           <Textarea
+            ref={descRef}
             className="h-28"
             allowClear
-            placeholder={tCommon("please-enter")}
+            placeholder={tGlobal("please-enter")}
             maxLength={40}
             value={formData.desc}
             onChange={(value) => onChangeForm(value, "desc")}
@@ -220,12 +222,13 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
         </div>
         <div className="flex flex-col">
           <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tCharacter("template-content")}
+            {tGlobal("content")}
           </div>
           <Textarea
+            ref={contentRef}
             className="h-28"
             allowClear
-            placeholder={tCommon("please-enter")}
+            placeholder={tGlobal("please-enter")}
             maxLength={40}
             value={formData.content}
             onChange={(value) => onChangeForm(value, "content")}
@@ -241,7 +244,7 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
           <Textarea
             className="h-20"
             allowClear
-            placeholder={tCommon("please-enter")}
+            placeholder={tGlobal("please-enter")}
             maxLength={40}
             value={formData.welcome}
             onChange={(value) => onChangeForm(value, "welcome")}

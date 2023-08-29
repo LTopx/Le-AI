@@ -15,8 +15,7 @@ import Share from "./share";
 
 export default function Handler() {
   const tChat = useTranslations("chat");
-  const tMenu = useTranslations("menu");
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
 
   const [activeId, list] = useChannelStore((state) => [
     state.activeId,
@@ -112,7 +111,7 @@ export default function Handler() {
   const onCancel = () => {
     if (!findChannel.channel_loading) return;
     cancelGPT(findChannel.channel_id);
-    toast.error(tChat("canceled"), { id: "cancel_chat" });
+    toast.error(tGlobal("canceled"), { id: "cancel_chat" });
   };
 
   const onClear = () => clearItem();
@@ -127,7 +126,7 @@ export default function Handler() {
             onClick={onCancel}
             icon={<Icon icon="stop_fill" size={18} />}
           >
-            <span className="hidden lg:block">{tChat("stop-generate")}</span>
+            <span className="hidden lg:block">{tGlobal("stop")}</span>
           </Button>
         </div>
       </div>
@@ -145,7 +144,9 @@ export default function Handler() {
           onClick={() => updateChatSettingOpen(true)}
           icon={<Icon icon="settings_3_line" size={18} />}
         >
-          <span className="hidden lg:block">{tChat("chat-setting")}</span>
+          <span className="hidden lg:block">
+            {tChat("conversation-setting")}
+          </span>
         </Button>
         <Button
           className="h-7 text-xs px-2.5"
@@ -165,17 +166,17 @@ export default function Handler() {
           icon={<Icon icon="add_line" size={16} />}
           onClick={onChannelAdd}
         >
-          <span className="hidden lg:block">{tMenu("new-chat")}</span>
+          <span className="hidden lg:block">{tChat("new-chat")}</span>
         </Button>
       </div>
 
       <Confirm
-        title={tMenu("clear-all-conversation")}
-        content={tChat("clear-current-conversation")}
+        title={tChat("clear-context")}
+        content={tChat("clear-current-context")}
         type="danger"
         onOk={onClear}
-        okText={tCommon("ok")}
-        cancelText={tCommon("cancel")}
+        okText={tGlobal("ok-spacing")}
+        cancelText={tGlobal("cancel-spacing")}
       >
         <Button
           className="h-7 text-xs px-2.5"
@@ -184,9 +185,7 @@ export default function Handler() {
           outline
           icon={<Icon icon="broom_line" size={16} />}
         >
-          <span className="hidden lg:block">
-            {tMenu("clear-all-conversation")}
-          </span>
+          <span className="hidden lg:block">{tChat("clear-context")}</span>
         </Button>
       </Confirm>
     </div>

@@ -6,8 +6,8 @@ import type { ChatItem } from "@/hooks/useChannel/types";
 import { useChannelStore } from "@/hooks/useChannel";
 
 const ChatEdit = React.forwardRef((_, forwardedRef) => {
-  const tCommon = useTranslations("common");
   const tChat = useTranslations("chat");
+  const tGlobal = useTranslations("global");
 
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -20,7 +20,7 @@ const ChatEdit = React.forwardRef((_, forwardedRef) => {
 
   const onOk = () => {
     if (!value?.trim()) {
-      return toast.error(tChat("can-not-empty"), { id: "can-not-empty" });
+      return toast.error(tGlobal("please-enter"), { id: "can-not-empty" });
     }
 
     updateContent(contentIdRef.current, value);
@@ -41,15 +41,15 @@ const ChatEdit = React.forwardRef((_, forwardedRef) => {
       title={tChat("edit-content")}
       maskClosable={false}
       open={open}
-      okText={tCommon("ok")}
-      cancelText={tCommon("cancel")}
+      okText={tGlobal("ok-spacing")}
+      cancelText={tGlobal("cancel-spacing")}
       onClose={onClose}
       onOk={onOk}
     >
       <Textarea
         className="h-72"
         allowClear
-        placeholder={tCommon("please-enter")}
+        placeholder={tGlobal("please-enter")}
         value={value}
         onChange={setValue}
       />
