@@ -65,7 +65,7 @@ if (
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers,
-  secret: process.env.NEXT_PUBLIC_AUTH_SECRET || 'secret',
+  secret: process.env.NEXT_PUBLIC_AUTH_SECRET || "secret",
   callbacks: {
     async jwt({ token, trigger }) {
       const id = token.sub || token.id;
@@ -111,7 +111,7 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
     // 1. If the user does not act within the validity period, the session will expire and they must log in again.
     // 2. All actions that trigger the useSession behavior in the interface will refresh this validity period
-    maxAge: 5 * 24 * 60 * 60, // 5 days
+    maxAge: 14 * 24 * 60 * 60, // 14 days
   },
   pages: {
     signIn: "/login",

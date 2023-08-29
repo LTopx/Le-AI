@@ -2,7 +2,7 @@
 
 ## v0.8.5
 
-> 2023-08-28
+> 2023-08-29
 
 ### Fixed
 
@@ -25,6 +25,7 @@
 - Adjust all the copy and related links within the project regarding L-GPT.
 - Adjusted some code structure
 - Add the Le-AI API Key to the logic for determining whether the key is configured.
+- Adjusted the user credential expiration time to 14 days.
 
 ## v0.8.4
 
