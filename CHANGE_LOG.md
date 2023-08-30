@@ -19,6 +19,7 @@
 - Self-built token integration logic for OpenAI, Azure OpenAI, and OpenRouter interfaces
 - Added support for configuring Le-AI API Key
 - Introduced shadcn/ui to optimize the style of some components
+- Added support for Traditional Chinese
 
 ### Changed
 

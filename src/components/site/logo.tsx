@@ -26,8 +26,7 @@ export default function Logo({
   const onCheckLog = () => {
     localStorage.setItem("is_new_version", pkg.version);
     const version = pkg.version.replace(/\./g, "");
-    const localePath = locale === "zh-CN" ? "zh-CN/" : "";
-    const url = `https://docs.le-ai.app/${localePath}change-log#v${version}`;
+    const url = `https://docs.le-ai.app/change-log#v${version}`;
     window.open(url);
   };
 

@@ -7,8 +7,10 @@ import { cn } from "@/lib";
 import { useOpenStore } from "@/hooks/useOpen";
 
 export const languages: DropdownOption[] = [
-  { label: "🇨🇳 简体中文", value: "zh-CN" },
   { label: "🇺🇸 English", value: "en" },
+  { label: "🇨🇳 简体中文", value: "zh-CN" },
+  { label: "🇭🇰 繁体中文", value: "zh-HK" },
+  // { label: "🇯🇵 日本語", value: "ja" },
 ];
 
 export default function LanguageSelect({

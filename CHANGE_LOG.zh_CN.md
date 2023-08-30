@@ -19,6 +19,7 @@
 - 自构建令牌打通 OpenAI、Azure OpenAI、OpenRouter 接口逻辑
 - 新增支持配置 Le-AI API Key
 - 引入 shadcn/ui 优化部分组件样式
+- 新增繁体中文支持
 
 ### 调整
 
