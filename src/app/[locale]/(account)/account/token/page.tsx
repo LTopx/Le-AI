@@ -5,17 +5,18 @@ import { useTranslations, useFormatter } from "next-intl";
 import { useClipboard } from "l-hooks";
 import toast from "react-hot-toast";
 import { Button, Dropdown, type DropdownOption } from "@ltopx/lx-ui";
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-} from "@nextui-org/table";
 import { useFetchError } from "@/hooks/useFetchError";
 import EditToken from "@/components/account/token/edit";
 import Icon from "@/components/icon";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export default function ManageToken() {
   const format = useFormatter();
@@ -143,30 +144,19 @@ export default function ManageToken() {
             {tGlobal("create")}
           </Button>
         </div>
-        <Table
-          classNames={{
-            wrapper:
-              "overflow-auto max-w-[calc(100vw-48px)] md:max-w-[calc(100vw-300px)]",
-          }}
-        >
+        <Table className="w-[500px] overflow-x-auto">
           <TableHeader>
-            <TableColumn>{tGlobal("name")}</TableColumn>
-            <TableColumn>{tGlobal("status")}</TableColumn>
-            <TableColumn>{tGlobal("usage")}</TableColumn>
-            <TableColumn>{tGlobal("remain")}</TableColumn>
-            <TableColumn>{tGlobal("create-time")}</TableColumn>
-            <TableColumn>{tGlobal("expire-date")}</TableColumn>
-            <TableColumn>{tGlobal("action")}</TableColumn>
+            <TableRow>
+              <TableHead>{tGlobal("name")}</TableHead>
+              <TableHead>{tGlobal("status")}</TableHead>
+              <TableHead>{tGlobal("usage")}</TableHead>
+              <TableHead>{tGlobal("remain")}</TableHead>
+              <TableHead>{tGlobal("create-time")}</TableHead>
+              <TableHead>{tGlobal("expire-date")}</TableHead>
+              <TableHead>{tGlobal("action")}</TableHead>
+            </TableRow>
           </TableHeader>
-          <TableBody
-            isLoading={loading}
-            loadingContent={
-              <div className="flex h-full bg-white/90 w-full justify-center items-center">
-                <Icon icon="loading_line" size={18} className="animate-spin" />
-              </div>
-            }
-            emptyContent={tGlobal("no-data")}
-          >
+          <TableBody>
             {list.map((item) => (
               <TableRow key={item.key}>
                 <TableCell className="whitespace-nowrap">{item.name}</TableCell>

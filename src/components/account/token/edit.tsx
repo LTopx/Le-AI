@@ -1,14 +1,17 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
+import { format } from "date-fns";
+import { Modal, Input, Tabs, Button, type TabsOption } from "@ltopx/lx-ui";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
 import {
-  Modal,
-  Input,
-  DatePicker,
-  Tabs,
-  Button,
-  type TabsOption,
-} from "@ltopx/lx-ui";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib";
+import { Button as NewButton } from "@/components/ui/button";
 import { useFetchError } from "@/hooks/useFetchError";
 
 interface EditTokenProps {
@@ -151,10 +154,33 @@ const EditToken = React.forwardRef<any, EditTokenProps>(
           </div>
           <div>
             <div className="text-sm mb-1">{tAccount("expire-date")}</div>
-            <DatePicker
-              value={formData.expire}
-              onChange={(value) => onChangeForm("expire", value)}
-            />
+            <Popover>
+              <PopoverTrigger asChild>
+                <NewButton
+                  variant={"outline"}
+                  size="sm"
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !formData.expire && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {formData.expire ? (
+                    format(formData.expire, "PPP")
+                  ) : (
+                    <span>{tGlobal("please-select")}</span>
+                  )}
+                </NewButton>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 z-[9999]" align="start">
+                <Calendar
+                  mode="single"
+                  selected={formData.expire}
+                  onSelect={(value) => onChangeForm("expire", value)}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
           <div>
             <div className="text-sm mb-1">{tGlobal("limit")}</div>

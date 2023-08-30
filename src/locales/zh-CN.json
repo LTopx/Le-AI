@@ -57,6 +57,7 @@
     "or": "或者",
     "package": "套餐",
     "please-enter": "请输入",
+    "please-select": "请选择",
     "plugins": "插件",
     "premium": "Le-AI 高级版",
     "privacy": "隐私",
@@ -109,7 +110,6 @@
   "backup": {
     "key": "加密密钥",
     "key-length-error": "加密密钥必须是 16 位字符",
-    "operation-options": "操作选项",
     "rule-1": "Le-AI 不会自动同步你的任何信息，所有的数据都默认存储在浏览器和设备本地。",
     "rule-2": "当使用备份和云同步功能时，Le-AI将采用您提供的本地加密密钥对数据进行AES加密解密。",
     "rule-3": "若密钥遗失，则没有任何办法能够正确找回您备份的数据。"

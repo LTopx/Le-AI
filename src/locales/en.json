@@ -57,6 +57,7 @@
     "or": "or",
     "package": "Package",
     "please-enter": "Please enter",
+    "please-select": "Please Select",
     "plugins": "Plugins",
     "premium": "Le-AI Premium",
     "privacy": "Privacy",
@@ -109,7 +110,6 @@
   "backup": {
     "key": "Encryption Key",
     "key-length-error": "The encryption key must be 16 characters long.",
-    "operation-options": "Operation Options",
     "rule-1": "Le-AI does not automatically sync any of your information, and all data is stored locally on the browser and device by default.",
     "rule-2": "When using the backup and cloud sync features, Le-AI will use the local encryption key provided by you to encrypt and decrypt the data using AES.",
     "rule-3": "If the key is lost, there is no way to correctly retrieve your backed-up data."

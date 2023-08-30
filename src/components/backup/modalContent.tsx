@@ -234,9 +234,6 @@ export default function ModalContent({ onClose }: IProps) {
           onChange={setKey}
         />
       </div>
-      <div>
-        <div className="mb-1 text-sm">{tBackup("operation-options")}</div>
-      </div>
       <div className="flex gap-2">
         <Button
           type="primary"
