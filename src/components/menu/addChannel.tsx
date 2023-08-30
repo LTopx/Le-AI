@@ -40,7 +40,7 @@ export default function AddChannel() {
   };
 
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1.5">
       <Button
         className="mb-2"
         block
