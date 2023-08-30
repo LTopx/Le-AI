@@ -71,7 +71,7 @@ export default function AuthForm() {
     <div
       className={cn(
         "shadow-md w-96 z-10 m-auto rounded-xl px-8 py-4 max-w-[calc(100vw-2rem)]",
-        "border border-neutral-200 dark:border-neutral-600",
+        "border border-neutral-200 dark:border-neutral-700/80",
         "dark:bg-[rgba(24,24,27,.8)]",
         {
           "pointer-events-none": loadingEmial || loadingGithub || loadingGoogle,
@@ -114,7 +114,7 @@ export default function AuthForm() {
       </div>
       {checkEmail() && (checkGithub() || checkGoogle()) && (
         <Divider className="my-8">
-          <span className="text-sm">{tGlobal("or")}</span>
+          <span className="text-sm uppercase">{tGlobal("or")}</span>
         </Divider>
       )}
       {checkEmail() && (
