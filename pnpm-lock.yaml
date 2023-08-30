@@ -17,11 +17,14 @@ dependencies:
   '@prisma/client':
     specifier: 5.2.0
     version: 5.2.0(prisma@5.2.0)
+  '@radix-ui/react-label':
+    specifier: ^2.0.2
+    version: 2.0.2(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-popover':
-    specifier: ^1.0.6
+    specifier: 1.0.6
     version: 1.0.6(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-slot':
-    specifier: ^1.0.2
+    specifier: 1.0.2
     version: 1.0.2(@types/react@18.2.21)(react@18.2.0)
   '@react-email/components':
     specifier: 0.0.7
@@ -51,7 +54,7 @@ dependencies:
     specifier: 10.4.15
     version: 10.4.15(postcss@8.4.29)
   class-variance-authority:
-    specifier: ^0.7.0
+    specifier: 0.7.0
     version: 0.7.0
   clsx:
     specifier: 2.0.0
@@ -78,8 +81,8 @@ dependencies:
     specifier: 2.0.5
     version: 2.0.5
   framer-motion:
-    specifier: 10.16.1
-    version: 10.16.1(react-dom@18.2.0)(react@18.2.0)
+    specifier: 10.16.2
+    version: 10.16.2(react-dom@18.2.0)(react@18.2.0)
   gpt-tokens:
     specifier: 1.1.2
     version: 1.1.2
@@ -90,8 +93,8 @@ dependencies:
     specifier: 0.4.6
     version: 0.4.6(@types/qs@6.9.7)(qs@6.11.2)(react-dom@18.2.0)(react@18.2.0)
   lucide-react:
-    specifier: ^0.271.0
-    version: 0.271.0(react@18.2.0)
+    specifier: 0.272.0
+    version: 0.272.0(react@18.2.0)
   math-random:
     specifier: 2.0.1
     version: 2.0.1
@@ -120,7 +123,7 @@ dependencies:
     specifier: 18.2.0
     version: 18.2.0
   react-day-picker:
-    specifier: ^8.8.1
+    specifier: 8.8.1
     version: 8.8.1(date-fns@2.30.0)(react@18.2.0)
   react-dom:
     specifier: 18.2.0
@@ -150,7 +153,7 @@ dependencies:
     specifier: 3.3.3
     version: 3.3.3
   tailwindcss-animate:
-    specifier: ^1.0.7
+    specifier: 1.0.7
     version: 1.0.7(tailwindcss@3.3.3)
   typescript:
     specifier: 5.2.2
@@ -2474,6 +2477,27 @@ packages:
       '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.21)(react@18.2.0)
       '@types/react': 18.2.21
       react: 18.2.0
+    dev: false
+
+  /@radix-ui/react-label@2.0.2(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-N5ehvlM7qoTLx7nWPodsPYPgMzA5WM8zZChQg8nyFJKnDO5WHdba1vv5/H6IO5LtJMfD2Q3wh1qHFGNtK0w3bQ==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.22.10
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
+      '@types/react': 18.2.21
+      '@types/react-dom': 18.2.7
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@radix-ui/react-menu@2.0.5(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0):
@@ -5431,6 +5455,24 @@ packages:
       '@emotion/is-prop-valid': 0.8.8
     dev: false
 
+  /framer-motion@10.16.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-aY6L9YMvqMWtfOQptaUvvr8dp97jskXY5UYLQM0vOPxKeERrG/Z034EIQZ/52u7MeCT0HlCQy3/l0HdUZCB9Tw==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      tslib: 2.6.2
+    optionalDependencies:
+      '@emotion/is-prop-valid': 0.8.8
+    dev: false
+
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
@@ -6504,8 +6546,8 @@ packages:
       yallist: 4.0.0
     dev: false
 
-  /lucide-react@0.271.0(react@18.2.0):
-    resolution: {integrity: sha512-oc3/6m7gg/5E9FsX0F7t7DOuBiafsLTwg5/f0hJUJYePbmLmCXpZj1OESilmaUSwXGztawV7V12ZXBfAb8wRAA==}
+  /lucide-react@0.272.0(react@18.2.0):
+    resolution: {integrity: sha512-TXk88XsL9YC9psZR6GSXDLpbppxlm2jN2uMjIWI5A7sPWb/dllib59lNcORC20N33TEeelDwcTR0dLKl/fhYLw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:

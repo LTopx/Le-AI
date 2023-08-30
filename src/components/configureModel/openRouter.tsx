@@ -31,7 +31,7 @@ export default function OpenRouter() {
         <div className="mb-1 text-sm flex gap-4 items-end">
           <span>API Key</span>
           <a
-            href="https://serper.dev"
+            href="https://openrouter.ai/keys"
             target="_blank"
             className="text-xs text-sky-400 cursor-pointer transition-colors hover:underline hover:text-sky-500"
           >

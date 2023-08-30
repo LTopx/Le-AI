@@ -2,7 +2,7 @@
 
 ## v0.9.0
 
-> 2023-08-30
+> 2023-08-31
 
 ### Fixed
 
@@ -10,6 +10,7 @@
 - Fixing invalid links.
 - Fixing the cross-domain issue with the chatgpt interface.
 - Fixing the issue of missing metadataBase.
+- Fixed the redirect link issue for OpenRouter Key.
 
 ### Add
 
@@ -29,6 +30,7 @@
 - Add the Le-AI API Key to the logic for determining whether the key is configured.
 - Adjusted the user credential expiration time to 14 days.
 - Refactor and streamline global multilingual configuration.
+- Refactor the login interface UI.
 
 ## v0.8.4
 
