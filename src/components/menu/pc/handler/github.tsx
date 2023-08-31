@@ -6,7 +6,7 @@ export default function Github() {
   return (
     <div className="flex flex-1 justify-center">
       <a
-        href="https://github.com/Peek-A-Booo/Le-AI"
+        href="https://github.com/LTopx/Le-AI"
         target="_blank"
         className={cn(
           "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
