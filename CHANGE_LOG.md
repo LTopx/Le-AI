@@ -2,7 +2,7 @@
 
 ## v0.9.0
 
-> 2023-08-31
+> 2023-09-01
 
 ### Fixed
 
@@ -11,6 +11,7 @@
 - Fixing the cross-domain issue with the chatgpt interface.
 - Fixing the issue of missing metadataBase.
 - Fixed the redirect link issue for OpenRouter Key.
+- Fixing the issue of not carrying cross-domain headers when requesting an error.
 
 ### Add
 

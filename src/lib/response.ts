@@ -11,7 +11,17 @@ interface IResSuccess {
 }
 
 export const ResErr = ({ msg, error = -1 }: IResErr) => {
-  return NextResponse.json({ error, msg }, { status: 500 });
+  return NextResponse.json(
+    { error, msg },
+    {
+      status: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    }
+  );
 };
 
 export const ResSuccess = (params?: IResSuccess) => {
