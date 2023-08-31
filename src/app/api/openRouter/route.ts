@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/utils/plugin/auth";
 import { prisma } from "@/lib/prisma";
 import { ResErr } from "@/lib";
+import { PREMIUM_MODELS } from "@/hooks/useLLM";
 import { regular } from "./regular";
 
 export async function OPTIONS() {
@@ -75,6 +76,15 @@ export async function POST(request: Request) {
     }
 
     if (!user) return ResErr({ error: 20002 });
+
+    // audit user license
+    if (
+      user.license_type !== "premium" &&
+      user.license_type !== "team" &&
+      PREMIUM_MODELS.includes(modelLabel)
+    ) {
+      return ResErr({ error: 20009 });
+    }
 
     const { availableTokens } = user;
     if (availableTokens <= 0) return ResErr({ error: 10005 });

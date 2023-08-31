@@ -31,6 +31,7 @@
 - Adjusted the user credential expiration time to 14 days.
 - Refactor and streamline global multilingual configuration.
 - Refactor the login interface UI.
+- Adjusted the permissions of some models in OpenRouter.
 
 ## v0.8.4
 

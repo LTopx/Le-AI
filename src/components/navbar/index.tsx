@@ -1,5 +1,6 @@
 import React from "react";
 import { cn } from "@/lib";
+import { Button } from "@ltopx/lx-ui";
 import Title from "./title";
 import Avatar from "@/components/site/avatar";
 import Icon from "@/components/icon";
@@ -28,17 +29,18 @@ export default function Navbar() {
         <Icon icon="indent_increase_line" size={24} />
       </div>
       <Title />
-      <div className="absolute top-0 right-3 h-full flex items-center gap-3">
+      <div className="absolute top-0 right-3 h-full flex items-center gap-2">
         {/* If you haven't logged in, there is no point in displaying anything here. */}
         {checkAuth() && (
-          <div>
-            <Icon
-              icon="gift_fill"
-              size={30}
-              className="text-orange-400 dark:text-orange-500 cursor-pointer"
-              onClick={() => updatePremiumOpen(true)}
-            />
-          </div>
+          <Button
+            className="px-2"
+            size="sm"
+            type="primary"
+            outline
+            onClick={() => updatePremiumOpen(true)}
+          >
+            <Icon icon="gift_fill" size={22} />
+          </Button>
         )}
         <Avatar />
       </div>
