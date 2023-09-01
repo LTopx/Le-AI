@@ -12,6 +12,7 @@
 - 修复 metadataBase 缺失的问题
 - 修复 OpenRouter Key 的跳转链接问题
 - 修复请求错误时没有携带跨域头的问题
+- 修复令牌页面 Table 的样式问题
 
 ### 新增
 

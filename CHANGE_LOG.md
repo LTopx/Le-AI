@@ -12,6 +12,7 @@
 - Fixing the issue of missing metadataBase.
 - Fixed the redirect link issue for OpenRouter Key.
 - Fixing the issue of not carrying cross-domain headers when requesting an error.
+- Fixed the style issue with the Table on the token page.
 
 ### Add
 

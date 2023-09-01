@@ -297,10 +297,13 @@
   },
   "zLog": {
     "full-log": "Click to view the full update log",
-    "menu-notice": "Le-AI client is coming soon",
-    "title": "v0.8.4 Released 🔥🔥",
-    "text1": "Newly added cloud synchronization function, which allows the synchronization of conversation content to the cloud, making it convenient to synchronize between different devices.",
-    "text2": "Adjust the model permissions provided by OpenRouter to 'free'.",
-    "text3": "Role template now supports adding configuration for welcome messages, which will be the default first sentence in a conversation."
+    "menu-notice": "Download Le-AI client",
+    "title": "v0.9.0 Update 🔥🔥",
+    "text1": "Adjusted project name and logo: L-GPT ⇒ Le-AI",
+    "text2": "Added support for client version, and now supports generating Le-API Key within the system for configuration use",
+    "text3": "Added support for Traditional Chinese, can be switched at the bottom left corner of the system",
+    "text4": "Added support for one-click session clearing",
+    "text5": "Fixed client interface cross-origin issue",
+    "text6": "Other UI details optimization"
   }
 }

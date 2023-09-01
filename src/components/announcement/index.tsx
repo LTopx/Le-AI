@@ -37,7 +37,7 @@ export default function Announcement() {
       open={open}
       onClose={onClose}
       footer={
-        <div className="flex gap-2 justify-end">
+        <div className="flex justify-end">
           <Button type="primary" onClick={onClose}>
             {tGlobal("ok-spacing")}
           </Button>
@@ -45,7 +45,7 @@ export default function Announcement() {
       }
     >
       <div className="max-h-[500px] overflow-y-auto">
-        <Image src={url} alt="" width={1920} height={800} />
+        {/* <Image src={url} alt="" width={1920} height={300} /> */}
         <div className="flex">
           <Button
             type="link"
@@ -60,8 +60,20 @@ export default function Announcement() {
           className="list-disc space-y-3 mt-3 max-h-[500px] pl-5 text-slate-500 overflow-y-auto marker:text-sky-400"
         >
           <li>{tZLog("text1")}</li>
-          <li>{tZLog("text2")}</li>
+          <li>
+            {tZLog("text2")},{" "}
+            <a
+              href="https://docs.le-ai.app/client"
+              target="_blank"
+              className="text-sky-400 hover:underline"
+            >
+              {tGlobal("learn-more")}
+            </a>
+          </li>
           <li>{tZLog("text3")}</li>
+          <li>{tZLog("text4")}</li>
+          <li>{tZLog("text5")}</li>
+          <li>{tZLog("text6")}</li>
         </ul>
       </div>
     </Modal>

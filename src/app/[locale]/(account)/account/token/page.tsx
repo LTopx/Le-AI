@@ -144,7 +144,7 @@ export default function ManageToken() {
             {tGlobal("create")}
           </Button>
         </div>
-        <Table className="w-[500px] overflow-x-auto">
+        <Table className="min-w-[760px] overflow-x-auto">
           <TableHeader>
             <TableRow>
               <TableHead>{tGlobal("name")}</TableHead>

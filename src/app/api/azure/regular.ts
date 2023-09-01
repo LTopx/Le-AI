@@ -84,7 +84,14 @@ export const regular = async ({
       leai_userId,
     });
 
-    return new Response(readable, response);
+    return new Response(readable, {
+      ...response,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
   } catch (error: any) {
     console.log(error, "azure openai regular error");
     return ResErr({ msg: error?.message || "Error" });
