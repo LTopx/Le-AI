@@ -44,14 +44,13 @@ export const metadata: Metadata = {
     userScalable: false,
   },
   appleWebApp: { capable: true, title: "Le-AI" },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_METABASE_URL as string),
   openGraph: {
     title: "Le-AI | An AI Assitant Hub",
     description:
       "Le-AI is an open-source project that helps you improve your learning, work, and life efficiency by providing various AI models.",
     url: "https://le-ai.app",
     siteName: "Le-AI",
-    locale: "zh_CN",
+    locale: "en_US",
     type: "website",
     images: {
       url: "https://le-ai.app/opengraph-image.png?v=2",

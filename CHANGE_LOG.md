@@ -1,5 +1,13 @@
 # Le-AI Change Log
 
+## v0.9.1
+
+> 2023-09-02
+
+### Fixed
+
+- Fixed: issue of missing metadataBase and env variable [#6](https://github.com/LTopx/Le-AI/issues/6)
+
 ## v0.9.0
 
 > 2023-09-01
