@@ -1,16 +1,8 @@
 # Le-AI 更新日志
 
-## v0.9.1
-
-> 2023-09-02
-
-### 修复
-
-- 修复 issue of missing metadataBase and env variable [#6](https://github.com/LTopx/Le-AI/issues/6)
-
 ## v0.9.0
 
-> 2023-09-01
+> 2023-09-02
 
 ### 修复
 
@@ -21,6 +13,7 @@
 - 修复 OpenRouter Key 的跳转链接问题
 - 修复请求错误时没有携带跨域头的问题
 - 修复令牌页面 Table 的样式问题
+- 修复 issue of missing metadataBase and env variable [#6](https://github.com/LTopx/Le-AI/issues/6)
 
 ### 新增
 

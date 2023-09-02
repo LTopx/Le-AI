@@ -1,16 +1,8 @@
 # Le-AI Change Log
 
-## v0.9.1
-
-> 2023-09-02
-
-### Fixed
-
-- Fixed: issue of missing metadataBase and env variable [#6](https://github.com/LTopx/Le-AI/issues/6)
-
 ## v0.9.0
 
-> 2023-09-01
+> 2023-09-02
 
 ### Fixed
 
@@ -21,6 +13,7 @@
 - Fixed the redirect link issue for OpenRouter Key.
 - Fixing the issue of not carrying cross-domain headers when requesting an error.
 - Fixed the style issue with the Table on the token page.
+- Fixed: issue of missing metadataBase and env variable [#6](https://github.com/LTopx/Le-AI/issues/6)
 
 ### Add
 
