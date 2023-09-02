@@ -17,6 +17,7 @@
 
 ### Add
 
+- Added support for Windows and Mac Beta clients.
 - Added support for one-click session clearing
 - Added logic and database table construction for token management page
 - Added important announcement prompt in the left-side menu
