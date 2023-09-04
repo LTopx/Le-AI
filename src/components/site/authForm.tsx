@@ -35,6 +35,11 @@ export default function AuthForm() {
   const onGithubLogin = async () => {
     setLoadingGithub(true);
     await signIn("github", { callbackUrl: "/" });
+    // await signIn("credentials", {
+    //   username: "asfasf",
+    //   password: "112233",
+    //   callbackUrl: "/",
+    // });
   };
 
   const onGoogleLogin = async () => {
