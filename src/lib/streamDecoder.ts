@@ -50,8 +50,8 @@ const streamDecoder = () => {
         while (!decoderDone) {
           const { done, value } = await reader.read();
           decoderDone = done;
-          const fragment = textDecoder.decode(value);
-          console.log(fragment, "fragment");
+          const fragment = textDecoder.decode(value, { stream: true });
+
           const checkIsError = checkFragmentError(fragment);
           if (checkIsError) {
             decoderDone = true;
