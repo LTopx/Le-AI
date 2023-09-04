@@ -8,6 +8,7 @@
 
 - 修复部署项目时配置自定义的 API Key 后鉴权逻辑有误的问题
 - 修复部分情况下回复出现乱码的问题
+- 修复 [#8](https://github.com/LTopx/Le-AI/issues/8)
 
 ## v0.9.0
 

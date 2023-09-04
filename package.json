@@ -39,7 +39,7 @@
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "file-saver": "2.0.5",
-    "framer-motion": "10.16.2",
+    "framer-motion": "10.16.3",
     "gpt-tokens": "1.1.2",
     "js-tiktoken": "1.0.7",
     "l-hooks": "0.4.6",

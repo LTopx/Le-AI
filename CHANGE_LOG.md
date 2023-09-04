@@ -8,6 +8,7 @@
 
 - Fixed the issue of incorrect authentication logic after configuring a custom API Key when deploying a project
 - Fixed the issue of garbled characters in some cases when replying
+- Fixed [#8](https://github.com/LTopx/Le-AI/issues/8)
 
 ## v0.9.0
 
