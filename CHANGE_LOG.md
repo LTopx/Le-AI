@@ -1,5 +1,13 @@
 # Le-AI Change Log
 
+## v0.9.1
+
+> 2023-09-04
+
+### Fixed
+
+- Fixed the issue of incorrect authentication logic after configuring a custom API Key when deploying a project
+
 ## v0.9.0
 
 > 2023-09-02

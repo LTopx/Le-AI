@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/utils/plugin/auth";
 import { prisma } from "@/lib/prisma";
-import { ResErr } from "@/lib";
+import { ResErr, checkAuth } from "@/lib";
 import { PREMIUM_MODELS } from "@/hooks/useLLM";
 import { regular } from "./regular";
 import { function_call } from "./function_call";
@@ -45,18 +45,20 @@ export async function POST(request: Request) {
     plugins,
   } = await request.json();
 
-  /**
-   * If not logged in, only the locally configured API Key can be used.
-   */
-  if (!session && !headerApiKey) return ResErr({ error: 10001 });
+  if (!session && !headerApiKey && API_KEY && checkAuth()) {
+    return ResErr({ error: 10001 });
+  }
 
   let user;
   let leaiApiKey = "";
   let leai_used_quota = 0;
   let leai_userId = "";
 
-  if (!headerApiKey || headerApiKey.startsWith("leai-")) {
-    if (!headerApiKey) {
+  // 如果是已经登录且没有配置自己 key 的用户或者是用 Le-AI key 的用户，需要校验用户的权限
+  // If it is a user who has already logged in and has not configured their own key,
+  // or if it is a user using the Le-AI key, it is necessary to verify the user's permissions.
+  if ((session && !headerApiKey) || headerApiKey.startsWith("leai-")) {
+    if (session && !headerApiKey) {
       user = await prisma.user.findUnique({
         where: { id: session?.user.id },
       });

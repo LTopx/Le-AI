@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/utils/plugin/auth";
 import { prisma } from "@/lib/prisma";
-import { ResErr } from "@/lib";
+import { ResErr, checkAuth } from "@/lib";
 import { PREMIUM_MODELS } from "@/hooks/useLLM";
 import { regular } from "./regular";
 import { function_call } from "./function_call";
@@ -38,10 +38,9 @@ export async function POST(request: Request) {
     plugins,
   } = await request.json();
 
-  /**
-   * If not logged in, only the locally configured API Key can be used.
-   */
-  if (!session && !headerApiKey) return ResErr({ error: 10001 });
+  if (!session && !headerApiKey && ENV_API_KEY && checkAuth()) {
+    return ResErr({ error: 10001 });
+  }
 
   let user;
   let leaiApiKey = "";
@@ -51,8 +50,8 @@ export async function POST(request: Request) {
   // Logging in without your own key means using the author's key.
   // At this point, you need to check the token balance of the current account first.
 
-  if (!headerApiKey || headerApiKey.startsWith("leai-")) {
-    if (!headerApiKey) {
+  if ((session && !headerApiKey) || headerApiKey.startsWith("leai-")) {
+    if (session && !headerApiKey) {
       user = await prisma.user.findUnique({
         where: { id: session?.user.id },
       });
