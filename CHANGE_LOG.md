@@ -7,6 +7,7 @@
 ### Fixed
 
 - Fixed the issue of incorrect authentication logic after configuring a custom API Key when deploying a project
+- Fixed the issue of garbled characters in some cases when replying
 
 ## v0.9.0
 
