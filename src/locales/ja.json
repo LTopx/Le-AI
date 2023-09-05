@@ -96,15 +96,24 @@
     "usage-tip": "以下はアカウントのポイント利用状況の概要です。データは毎日更新されます（リアルタイムではありません）"
   },
   "auth": {
+    "account": "アカウント(メールアドレス)",
+    "account-login": "アカウントパスワードでログイン",
     "auth-failed": "認証に失敗しました",
     "auth-success": "認証に成功しました",
+    "change-password": "パスワードの変更",
     "check-mail": "メールを確認してください",
     "continue-gpt": "Le-AIを続ける",
     "continue-with-github": "GitHubでログインする",
     "continue-with-google": "Googleでログインする",
+    "current-password": "現在のパスワード",
     "email-address": "メールアドレス",
+    "email-login": "メールログイン",
     "input-valid-email": "正しいメールアドレスを入力してください",
+    "new-password": "新しいパスワード",
+    "password": "パスワード",
+    "set-password": "パスワードを設定する",
     "sign-in-link": "ログインリンクがあなたのメールに送信されました",
+    "theme-password-error": "現在のパスワードと新しいパスワードは同じにできません",
     "title": "ログイン / 登録"
   },
   "backup": {
@@ -165,7 +174,10 @@
     "20016": "先にLe-AIトークンを有効化してください",
     "20017": "現在のLe-AIトークンの割り当てが使い切られました",
     "20018": "現在のLe-AIトークンは期限切れです",
-    "20019": "'API_KEY'環境変数が設定されていません"
+    "20019": "'API_KEY'環境変数が設定されていません",
+    "20020": "パスワードは空白にできません",
+    "20021": "パスワードを設定してください",
+    "20022": "現在のパスワードが間違っています"
   },
   "configure": {
     "api-proxy": "APIプロキシアドレス",

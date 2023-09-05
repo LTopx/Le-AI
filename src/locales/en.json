@@ -96,15 +96,24 @@
     "usage-tip": "Below is a summary of the point usage for your account. The data is updated daily (not in real-time)"
   },
   "auth": {
+    "account": "Account(Email Address)",
+    "account-login": "Account",
     "auth-failed": "Authentication failed",
     "auth-success": "Authentication success",
+    "change-password": "Change Password",
     "check-mail": "Check your email",
     "continue-gpt": "Continue to Le-AI",
     "continue-with-github": "Continue with Github",
     "continue-with-google": "Continue with Google",
+    "current-password": "Current Password",
     "email-address": "Email Address",
+    "email-login": "Email",
     "input-valid-email": "Please enter a valid email address",
+    "new-password": "New Password",
+    "password": "Password",
+    "set-password": "Set Password",
     "sign-in-link": "A sign in link has been sent to your email",
+    "theme-password-error": "The current password cannot be the same as the new password.",
     "title": "Login / Sign up"
   },
   "backup": {
@@ -165,7 +174,10 @@
     "20016": "Please enable the Le-AI token first.",
     "20017": "The current quota for Le-AI tokens has been exhausted.",
     "20018": "The current Le-AI token has expired.",
-    "20019": "API_KEY environment variable not configured."
+    "20019": "API_KEY environment variable not configured.",
+    "20020": "The password cannot be empty.",
+    "20021": "Please set a password first",
+    "20022": "Incorrect current password"
   },
   "configure": {
     "api-proxy": "API Proxy",

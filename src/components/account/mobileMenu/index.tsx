@@ -11,9 +11,9 @@ import type { MenuItemProps } from "../menu";
 
 function Content({ children }: { children: React.ReactNode }) {
   return (
-    <nav className="pointer-events-none fixed bottom-20 right-7 z-10 max-w-[60%] select-none text-end">
+    <nav className="text-end max-w-[60%] right-7 bottom-20 z-10 pointer-events-none fixed select-none">
       <motion.ul
-        className="flex flex-col items-end gap-2"
+        className="flex flex-col gap-2 items-end"
         variants={{
           open: { transition: { staggerChildren: 0.02 } },
           closed: {
@@ -31,6 +31,7 @@ const MobileMenu: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
   const tGlobal = useTranslations("global");
+  const tAuth = useTranslations("auth");
 
   const [open, setOpen] = React.useState(false);
 
@@ -44,6 +45,11 @@ const MobileMenu: React.FC = () => {
       label: tGlobal("user-info"),
       value: "info",
       path: "/account/info",
+    },
+    {
+      label: tAuth("change-password"),
+      value: "changePwd",
+      path: "/account/changePwd",
     },
     {
       label: tGlobal("token"),

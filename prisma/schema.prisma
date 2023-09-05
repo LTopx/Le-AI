@@ -65,6 +65,7 @@ model User {
   share              Share[]
   Backup             Backup[]
   ApiTokens          ApiTokens[]
+  password           String?
 }
 
 model Backup {

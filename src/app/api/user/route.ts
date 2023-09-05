@@ -1,8 +1,7 @@
-import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/utils/plugin/auth";
 import { prisma } from "@/lib/prisma";
-import { ResErr } from "@/lib";
+import { ResErr, ResSuccess } from "@/lib";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -27,50 +26,67 @@ export async function GET() {
       license_type: user.license_type,
       freeTrialed: user.freeTrialed,
       availableTokens: user.availableTokens,
+      password: user.password,
     };
 
-    return NextResponse.json({ error: 0, data: response }, { status: 200 });
+    return ResSuccess({ data: response });
   } catch (error) {
     console.log(error, "get user error");
-    return NextResponse.json({ error: -1, msg: "error" }, { status: 500 });
+    return ResErr({ msg: "get user error" });
   }
 }
 
 export async function PUT(request: Request) {
-  const session = await getServerSession(authOptions);
+  try {
+    const session = await getServerSession(authOptions);
 
-  // check session
-  const userId = session?.user.id;
-  if (!userId) {
-    return NextResponse.json(
-      { error: -1, msg: "user id is empty" },
-      { status: 500 }
-    );
+    if (!session) return ResErr({ error: 20001 });
+
+    const userId = session.user.id;
+
+    // find user
+    const findUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!findUser) return ResErr({ error: 20002 });
+
+    // update user info
+    const { name, image, password, newPassword } = await request.json();
+
+    if (name) {
+      await prisma.user.update({
+        data: { name, image },
+        where: { id: userId },
+      });
+    }
+
+    if (newPassword) {
+      // 没有旧密码，代表是第一次设置密码
+      // No old password, indicating it is the first time setting a password
+      if (!password) {
+        if (findUser.password) return ResErr({ error: 20020 });
+      } else {
+        // 有旧密码，代表是修改密码
+        // There is an old password, indicating that the password is modified
+        if (!findUser.password) return ResErr({ error: 20021 });
+        if (findUser.password !== password) return ResErr({ error: 20022 });
+      }
+
+      await prisma.user.update({
+        data: { password: newPassword },
+        where: { id: userId },
+      });
+    }
+
+    // update recently use
+    await prisma.user.update({
+      data: { recentlyUse: new Date() },
+      where: { id: userId },
+    });
+
+    return ResSuccess();
+  } catch (error) {
+    console.log(error, "update user error");
+    return ResErr({ msg: "update user error" });
   }
-
-  // find user
-  const findUser = await prisma.user.findUnique({
-    where: { id: session?.user.id },
-  });
-  if (!findUser) {
-    return NextResponse.json(
-      { error: -1, msg: "user not found" },
-      { status: 500 }
-    );
-  }
-
-  // update user info
-  const { name, image } = await request.json();
-  await prisma.user.update({
-    data: { name, image },
-    where: { id: userId },
-  });
-
-  // update recently use
-  await prisma.user.update({
-    data: { recentlyUse: new Date() },
-    where: { id: userId },
-  });
-
-  return NextResponse.json({ error: 0 }, { status: 200 });
 }

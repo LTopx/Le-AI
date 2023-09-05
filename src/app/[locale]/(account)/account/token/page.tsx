@@ -11,7 +11,6 @@ import Icon from "@/components/icon";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,

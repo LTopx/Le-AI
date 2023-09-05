@@ -96,15 +96,24 @@
     "usage-tip": "下面是您帳戶的點數使用情況摘要。數據每日更新（非實時）"
   },
   "auth": {
+    "account": "帳號(電子郵件地址)",
+    "account-login": "帳號密碼登錄",
     "auth-failed": "驗證失敗",
     "auth-success": "驗證成功",
+    "change-password": "更改密碼",
     "check-mail": "檢查您的郵箱",
     "continue-gpt": "繼續使用 Le-AI",
     "continue-with-github": "使用 Github 登錄",
     "continue-with-google": "使用 Google 登錄",
+    "current-password": "現行密碼",
     "email-address": "電子郵件地址",
+    "email-login": "郵箱登錄",
     "input-valid-email": "請輸入正確的郵箱",
+    "new-password": "新密碼",
+    "password": "密碼",
+    "set-password": "設置密碼",
     "sign-in-link": "一個登錄鏈接已經發送到您的郵箱",
+    "theme-password-error": "當前密碼與新密碼不能相同",
     "title": "登錄 / 註冊"
   },
   "backup": {
@@ -165,7 +174,10 @@
     "20016": "請先啟用 Le-AI 令牌",
     "20017": "當前 Le-AI 令牌的額度已經用完",
     "20018": "當前 Le-AI 令牌已過期",
-    "20019": "未配置 API_KEY 的環境變量"
+    "20019": "未配置 API_KEY 的環境變量",
+    "20020": "密碼不能為空",
+    "20021": "請先設置密碼",
+    "20022": "當前密碼錯誤"
   },
   "configure": {
     "api-proxy": "API 代理地址",

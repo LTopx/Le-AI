@@ -12,13 +12,13 @@ export async function GET() {
 
   try {
     const user = await prisma.user.findUnique({
-      where: { id: session?.user.id },
+      where: { id: session.user.id },
     });
 
     if (!user) return ResErr({ error: 20002 });
 
     const find = await prisma.backup.findFirst({
-      where: { userId: session?.user.id },
+      where: { userId: session.user.id },
     });
 
     if (!find) return ResErr({ error: 20012 });

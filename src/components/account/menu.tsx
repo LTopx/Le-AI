@@ -15,6 +15,7 @@ export default function Menu() {
   const pathname = usePathname();
   const router = useRouter();
   const tGlobal = useTranslations("global");
+  const tAuth = useTranslations("auth");
 
   const menuItems: MenuItemProps[] = [
     {
@@ -26,6 +27,11 @@ export default function Menu() {
       label: tGlobal("user-info"),
       value: "info",
       path: "/account/info",
+    },
+    {
+      label: tAuth("change-password"),
+      value: "changePwd",
+      path: "/account/changePwd",
     },
     {
       label: tGlobal("token"),

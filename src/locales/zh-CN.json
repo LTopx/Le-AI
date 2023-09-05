@@ -96,15 +96,24 @@
     "usage-tip": "下面是您账户的点数使用情况摘要。数据每日更新（非实时）"
   },
   "auth": {
+    "account": "账号(电子邮件地址)",
+    "account-login": "账号密码登录",
     "auth-failed": "验证失败",
     "auth-success": "验证成功",
+    "change-password": "修改密码",
     "check-mail": "检查您的邮箱",
     "continue-gpt": "继续使用 Le-AI",
     "continue-with-github": "使用 Github 登录",
     "continue-with-google": "使用 Google 登录",
+    "current-password": "当前密码",
     "email-address": "电子邮件地址",
+    "email-login": "邮箱登录",
     "input-valid-email": "请输入正确的邮箱",
+    "new-password": "新密码",
+    "password": "密码",
+    "set-password": "设置密码",
     "sign-in-link": "一个登录链接已经发送到您的邮箱",
+    "theme-password-error": "当前密码与新密码不能相同",
     "title": "登录 / 注册"
   },
   "backup": {
@@ -165,7 +174,10 @@
     "20016": "请先启用 Le-AI 令牌",
     "20017": "当前 Le-AI 令牌的额度已经用完",
     "20018": "当前 Le-AI 令牌已过期",
-    "20019": "未配置 API_KEY 的环境变量"
+    "20019": "未配置 API_KEY 的环境变量",
+    "20020": "密码不能为空",
+    "20021": "请先设置密码",
+    "20022": "当前密码错误"
   },
   "configure": {
     "api-proxy": "API 代理地址",

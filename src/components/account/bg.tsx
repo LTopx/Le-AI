@@ -12,8 +12,6 @@ export default function Bg() {
     setNowTheme(theme);
   }, [theme]);
 
-  console.log(nowTheme);
-
   if (nowTheme === "dark") return null;
 
   return (

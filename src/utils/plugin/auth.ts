@@ -7,39 +7,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import { sendVerificationRequest } from "@/email";
 
-const providers: NextAuthOptions["providers"] = [
-  // CredentialsProvider({
-  //   name: "Credentials",
-  //   credentials: {
-  //     username: { label: "Username", type: "text", placeholder: "jsmith" },
-  //     password: { label: "Password", type: "password" },
-  //   },
-  //   async authorize(credentials, req) {
-  //     console.log(credentials, "credentials");
-  //     const databaseUser = await prisma.user.findMany();
-  //     console.log(databaseUser, "databaseUser");
-  //     return databaseUser[1];
-  //     // You need to provide your own logic here that takes the credentials
-  //     // submitted and returns either a object representing a user or value
-  //     // that is false/null if the credentials are invalid.
-  //     // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-  //     // You can also use the `req` object to obtain additional parameters
-  //     // (i.e., the request IP address)
-  //     const res = await fetch("/your/endpoint", {
-  //       method: "POST",
-  //       body: JSON.stringify(credentials),
-  //       headers: { "Content-Type": "application/json" },
-  //     });
-  //     const user = await res.json();
-  //     // If no error and we have user data, return it
-  //     if (res.ok && user) {
-  //       return user;
-  //     }
-  //     // Return null if user data could not be retrieved
-  //     return null;
-  //   },
-  // }),
-];
+const providers: NextAuthOptions["providers"] = [];
 
 // EmailProvider
 if (
@@ -61,6 +29,32 @@ if (
       },
       from: process.env.NEXT_PUBLIC_EMAIL_FROM,
       sendVerificationRequest,
+    })
+  );
+
+  providers.push(
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        const databaseUser = await prisma.user.findUnique({
+          where: { email: credentials?.username },
+        });
+
+        // Return null if user data could not be retrieved
+        if (
+          !databaseUser?.password ||
+          databaseUser.password !== credentials?.password
+        ) {
+          return null;
+        }
+
+        // If no error and we have user data, return it
+        return databaseUser;
+      },
     })
   );
 }
