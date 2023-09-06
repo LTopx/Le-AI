@@ -20,6 +20,7 @@
 ### Changed
 
 - Update Azure OpenAI API Version to 2023-08-01-preview
+- Adjust the UI of the left bottom menu in the system
 
 ## v0.9.0
 
