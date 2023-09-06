@@ -15,6 +15,7 @@
 
 - Support for account/password login
 - Added a return to home button on the API Key configuration page
+- Added privacy agreement and login guide to the login interface.
 
 ### Changed
 

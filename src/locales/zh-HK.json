@@ -98,6 +98,8 @@
   "auth": {
     "account": "帳號(電子郵件地址)",
     "account-login": "帳號密碼登錄",
+    "account-tip": "首先您需要在帳戶中心設定您的密碼。",
+    "agree-privacy-policy": "點擊繼續，即表示您同意我們的",
     "auth-failed": "驗證失敗",
     "auth-success": "驗證成功",
     "change-password": "更改密碼",
@@ -111,6 +113,7 @@
     "input-valid-email": "請輸入正確的郵箱",
     "new-password": "新密碼",
     "password": "密碼",
+    "privacy-policy": "私隱政策",
     "set-password": "設置密碼",
     "sign-in-link": "一個登錄鏈接已經發送到您的郵箱",
     "theme-password-error": "當前密碼與新密碼不能相同",

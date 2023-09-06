@@ -98,6 +98,8 @@
   "auth": {
     "account": "アカウント(メールアドレス)",
     "account-login": "アカウントパスワードでログイン",
+    "account-tip": "まず、アカウントセンターでパスワードを設定する必要があります。",
+    "agree-privacy-policy": "クリックして続けることで、私たちの",
     "auth-failed": "認証に失敗しました",
     "auth-success": "認証に成功しました",
     "change-password": "パスワードの変更",
@@ -111,6 +113,7 @@
     "input-valid-email": "正しいメールアドレスを入力してください",
     "new-password": "新しいパスワード",
     "password": "パスワード",
+    "privacy-policy": "プライバシーポリシー",
     "set-password": "パスワードを設定する",
     "sign-in-link": "ログインリンクがあなたのメールに送信されました",
     "theme-password-error": "現在のパスワードと新しいパスワードは同じにできません",

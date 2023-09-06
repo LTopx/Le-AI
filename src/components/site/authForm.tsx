@@ -13,8 +13,15 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
+  CardFooter,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -190,9 +197,9 @@ export default function AuthForm() {
         )}
         {checkEmail() && (checkGithub() || checkGoogle()) && (
           <div className="flex my-8 items-center">
-            <div className="bg-[rgba(0,0,0,0.16)] flex-1 h-[1px]"></div>
-            <div className="mx-4 text-[13px]">{tGlobal("or")}</div>
-            <div className="bg-[rgba(0,0,0,0.16)] flex-1 h-[1px]"></div>
+            <div className="bg-[rgba(0,0,0,0.16)] dark:bg-[#27272a] flex-1 h-[1px]"></div>
+            <div className="mx-4 text-[13px] uppercase">{tGlobal("or")}</div>
+            <div className="bg-[rgba(0,0,0,0.16)] dark:bg-[#27272a] flex-1 h-[1px]"></div>
           </div>
         )}
         {checkEmail() && (
@@ -219,7 +226,35 @@ export default function AuthForm() {
               <TabsContent value="account">
                 <div className="my-4 w-full grid gap-4 items-center">
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="account">{tAuth("account")}</Label>
+                    <Label
+                      htmlFor="account"
+                      className="flex items-center gap-1"
+                    >
+                      {tAuth("account")}
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div>
+                              <Icon
+                                icon="question_line"
+                                size={18}
+                                className="cursor-pointer"
+                              />
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent className="max-w-[calc(100vw-4rem)]">
+                            {tAuth("account-tip")}{" "}
+                            <a
+                              className="text-sky-400 hover:underline dark:text-sky-500 transition-colors"
+                              href="https://docs.le-ai.app/basic/login"
+                              target="_blank"
+                            >
+                              {tGlobal("learn-more")}
+                            </a>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </Label>
                     <Input
                       ref={accountRef}
                       className="h-[38px]"
@@ -255,6 +290,18 @@ export default function AuthForm() {
           </>
         )}
       </CardContent>
+      <CardFooter>
+        <p className="px-8 text-center text-sm text-muted-foreground">
+          {tAuth("agree-privacy-policy")}{" "}
+          <a
+            className="underline underline-offset-4 hover:text-primary transition-colors"
+            href="https://docs.le-ai.app/privacy"
+            target="_blank"
+          >
+            {tAuth("privacy-policy")}
+          </a>
+        </p>
+      </CardFooter>
     </Card>
   );
 }

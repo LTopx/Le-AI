@@ -98,6 +98,8 @@
   "auth": {
     "account": "账号(电子邮件地址)",
     "account-login": "账号密码登录",
+    "account-tip": "首先您需要在账户中心设置您的密码。",
+    "agree-privacy-policy": "点击继续，即表示您同意我们的",
     "auth-failed": "验证失败",
     "auth-success": "验证成功",
     "change-password": "修改密码",
@@ -111,6 +113,7 @@
     "input-valid-email": "请输入正确的邮箱",
     "new-password": "新密码",
     "password": "密码",
+    "privacy-policy": "隐私政策",
     "set-password": "设置密码",
     "sign-in-link": "一个登录链接已经发送到您的邮箱",
     "theme-password-error": "当前密码与新密码不能相同",
