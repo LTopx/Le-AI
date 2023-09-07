@@ -1,7 +1,8 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Input, Tooltip, Slider } from "@ltopx/lx-ui";
+import { Input, Tooltip } from "@ltopx/lx-ui";
 import Icon from "@/components/icon";
+import { Slider } from "@/components/ui/slider";
 import { useOpenAIStore } from "@/hooks/useOpenAI";
 import type { OpenAI } from "@/hooks/useOpenAI/types";
 import { cn } from "@/lib";
@@ -70,8 +71,8 @@ export default function OpenAI() {
             className="flex-1"
             max={1}
             step={0.5}
-            defaultValue={openai.temperature}
-            onChange={(value) => onChange(value, "temperature")}
+            defaultValue={[openai.temperature]}
+            onValueChange={(value) => onChange(value[0], "temperature")}
           />
           <div
             className={cn(

@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Input, Tooltip, Slider, Divider, Button } from "@ltopx/lx-ui";
+import { Input, Tooltip, Divider, Button } from "@ltopx/lx-ui";
+import { Slider } from "@/components/ui/slider";
 import { useOpenAIStore } from "@/hooks/useOpenAI";
 import { useLLMStore } from "@/hooks/useLLM";
 import type { Model } from "@/hooks/useLLM/types";
@@ -79,8 +80,8 @@ export default function Azure() {
               className="flex-1"
               max={1}
               step={0.5}
-              defaultValue={azure.temperature}
-              onChange={(value) => onChange(value, "temperature")}
+              defaultValue={[azure.temperature]}
+              onValueChange={(value) => onChange(value[0], "temperature")}
             />
             <div
               className={cn(
