@@ -2,7 +2,7 @@
 
 ## v0.9.1
 
-> 2023-09-06
+> 2023-09-08
 
 ### Fixed
 
@@ -10,6 +10,7 @@
 - Fixed the issue of garbled characters in some cases when replying
 - Fixed [#8](https://github.com/LTopx/Le-AI/issues/8)
 - Fixed the issue of incorrect background image display on the email login page
+- Fix the issue of character creation prompt and welcome message word limit
 
 ### Add
 

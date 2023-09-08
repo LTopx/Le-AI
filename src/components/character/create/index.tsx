@@ -222,14 +222,13 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
         </div>
         <div className="flex flex-col">
           <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tGlobal("content")}
+            Prompt {tGlobal("content")}
           </div>
           <Textarea
             ref={contentRef}
             className="h-28"
             allowClear
             placeholder={tGlobal("please-enter")}
-            maxLength={40}
             value={formData.content}
             onChange={(value) => onChangeForm(value, "content")}
           />
@@ -245,7 +244,6 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
             className="h-20"
             allowClear
             placeholder={tGlobal("please-enter")}
-            maxLength={40}
             value={formData.welcome}
             onChange={(value) => onChangeForm(value, "welcome")}
           />
