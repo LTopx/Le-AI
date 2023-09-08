@@ -2,14 +2,23 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
+import { Modal, type SelectOption } from "@ltopx/lx-ui";
 import {
-  Modal,
-  Input,
   Select,
-  Textarea,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Tooltip,
-  type SelectOption,
-} from "@ltopx/lx-ui";
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import Icon from "@/components/icon";
 import MenuIcon from "@/components/menu/icon";
 import type { Character } from "@/lib/character";
@@ -74,15 +83,6 @@ const options: SelectOption[] = [
     value: "GameLine",
   },
 ];
-
-const renderLabel = (row: any) => {
-  return (
-    <div className="flex gap-2 items-center">
-      <MenuIcon className="" name={row.value} />
-      <span>{row.value}</span>
-    </div>
-  );
-};
 
 const CreateCharacter = React.forwardRef((_, forwardedRef) => {
   const tGlobal = useTranslations("global");
@@ -181,71 +181,79 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
       onClose={onClose}
       onOk={onOk}
     >
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col">
-          <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tGlobal("name")}
-          </div>
+      <div className="grid w-full items-center gap-4">
+        <div className="flex flex-col space-y-1.5">
+          <Label htmlFor="name">{tGlobal("name")}</Label>
           <Input
+            id="name"
             ref={nameRef}
-            allowClear
             placeholder={tGlobal("please-enter")}
             maxLength={40}
             value={formData.name}
-            onChange={(value) => onChangeForm(value, "name")}
+            onChange={(e) => onChangeForm(e.target.value, "name")}
           />
         </div>
-        <div className="flex flex-col">
-          <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tGlobal("icon")}
-          </div>
+        <div className="flex flex-col space-y-1.5">
+          <Label htmlFor="icon">{tGlobal("icon")}</Label>
           <Select
-            options={options}
-            renderLabel={renderLabel}
             value={formData.icon}
-            onChange={(value) => onChangeForm(value, "icon")}
-          />
+            onValueChange={(value) => onChangeForm(value, "icon")}
+          >
+            <SelectTrigger id="icon">
+              <SelectValue placeholder="Select" />
+            </SelectTrigger>
+            <SelectContent position="popper" className="max-h-[300px]">
+              {options.map((row) => (
+                <SelectItem key={row.value} value={row.value}>
+                  <div className="flex gap-2 items-center">
+                    <MenuIcon className="" name={row.value} />
+                    <span>{row.value}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-        <div className="flex flex-col">
-          <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tGlobal("desc")}
-          </div>
+        <div className="flex flex-col space-y-1.5">
+          <Label htmlFor="desc">{tGlobal("desc")}</Label>
           <Textarea
+            id="desc"
             ref={descRef}
-            className="h-28"
-            allowClear
             placeholder={tGlobal("please-enter")}
             maxLength={40}
             value={formData.desc}
-            onChange={(value) => onChangeForm(value, "desc")}
+            onChange={(e) => onChangeForm(e.target.value, "desc")}
           />
         </div>
-        <div className="flex flex-col">
-          <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            Prompt {tGlobal("content")}
-          </div>
+        <div className="flex flex-col space-y-1.5">
+          <Label htmlFor="content">Prompt {tGlobal("content")}</Label>
           <Textarea
+            id="content"
             ref={contentRef}
-            className="h-28"
-            allowClear
             placeholder={tGlobal("please-enter")}
             value={formData.content}
-            onChange={(value) => onChangeForm(value, "content")}
+            onChange={(e) => onChangeForm(e.target.value, "content")}
           />
         </div>
-        <div className="flex flex-col">
-          <div className="text-sm text-black/90 mb-2 dark:text-white/90 flex items-center gap-1">
+        <div className="flex flex-col space-y-1.5">
+          <Label htmlFor="welcome" className="flex items-center gap-2">
             {tCharacter("welcome-message")}
-            <Tooltip title={tCharacter("welcome-message-tip")}>
-              <Icon icon="question_line" size={18} />
-            </Tooltip>
-          </div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Icon icon="question_line" size={18} />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {tCharacter("welcome-message-tip")}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </Label>
           <Textarea
-            className="h-20"
-            allowClear
+            id="welcome"
             placeholder={tGlobal("please-enter")}
             value={formData.welcome}
-            onChange={(value) => onChangeForm(value, "welcome")}
+            onChange={(e) => onChangeForm(e.target.value, "welcome")}
           />
         </div>
       </div>

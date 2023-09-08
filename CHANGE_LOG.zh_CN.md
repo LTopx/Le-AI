@@ -22,6 +22,7 @@
 
 - 更新 Azure OpenAI API Version 为 2023-08-01-preview
 - 调整系统左侧底部菜单 UI
+- 重构新建角色弹出框 UI
 
 ## v0.9.0
 

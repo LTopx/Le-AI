@@ -22,6 +22,7 @@
 
 - Update Azure OpenAI API Version to 2023-08-01-preview
 - Adjust the UI of the left bottom menu in the system
+- Refactor the UI of the pop-up box for creating a new character
 
 ## v0.9.0
 
