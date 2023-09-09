@@ -127,7 +127,7 @@
     "rule-3": "If the key is lost, there is no way to correctly retrieve your backed-up data."
   },
   "character": {
-    "ai-character": "AI Characters",
+    "character": "Characters",
     "helper": "Assistant",
     "hr": "HR",
     "mine": "My Characters",

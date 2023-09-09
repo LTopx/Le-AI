@@ -17,8 +17,6 @@ export default function Character() {
   const tCharacter = useTranslations("character");
   const tGlobal = useTranslations("global");
 
-  const createRef = React.useRef<any>(null);
-
   const locale = useLocale();
   const myCharacterList = useCharacterStore((state) => state.list);
 
@@ -103,8 +101,6 @@ export default function Character() {
     setOpen(false);
   };
 
-  const onAdd = () => createRef.current?.init();
-
   const onDelete = (id: string) => deleteCharacter(id);
 
   React.useEffect(() => {
@@ -114,7 +110,7 @@ export default function Character() {
   return (
     <>
       <Modal
-        title={tCharacter("ai-character")}
+        title={`AI ${tCharacter("character")}`}
         width="1366px"
         maskClosable={false}
         open={open}
@@ -125,25 +121,9 @@ export default function Character() {
           options={options}
           activeTab={activeTab}
           onChange={setActiveTab}
-          extra={
-            <Button
-              className="hidden lg:flex"
-              type="primary"
-              icon={<Icon icon="add_line" />}
-              onClick={onAdd}
-            >
-              {tGlobal("create")}
-            </Button>
-          }
+          extra={<Create className="hidden lg:flex" />}
         />
-        <Button
-          type="primary"
-          className="mb-4 lg:hidden"
-          icon={<Icon icon="add_line" />}
-          onClick={onAdd}
-        >
-          {tGlobal("create")}
-        </Button>
+        <Create className="mb-4 lg:hidden" />
 
         {lists.length ? (
           <div className="h-[50vh] grid gap-4 grid-cols-1 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -225,13 +205,12 @@ export default function Character() {
             ))}
           </div>
         ) : (
-          <div className="h-[50vh] flex gap-2 justify-center items-center">
+          <div className="flex h-[50vh] gap-2 justify-center items-center">
             <Icon icon="warning_fill" size={18} />
             {tGlobal("no-data")}
           </div>
         )}
       </Modal>
-      <Create ref={createRef} />
     </>
   );
 }

@@ -127,7 +127,7 @@
     "rule-3": "若密钥遗失，则没有任何办法能够正确找回您备份的数据。"
   },
   "character": {
-    "ai-character": "AI 角色模板",
+    "character": "角色模板",
     "helper": "助手",
     "hr": "人力资源",
     "mine": "我的模板",
