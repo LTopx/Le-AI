@@ -16,8 +16,8 @@ export default function Announcement() {
 
   const url =
     locale === "zh-CN"
-      ? "https://docs.le-ai.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.8.4-1-zh-CN.b45cbba3.png&w=1080&q=75"
-      : "https://docs.le-ai.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.8.4-1-en.b530893e.png&w=1080&q=75";
+      ? "https://docs.le-ai.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.9.1-1-zh-CN.953cc277.png&w=828&q=100"
+      : "https://docs.le-ai.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.9.1-1-en.93658f64.png&w=828&q=100";
 
   const onClose = () => {
     localStorage.setItem("announcement_version", pkg.version);
@@ -45,7 +45,7 @@ export default function Announcement() {
       }
     >
       <div className="max-h-[500px] overflow-y-auto">
-        {/* <Image src={url} alt="" width={1920} height={300} /> */}
+        <Image src={url} alt="" width={1920} height={300} />
         <div className="flex">
           <Button
             type="link"
@@ -73,7 +73,6 @@ export default function Announcement() {
           <li>{tZLog("text3")}</li>
           <li>{tZLog("text4")}</li>
           <li>{tZLog("text5")}</li>
-          <li>{tZLog("text6")}</li>
         </ul>
       </div>
     </Modal>
