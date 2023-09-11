@@ -313,12 +313,11 @@
   "zLog": {
     "full-log": "Click to view the full update log",
     "menu-notice": "Download Le-AI client",
-    "title": "v0.9.0 Update 🔥🔥",
-    "text1": "Adjusted project name and logo: L-GPT ⇒ Le-AI",
-    "text2": "Added support for client version, and now supports generating Le-API Key within the system for configuration use",
-    "text3": "Added support for Traditional Chinese, can be switched at the bottom left corner of the system",
-    "text4": "Added support for one-click session clearing",
-    "text5": "Fixed client interface cross-origin issue",
-    "text6": "Other UI details optimization"
+    "title": "v0.9.1 Update 🔥🔥",
+    "text1": "Added support for account password login",
+    "text2": "Added compatibility to configure other third-party OpenAI API Keys. For example: nextweb, API2D",
+    "text3": "Fixed the issue of character limit for prompts and welcome messages when creating a new role",
+    "text4": "Fixed the issue of garbled response in some cases",
+    "text5": "Other UI details optimization"
   }
 }
