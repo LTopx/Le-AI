@@ -79,7 +79,7 @@
     "@types/crypto-js": "4.1.2",
     "@types/file-saver": "2.0.5",
     "@types/math-random": "1.0.0",
-    "@types/nodemailer": "6.4.9",
+    "@types/nodemailer": "6.4.10",
     "@types/react-syntax-highlighter": "15.5.7",
     "@types/uuid": "9.0.3",
     "dotenv-cli": "7.3.0",

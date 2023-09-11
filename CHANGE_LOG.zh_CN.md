@@ -17,13 +17,14 @@
 - 支持账号密码登录
 - API Key 配置页面新增返回首页按钮
 - 登录界面新增隐私协议和登录指引
+- 兼容配置其他第三方 OpenAI API Key。例如：nextweb，API2D 等等
 
 ### 调整
 
 - 更新 Azure OpenAI API Version 为 2023-08-01-preview
 - 调整系统左侧底部菜单 UI
 - 重构新建角色弹出框 UI
-- 调整 prompt 传参实现逻辑，全部由前端解析并组装
+- 调整 prompt, messages 传参实现逻辑，全部由前端解析并组装
 
 ## v0.9.0
 

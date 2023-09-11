@@ -17,13 +17,14 @@
 - Support for account/password login
 - Added a return to home button on the API Key configuration page
 - Added privacy agreement and login guide to the login interface.
+- Compatible with configuring other third-party OpenAI API Keys. For example: nextweb, API2D, and so on.
 
 ### Changed
 
 - Update Azure OpenAI API Version to 2023-08-01-preview
 - Adjust the UI of the left bottom menu in the system
 - Refactor the UI of the pop-up box for creating a new character
-- Adjust the implementation logic of prompt parameters, all parsed and assembled by the front end
+- Adjust the implementation logic of prompt, messages parameters, all parsed and assembled by the front end
 
 ## v0.9.0
 

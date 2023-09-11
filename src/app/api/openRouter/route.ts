@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     modelLabel,
     temperature,
     max_tokens,
-    chat_list,
+    messages,
   } = await request.json();
 
   // if (!session && !headerApiKey) return ResErr({ error: 10001 });
@@ -103,8 +103,6 @@ export async function POST(request: Request) {
   if (!Authorization) return ResErr({ error: 10002 });
 
   const fetchURL = "https://openrouter.ai/api/v1/chat/completions";
-
-  const messages = [...chat_list];
 
   const userId = session?.user.id;
 

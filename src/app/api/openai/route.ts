@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     proxy: proxyUrl,
     temperature,
     max_tokens,
-    chat_list,
+    messages,
     plugins,
   } = await request.json();
 
@@ -120,8 +120,6 @@ export async function POST(request: Request) {
     proxy = proxyUrl || ENV_API_PROXY || "https://api.openai.com";
   }
   const fetchURL = proxy + "/v1/chat/completions";
-
-  const messages = [...chat_list];
 
   const userId = session?.user.id;
 

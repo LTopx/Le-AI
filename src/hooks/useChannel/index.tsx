@@ -361,7 +361,7 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           }))
           .slice(sliceStart <= 0 ? 0 : sliceStart, chat_list.length);
 
-        params.chat_list = [{ role: "system", content: prompt }, ...arr];
+        params.messages = [{ role: "system", content: prompt }, ...arr];
 
         fetch(fetchUrl, {
           method: "POST",
@@ -543,7 +543,7 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
         const newParams = params.newParams;
         newParams.model = "gpt-3.5-turbo";
         newParams.modelLabel = "gpt-3.5-turbo";
-        newParams.chat_list = newParams.chat_list.map((item: any) => ({
+        newParams.messages = newParams.chat_list.map((item: any) => ({
           role: item.role,
           content: item.content,
         }));

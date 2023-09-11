@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     temperature,
     max_tokens,
     resourceName,
-    chat_list,
+    messages,
     plugins,
   } = await request.json();
 
@@ -117,8 +117,6 @@ export async function POST(request: Request) {
   if (!RESOURCE_NAME) return ResErr({ error: 20010 });
 
   const fetchURL = `https://${RESOURCE_NAME}.openai.azure.com/openai/deployments/${model}/chat/completions?api-version=${ENV_API_VERSION}`;
-
-  const messages = [...chat_list];
 
   const userId = session?.user.id;
 
