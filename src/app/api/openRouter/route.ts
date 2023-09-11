@@ -29,7 +29,6 @@ export async function POST(request: Request) {
     modelLabel,
     temperature,
     max_tokens,
-    prompt,
     chat_list,
   } = await request.json();
 
@@ -110,7 +109,6 @@ export async function POST(request: Request) {
   const userId = session?.user.id;
 
   return await regular({
-    prompt,
     messages,
     fetchURL,
     Authorization,

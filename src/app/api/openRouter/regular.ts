@@ -4,7 +4,6 @@ import type { supportModelType } from "@/lib/calcTokens/gpt-tokens";
 import type { IFetchOpenRouter } from "./types";
 
 interface IRegular extends IFetchOpenRouter {
-  prompt?: string;
   modelLabel: supportModelType;
   userId?: string;
   headerApiKey?: string;
@@ -40,7 +39,6 @@ const fetchOpenRouter = async ({
 };
 
 export const regular = async ({
-  prompt,
   messages,
   fetchURL,
   Authorization,
@@ -54,8 +52,6 @@ export const regular = async ({
   leai_used_quota,
   leai_userId,
 }: IRegular) => {
-  if (prompt) messages.unshift({ role: "system", content: prompt });
-
   try {
     const response = await fetchOpenRouter({
       fetchURL,

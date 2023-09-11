@@ -32,7 +32,6 @@ export async function POST(request: Request) {
     modelLabel,
     temperature,
     max_tokens,
-    prompt,
     resourceName,
     chat_list,
     plugins,
@@ -126,7 +125,6 @@ export async function POST(request: Request) {
   // Without using plugins, we will proceed with a regular conversation.
   if (!plugins?.length) {
     return await regular({
-      prompt,
       messages,
       fetchURL,
       Authorization,

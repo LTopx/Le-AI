@@ -49,7 +49,7 @@
     "gpt-tokens": "1.1.2",
     "js-tiktoken": "1.0.7",
     "l-hooks": "0.4.6",
-    "lucide-react": "0.274.0",
+    "lucide-react": "0.276.0",
     "math-random": "2.0.1",
     "microsoft-cognitiveservices-speech-sdk": "1.32.0",
     "next": "13.4.19",

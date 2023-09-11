@@ -2,7 +2,7 @@
 
 ## v0.9.1
 
-> 2023-09-08
+> 2023-09-11
 
 ### Fixed
 
@@ -23,6 +23,7 @@
 - Update Azure OpenAI API Version to 2023-08-01-preview
 - Adjust the UI of the left bottom menu in the system
 - Refactor the UI of the pop-up box for creating a new character
+- Adjust the implementation logic of prompt parameters, all parsed and assembled by the front end
 
 ## v0.9.0
 

@@ -342,7 +342,6 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           modelLabel: findModelLabel.label,
           temperature: modelConfig.temperature,
           max_tokens: modelConfig.max_tokens,
-          prompt,
           plugins: findCh.channel_plugins,
         };
 
@@ -362,7 +361,7 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           }))
           .slice(sliceStart <= 0 ? 0 : sliceStart, chat_list.length);
 
-        params.chat_list = arr;
+        params.chat_list = [{ role: "system", content: prompt }, ...arr];
 
         fetch(fetchUrl, {
           method: "POST",

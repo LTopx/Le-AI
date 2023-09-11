@@ -40,7 +40,6 @@ export async function POST(request: Request) {
     proxy: proxyUrl,
     temperature,
     max_tokens,
-    prompt,
     chat_list,
     plugins,
   } = await request.json();
@@ -129,7 +128,6 @@ export async function POST(request: Request) {
   // Without using plugins, we will proceed with a regular conversation.
   if (!plugins?.length) {
     return await regular({
-      prompt,
       messages,
       fetchURL,
       Authorization,

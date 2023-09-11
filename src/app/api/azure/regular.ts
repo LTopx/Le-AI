@@ -4,7 +4,6 @@ import type { supportModelType } from "@/lib/calcTokens/gpt-tokens";
 import type { IFetchAzureOpenAI } from "./types";
 
 interface IRegular extends IFetchAzureOpenAI {
-  prompt?: string;
   model: string;
   modelLabel: supportModelType;
   userId?: string;
@@ -40,7 +39,6 @@ const fetchAzureOpenAI = async ({
 };
 
 export const regular = async ({
-  prompt,
   messages,
   fetchURL,
   Authorization,
@@ -54,8 +52,6 @@ export const regular = async ({
   leai_used_quota,
   leai_userId,
 }: IRegular) => {
-  if (prompt) messages.unshift({ role: "system", content: prompt });
-
   try {
     const response = await fetchAzureOpenAI({
       fetchURL,
