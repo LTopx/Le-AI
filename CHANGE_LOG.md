@@ -2,11 +2,12 @@
 
 ## v0.9.2
 
-> 2023-09-12
+> 2023-09-13
 
 ### Changed
 
 - Reconstruct the UI of the API Key configuration page.
+- Adjust the proxy configuration logic for OpenAI API Key, fix [#11](https://github.com/LTopx/Le-AI/issues/11).
 
 ## v0.9.1
 

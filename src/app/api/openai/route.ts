@@ -115,11 +115,11 @@ export async function POST(request: Request) {
   const ENV_API_PROXY = getEnvProxyUrl();
   let proxy = "";
   if (leaiApiKey) {
-    proxy = ENV_API_PROXY || "https://api.openai.com";
+    proxy = ENV_API_PROXY || "https://api.openai.com/v1";
   } else {
-    proxy = proxyUrl || ENV_API_PROXY || "https://api.openai.com";
+    proxy = proxyUrl || ENV_API_PROXY || "https://api.openai.com/v1";
   }
-  const fetchURL = proxy + "/v1/chat/completions";
+  const fetchURL = proxy + "/chat/completions";
 
   const userId = session?.user.id;
 
