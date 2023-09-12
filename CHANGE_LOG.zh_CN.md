@@ -2,11 +2,12 @@
 
 ## v0.9.2
 
-> 2023-09-12
+> 2023-09-13
 
 ### 调整
 
 - 重构 API Key 配置页面的 UI
+- 调整 OpenAI API Key 的代理配置逻辑，修复 [#11](https://github.com/LTopx/Le-AI/issues/11)
 
 ## v0.9.1
 
