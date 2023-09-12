@@ -1,11 +1,18 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Input, Tooltip } from "@ltopx/lx-ui";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { isUndefined } from "@/lib";
 import Icon from "@/components/icon";
 import { Slider } from "@/components/ui/slider";
 import { useOpenAIStore } from "@/hooks/useOpenAI";
 import type { OpenAI } from "@/hooks/useOpenAI/types";
-import { cn } from "@/lib";
 
 export default function OpenAI() {
   const tGlobal = useTranslations("global");
@@ -26,10 +33,26 @@ export default function OpenAI() {
     updateOpenAI({ ...openai, [key]: value });
   };
 
+  const onBlur = (value: number, key: keyof OpenAI) => {
+    if (key === "max_tokens") {
+      const min = 1;
+      const max = 4097;
+      const step = 1;
+      if (max && value > max) {
+        updateOpenAI({ ...openai, [key]: max });
+      } else if (min && value < min) {
+        updateOpenAI({ ...openai, [key]: min });
+      } else if (!isUndefined(step) && step > 0) {
+        const stepValue = Math.round(value / step) * step;
+        updateOpenAI({ ...openai, [key]: stepValue });
+      }
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-3">
-      <div>
-        <div className="mb-1 text-sm flex gap-4 items-end">
+    <div className="grid w-full items-center gap-4">
+      <div className="flex flex-col space-y-1.5">
+        <Label htmlFor="apiKey" className="flex items-center gap-2">
           <span>API Key</span>
           <a
             href="https://platform.openai.com/account/api-keys"
@@ -38,68 +61,74 @@ export default function OpenAI() {
           >
             ({tConfigure("get-apiKey")})
           </a>
-        </div>
-        <div className="flex gap-2">
-          <Input
-            className="flex-1"
-            type="password"
-            allowClear
-            placeholder={tGlobal("please-enter")}
-            value={openai.apiKey}
-            onChange={(value) => onChange(value, "apiKey")}
-          />
-        </div>
-      </div>
-      <div>
-        <div className="mb-1 text-sm">{tConfigure("api-proxy")}</div>
+        </Label>
         <Input
-          allowClear
-          placeholder={tConfigure("set-api-proxy") as string}
-          value={openai.proxy}
-          onChange={(value) => onChange(value, "proxy")}
+          id="apiKey"
+          type="password"
+          placeholder={tGlobal("please-enter")}
+          value={openai.apiKey}
+          onChange={(e) => onChange(e.target.value, "apiKey")}
         />
       </div>
-      <div>
-        <div className="mb-1 text-sm flex items-center gap-2">
-          {tConfigure("temperature")}
-          <Tooltip title={tConfigure("temperature-tip")}>
-            <Icon icon="question_line" size={18} />
-          </Tooltip>
-        </div>
-        <div className="flex items-center gap-2">
-          <Slider
-            className="flex-1"
-            max={1}
-            step={0.5}
-            defaultValue={[openai.temperature]}
-            onValueChange={(value) => onChange(value[0], "temperature")}
-          />
-          <div
-            className={cn(
-              "text-sm hidden md:flex w-28 h-8 justify-center items-center rounded-md",
-              "bg-neutral-200 dark:bg-neutral-700/90"
-            )}
-          >
-            {mapTemperature(openai.temperature)}
-          </div>
-        </div>
-      </div>
-      <div>
-        <div className="mb-1 text-sm flex items-center gap-2">
-          {tConfigure("max-tokens")}
-          <Tooltip title={tConfigure("max-tokens-tip")}>
-            <Icon icon="question_line" size={18} />
-          </Tooltip>
-        </div>
+      <div className="flex flex-col space-y-1.5">
+        <Label htmlFor="proxy">{tConfigure("api-proxy")}</Label>
         <Input
+          id="proxy"
+          placeholder={tConfigure("set-api-proxy") as string}
+          value={openai.proxy}
+          onChange={(e) => onChange(e.target.value, "proxy")}
+        />
+      </div>
+      <div className="flex flex-col space-y-4">
+        <Label className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span>{tConfigure("temperature")}</span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Icon icon="question_line" size={18} />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-[calc(100vw-4rem)]">
+                  {tConfigure("temperature-tip")}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+          <span className="text-sm text-muted-foreground">
+            {mapTemperature(openai.temperature)}
+          </span>
+        </Label>
+        <Slider
+          className="flex-1 h-[6px]"
+          max={1}
+          step={0.5}
+          defaultValue={[openai.temperature]}
+          onValueChange={(value) => onChange(value[0], "temperature")}
+        />
+      </div>
+      <div className="flex flex-col space-y-1.5">
+        <Label htmlFor="max_tokens" className="flex items-center gap-2">
+          <span>{tConfigure("max-tokens")}</span>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Icon icon="question_line" size={18} />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-[calc(100vw-4rem)]">
+                {tConfigure("max-tokens-tip")}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </Label>
+        <Input
+          id="max_tokens"
           type="number"
-          allowClear
           min={1}
           max={4097}
           step={1}
-          placeholder={tGlobal("please-enter")}
           value={openai.max_tokens}
-          onChange={(value) => onChange(value, "max_tokens")}
+          onChange={(e) => onChange(Number(e.target.value), "max_tokens")}
+          onBlur={(e) => onBlur(Number(e.target.value), "max_tokens")}
         />
       </div>
     </div>

@@ -15,9 +15,7 @@ export default function Announcement() {
   const [open, setOpen] = React.useState(false);
 
   const url =
-    locale === "zh-CN"
-      ? "https://docs.le-ai.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.9.1-1-zh-CN.953cc277.png&w=828&q=100"
-      : "https://docs.le-ai.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fv0.9.1-1-en.93658f64.png&w=828&q=100";
+    locale === "zh-CN" ? "/changelog/zh-CN.webp" : "/changelog/en.webp";
 
   const onClose = () => {
     localStorage.setItem("announcement_version", pkg.version);

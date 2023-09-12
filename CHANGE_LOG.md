@@ -1,5 +1,13 @@
 # Le-AI Change Log
 
+## v0.9.2
+
+> 2023-09-12
+
+### Changed
+
+- Reconstruct the UI of the API Key configuration page.
+
 ## v0.9.1
 
 > 2023-09-11
