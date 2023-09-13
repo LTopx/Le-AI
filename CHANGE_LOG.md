@@ -6,8 +6,8 @@
 
 ### Changed
 
-- Reconstruct the UI of the API Key configuration page.
-- Adjust the proxy configuration logic for OpenAI API Key, fix [#11](https://github.com/LTopx/Le-AI/issues/11).
+- Reconstruct some page module UI and migrate to shadcn/ui
+- Adjust the proxy configuration logic for OpenAI API Key, fix [#11](https://github.com/LTopx/Le-AI/issues/11)
 
 ## v0.9.1
 

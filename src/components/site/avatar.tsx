@@ -5,11 +5,19 @@ import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "next-intl/client";
-import { Dropdown, Button, type DropdownOption } from "@ltopx/lx-ui";
+import { Button, type DropdownOption } from "@ltopx/lx-ui";
 import { useUserInfoStore } from "@/hooks/useUserInfo";
 import { useOpenStore } from "@/hooks/useOpen";
 import { checkAuth } from "@/lib/checkEnv";
 import Icon from "@/components/icon";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Avatar() {
   const session = useSession();
@@ -134,12 +142,12 @@ export default function Avatar() {
   const renderLabel = () => {
     if (!user) return null;
     return (
-      <div className="border-b px-2 pb-1">
+      <>
         <div className="font-medium text-sm">
           {user.name || user.email?.split("@")[0]}
         </div>
         <div className="text-xs">{user.email}</div>
-      </div>
+      </>
     );
   };
 
@@ -175,37 +183,52 @@ export default function Avatar() {
   }, [session.data]);
 
   return (
-    <Dropdown
-      label={renderLabel()}
-      options={menus}
-      onSelect={onSelect}
-      align="end"
-      disabled={disabled}
-    >
-      {session.data?.user ? (
-        <div className="cursor-pointer">
-          {session.data.user.image ? (
-            <Image
-              className="rounded-full"
-              src={session.data.user.image}
-              alt="Avatar"
-              width={32}
-              height={32}
-            />
-          ) : (
-            <div className="rounded-full flex bg-sky-400 h-8 w-8 justify-center items-center">
-              <Icon icon="user_3_fill" className="text-white" size={20} />
+    <div className="flex items-center">
+      <DropdownMenu>
+        <DropdownMenuTrigger className="outline-none">
+          {session.data?.user ? (
+            <div className="cursor-pointer">
+              {session.data.user.image ? (
+                <Image
+                  className="rounded-full"
+                  src={session.data.user.image}
+                  alt="Avatar"
+                  width={32}
+                  height={32}
+                />
+              ) : (
+                <div className="rounded-full flex bg-sky-400 h-8 w-8 justify-center items-center">
+                  <Icon icon="user_3_fill" className="text-white" size={20} />
+                </div>
+              )}
             </div>
+          ) : (
+            <Button
+              type="primary"
+              size="sm"
+              icon={<Icon icon="user_add_2_line" size={18} />}
+              loading={disabled}
+            />
           )}
-        </div>
-      ) : (
-        <Button
-          type="primary"
-          size="sm"
-          icon={<Icon icon="user_add_2_line" size={18} />}
-          loading={disabled}
-        />
-      )}
-    </Dropdown>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>{renderLabel()}</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          {menus.map((item) => {
+            if (item.type === "seperate")
+              return <DropdownMenuSeparator key={item.value} />;
+            return (
+              <DropdownMenuItem
+                key={item.value}
+                className="cursor-pointer"
+                onClick={() => onSelect(item.value)}
+              >
+                {item.label}
+              </DropdownMenuItem>
+            );
+          })}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }

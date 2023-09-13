@@ -74,7 +74,6 @@ export default function OpenAI() {
         <Label htmlFor="proxy">{tConfigure("api-proxy")}</Label>
         <Input
           id="proxy"
-          // placeholder={tConfigure("set-api-proxy") as string}
           placeholder="https://api.openai.com/v1"
           value={openai.proxy}
           onChange={(e) => onChange(e.target.value, "proxy")}

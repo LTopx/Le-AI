@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, type Spring } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Select, Button } from "@ltopx/lx-ui";
+import { Button } from "@ltopx/lx-ui";
 import { useLLMStore } from "@/hooks/useLLM";
 import { useChannelStore } from "@/hooks/useChannel";
 import { useOpenStore } from "@/hooks/useOpen";
@@ -12,6 +12,14 @@ import Icon from "@/components/icon";
 import PremiumBtn from "./premiumBtn";
 import MenuIcon from "@/components/menu/icon";
 import Plugin from "./plugin";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface ChatConfigureProps {
   list: ChannelListItem[];
@@ -22,37 +30,6 @@ export const softBouncePrest: Spring = {
   type: "spring",
   damping: 10,
   stiffness: 100,
-};
-
-const renderLabel = (item: any) => {
-  return (
-    <div className="flex gap-2 items-center">
-      {item.ico}
-      {item.label}
-    </div>
-  );
-};
-
-const renderModelLabel = (item: any) => {
-  return (
-    <div className="flex gap-4 items-center">
-      <div className="flex items-center gap-1.5">
-        {!!item.icon && <span>{item.icon}</span>}
-        <span>{item.label}</span>
-      </div>
-      {!!item.premium && (
-        <span
-          className={cn(
-            "select-none rounded text-xs py-0.5 px-2 border",
-            "border-amber-400 text-amber-400 bg-amber-50",
-            "dark:border-orange-500 dark:text-orange-500 dark:bg-orange-50/90"
-          )}
-        >
-          PRO
-        </span>
-      )}
-    </div>
-  );
 };
 
 export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
@@ -137,25 +114,61 @@ export default function ChatConfigure({ list, channel }: ChatConfigureProps) {
         >
           <div>
             <Select
-              className="w-full"
-              size="lg"
-              options={LLMOptions}
-              renderLabel={renderLabel}
               value={channel.channel_model.type}
-              onChange={onChangeType}
-            />
+              onValueChange={onChangeType}
+            >
+              <SelectTrigger className="h-9">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {LLMOptions.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      <div className="flex gap-2 items-center">
+                        {item.ico}
+                        {item.label}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
             <div className="flex mt-4 gap-4 items-center">
               <div className="text-sm text-black/90 dark:text-white/90">
                 {tGlobal("model")}
               </div>
               <div className="flex-1">
                 <Select
-                  className="w-full"
-                  options={options}
-                  renderLabel={renderModelLabel}
                   value={channel.channel_model.name}
-                  onChange={onChangeModel}
-                />
+                  onValueChange={onChangeModel}
+                >
+                  <SelectTrigger className="h-9">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {options.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        <div className="flex gap-4 items-center">
+                          <div className="flex items-center gap-1.5">
+                            {!!item.icon && <span>{item.icon}</span>}
+                            <span>{item.label}</span>
+                          </div>
+                          {!!item.premium && (
+                            <span
+                              className={cn(
+                                "select-none rounded text-xs py-0.5 px-2 border",
+                                "border-amber-400 text-amber-400 bg-amber-50",
+                                "dark:border-orange-500 dark:text-orange-500 dark:bg-orange-50/90"
+                              )}
+                            >
+                              PRO
+                            </span>
+                          )}
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
