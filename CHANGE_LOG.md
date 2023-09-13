@@ -4,6 +4,10 @@
 
 > 2023-09-13
 
+### Fixed
+
+- Fix avatar UI display error issue
+
 ### Changed
 
 - Reconstruct some page module UI and migrate to shadcn/ui

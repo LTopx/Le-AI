@@ -58,7 +58,8 @@ input[type="number"] {
     --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
-    --primary: 220.9 39.3% 11%;
+    --primary: 199 93% 61%;
+    /* --primary: 220.9 39.3% 11%; */
     --primary-foreground: 210 20% 98%;
     --secondary: 220 14.3% 95.9%;
     --secondary-foreground: 220.9 39.3% 11%;
@@ -70,7 +71,7 @@ input[type="number"] {
     --destructive-foreground: 210 20% 98%;
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 199, 93%, 61%;
+    --ring: 199 93% 61%;
     /* --ring: 224 71.4% 4.1%; */
     --radius: 0.5rem;
   }
@@ -94,7 +95,7 @@ input[type="number"] {
     --destructive-foreground: 210 20% 98%;
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
-    --ring: 203, 80%, 57%;
+    --ring: 203 80% 57%;
     /* --ring: 216 12.2% 83.9%; */
   }
 }

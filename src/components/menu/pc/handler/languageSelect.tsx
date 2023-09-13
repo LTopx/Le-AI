@@ -1,10 +1,17 @@
 import React from "react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next-intl/client";
-import { Dropdown, DropdownOption } from "@ltopx/lx-ui";
+import { DropdownOption } from "@ltopx/lx-ui";
 import Icon from "@/components/icon";
 import { cn } from "@/lib";
 import { useOpenStore } from "@/hooks/useOpen";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const languages: DropdownOption[] = [
   { label: "🇺🇸 English", value: "en" },
@@ -34,28 +41,37 @@ export default function LanguageSelect({
   };
 
   return (
-    <Dropdown
-      selectable
-      side="top"
-      options={languages}
-      value={locale}
-      onSelect={onLocaleChange}
-    >
-      <div className="flex flex-1 justify-center">
-        <div
-          className={cn(
-            "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
-            "hover:bg-gray-200/60",
-            "dark:hover:bg-slate-700/70"
-          )}
-        >
-          {loadingChangeLang ? (
-            <Icon icon="loading_line" size={20} className="animate-spin" />
-          ) : (
-            <Icon icon="translate_2_line" size={24} />
-          )}
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <div className="flex flex-1 justify-center">
+          <div
+            className={cn(
+              "w-8 h-8 flex justify-center items-center cursor-pointer transition-colors rounded-md",
+              "hover:bg-gray-200/60",
+              "dark:hover:bg-slate-700/70"
+            )}
+          >
+            {loadingChangeLang ? (
+              <Icon icon="loading_line" size={20} className="animate-spin" />
+            ) : (
+              <Icon icon="translate_2_line" size={24} />
+            )}
+          </div>
         </div>
-      </div>
-    </Dropdown>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuRadioGroup value={locale} onValueChange={onLocaleChange}>
+          {languages.map((item) => (
+            <DropdownMenuRadioItem
+              className="cursor-pointer"
+              key={item.value}
+              value={item.value}
+            >
+              {item.label}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

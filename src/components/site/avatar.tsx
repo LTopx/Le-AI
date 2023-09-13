@@ -143,10 +143,13 @@ export default function Avatar() {
     if (!user) return null;
     return (
       <>
-        <div className="font-medium text-sm">
-          {user.name || user.email?.split("@")[0]}
-        </div>
-        <div className="text-xs">{user.email}</div>
+        <DropdownMenuLabel>
+          <div className="font-medium text-sm">
+            {user.name || user.email?.split("@")[0]}
+          </div>
+          <div className="text-xs">{user.email}</div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
       </>
     );
   };
@@ -185,7 +188,7 @@ export default function Avatar() {
   return (
     <div className="flex items-center">
       <DropdownMenu>
-        <DropdownMenuTrigger className="outline-none">
+        <DropdownMenuTrigger className="outline-none" disabled={disabled}>
           {session.data?.user ? (
             <div className="cursor-pointer">
               {session.data.user.image ? (
@@ -212,8 +215,7 @@ export default function Avatar() {
           )}
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>{renderLabel()}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
+          {renderLabel()}
           {menus.map((item) => {
             if (item.type === "seperate")
               return <DropdownMenuSeparator key={item.value} />;
