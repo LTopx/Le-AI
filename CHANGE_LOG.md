@@ -2,11 +2,12 @@
 
 ## v0.9.2
 
-> 2023-09-13
+> 2023-09-15
 
 ### Fixed
 
 - Fix avatar UI display error issue
+- Fix configuration error in .env.local.demo file
 
 ### Changed
 
