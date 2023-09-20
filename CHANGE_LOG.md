@@ -2,13 +2,14 @@
 
 ## v0.9.2
 
-> 2023-09-18
+> 2023-09-20
 
 ### Fixed
 
 - Fix avatar UI display error issue
 - Fix configuration error in .env.local.demo file
 - Fix multiple language configuration errors.
+- Fix the issue of parsing error in react-markdown caused by upgrading remark-gfm version.
 
 ### Changed
 
