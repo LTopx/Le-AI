@@ -5,13 +5,13 @@ import { Button, Confirm } from "@ltopx/lx-ui";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import { useChannelStore, initChannelList } from "@/hooks/useChannel";
-import { useOpenStore } from "@/hooks/useOpen";
 import { useUserInfoStore } from "@/hooks/useUserInfo";
 import { useLLMStore } from "@/hooks/useLLM";
 import { useModelCacheStore } from "@/hooks/useModelCache";
 import { cn } from "@/lib";
 import Icon from "@/components/icon";
 import Share from "./share";
+import ChatSetting from "./chatSetting";
 
 export default function Handler() {
   const tChat = useTranslations("chat");
@@ -32,9 +32,6 @@ export default function Handler() {
   );
   const license_type = useUserInfoStore((state) => state.license_type);
 
-  const updateChatSettingOpen = useOpenStore(
-    (state) => state.updateChatSettingOpen
-  );
   const addList = useChannelStore((state) => state.addList);
   const cancelGPT = useChannelStore((state) => state.cancelGPT);
   const clearItem = useChannelStore((state) => state.clearItem);
@@ -136,18 +133,7 @@ export default function Handler() {
   return (
     <div className="flex items-center justify-between">
       <div className="flex py-1.5 gap-2 items-center">
-        <Button
-          className="h-7 text-xs px-2.5 group"
-          rounded
-          outline
-          type="primary"
-          onClick={() => updateChatSettingOpen(true)}
-          icon={<Icon icon="settings_3_line" size={18} />}
-        >
-          <span className="hidden lg:block">
-            {tChat("conversation-setting")}
-          </span>
-        </Button>
+        <ChatSetting />
         <Button
           className="h-7 text-xs px-2.5"
           rounded

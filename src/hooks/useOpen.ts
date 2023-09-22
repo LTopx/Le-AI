@@ -7,7 +7,6 @@ type OpenStore = {
   chargeTokenOpen: boolean;
   mobileMenuOpen: boolean;
   ttsSettingOpen: boolean;
-  chatSettingOpen: boolean;
   characterOpen: boolean;
   pluginSettingOpen: boolean;
   backupOpen: boolean;
@@ -17,7 +16,6 @@ type OpenStore = {
   updateChargeTokenOpen: (chargeTokenOpen: boolean) => void;
   updateMobileMenuOpen: (mobileMenuOpen: boolean) => void;
   updateTtsSettingOpen: (ttsSettingOpen: boolean) => void;
-  updateChatSettingOpen: (chatSettingOpen: boolean) => void;
   updateCharacterOpen: (characterOpen: boolean) => void;
   updatePluginSettingOpen: (pluginSettingOpen: boolean) => void;
   updateBackupOpen: (backupOpen: boolean) => void;
@@ -30,7 +28,6 @@ export const useOpenStore = createWithEqualityFn<OpenStore>(
     chargeTokenOpen: false,
     mobileMenuOpen: false,
     ttsSettingOpen: false,
-    chatSettingOpen: false,
     characterOpen: false,
     pluginSettingOpen: false,
     backupOpen: false,
@@ -40,7 +37,6 @@ export const useOpenStore = createWithEqualityFn<OpenStore>(
     updateChargeTokenOpen: (chargeTokenOpen) => set({ chargeTokenOpen }),
     updateMobileMenuOpen: (mobileMenuOpen) => set({ mobileMenuOpen }),
     updateTtsSettingOpen: (ttsSettingOpen) => set({ ttsSettingOpen }),
-    updateChatSettingOpen: (chatSettingOpen) => set({ chatSettingOpen }),
     updateCharacterOpen: (characterOpen) => set({ characterOpen }),
     updatePluginSettingOpen: (pluginSettingOpen) => set({ pluginSettingOpen }),
     updateBackupOpen: (backupOpen) => set({ backupOpen }),

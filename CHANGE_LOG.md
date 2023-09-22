@@ -2,19 +2,26 @@
 
 ## v0.9.2
 
-> 2023-09-20
+> 2023-09-22
+
+### Add
+
+- Added support for configuring a member threshold for session summarization to achieve the effect of "unlimited sessions"
+- "Session Settings" added support for configuring the threshold of message compression for historical messages.
 
 ### Fixed
 
 - Fix avatar UI display error issue
 - Fix configuration error in .env.local.demo file
-- Fix multiple language configuration errors.
-- Fix the issue of parsing error in react-markdown caused by upgrading remark-gfm version.
+- Fix multiple language configuration errors
+- Fix the issue of parsing error in react-markdown caused by upgrading remark-gfm version
+- Fix the display effect of the loading icon during session loading
 
 ### Changed
 
 - Reconstruct some page module UI and migrate to shadcn/ui
 - Adjust the proxy configuration logic for OpenAI API Key, fix [#11](https://github.com/LTopx/Le-AI/issues/11)
+- Disable voice playback during conversation loading.
 
 ## v0.9.1
 

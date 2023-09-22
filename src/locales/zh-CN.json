@@ -34,7 +34,6 @@
     "expire-date": "过期时间",
     "export-import": "导出 / 导入",
     "forever": "永久",
-    "get-title-prompt": "这个聊天的简短而相关的标题是什么？您必须严格回答只有标题，不允许任何其他文本。",
     "icon": "图标",
     "introduction": "基本介绍",
     "learn-more": "了解更多",
@@ -151,7 +150,9 @@
     "edit-content": "编辑会话内容",
     "messages": "条会话",
     "new-chat": "新建会话",
-    "new-conversation": "新会话"
+    "new-conversation": "新会话",
+    "threshold": "历史消息压缩阈值",
+    "threshold-tip": "与'上下文限制'一起生效，超过阈值则会自动总结上下文进行内容压缩"
   },
   "code": {
     "10001": "请先登录或自行配置API Key来使用Le-AI",
@@ -257,6 +258,11 @@
     "team-3": "支持团队管理",
     "team-4": "更多功能即将推出",
     "tokens-recharged": "Le-AI 点数充值成功！"
+  },
+  "prompt": {
+    "get-title": "这个聊天的简短而相关的标题是什么？您必须严格回答只有标题，不允许任何其他文本。",
+    "summarize": "简要总结一下这段对话，用作后续的上下文提示 prompt，控制在 200 字以内",
+    "summarize-previous": "这是对历史聊天的总结，作为前情提要："
   },
   "share": {
     "copy-link": "复制链接",

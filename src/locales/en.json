@@ -34,7 +34,6 @@
     "expire-date": "Expiration Date",
     "export-import": "Export / Import",
     "forever": "Forever",
-    "get-title-prompt": "What would be a short and relevant title for this chat? You must strictly answer with only the title, no other text is allowed.",
     "icon": "Icon",
     "introduction": "Introduction",
     "learn-more": "Learn more",
@@ -151,7 +150,9 @@
     "edit-content": "Edit chat content",
     "messages": "messages",
     "new-chat": "New Chat",
-    "new-conversation": "New Conversation"
+    "new-conversation": "New Conversation",
+    "threshold": "Historical message compression threshold",
+    "threshold-tip": "Effective with 'context constraints', if the threshold is exceeded, automatic summarization of context will be performed for content compression."
   },
   "code": {
     "10001": "Please log in or configure your API Key to use Le-AI.",
@@ -257,6 +258,11 @@
     "team-3": "Support team management",
     "team-4": "More features are coming soon",
     "tokens-recharged": "Le-AI Points recharge successful!"
+  },
+  "prompt": {
+    "get-title": "What would be a short and relevant title for this chat? You must strictly answer with only the title, no other text is allowed.",
+    "summarize": "Briefly summarize this dialogue as a prompt for future context, keeping it within 200 characters.",
+    "summarize-previous": "This is a summary of the previous chat history, as a preface:"
   },
   "share": {
     "copy-link": "Copy Link",

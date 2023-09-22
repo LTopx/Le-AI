@@ -6,6 +6,7 @@ import type { ChatItem } from "@/hooks/useChannel/types";
 
 interface ChatTTSProps {
   data: ChatItem;
+  disabled: boolean;
   onRead: () => void;
   onPause: () => void;
   onTTSSetting: () => void;
@@ -13,6 +14,7 @@ interface ChatTTSProps {
 
 export default function ChatTTS({
   data,
+  disabled,
   onRead,
   onPause,
   onTTSSetting,
@@ -29,6 +31,7 @@ export default function ChatTTS({
           rounded
           icon={<Icon icon="play_fill" size={17} />}
           loading={!!data.tts_loading}
+          disabled={disabled}
           onClick={onRead}
         />
         {!!data.tts_loading && (
@@ -40,6 +43,7 @@ export default function ChatTTS({
       <Button
         className="opacity-0 transition-opacity select-none group-hover:opacity-100"
         type="link"
+        disabled={disabled}
         onClick={onTTSSetting}
       >
         {tGlobal("setting")}

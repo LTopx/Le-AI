@@ -38,6 +38,7 @@ export interface ChatItem {
   time: string;
   content: string;
   tts_loading?: boolean;
+  is_summarized?: boolean;
 }
 
 export interface ChannelListItem {
@@ -52,5 +53,7 @@ export interface ChannelListItem {
   channel_loading: boolean;
   channel_context_length: number;
   channel_plugins: string[];
+  channel_summarize: string;
+  channel_summarize_threshold: number;
   chat_list: ChatItem[];
 }

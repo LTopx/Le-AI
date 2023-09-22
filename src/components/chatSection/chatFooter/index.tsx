@@ -20,6 +20,7 @@ export default function ChatFooter() {
   const session = useSession();
 
   const tGlobal = useTranslations("global");
+  const tPrompt = useTranslations("prompt");
   const tCode = useTranslations("code");
   const tPoints = useTranslations("points");
   const tPremium = useTranslations("premium");
@@ -107,14 +108,19 @@ export default function ChatFooter() {
     scrollToBottom();
 
     try {
-      const res: any = await sendGPT(chat_list, activeId);
+      const res: any = await sendGPT(
+        chat_list,
+        activeId,
+        tPrompt("summarize-previous"),
+        tPrompt("summarize")
+      );
 
       if (res) {
         const cloneRes = JSON.parse(JSON.stringify(res));
         const newParams = cloneRes.newParams;
         newParams.chat_list.push({
           role: "system",
-          content: tGlobal("get-title-prompt"),
+          content: tPrompt("get-title"),
         });
         delete newParams.prompt;
         // No need to call the plugin function when retrieving the channel name.

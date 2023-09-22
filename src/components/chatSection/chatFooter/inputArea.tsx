@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { useConfigStore } from "@/hooks/useConfig";
 import { isMobile, getPlatform, cn } from "@/lib";
 import Icon from "@/components/icon";
+import { Loader2 } from "lucide-react";
 
 export interface ChatInputProps {
   className?: string | undefined;
@@ -124,7 +125,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
               "dark:text-sky-400/90"
             )}
           >
-            <Icon className="animate-spin" icon="loading_line" size={24} />
+            <Loader2 className="h-6 w-6 animate-spin text-sky-400 dark:text-sky-400/90" />
           </div>
         ) : (
           <div
