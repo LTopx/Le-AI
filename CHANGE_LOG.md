@@ -1,17 +1,107 @@
-# L-GPT Change Log
+# Le-AI Change Log
+
+## v0.9.2
+
+> 2023-09-22
+
+### Add
+
+- Added support for configuring a member threshold for session summarization to achieve the effect of "unlimited sessions"
+- "Session Settings" added support for configuring the threshold of message compression for historical messages.
+
+### Fixed
+
+- Fix avatar UI display error issue
+- Fix configuration error in .env.local.demo file
+- Fix multiple language configuration errors
+- Fix the issue of parsing error in react-markdown caused by upgrading remark-gfm version
+- Fix the display effect of the loading icon during session loading
+
+### Changed
+
+- Reconstruct some page module UI and migrate to shadcn/ui
+- Adjust the proxy configuration logic for OpenAI API Key, fix [#11](https://github.com/LTopx/Le-AI/issues/11)
+- Disable voice playback during conversation loading.
+
+## v0.9.1
+
+> 2023-09-11
+
+### Fixed
+
+- Fixed the issue of incorrect authentication logic after configuring a custom API Key when deploying a project
+- Fixed the issue of garbled characters in some cases when replying
+- Fixed [#8](https://github.com/LTopx/Le-AI/issues/8)
+- Fixed the issue of incorrect background image display on the email login page
+- Fix the issue of character creation prompt and welcome message word limit
+
+### Add
+
+- Support for account/password login
+- Added a return to home button on the API Key configuration page
+- Added privacy agreement and login guide to the login interface.
+- Compatible with configuring other third-party OpenAI API Keys. For example: nextweb, API2D, and so on.
+
+### Changed
+
+- Update Azure OpenAI API Version to 2023-08-01-preview
+- Adjust the UI of the left bottom menu in the system
+- Refactor the UI of the pop-up box for creating a new character
+- Adjust the implementation logic of prompt, messages parameters, all parsed and assembled by the front end
+
+## v0.9.0
+
+> 2023-09-02
+
+### Fixed
+
+- Fixed the issue of being unable to use when not logged in but configured with an API KEY
+- Fixing invalid links.
+- Fixing the cross-domain issue with the chatgpt interface.
+- Fixing the issue of missing metadataBase.
+- Fixed the redirect link issue for OpenRouter Key.
+- Fixing the issue of not carrying cross-domain headers when requesting an error.
+- Fixed the style issue with the Table on the token page.
+- Fixed: issue of missing metadataBase and env variable [#6](https://github.com/LTopx/Le-AI/issues/6)
+
+### Add
+
+- Added support for Windows and Mac Beta clients.
+- Added support for one-click session clearing
+- Added logic and database table construction for token management page
+- Added important announcement prompt in the left-side menu
+- Self-built token integration logic for OpenAI, Azure OpenAI, and OpenRouter interfaces
+- Added support for configuring Le-AI API Key
+- Introduced shadcn/ui to optimize the style of some components
+- Added support for Traditional Chinese
+
+### Changed
+
+- Adjust the project name: L-GPT => Le-AI
+- Adjust all the copy and related links within the project regarding L-GPT.
+- Adjusted some code structure
+- Add the Le-AI API Key to the logic for determining whether the key is configured.
+- Adjusted the user credential expiration time to 14 days.
+- Refactor and streamline global multilingual configuration.
+- Refactor the login interface UI.
+- Adjusted the permissions of some models in OpenRouter.
 
 ## v0.8.4
 
-> 2023-08-14
+> 2023-08-19
 
 ### Add
 
 - Support for configuring welcome messages has been added to the character template, serving as the default first sentence of a conversation.
 - Add privacy policy and contact information.
+- Added cloud synchronization function, which can synchronize conversation content to the cloud for easy synchronization between different devices.
 
 ### Changed
 
 - Support for importing and exporting configurations of OpenRouter.
+- Adjust the layout of the bottom left menu.
+- Adjust the model permissions provided by OpenRouter to free.
+- Adjust the cloud backup quota, free users can back up 50KB of data.
 
 ## v0.8.3
 
@@ -209,7 +299,7 @@
 
 ### Fixed
 
-- Fix the issue where the page displays incorrectly when clicking Cancel during Github login [#2](https://github.com/Peek-A-Booo/L-GPT/issues/2)
+- Fix the issue where the page displays incorrectly when clicking Cancel during Github login [#2](https://github.com/LTopx/Le-AI/issues/2)
 
 ### Add
 
@@ -295,7 +385,7 @@
 ### Add
 
 - Add a scheduled service to clear useless conversation shares older than 7 days.
-- Adding a link to the [L-GPT documentation](https://docs.ltopx.com) for navigation.
+- Adding a link to the [Le-AI documentation](https://docs.le-ai.app) for navigation.
 
 ### Fixed
 

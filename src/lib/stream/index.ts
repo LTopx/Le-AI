@@ -18,17 +18,23 @@ interface StreamProps {
   plugins?: fn_call[];
   fetchURL?: string;
   Authorization?: string;
+  leaiApiKey?: string;
+  leai_used_quota?: number;
   temperature?: number;
   max_tokens?: number;
   fetchFn?: any;
+  leai_userId?: string;
 }
 
 interface ICalcTokens {
   userId?: string;
   headerApiKey?: string;
+  leaiApiKey?: string;
+  leai_used_quota?: number;
   messages: any[];
   content: string;
   modelLabel: supportModelType;
+  leai_userId?: string;
 }
 
 const sleep = (ms: number) => {
@@ -38,27 +44,43 @@ const sleep = (ms: number) => {
 const calculateTokens = async ({
   userId,
   headerApiKey,
+  leaiApiKey,
+  leai_used_quota = 0,
   messages,
   content,
   modelLabel,
+  leai_userId,
 }: ICalcTokens) => {
-  // If use own key, no need to calculate tokens
-  if (userId && !headerApiKey) {
-    const final = [...messages, { role: "assistant", content }];
+  let localUserId = userId;
 
-    const { usedTokens, usedUSD } = calcTokens(final, modelLabel);
+  const final = [...messages, { role: "assistant", content }];
+  const { usedTokens, usedUSD } = calcTokens(final, modelLabel);
+  const used_availableTokens = Math.ceil(usedUSD * BASE_PRICE);
 
-    const findUser = await prisma.user.findUnique({
-      where: { id: userId },
+  if (leaiApiKey) {
+    await prisma.apiTokens.update({
+      where: { key: leaiApiKey },
+      data: {
+        used_quota: leai_used_quota + used_availableTokens,
+      },
     });
+
+    if (!localUserId) localUserId = leai_userId;
+  }
+
+  // If use own key, no need to calculate tokens
+  if (localUserId && (!headerApiKey || leaiApiKey)) {
+    const findUser = await prisma.user.findUnique({
+      where: { id: localUserId },
+    });
+
     if (findUser) {
       const costTokens = findUser.costTokens + usedTokens;
       const costUSD = Number((findUser.costUSD + usedUSD).toFixed(5));
-      const availableTokens =
-        findUser.availableTokens - Math.ceil(usedUSD * BASE_PRICE);
+      const availableTokens = findUser.availableTokens - used_availableTokens;
 
       await prisma.user.update({
-        where: { id: userId },
+        where: { id: localUserId },
         data: {
           costTokens,
           costUSD,
@@ -80,9 +102,12 @@ export const stream = async ({
   plugins = [],
   fetchURL,
   Authorization,
+  leaiApiKey,
+  leai_used_quota,
   temperature,
   max_tokens,
   fetchFn,
+  leai_userId,
 }: StreamProps) => {
   const reader = readable.getReader();
   const writer = writable.getWriter();
@@ -149,9 +174,12 @@ export const stream = async ({
   await calculateTokens({
     userId,
     headerApiKey,
+    leaiApiKey,
+    leai_used_quota,
     messages,
     content: tokenContext,
     modelLabel,
+    leai_userId,
   });
 
   if (!is_function_call) {
@@ -233,9 +261,12 @@ export const stream = async ({
     await calculateTokens({
       userId,
       headerApiKey,
+      leaiApiKey,
+      leai_used_quota,
       messages: newMessages,
       content: function_call_resultContent,
       modelLabel,
+      leai_userId,
     });
 
     if (function_call_streamBuffer) {

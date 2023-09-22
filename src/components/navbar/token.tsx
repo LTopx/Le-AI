@@ -14,6 +14,8 @@ interface TokenProps {
 }
 
 const Token = React.forwardRef<any, TokenProps>(({ cost }, forwardedRef) => {
+  const tGlobal = useTranslations("global");
+  const tChat = useTranslations("chat");
   const tToken = useTranslations("token");
 
   const [open, setOpen] = React.useState(false);
@@ -43,7 +45,7 @@ const Token = React.forwardRef<any, TokenProps>(({ cost }, forwardedRef) => {
               target="_blank"
               className="text-sky-500 hover:text-sky-400 transition-colors"
             >
-              {tToken("know-more")}
+              {tGlobal("learn-more")}
             </a>
           </li>
         </ul>
@@ -91,7 +93,9 @@ const Token = React.forwardRef<any, TokenProps>(({ cost }, forwardedRef) => {
     >
       <div className="flex flex-col my-3 px-5 gap-3">
         <div>
-          <div className="font-medium text-base">{tToken("current-cost")}</div>
+          <div className="font-medium text-base">
+            {tChat("current-content")}
+          </div>
           <div className="text-sm">
             ${cost?.usd} / {cost?.tokens} Tokens
           </div>
@@ -108,10 +112,10 @@ const Token = React.forwardRef<any, TokenProps>(({ cost }, forwardedRef) => {
           <Button
             className="pl-0"
             type="link"
-            href="https://docs.ltopx.com/token"
+            href="https://docs.le-ai.app/token"
             target="_blank"
           >
-            {tToken("learn-more")}
+            {tGlobal("learn-more")}
           </Button>
         </div>
       </div>

@@ -1,21 +1,21 @@
-<h4 align="right">English | <strong><a href="https://github.com/LTopx/L-GPT/blob/main/README_CN.md">中文</a></strong></h4>
+<h4 align="right">English | <strong><a href="https://github.com/LTopx/Le-AI/blob/main/README_CN.md">中文</a></strong></h4>
 
 <p align="center">
-    <a href="https://chat.ltopx.com" target="_blank" rel="noopener noreferrer">
-        <img width="100" src="./public/favicon-96x96.png" alt="L-GPT" />
+    <a href="https://le-ai.app" target="_blank" rel="noopener noreferrer">
+        <img width="100" src="./public/favicon-96x96.png" alt="Le-AI" />
     </a>
 </p>
 
-<h1 align="center">L-GPT</h1>
+<h1 align="center">Le-AI</h1>
 
 <p align="center">Your open-source AI Assistant Hub, helping you boost efficiency UP UP~</p>
 
 <p align="center">
-<a href="https://github.com/LTopx/L-GPT/releases">
-  <img alt="GitHub release" src="https://img.shields.io/github/release/LTopx/L-GPT.svg?style=flat-square&include_prereleases" />
+<a href="https://github.com/LTopx/Le-AI/releases">
+  <img alt="GitHub release" src="https://img.shields.io/github/release/LTopx/Le-AI.svg?style=flat-square&include_prereleases" />
 </a>
-<a href="https://github.com/LTopx/L-GPT/commits">
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/LTopx/L-GPT.svg?style=flat-square" />
+<a href="https://github.com/LTopx/Le-AI/commits">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/LTopx/Le-AI.svg?style=flat-square" />
 </a>
 <a href="https://twitter.com/peekbomb" target="_blank">
   <img alt="twitter" src="https://img.shields.io/badge/follow-Ethan Liu-red?style=flat-square&logo=Twitter">
@@ -26,25 +26,23 @@
 
 <div align="center">
 
-[Demo](https://chat.ltopx.com/) | [Docs](https://docs.ltopx.com/) | [Q&A](https://docs.ltopx.com/faq) | [Change Log](https://docs.ltopx.com/change-log) | [Feedback](https://github.com/LTopx/L-GPT/issues) | [Telegram](https://t.me/+7fLJJoGV_bJhYTk1) | [Contact Me](https://goethan.cc/)
+[Demo](https://le-ai.app/) | [Docs](https://docs.le-ai.app/) | [Q&A](https://docs.le-ai.app/faq) | [Change Log](https://docs.le-ai.app/change-log) | [Feedback](https://github.com/LTopx/Le-AI/issues) | [Telegram](https://t.me/+7fLJJoGV_bJhYTk1) | [Contact Me](https://goethan.cc/)
 
 </div>
 
 <div align="center">
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/L-GPT)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/Le-AI)
 
 </div>
 
-<p align="center">
-  <img src="./public/screenshots/screenshot.png" height="500px">
-</p>
+![cover](./public/screenshots/screenshot.png)
 
 ## ✨ Demo
 
-Direct access: [https://chat.ltopx.com](https://chat.ltopx.com/)
+Direct access: [https://le-ai.app](https://le-ai.app/)
 
-Project documentation: [https://docs.ltopx.com](https://docs.ltopx.com/)
+Project documentation: [https://docs.le-ai.app](https://docs.le-ai.app/)
 
 ## 🎯 Key Features
 
@@ -56,13 +54,14 @@ Project documentation: [https://docs.ltopx.com](https://docs.ltopx.com/)
 - Supports OpenAI and Azure OpenAI
 - Supports custom role templates to create more AI possibilities
 - Supports i18n multilingual internationalization: English, Simplified Chinese
-- For more information, please refer to the [documentation](https://docs.ltopx.com/)
+- For more information, please refer to the [documentation](https://docs.le-ai.app/)
 
 ## 📍 Development Plan
 
 - [x] Support custom prompt repository
 - [x] Support Function call for implementing more functionalities
 - [x] Support for large language model APIs such as Claude, PaLM, and Llama 2.
+- [x] Support distributing keys for use in an unauthenticated state.
 - [ ] Support long conversations
 - [ ] Support integration of Midjourney drawing
 - [ ] Desktop version development
@@ -71,7 +70,7 @@ Project documentation: [https://docs.ltopx.com](https://docs.ltopx.com/)
 
 Currently supports one-click deployment to Vercel.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/L-GPT)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/Le-AI)
 
 ## 🪄 Local Development
 
@@ -111,8 +110,8 @@ pnpm build && pnpm start
 
 ## More Optional Environment Variables
 
-Refer to the documentation: [https://docs.ltopx.com](https://docs.ltopx.com/develop/env)
+Refer to the documentation: [https://docs.le-ai.app](https://docs.le-ai.app/develop/env)
 
 ## License
 
-[GNU](https://github.com/LTopx/L-GPT/blob/main/LICENSE)
+[GNU](https://github.com/LTopx/Le-AI/blob/main/LICENSE)

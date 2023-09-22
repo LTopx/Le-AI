@@ -1,7 +1,7 @@
 import React from "react";
 import { cn } from "@/lib";
 import Logo from "@/components/site/logo";
-import AddChannel from "./addChannel";
+import AddChannel from "../addChannel";
 import List from "./list";
 import Handler from "./handler";
 

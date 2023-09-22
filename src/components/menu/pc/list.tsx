@@ -18,8 +18,8 @@ export default function List() {
   const updateActiveId = useChannelStore((state) => state.updateActiveId);
   const formats = useFormatter();
 
-  const tMenu = useTranslations("menu");
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
+  const tChat = useTranslations("chat");
 
   const onChangeChannel = (id: string) => {
     if (id === activeId) return;
@@ -54,7 +54,7 @@ export default function List() {
                 loading={channel.channel_loading}
               />
               <span className="font-medium">
-                {channel.channel_name || tMenu("new-conversation")}
+                {channel.channel_name || tChat("new-conversation")}
               </span>
             </div>
           </div>
@@ -65,7 +65,7 @@ export default function List() {
               { "dark:text-neutral-400": channel.channel_id === activeId }
             )}
           >
-            {channel.chat_list.length} {tMenu("messages")}
+            {channel.chat_list.length} {tChat("messages")}
             <div className="tabular-nums group-hover:opacity-0">
               {!!(channel.chat_list.length && channel.chat_list.at(-1)?.time) &&
                 formats.dateTime(
@@ -81,11 +81,11 @@ export default function List() {
             </div>
           </div>
           <Confirm
-            title={tMenu("delete-this-conversation")}
-            content={tMenu("delete-conversation")}
+            title={tChat("delete-chat")}
+            content={tChat("delete-chat-tip")}
             type="danger"
-            cancelText={tCommon("cancel")}
-            okText={tCommon("ok")}
+            okText={tGlobal("ok-spacing")}
+            cancelText={tGlobal("cancel-spacing")}
             onOk={() => deleteList(channel.channel_id)}
           >
             <div

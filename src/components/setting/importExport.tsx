@@ -13,7 +13,7 @@ import { useCharacterStore } from "@/hooks/useCharacter";
 export default function ImportExport() {
   const format = useFormatter();
 
-  const tSetting = useTranslations("setting");
+  const tGlobal = useTranslations("global");
 
   const [openai, azure, openRouter] = useOpenAIStore((state) => [
     state.openai,
@@ -87,7 +87,7 @@ export default function ImportExport() {
         }
 
         updateSettingOpen(false);
-        toast.success(tSetting("import-success"));
+        toast.success(tGlobal("operation-successful"));
       } catch {}
     };
     reader.readAsText(file);
@@ -102,7 +102,7 @@ export default function ImportExport() {
           "border-slate-100 dark:border-neutral-500/60"
         )}
       >
-        <div className="text-sm">{tSetting("export-import")}</div>
+        <div className="text-sm">{tGlobal("export-import")}</div>
         <div className="flex gap-2">
           <Button onClick={onExport}>
             <Icon icon="upload_3_line" size={18} />

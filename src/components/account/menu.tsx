@@ -14,23 +14,29 @@ export interface MenuItemProps {
 export default function Menu() {
   const pathname = usePathname();
   const router = useRouter();
-  const t = useTranslations("account");
+  const tGlobal = useTranslations("global");
+  const tAuth = useTranslations("auth");
 
   const menuItems: MenuItemProps[] = [
     {
-      label: t("usage"),
+      label: tGlobal("usage"),
       value: "account",
       path: "/account",
     },
-    // {
-    //   label: t("teams"),
-    //   value: "team",
-    //   path: "/account/team",
-    // },
     {
-      label: t("user-info"),
+      label: tGlobal("user-info"),
       value: "info",
       path: "/account/info",
+    },
+    {
+      label: tAuth("change-password"),
+      value: "changePwd",
+      path: "/account/changePwd",
+    },
+    {
+      label: tGlobal("token"),
+      value: "token",
+      path: "/account/token",
     },
   ];
 
@@ -40,7 +46,7 @@ export default function Menu() {
   };
 
   return (
-    <div className="w-60">
+    <div className="w-52">
       {menuItems.map((item) => (
         <div
           key={item.value}

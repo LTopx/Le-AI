@@ -11,6 +11,7 @@ const ViewsCount: React.FC<{ count: number; time: any; from: string }> = ({
   from,
 }) => {
   const tShare = useTranslations("share");
+
   const { format } = useDateFormat();
 
   return (

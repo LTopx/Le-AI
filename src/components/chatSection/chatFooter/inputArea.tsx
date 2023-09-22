@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { useConfigStore } from "@/hooks/useConfig";
 import { isMobile, getPlatform, cn } from "@/lib";
 import Icon from "@/components/icon";
+import { Loader2 } from "lucide-react";
 
 export interface ChatInputProps {
   className?: string | undefined;
@@ -20,7 +21,7 @@ export interface ChatInputRef {
 
 const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
   ({ className, loading, value, onChange, onSubmit }, forwardedRef) => {
-    const tChat = useTranslations("chat");
+    const tGlobal = useTranslations("global");
     const sendMessageType = useConfigStore((state) => state.sendMessageType);
 
     // data
@@ -96,7 +97,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
     return (
       <div
         className={cn(
-          "bg-white hover:border-sky-400 flex-1 border rounded-md transition-colors relative pr-5",
+          "bg-white hover:border-sky-400 flex-1 border rounded-xl transition-colors relative pr-5",
           "dark:bg-neutral-900/90 dark:border-neutral-700 dark:backdrop-blur-sm",
           {
             "border-sky-400 dark:border-sky-400/90 shadow": isFocus,
@@ -107,7 +108,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
         <textarea
           className="bg-transparent rounded-md h-full outline-none text-sm w-full max-h-56 py-3 px-4 resize-none block"
           ref={inputRef}
-          placeholder={tChat("type-message")}
+          placeholder={tGlobal("type-message")}
           rows={1}
           onInput={onInput}
           value={value}
@@ -124,7 +125,7 @@ const ChatInput = React.forwardRef<ChatInputRef, ChatInputProps>(
               "dark:text-sky-400/90"
             )}
           >
-            <Icon className="animate-spin" icon="loading_line" size={24} />
+            <Loader2 className="h-6 w-6 animate-spin text-sky-400 dark:text-sky-400/90" />
           </div>
         ) : (
           <div

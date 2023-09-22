@@ -31,6 +31,7 @@ export const useOpenAIStore = createWithEqualityFn<OpenAIStore>(
       temperature: 1,
       max_tokens: 1000,
     },
+    leAIKey: "",
     env: {
       OPENAI_API_KEY: "",
       AZURE_API_KEY: "",
@@ -51,6 +52,11 @@ export const useOpenAIStore = createWithEqualityFn<OpenAIStore>(
       set({ openRouter });
     },
 
+    updateLeAIKey: (leAIKey) => {
+      localStorage.setItem("leAIKey", leAIKey);
+      set({ leAIKey });
+    },
+
     updateEnv: (env: Env) => {
       set({ env });
     },
@@ -62,6 +68,7 @@ export const useOpenAIInit = () => {
   const updateOpenAI = useOpenAIStore((state) => state.updateOpenAI);
   const updateAzure = useOpenAIStore((state) => state.updateAzure);
   const updateOpenRouter = useOpenAIStore((state) => state.updateOpenRouter);
+  const updateLeAIKey = useOpenAIStore((state) => state.updateLeAIKey);
   const updateEnv = useOpenAIStore((state) => state.updateEnv);
 
   const init = () => {
@@ -82,9 +89,11 @@ export const useOpenAIInit = () => {
       temperature: 1,
       max_tokens: 1000,
     };
+    const localLeAIKey = localStorage.getItem("leAIKey") || "";
     updateOpenAI(localOpenAIConfig);
     updateAzure(localAzureConfig);
     updateOpenRouter(localOpenRouterConfig);
+    updateLeAIKey(localLeAIKey);
     updateEnv({
       OPENAI_API_KEY: process.env.NEXT_PUBLIC_OPENAI_API_KEY || "",
       AZURE_API_KEY: process.env.NEXT_PUBLIC_AZURE_OPENAI_API_KEY || "",

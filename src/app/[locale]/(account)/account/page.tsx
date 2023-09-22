@@ -21,6 +21,7 @@ const getMonthDate = (params: Date) => {
 
 export default function Account() {
   const tAccount = useTranslations("account");
+  const tGlobal = useTranslations("global");
 
   const costRef = React.useRef<HTMLDivElement>(null);
   const costChart = React.useRef<echarts.ECharts>();
@@ -127,10 +128,10 @@ export default function Account() {
 
   return (
     <div>
-      <div className="text-2xl font-semibold">{tAccount("usage")}</div>
+      <div className="text-2xl font-semibold">{tGlobal("usage")}</div>
       <div className="text-sm mt-4 mb-8">{tAccount("usage-tip")}</div>
       <div className="flex items-center gap-2 mb-8">
-        <div>{tAccount("month")}</div>
+        <div>{tGlobal("month")}</div>
         <SelectMonth month={month} onChange={onChange} />
       </div>
       <div

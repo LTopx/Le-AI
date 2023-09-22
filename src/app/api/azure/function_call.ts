@@ -9,6 +9,9 @@ interface IFunctionCall extends IFetchAzureOpenAI {
   modelLabel: supportModelType;
   userId?: string;
   headerApiKey?: string;
+  leaiApiKey?: string;
+  leai_used_quota?: number;
+  leai_userId?: string;
 }
 
 const fetchAzureOpenAI = async ({
@@ -50,6 +53,9 @@ export const function_call = async ({
   plugins,
   userId,
   headerApiKey,
+  leaiApiKey,
+  leai_used_quota,
+  leai_userId,
 }: IFunctionCall & { plugins: fn_call[] }) => {
   try {
     const temperature = isUndefined(p_temperature) ? 1 : p_temperature;
@@ -83,9 +89,19 @@ export const function_call = async ({
       temperature,
       max_tokens,
       fetchFn: fetchAzureOpenAI,
+      leaiApiKey,
+      leai_used_quota,
+      leai_userId,
     });
 
-    return new Response(readable, response);
+    return new Response(readable, {
+      ...response,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
   } catch (error: any) {
     console.log(error, "azure openai function_call error");
     return ResErr({ msg: error?.message || "Error" });

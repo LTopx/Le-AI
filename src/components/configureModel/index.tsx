@@ -1,18 +1,17 @@
 import React from "react";
-import { Select, Divider } from "@ltopx/lx-ui";
+import { Divider } from "@ltopx/lx-ui";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useLLMStore } from "@/hooks/useLLM";
 import OpenAI from "./openai";
 import Azure from "./azure";
 import OpenRouter from "./openRouter";
-
-const renderLabel = (item: any) => {
-  return (
-    <div className="flex gap-2 items-center">
-      {item.ico}
-      {item.label}
-    </div>
-  );
-};
 
 export default function ConfigureModel() {
   const [model, setModel] = React.useState<string>("");
@@ -35,14 +34,23 @@ export default function ConfigureModel() {
 
   return (
     <>
-      <Select
-        className="w-full"
-        size="lg"
-        options={LLMOptions}
-        renderLabel={renderLabel}
-        value={model}
-        onChange={setModel}
-      />
+      <Select value={model} onValueChange={setModel}>
+        <SelectTrigger>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {LLMOptions.map((item) => (
+              <SelectItem key={item.value} value={item.value}>
+                <div className="flex gap-2 items-center">
+                  {item.ico}
+                  {item.label}
+                </div>
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
       <Divider>{findLLM?.ico_big}</Divider>
       {model === LLMOptions[0].value && <OpenAI />}
       {model === LLMOptions[1].value && <Azure />}

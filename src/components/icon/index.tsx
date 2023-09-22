@@ -80,9 +80,24 @@ import { Star_fill } from "./star_fill";
 import { Pencil_line } from "./pencil_line";
 import { Plugin_2_line } from "./plugin_2_line";
 import { Open_Router } from "./open_router";
+import { Cloud_fill } from "./cloud_fill";
+import { Contacts_line } from "./contacts_line";
+import { Cloud_line } from "./cloud_line";
+import { Safe_alert_line } from "./safe_alert_line";
+import { Bell_ringing_line } from "./bell_ringing_line";
 
 const Icon: React.FC<IconProps> = (props) => {
   const { icon } = props;
+
+  if (icon === "bell_ringing_line") return <Bell_ringing_line {...props} />;
+
+  if (icon === "safe_alert_line") return <Safe_alert_line {...props} />;
+
+  if (icon === "cloud_line") return <Cloud_line {...props} />;
+
+  if (icon === "contacts_line") return <Contacts_line {...props} />;
+
+  if (icon === "cloud_fill") return <Cloud_fill {...props} />;
 
   if (icon === "open_router") return <Open_Router {...props} />;
 

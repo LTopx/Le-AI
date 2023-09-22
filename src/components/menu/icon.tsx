@@ -1,6 +1,7 @@
 import type { ChannelIcon } from "@/hooks/useChannel/types";
 import { isUndefined } from "@/lib";
 import Icon from "@/components/icon";
+import { Loader2 } from "lucide-react";
 
 export default function MenuIcon({
   name,
@@ -21,7 +22,7 @@ export default function MenuIcon({
   if (loading) {
     return (
       <div className="top-[50%] left-0 -translate-y-[50%] absolute">
-        <Icon icon="loading_line" size={16} className="animate-spin" />
+        <Loader2 className="h-4 w-4 animate-spin text-sky-400 dark:text-sky-400/90" />
       </div>
     );
   }

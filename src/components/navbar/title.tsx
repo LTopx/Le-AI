@@ -7,8 +7,8 @@ import { useOpenAIStore } from "@/hooks/useOpenAI";
 import Token from "./token";
 
 export default function Title() {
-  const tMenu = useTranslations("menu");
-  const tSetting = useTranslations("setting");
+  const tChat = useTranslations("chat");
+  const tConfigure = useTranslations("configure");
 
   const tokenRef = React.useRef<any>(null);
 
@@ -17,15 +17,25 @@ export default function Title() {
     state.list,
   ]);
 
-  const [openAIKey, azureKey, env] = useOpenAIStore((state) => [
-    state.openai.apiKey,
-    state.azure.apiKey,
-    state.env,
-  ]);
+  const [openAIKey, azureKey, openRouterKey, leAIKey, env] = useOpenAIStore(
+    (state) => [
+      state.openai.apiKey,
+      state.azure.apiKey,
+      state.openRouter.apiKey,
+      state.leAIKey,
+      state.env,
+    ]
+  );
 
   const apiKey = React.useMemo(
-    () => openAIKey || azureKey || env.OPENAI_API_KEY || env.AZURE_API_KEY,
-    [openAIKey, azureKey, env]
+    () =>
+      openAIKey ||
+      azureKey ||
+      openRouterKey ||
+      leAIKey ||
+      env.OPENAI_API_KEY ||
+      env.AZURE_API_KEY,
+    [openAIKey, azureKey, openRouterKey, env]
   );
 
   const { channel_name, channel_cost } = React.useMemo(() => {
@@ -43,8 +53,8 @@ export default function Title() {
       <div className="h-full flex flex-col justify-center">
         <div className="truncate max-w-[calc(100%-200px)] mx-auto text-center font-semibold transition-colors">
           {apiKey
-            ? channel_name || tMenu("new-conversation")
-            : tSetting("set-api-key")}
+            ? channel_name || tChat("new-conversation")
+            : tConfigure("set-api-key")}
         </div>
         {!!channel_cost.tokens && (
           <div className="text-xs text-neutral-400 flex justify-center">

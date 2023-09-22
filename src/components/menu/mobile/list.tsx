@@ -11,8 +11,8 @@ interface ListProps {
 }
 
 export default function List({ onClose }: ListProps) {
-  const tMenu = useTranslations("menu");
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
+  const tChat = useTranslations("chat");
 
   const [activeId, channelList] = useChannelStore((state) => [
     state.activeId,
@@ -54,7 +54,7 @@ export default function List({ onClose }: ListProps) {
               )}
             >
               <MenuIcon name={channel.channel_icon} />
-              {channel.channel_name || tMenu("new-conversation")}
+              {channel.channel_name || tChat("new-conversation")}
             </div>
             <div
               className={cn(
@@ -85,14 +85,14 @@ export default function List({ onClose }: ListProps) {
               }
             )}
           >
-            {channel.chat_list.length} {tMenu("messages")}
+            {channel.chat_list.length} {tChat("messages")}
           </div>
           <Confirm
-            title={tMenu("delete-this-conversation")}
-            content={tMenu("delete-conversation")}
+            title={tChat("delete-chat")}
+            content={tChat("delete-chat-tip")}
             type="danger"
-            cancelText={tCommon("cancel")}
-            okText={tCommon("ok")}
+            okText={tGlobal("ok-spacing")}
+            cancelText={tGlobal("cancel-spacing")}
             onOk={() => deleteList(channel.channel_id)}
           >
             <div

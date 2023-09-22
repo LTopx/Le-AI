@@ -4,6 +4,7 @@ import { useFormatter, useTranslations } from "next-intl";
 import { useRouter } from "next-intl/client";
 import { useDebounceFn } from "ahooks";
 import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
 import { Button } from "@ltopx/lx-ui";
 import { useChannelStore } from "@/hooks/useChannel";
 import { useLLMStore } from "@/hooks/useLLM";
@@ -15,7 +16,7 @@ import { useUserInfoStore } from "@/hooks/useUserInfo";
 import { cn, calcTokens } from "@/lib";
 import type { supportModelType } from "@/lib/calcTokens/gpt-tokens";
 import { checkAuth, checkTTS } from "@/lib/checkEnv";
-import Icon from "@/components/icon";
+import { useFetchError } from "@/hooks/useFetchError";
 import Avatar from "./avatar";
 import Handler from "./handler";
 import ChatConfigure from "../chatConfigure";
@@ -28,15 +29,14 @@ export default function ChatList() {
   const session = useSession();
   const router = useRouter();
 
-  const tTTS = useTranslations("tts");
-  const tRes = useTranslations("responseErr");
-  const tAuth = useTranslations("auth");
-  const tRecharge = useTranslations("recharge");
+  const tGlobal = useTranslations("global");
+  const tPrompt = useTranslations("prompt");
+  const tCode = useTranslations("code");
+  const tPoints = useTranslations("points");
   const tPremium = useTranslations("premium");
-  const tErrorCode = useTranslations("errorCode");
-  const tCommon = useTranslations("common");
 
   const chatEditRef = React.useRef<any>(null);
+  const { catchError } = useFetchError();
 
   const [activeId, list] = useChannelStore((state) => [
     state.activeId,
@@ -50,6 +50,7 @@ export default function ChatList() {
 
   const updateList = useChannelStore((state) => state.updateList);
   const sendGPT = useChannelStore((state) => state.sendGPT);
+  const clearSummarize = useChannelStore((state) => state.clearSummarize);
   const speak = useTTSStore((state) => state.speak);
   const pause = useTTSStore((state) => state.pause);
   const updateTTSOpen = useOpenStore((state) => state.updateTtsSettingOpen);
@@ -68,11 +69,18 @@ export default function ChatList() {
   );
 
   const onDelete = (item: ChatItem) => {
-    const { id } = item;
+    const { id, is_summarized } = item;
     const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
     const findCh = newList.find((item) => item.channel_id === activeId);
     if (!findCh) return;
     findCh.chat_list = findCh.chat_list.filter((item) => item.id !== id);
+
+    if (is_summarized) {
+      findCh.channel_summarize = "";
+      findCh.chat_list.forEach((item) => {
+        if (item.is_summarized) item.is_summarized = false;
+      });
+    }
 
     const channel_model = findCh.channel_model;
 
@@ -118,7 +126,7 @@ export default function ChatList() {
   };
 
   const onExceeded = () => {
-    window.open("https://docs.ltopx.com/conversation-limits");
+    window.open("https://docs.le-ai.app/faq");
   };
 
   const onRegenerate = async (item: ChatItem) => {
@@ -143,7 +151,12 @@ export default function ChatList() {
     updateList(newList);
 
     try {
-      await sendGPT(arr, activeId);
+      await sendGPT(
+        arr,
+        activeId,
+        tPrompt("summarize-previous"),
+        tPrompt("summarize")
+      );
 
       if (session.data) updateUserInfo(2000);
     } catch (errRes: any) {
@@ -152,10 +165,10 @@ export default function ChatList() {
         return toast(
           () => (
             <div className="flex gap-4 items-center">
-              {tRes("10001")}
+              {tCode("10001")}
               {checkAuth() && (
                 <Button type="primary" onClick={onLogin}>
-                  {tAuth("log-in")}
+                  {tGlobal("sign-in")}
                 </Button>
               )}
             </div>
@@ -163,34 +176,28 @@ export default function ChatList() {
           { duration: 5000 }
         );
       } else if (errRes.error === 10002) {
-        errorMessage = tRes("10002");
+        errorMessage = tCode("10002");
       } else if (errRes.error === 10004) {
-        errorMessage = tRes("10004");
+        errorMessage = tCode("10004");
       } else if (errRes.error === 10005) {
         return toast(
           () => (
             <div className="flex gap-4 items-center">
-              {tRes("10005")}
+              {tCode("10005")}
               <Button type="primary" onClick={onRecharge}>
-                {license_type ? tRecharge("recharge") : tPremium("free-trial")}
+                {license_type ? tPoints("recharge") : tPremium("free-trial")}
               </Button>
             </div>
           ),
           { duration: 5000 }
         );
-      } else if (errRes.error === 20002) {
-        errorMessage = tErrorCode("20002");
-      } else if (errRes.error === 20009) {
-        errorMessage = tErrorCode("20009");
-      } else if (errRes.error === 20010) {
-        errorMessage = tErrorCode("20010");
       } else if (errRes.error.code === "context_length_exceeded") {
         return toast(
           () => (
             <div className="flex gap-4 items-center">
-              {tRes("context_length_exceeded")}
+              {tGlobal("context-length-exceeded")}
               <Button type="primary" onClick={onExceeded}>
-                {tRes("learn-more")}
+                {tGlobal("learn-more")}
               </Button>
             </div>
           ),
@@ -198,7 +205,7 @@ export default function ChatList() {
         );
       } else {
         errorMessage =
-          errRes.msg || errRes.error?.message || tCommon("service-error");
+          errRes.msg || errRes.error?.message || catchError(errRes);
       }
       toast.error(errorMessage, { duration: 4000 });
       return;
@@ -209,7 +216,9 @@ export default function ChatList() {
 
   const onRead = (item: ChatItem, channel_id: string) => {
     if (license_type !== "premium" && license_type !== "team") {
-      return toast.error(tTTS("auth-error"), { id: "license_type_error" });
+      return toast.error(tGlobal("license-check-error"), {
+        id: "license_type_error",
+      });
     }
 
     const newList: ChannelListItem[] = JSON.parse(JSON.stringify(list));
@@ -242,6 +251,8 @@ export default function ChatList() {
     updateList(newList);
     pause();
   };
+
+  const onReSummarize = () => clearSummarize(activeId);
 
   React.useEffect(() => {
     pause();
@@ -310,6 +321,12 @@ export default function ChatList() {
                 {item.role === "assistant" && checkTTS() && (
                   <ChatTTS
                     data={item}
+                    disabled={
+                      !!(
+                        findChannel?.channel_loading ||
+                        findChannel?.channel_loading_connect
+                      )
+                    }
                     onRead={() =>
                       onRead(item, findChannel?.channel_id as string)
                     }
@@ -324,17 +341,11 @@ export default function ChatList() {
           </div>
         ))}
         {!!findChannel?.channel_loading_connect && (
-          <div>
-            <Icon
-              icon="loading_line"
-              size={24}
-              className="ml-11 animate-spin text-sky-400 dark:text-sky-400/90"
-            />
-          </div>
+          <Loader2 className="ml-11 h-6 w-6 animate-spin text-sky-400 dark:text-sky-400/90" />
         )}
       </div>
       <div className="h-32 overflow-hidden" />
-      <ChatEdit ref={chatEditRef} />
+      <ChatEdit ref={chatEditRef} onReSummarize={onReSummarize} />
     </>
   );
 }

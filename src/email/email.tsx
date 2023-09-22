@@ -32,10 +32,10 @@ export default function Email(props: any) {
               />
             </Section>
             <Heading className="text-black text-2xl font-normal text-center p-0 my-8 mx-0">
-              Sign in to <strong>L-GPT</strong>
+              Sign in to <strong>Le-AI</strong>
             </Heading>
             <Text className="text-black text-sm leading-[24px]">
-              Hello, you are sign in to <strong>L-GPT</strong>. Click the button
+              Hello, you are sign in to <strong>Le-AI</strong>. Click the button
               below to sign in.
             </Text>
             <Section className="text-center my-[32px]">
@@ -51,7 +51,7 @@ export default function Email(props: any) {
             <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
             <Text className="text-[#666666] text-xs leading-[24px]">
               This email was intended for sign in to{" "}
-              <span className="text-black">L-GPT</span>. If you did not request
+              <span className="text-black">Le-AI</span>. If you did not request
               this email, you can ignore it. If you are concerned about your
               account's safety, please reply to this email to get in touch with
               us.

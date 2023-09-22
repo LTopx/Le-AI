@@ -1,4 +1,5 @@
 import type { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/email";
@@ -28,6 +29,32 @@ if (
       },
       from: process.env.NEXT_PUBLIC_EMAIL_FROM,
       sendVerificationRequest,
+    })
+  );
+
+  providers.push(
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        const databaseUser = await prisma.user.findUnique({
+          where: { email: credentials?.username },
+        });
+
+        // Return null if user data could not be retrieved
+        if (
+          !databaseUser?.password ||
+          databaseUser.password !== credentials?.password
+        ) {
+          return null;
+        }
+
+        // If no error and we have user data, return it
+        return databaseUser;
+      },
     })
   );
 }
@@ -65,7 +92,7 @@ if (
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers,
-  secret: process.env.NEXT_PUBLIC_AUTH_SECRET || 'secret',
+  secret: process.env.NEXT_PUBLIC_AUTH_SECRET || "secret",
   callbacks: {
     async jwt({ token, trigger }) {
       const id = token.sub || token.id;
@@ -111,7 +138,7 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
     // 1. If the user does not act within the validity period, the session will expire and they must log in again.
     // 2. All actions that trigger the useSession behavior in the interface will refresh this validity period
-    maxAge: 5 * 24 * 60 * 60, // 5 days
+    maxAge: 14 * 24 * 60 * 60, // 14 days
   },
   pages: {
     signIn: "/login",

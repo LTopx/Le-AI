@@ -7,7 +7,12 @@ import Providers from "../providers";
 import Announcement from "@/components/announcement";
 
 export function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "zh-CN" }];
+  return [
+    { locale: "en" },
+    { locale: "zh-CN" },
+    { locale: "zh-HK" },
+    // { locale: "ja" },
+  ];
 }
 
 const inter = Inter({ subsets: ["latin"] });

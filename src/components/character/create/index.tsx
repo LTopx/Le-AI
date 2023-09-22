@@ -2,17 +2,35 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
+import { Button as LxButton, type SelectOption } from "@ltopx/lx-ui";
+import { Button } from "@/components/ui/button";
 import {
-  Modal,
-  Input,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   Select,
-  Textarea,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Tooltip,
-  type SelectOption,
-} from "@ltopx/lx-ui";
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import Icon from "@/components/icon";
-import MenuIcon from "@/components/menu/icon";
 import type { Character } from "@/lib/character";
+import MenuIcon from "@/components/menu/icon";
 import { useCharacterStore } from "@/hooks/useCharacter";
 
 interface ICharacter {
@@ -75,20 +93,12 @@ const options: SelectOption[] = [
   },
 ];
 
-const renderLabel = (row: any) => {
-  return (
-    <div className="flex gap-2 items-center">
-      <MenuIcon className="" name={row.value} />
-      <span>{row.value}</span>
-    </div>
-  );
-};
-
-const CreateCharacter = React.forwardRef((_, forwardedRef) => {
+export default function Create({ className }: { className?: string }) {
+  const tGlobal = useTranslations("global");
   const tCharacter = useTranslations("character");
-  const tCommon = useTranslations("common");
 
   const [open, setOpen] = React.useState(false);
+
   const [formData, setFormData] = React.useState<ICharacter>({
     name: "",
     icon: "RiChatSmile2Line",
@@ -102,7 +112,27 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
     },
   });
 
+  const nameRef = React.useRef<any>(null);
+  const descRef = React.useRef<any>(null);
+  const contentRef = React.useRef<any>(null);
+
   const onClose = () => setOpen(false);
+
+  const onAdd = () => {
+    setFormData({
+      name: "",
+      icon: "RiChatSmile2Line",
+      desc: "",
+      content: "",
+      welcome: "",
+      model_config: {
+        model_type: "openai",
+        model_name: "gpt-3.5-turbo-16k",
+        context_length: 8,
+      },
+    });
+    setOpen(true);
+  };
 
   const onChangeForm = (value: any, key: keyof ICharacter) => {
     setFormData((data: ICharacter) => {
@@ -116,22 +146,18 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
 
   const onOk = () => {
     if (!formData.name) {
-      return toast.error(
-        `${tCommon("please-enter")} ${tCharacter("template-name")}`,
-        { id: "enter-name" }
-      );
+      nameRef.current?.focus();
+      return toast.error(tGlobal("please-enter"), {
+        id: "enter-name",
+      });
     }
     if (!formData.desc) {
-      return toast.error(
-        `${tCommon("please-enter")} ${tCharacter("template-desc")}`,
-        { id: "enter-desc" }
-      );
+      descRef.current?.focus();
+      return toast.error(tGlobal("please-enter"), { id: "enter-desc" });
     }
     if (!formData.content) {
-      return toast.error(
-        `${tCommon("please-enter")} ${tCharacter("template-content")}`,
-        { id: "enter-content" }
-      );
+      contentRef.current?.focus();
+      return toast.error(tGlobal("please-enter"), { id: "enter-content" });
     }
     const params: Character = {
       id: uuidv4(),
@@ -149,109 +175,121 @@ const CreateCharacter = React.forwardRef((_, forwardedRef) => {
       },
     };
     addList(params);
-    toast.success(tCharacter("create-success"));
+    toast.success(tGlobal("operation-successful"));
     setOpen(false);
   };
 
-  React.useImperativeHandle(forwardedRef, () => ({
-    init() {
-      setFormData({
-        name: "",
-        icon: "RiChatSmile2Line",
-        desc: "",
-        content: "",
-        welcome: "",
-        model_config: {
-          model_type: "openai",
-          model_name: "gpt-3.5-turbo-16k",
-          context_length: 8,
-        },
-      });
-      setOpen(true);
-    },
-  }));
-
   return (
-    <Modal
-      title={tCharacter("create")}
-      open={open}
-      maskClosable={false}
-      okText={tCommon("ok")}
-      cancelText={tCommon("cancel")}
-      onClose={onClose}
-      onOk={onOk}
-    >
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col">
-          <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tCharacter("template-name")}
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <LxButton
+          className={className}
+          type="primary"
+          icon={<Icon icon="add_line" />}
+          onClick={onAdd}
+        >
+          {tGlobal("create")}
+        </LxButton>
+      </DialogTrigger>
+      <DialogContent className="!w-[520px]">
+        <DialogHeader>
+          <DialogTitle>
+            {tGlobal("create")} {tCharacter("character")}
+          </DialogTitle>
+        </DialogHeader>
+        <div className="grid py-4 gap-4">
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="name">
+              {tCharacter("character")} {tGlobal("name")}
+            </Label>
+            <Input
+              id="name"
+              ref={nameRef}
+              placeholder={tGlobal("please-enter")}
+              maxLength={40}
+              value={formData.name}
+              onChange={(e) => onChangeForm(e.target.value, "name")}
+            />
           </div>
-          <Input
-            allowClear
-            placeholder={tCommon("please-enter")}
-            maxLength={40}
-            value={formData.name}
-            onChange={(value) => onChangeForm(value, "name")}
-          />
-        </div>
-        <div className="flex flex-col">
-          <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tCharacter("template-icon")}
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="icon">
+              {tCharacter("character")} {tGlobal("icon")}
+            </Label>
+            <Select
+              value={formData.icon}
+              onValueChange={(value) => onChangeForm(value, "icon")}
+            >
+              <SelectTrigger id="icon">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent position="popper" className="max-h-[300px]">
+                {options.map((row) => (
+                  <SelectItem key={row.value} value={row.value}>
+                    <div className="flex gap-2 items-center">
+                      <MenuIcon className="" name={row.value} />
+                      <span>{row.value}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <Select
-            options={options}
-            renderLabel={renderLabel}
-            value={formData.icon}
-            onChange={(value) => onChangeForm(value, "icon")}
-          />
-        </div>
-        <div className="flex flex-col">
-          <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tCharacter("template-desc")}
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="desc">
+              {tCharacter("character")} {tGlobal("desc")}
+            </Label>
+            <Textarea
+              id="desc"
+              ref={descRef}
+              placeholder={tGlobal("please-enter")}
+              maxLength={40}
+              value={formData.desc}
+              onChange={(e) => onChangeForm(e.target.value, "desc")}
+            />
           </div>
-          <Textarea
-            className="h-28"
-            allowClear
-            placeholder={tCommon("please-enter")}
-            maxLength={40}
-            value={formData.desc}
-            onChange={(value) => onChangeForm(value, "desc")}
-          />
-        </div>
-        <div className="flex flex-col">
-          <div className="text-sm text-black/90 mb-2 dark:text-white/90">
-            {tCharacter("template-content")}
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="content">Prompt {tGlobal("content")}</Label>
+            <Textarea
+              id="content"
+              ref={contentRef}
+              placeholder={tGlobal("please-enter")}
+              value={formData.content}
+              onChange={(e) => onChangeForm(e.target.value, "content")}
+            />
           </div>
-          <Textarea
-            className="h-28"
-            allowClear
-            placeholder={tCommon("please-enter")}
-            maxLength={40}
-            value={formData.content}
-            onChange={(value) => onChangeForm(value, "content")}
-          />
-        </div>
-        <div className="flex flex-col">
-          <div className="text-sm text-black/90 mb-2 dark:text-white/90 flex items-center gap-1">
-            {tCharacter("welcome-message")}
-            <Tooltip title={tCharacter("welcome-message-tip")}>
-              <Icon icon="question_line" size={18} />
-            </Tooltip>
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="welcome" className="flex items-center gap-2">
+              {tCharacter("welcome-message")}
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Icon icon="question_line" size={18} />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {tCharacter("welcome-message-tip")}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </Label>
+            <Textarea
+              id="welcome"
+              placeholder={tGlobal("please-enter")}
+              value={formData.welcome}
+              onChange={(e) => onChangeForm(e.target.value, "welcome")}
+            />
           </div>
-          <Textarea
-            className="h-20"
-            allowClear
-            placeholder={tCommon("please-enter")}
-            maxLength={40}
-            value={formData.welcome}
-            onChange={(value) => onChangeForm(value, "welcome")}
-          />
         </div>
-      </div>
-    </Modal>
+        <DialogFooter>
+          <div className="flex justify-between flex-1">
+            <Button variant="outline" size="sm" onClick={onClose}>
+              {tGlobal("cancel-spacing")}
+            </Button>
+            <Button size="sm" onClick={onOk}>
+              {tGlobal("ok-spacing")}
+            </Button>
+          </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
-});
-
-CreateCharacter.displayName = "CreateCharacter";
-
-export default CreateCharacter;
+}

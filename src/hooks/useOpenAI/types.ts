@@ -27,10 +27,12 @@ export type OpenAIStore = {
   openai: OpenAI;
   azure: Azure;
   openRouter: OpenRouter;
+  leAIKey: string;
   env: Env;
 
   updateOpenAI: (openai: OpenAI) => void;
   updateAzure: (azure: Azure) => void;
   updateOpenRouter: (openRouter: OpenRouter) => void;
+  updateLeAIKey: (leAIKey: string) => void;
   updateEnv: (env: Env) => void;
 };

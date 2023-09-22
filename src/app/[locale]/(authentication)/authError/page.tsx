@@ -12,46 +12,46 @@ const AuthError: React.FC = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const errorCode = searchParams.get("error");
-  const tAuth = useTranslations("auth");
+  const tGlobal = useTranslations("global");
 
   const errorMsg = {
     Configuration: {
-      title: tAuth("configuration"),
-      text1: tAuth("configuration-1"),
-      text2: tAuth("configuration-2"),
+      title: "Server error",
+      text1: "There is a problem with the server configuration.",
+      text2: "Check the server logs for more information.",
       btn: {
-        label: tAuth("return-to-home-page"),
+        label: tGlobal("return-to-homepage"),
         path: "/",
       },
     },
     AccessDenied: {
-      title: tAuth("access-denied"),
-      text1: tAuth("access-denied-1"),
+      title: "Access Denied",
+      text1: "You do not have permission to sign in.",
       btn: {
-        label: tAuth("sign-in"),
+        label: tGlobal("sign-in"),
         path: "/login",
       },
     },
     Verification: {
-      title: tAuth("verification"),
-      text1: tAuth("verification-1"),
-      text2: tAuth("verification-2"),
+      title: "Unable to sign in",
+      text1: "The sign in link is no longer valid.",
+      text2: "It may have been used already or it may have expired.",
       btn: {
-        label: tAuth("sign-in"),
+        label: tGlobal("sign-in"),
         path: "/login",
       },
     },
     Default: {
-      title: tAuth("error"),
+      title: tGlobal("error"),
       btn: {
-        label: tAuth("return-to-home-page"),
+        label: tGlobal("return-to-homepage"),
         path: "/",
       },
     },
   }[errorCode as string] || {
-    title: "Error",
+    title: tGlobal("error"),
     btn: {
-      label: "返回首页",
+      label: tGlobal("return-to-homepage"),
       path: "/",
     },
   };

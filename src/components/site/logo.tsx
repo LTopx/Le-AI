@@ -26,8 +26,7 @@ export default function Logo({
   const onCheckLog = () => {
     localStorage.setItem("is_new_version", pkg.version);
     const version = pkg.version.replace(/\./g, "");
-    const localePath = locale === "zh-CN" ? "zh-CN/" : "";
-    const url = `https://docs.ltopx.com/${localePath}change-log#v${version}`;
+    const url = `https://docs.le-ai.app/change-log#v${version}`;
     window.open(url);
   };
 
@@ -44,13 +43,13 @@ export default function Logo({
         { "text-4xl": size === "large" }
       )}
     >
-      <Image src="/logo.png" alt="logo" width={38} height={38} />
+      <Image src="/logo.png" alt="logo" width={30} height={30} />
       <div
-        className="flex items-center gap-2 cursor-pointer select-none text-transparent font-extrabold"
+        className="flex font-extrabold text-transparent gap-2 items-center cursor-pointer select-none"
         onClick={onClick}
       >
         <span className="bg-clip-text animate-flow bg-logo bg-[size:400%]">
-          L-GPT
+          Le-AI
         </span>
         {!!share && (
           <span className="bg-clip-text bg-share-ico animate-flow bg-[size:400%]">

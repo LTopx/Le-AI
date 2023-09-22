@@ -4,11 +4,13 @@ import type { supportModelType } from "@/lib/calcTokens/gpt-tokens";
 import type { IFetchAzureOpenAI } from "./types";
 
 interface IRegular extends IFetchAzureOpenAI {
-  prompt?: string;
   model: string;
   modelLabel: supportModelType;
   userId?: string;
   headerApiKey?: string;
+  leaiApiKey?: string;
+  leai_used_quota?: number;
+  leai_userId?: string;
 }
 
 const fetchAzureOpenAI = async ({
@@ -37,7 +39,6 @@ const fetchAzureOpenAI = async ({
 };
 
 export const regular = async ({
-  prompt,
   messages,
   fetchURL,
   Authorization,
@@ -47,9 +48,10 @@ export const regular = async ({
   max_tokens,
   userId,
   headerApiKey,
+  leaiApiKey,
+  leai_used_quota,
+  leai_userId,
 }: IRegular) => {
-  if (prompt) messages.unshift({ role: "system", content: prompt });
-
   try {
     const response = await fetchAzureOpenAI({
       fetchURL,
@@ -73,9 +75,19 @@ export const regular = async ({
       messages,
       model,
       modelLabel,
+      leaiApiKey,
+      leai_used_quota,
+      leai_userId,
     });
 
-    return new Response(readable, response);
+    return new Response(readable, {
+      ...response,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
   } catch (error: any) {
     console.log(error, "azure openai regular error");
     return ResErr({ msg: error?.message || "Error" });

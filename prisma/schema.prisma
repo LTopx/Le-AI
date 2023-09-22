@@ -43,26 +43,55 @@ model VerificationToken {
 }
 
 model User {
-  id                 String    @id @default(cuid())
+  id                 String      @id @default(cuid())
   name               String?
-  email              String?   @unique
+  email              String?     @unique
   emailVerified      DateTime?
   image              String?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime? @updatedAt
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime?   @updatedAt
   recentlyUse        DateTime?
-  costTokens         Int       @default(0)
-  costUSD            Float     @default(0)
-  availableTokens    Int       @default(10000)
+  costTokens         Int         @default(0)
+  costUSD            Float       @default(0)
+  availableTokens    Int         @default(15000)
   license_type       String?
-  freeTrialed        Int       @default(0)
-  productHuntTrialed Int       @default(0)
-  twitterTrialed     Int       @default(0)
+  freeTrialed        Int         @default(0)
+  productHuntTrialed Int         @default(0)
+  twitterTrialed     Int         @default(0)
   accounts           Account[]
   Cost               Cost[]
   License            License[]
   sessions           Session[]
   share              Share[]
+  Backup             Backup[]
+  ApiTokens          ApiTokens[]
+  password           String?
+}
+
+model Backup {
+  id        String    @id @default(cuid())
+  content   String
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+}
+
+model ApiTokens {
+  id          String    @id @default(cuid())
+  key         String    @unique
+  name        String
+  // 0: stop, 1: running
+  status      Int       @default(0)
+  used_quota  Int       @default(0)
+  // -1: no limit
+  total_quota Int       @default(0)
+  // not exist means it never expires.
+  expire      DateTime?
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
 }
 
 model License {

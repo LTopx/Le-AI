@@ -1,17 +1,107 @@
-# L-GPT 更新日志
+# Le-AI 更新日志
+
+## v0.9.2
+
+> 2023-09-22
+
+### 新增
+
+- 新增支持配置会员阈值进行会话总结，达到“无限会话”的效果
+- "会话设置" 新增支持配置 历史消息压缩阈值
+
+### 修复
+
+- 修复 avatar UI 显示错误问题
+- 修复 .env.local.demo 文件中的配置错误
+- 修复多语言配置错误
+- 修复 remark-gfm 版本升级后造成 react-markdown 内容解析错误的问题
+- 修复会话 loading 时的 Loading 图标显示效果
+
+### 调整
+
+- 重构部分页面模块 UI，迁移到 shadcn/ui
+- 调整 OpenAI API Key 的代理配置逻辑，修复 [#11](https://github.com/LTopx/Le-AI/issues/11)
+- 会话 loading 时禁止播放语音
+
+## v0.9.1
+
+> 2023-09-11
+
+### 修复
+
+- 修复部署项目时配置自定义的 API Key 后鉴权逻辑有误的问题
+- 修复部分情况下回复出现乱码的问题
+- 修复 [#8](https://github.com/LTopx/Le-AI/issues/8)
+- 修复邮件登录页面背景图片显示不正确的问题
+- 修复新建角色时，prompt 和欢迎语字数限制的问题
+
+### 新增
+
+- 支持账号密码登录
+- API Key 配置页面新增返回首页按钮
+- 登录界面新增隐私协议和登录指引
+- 兼容配置其他第三方 OpenAI API Key。例如：nextweb，API2D 等等
+
+### 调整
+
+- 更新 Azure OpenAI API Version 为 2023-08-01-preview
+- 调整系统左侧底部菜单 UI
+- 重构新建角色弹出框 UI
+- 调整 prompt, messages 传参实现逻辑，全部由前端解析并组装
+
+## v0.9.0
+
+> 2023-09-02
+
+### 修复
+
+- 修复未登录但配置了 API KEY 时无法使用的问题
+- 修复无效链接
+- 修复 chatgpt 接口的跨域问题
+- 修复 metadataBase 缺失的问题
+- 修复 OpenRouter Key 的跳转链接问题
+- 修复请求错误时没有携带跨域头的问题
+- 修复令牌页面 Table 的样式问题
+- 修复 issue of missing metadataBase and env variable [#6](https://github.com/LTopx/Le-AI/issues/6)
+
+### 新增
+
+- 新增支持 Windows、Mac Beta 客户端
+- 新增支持一键清空会话
+- 新增令牌管理页面相关逻辑和数据库表构建
+- 新增左侧菜单重要公告提示
+- 自构建令牌打通 OpenAI、Azure OpenAI、OpenRouter 接口逻辑
+- 新增支持配置 Le-AI API Key
+- 引入 shadcn/ui 优化部分组件样式
+- 新增繁体中文支持
+
+### 调整
+
+- 调整项目名称：L-GPT => Le-AI
+- 调整项目内所有关于 L-GPT 的文案和相关链接
+- 调整部分代码结构
+- 判断是否配置 key 的逻辑把 Le-AI API Key 加上了
+- 调整用户凭证过期时间为 14 天
+- 重构精简全局多语言配置
+- 重构登录界面 UI
+- 调整 OpenRouter 部分模型的权限
 
 ## v0.8.4
 
-> 2023-08-14
+> 2023-08-19
 
 ### 新增
 
 - 角色模板新增支持配置欢迎语，作为会话默认的第一句话
 - 新增隐私协议和联系方式
+- 新增云同步功能，可以同步会话内容到云端，方便在不同设备之间同步
 
 ### 调整
 
 - 支持 OpenRouter 配置的导入导出
+- 调整左侧底部菜单布局
+- 调整 OpenRouter 提供的模型权限为 free
+- 调整云备份额度，免费用户可备份 50KB 数据
 
 ## v0.8.3
 
@@ -209,7 +299,7 @@
 
 ### 修复
 
-- 修复 Github 登录时点击取消返回页面显示有误的问题 [#2](https://github.com/Peek-A-Booo/L-GPT/issues/2)
+- 修复 Github 登录时点击取消返回页面显示有误的问题 [#2](https://github.com/LTopx/Le-AI/issues/2)
 
 ### 新增
 
@@ -295,7 +385,7 @@
 ### 新增
 
 - 添加清除 7 天之前无用的会话分享的定时服务
-- 添加跳转 [L-GPT 文档链接](https://docs.ltopx.com)
+- 添加跳转 [Le-AI 文档链接](https://docs.le-ai.app)
 
 ### 修复
 

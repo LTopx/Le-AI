@@ -18,12 +18,12 @@ export default function Handler({
   onEdit,
 }: HandlerProps) {
   const tChat = useTranslations("chat");
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
 
   return (
     <>
       <div className="flex opacity-0 transition-opacity gap-1.5 group-hover:opacity-100">
-        <Tooltip title={tCommon("copy")}>
+        <Tooltip title={tGlobal("copy")}>
           <Button className="h-6 px-2" type="primary" outline size="sm" rounded>
             <CopyIcon size={16} content={content} />
           </Button>
@@ -45,8 +45,8 @@ export default function Handler({
           title={tChat("delete-chat")}
           content={tChat("delete-chat-tip")}
           onOk={onDelete}
-          okText={tCommon("ok")}
-          cancelText={tCommon("cancel")}
+          okText={tGlobal("ok-spacing")}
+          cancelText={tGlobal("cancel-spacing")}
           type="danger"
         >
           <Tooltip title={tChat("delete-chat")}>
@@ -61,7 +61,7 @@ export default function Handler({
             </Button>
           </Tooltip>
         </Confirm>
-        <Tooltip title={tCommon("retry")}>
+        <Tooltip title={tGlobal("retry")}>
           <Button
             className="h-6 px-2"
             type="primary"

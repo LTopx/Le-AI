@@ -9,7 +9,7 @@ import { useOpenStore } from "@/hooks/useOpen";
 
 export default function Tokens({ mobile = false }: { mobile?: boolean }) {
   const session = useSession();
-  const tToken = useTranslations("token");
+  const tPoints = useTranslations("points");
 
   const availableTokens = useUserInfoStore((state) => state.availableTokens);
 
@@ -34,7 +34,7 @@ export default function Tokens({ mobile = false }: { mobile?: boolean }) {
     >
       <Icon icon="chart_pie_line" size={18} />
       <div className="flex flex-1 gap-2 items-center group">
-        <div>{tToken("points")}</div>
+        <div>{tPoints("points")}</div>
         <div className="flex flex-1 text-xs gap-1 justify-end">
           {availableTokens <= 0 ? 0 : availableTokens}
         </div>

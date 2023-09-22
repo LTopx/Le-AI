@@ -12,22 +12,21 @@ import { useOpenStore } from "@/hooks/useOpen";
 import { useScrollToBottomStore } from "@/hooks/useScrollToBottom";
 import { useLLMStore } from "@/hooks/useLLM";
 import { checkAuth } from "@/lib/checkEnv";
+import { useFetchError } from "@/hooks/useFetchError";
 import Handler from "./handler";
 import Inputarea from "./inputArea";
 
 export default function ChatFooter() {
   const session = useSession();
 
-  const tChat = useTranslations("chat");
-  const tRes = useTranslations("responseErr");
-  const tAuth = useTranslations("auth");
-  const tRecharge = useTranslations("recharge");
-  const tPremium = useTranslations("premium");
-  const tErrorCode = useTranslations("errorCode");
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
   const tPrompt = useTranslations("prompt");
+  const tCode = useTranslations("code");
+  const tPoints = useTranslations("points");
+  const tPremium = useTranslations("premium");
 
   const router = useRouter();
+  const { catchError } = useFetchError();
 
   // data
   const [inputValue, setInputValue] = React.useState<string>("");
@@ -81,14 +80,12 @@ export default function ChatFooter() {
     }
   };
 
-  const onExceeded = () => {
-    window.open("https://docs.ltopx.com/conversation-limits");
-  };
+  const onExceeded = () => window.open("https://docs.le-ai.app/faq");
 
   const send = async () => {
     if (loadingChannel) return;
     if (!inputValue?.trim()) {
-      return toast.error(tChat("enter-message"), {
+      return toast.error(tGlobal("please-enter"), {
         id: "empty-message",
         duration: 2000,
       });
@@ -99,7 +96,7 @@ export default function ChatFooter() {
       return item.models.find((val) => val.value === modelName);
     });
     if (!findModel) {
-      return toast.error(tRes("10003"), { id: "empty-model", duration: 4000 });
+      return toast.error(tCode("10003"), { id: "empty-model", duration: 4000 });
     }
 
     setInputValue("");
@@ -111,7 +108,12 @@ export default function ChatFooter() {
     scrollToBottom();
 
     try {
-      const res: any = await sendGPT(chat_list, activeId);
+      const res: any = await sendGPT(
+        chat_list,
+        activeId,
+        tPrompt("summarize-previous"),
+        tPrompt("summarize")
+      );
 
       if (res) {
         const cloneRes = JSON.parse(JSON.stringify(res));
@@ -128,16 +130,15 @@ export default function ChatFooter() {
 
       if (session.data) updateUserInfo(2000);
     } catch (errRes: any) {
-      console.log(errRes, "errRes");
       let errorMessage = "error";
       if (errRes.error === 10001) {
         return toast(
           () => (
             <div className="flex gap-4 items-center">
-              {tRes("10001")}
+              {tCode("10001")}
               {checkAuth() && (
                 <Button type="primary" onClick={onLogin}>
-                  {tAuth("log-in")}
+                  {tGlobal("sign-in")}
                 </Button>
               )}
             </div>
@@ -145,34 +146,28 @@ export default function ChatFooter() {
           { duration: 5000 }
         );
       } else if (errRes.error === 10002) {
-        errorMessage = tRes("10002");
+        errorMessage = tCode("10002");
       } else if (errRes.error === 10004) {
-        errorMessage = tRes("10004");
+        errorMessage = tCode("10004");
       } else if (errRes.error === 10005) {
         return toast(
           () => (
             <div className="flex gap-4 items-center">
-              {tRes("10005")}
+              {tCode("10005")}
               <Button type="primary" onClick={onRecharge}>
-                {license_type ? tRecharge("recharge") : tPremium("free-trial")}
+                {license_type ? tPoints("recharge") : tPremium("free-trial")}
               </Button>
             </div>
           ),
           { duration: 5000 }
         );
-      } else if (errRes.error === 20002) {
-        errorMessage = tErrorCode("20002");
-      } else if (errRes.error === 20009) {
-        errorMessage = tErrorCode("20009");
-      } else if (errRes.error === 20010) {
-        errorMessage = tErrorCode("20010");
       } else if (errRes.error.code === "context_length_exceeded") {
         return toast(
           () => (
             <div className="flex gap-4 items-center">
-              {tRes("context_length_exceeded")}
+              {tGlobal("context-length-exceeded")}
               <Button type="primary" onClick={onExceeded}>
-                {tRes("learn-more")}
+                {tGlobal("learn-more")}
               </Button>
             </div>
           ),
@@ -180,7 +175,7 @@ export default function ChatFooter() {
         );
       } else {
         errorMessage =
-          errRes.msg || errRes.error?.message || tCommon("service-error");
+          errRes.msg || errRes.error?.message || catchError(errRes);
       }
       toast.error(errorMessage, { duration: 4000 });
       return;

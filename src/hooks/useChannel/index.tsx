@@ -2,7 +2,7 @@ import { createWithEqualityFn } from "zustand/traditional";
 import { shallow } from "zustand/shallow";
 import { v4 as uuidv4 } from "uuid";
 import { BASE_PROMPT } from "@/utils/constant";
-import { isUndefined } from "@/lib";
+import { isUndefined, countMessages, type Messages } from "@/lib";
 import { calcTokens } from "@/lib/calcTokens";
 import { useLLMStore } from "../useLLM";
 import { useOpenAIStore } from "../useOpenAI";
@@ -12,6 +12,7 @@ import { useScrollToBottomStore } from "../useScrollToBottom";
 import type { ChannelListItem, ChatItem, ChannelIcon } from "./types";
 import { streamDecoder } from "@/lib/streamDecoder";
 import { type Character } from "@/lib/character";
+import { summarize } from "./tools";
 
 type ChannelStore = {
   activeId: string;
@@ -22,15 +23,22 @@ type ChannelStore = {
   updateContent: (id: string, content: string) => void;
   updateList: (list: ChannelListItem[]) => void;
   addList: (item: ChannelListItem) => void;
+  clearList: () => void;
   deleteList: (id: string) => void;
   clearItem: () => void;
   addChatItem: (content: string) => ChatItem[];
   updateCharacter: (item: Character) => void;
-  sendGPT: (chat_list: ChatItem[], channel_id: string) => Promise<void>;
+  sendGPT: (
+    chat_list: ChatItem[],
+    channel_id: string,
+    summarize_previous: string,
+    summarize: string
+  ) => Promise<void>;
   getChannelName: (params: any) => Promise<void>;
   cancelGPT: (channel_id: string) => void;
   updatePlugin: (channel_id: string, plugins: string[]) => void;
   resetPlugin: (name: string) => void;
+  clearSummarize: (channel_id: string) => void;
 };
 
 export const initChannelList: ChannelListItem[] = [
@@ -56,6 +64,8 @@ export const initChannelList: ChannelListItem[] = [
     channel_loading: false,
     channel_context_length: 8,
     channel_plugins: [],
+    channel_summarize: "",
+    channel_summarize_threshold: 1000,
     chat_list: [],
   },
 ];
@@ -102,6 +112,10 @@ const getInitChannelList = () => {
           }
 
           item.channel_plugins = item.channel_plugins || [];
+
+          if (isUndefined(item.channel_summarize_threshold)) {
+            item.channel_summarize_threshold = 1000;
+          }
 
           return item;
         }
@@ -168,6 +182,14 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           localStorage.setItem("channelList", JSON.stringify(state.list));
           return { list: state.list };
         }
+      });
+    },
+    clearList: () => {
+      set(() => {
+        const activeId = initChannelList[0].channel_id;
+        localStorage.setItem("channelList", JSON.stringify(initChannelList));
+        localStorage.setItem("activeId", activeId);
+        return { activeId, list: initChannelList };
       });
     },
     deleteList: (id) => {
@@ -284,15 +306,18 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
         return { list: newList };
       });
     },
-    sendGPT: (chat_list, channel_id) => {
-      return new Promise((resolve, reject) => {
+    sendGPT: (chat_list, channel_id, summarize_previous, summarize_content) => {
+      return new Promise(async (resolve, reject) => {
         let modelType: any;
         let modelConfig: any;
+        let modelThreshold: number = 1000;
         let prompt: any;
         let findCh: ChannelListItem | undefined;
+        let summarizeContent: string | undefined;
 
         const LLMStore = useLLMStore.getState();
         const OpenAIStore = useOpenAIStore.getState();
+        const leAIKey = OpenAIStore.leAIKey;
 
         const { decoder } = streamDecoder();
 
@@ -308,6 +333,8 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           if (!findCh.channel_prompt) findCh.channel_prompt = BASE_PROMPT;
           findCh.channel_loading_connect = true;
           findCh.channel_loading = true;
+          summarizeContent = findCh.channel_summarize;
+          modelThreshold = findCh.channel_summarize_threshold || 1000;
 
           localStorage.setItem("channelList", JSON.stringify(newList));
 
@@ -327,12 +354,11 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           (item: any) => item.value === findCh?.channel_model.name
         );
 
-        let params: any = {
+        const params: any = {
           model: findCh.channel_model.name,
           modelLabel: findModelLabel.label,
           temperature: modelConfig.temperature,
           max_tokens: modelConfig.max_tokens,
-          prompt,
           plugins: findCh.channel_plugins,
         };
 
@@ -345,20 +371,78 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
         const sliceStart =
           chat_list.length - (1 + findCh.channel_context_length);
 
-        const arr = chat_list
+        let arr: any[] = chat_list
           .map((item) => ({
             role: item.role,
             content: item.content,
+            is_summarized: item.is_summarized,
           }))
           .slice(sliceStart <= 0 ? 0 : sliceStart, chat_list.length);
 
-        params.chat_list = arr;
+        if (summarizeContent) arr = arr.filter((item) => !item.is_summarized);
+
+        const countArr = arr.slice(0, arr.length - 1);
+
+        const counts = countMessages(countArr as Messages[]);
+
+        // 如果消息长度大于阈值，则需要进行总结
+        // If the length of the message is greater than the threshold, a summary is needed.
+        if (counts > modelThreshold) {
+          const key = leAIKey || OpenAIStore.openai.apiKey;
+          const content = await summarize(
+            summarizeContent
+              ? [{ role: "system", content: summarizeContent }, ...countArr]
+              : countArr,
+            OpenAIStore.openai.proxy,
+            key,
+            summarize_content
+          );
+          if (!content) return;
+
+          // 将当前会话列表的消息都标记为已总结，然后再把总结后的内容存储到列表配置中
+          // Mark all messages in the current session list as summarized,
+          // and then store the summarized content in the list configuration.
+          set((state) => {
+            const newList: ChannelListItem[] = JSON.parse(
+              JSON.stringify(state.list)
+            );
+            findCh = newList.find((item) => item.channel_id === channel_id);
+            if (!findCh) return {};
+
+            const list_length = findCh.chat_list.length;
+
+            findCh.chat_list.forEach((item, index) => {
+              item.is_summarized = index < list_length - 1;
+            });
+            arr = findCh.chat_list.filter((item) => !item.is_summarized);
+            findCh.channel_summarize = content;
+
+            localStorage.setItem("channelList", JSON.stringify(newList));
+
+            return { list: newList };
+          });
+
+          summarizeContent = content;
+        }
+
+        let messages = [{ role: "system", content: prompt }];
+        if (summarizeContent) {
+          messages.push({
+            role: "system",
+            content: summarize_previous + summarizeContent,
+          });
+        }
+
+        params.messages = [...messages, ...arr].map((item) => ({
+          role: item.role,
+          content: item.content,
+        }));
 
         fetch(fetchUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: modelConfig.apiKey,
+            Authorization: leAIKey || modelConfig.apiKey,
           },
           signal: controller.signal,
           body: JSON.stringify(params),
@@ -529,11 +613,12 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
       return new Promise((resolve, reject) => {
         const { decoder } = streamDecoder();
         const OpenAIStore = useOpenAIStore.getState();
+        const leAIKey = OpenAIStore.leAIKey;
 
         const newParams = params.newParams;
         newParams.model = "gpt-3.5-turbo";
         newParams.modelLabel = "gpt-3.5-turbo";
-        newParams.chat_list = newParams.chat_list.map((item: any) => ({
+        newParams.messages = newParams.chat_list.map((item: any) => ({
           role: item.role,
           content: item.content,
         }));
@@ -542,7 +627,7 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: OpenAIStore.openai.apiKey,
+            Authorization: leAIKey || OpenAIStore.openai.apiKey,
           },
           body: JSON.stringify(newParams),
         }).then(async (response) => {
@@ -686,6 +771,24 @@ export const useChannelStore = createWithEqualityFn<ChannelStore>(
             (item) => item !== plugin_name
           );
         });
+
+        return { list: newList };
+      });
+    },
+    clearSummarize: (channel_id) => {
+      set((state) => {
+        const newList: ChannelListItem[] = JSON.parse(
+          JSON.stringify(state.list)
+        );
+        const findCh = newList.find((item) => item.channel_id === channel_id);
+        if (!findCh) return {};
+
+        findCh.channel_summarize = "";
+        findCh.chat_list.forEach((item) => {
+          if (item.is_summarized) item.is_summarized = false;
+        });
+
+        localStorage.setItem("channelList", JSON.stringify(newList));
 
         return { list: newList };
       });

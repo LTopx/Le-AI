@@ -79,7 +79,12 @@ export type IconType =
   | "star_fill"
   | "pencil_line"
   | "plugin_2_line"
-  | "open_router";
+  | "open_router"
+  | "cloud_fill"
+  | "contacts_line"
+  | "cloud_line"
+  | "safe_alert_line"
+  | "bell_ringing_line";
 
 export interface IconProps {
   className?: string;

@@ -1,22 +1,31 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Input, Tooltip, Slider } from "@ltopx/lx-ui";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import Icon from "@/components/icon";
+import { Slider } from "@/components/ui/slider";
+import { isUndefined } from "@/lib";
 import { useOpenAIStore } from "@/hooks/useOpenAI";
 import type { OpenRouter } from "@/hooks/useOpenAI/types";
-import { cn } from "@/lib";
 
 export default function OpenRouter() {
-  const tSetting = useTranslations("setting");
+  const tGlobal = useTranslations("global");
+  const tConfigure = useTranslations("configure");
 
   const openRouter = useOpenAIStore((state) => state.openRouter);
 
   const updateOpenRouter = useOpenAIStore((state) => state.updateOpenRouter);
 
   const mapTemperature = (value: number) => {
-    if (value === 0) return tSetting("deterministic");
-    if (value === 0.5) return tSetting("neutral");
-    if (value === 1) return tSetting("random");
+    if (value === 0) return tConfigure("deterministic");
+    if (value === 0.5) return tConfigure("neutral");
+    if (value === 1) return tConfigure("random");
     return "";
   };
 
@@ -24,71 +33,93 @@ export default function OpenRouter() {
     updateOpenRouter({ ...openRouter, [key]: value });
   };
 
+  const onBlur = (value: number, key: keyof OpenRouter) => {
+    if (key === "max_tokens") {
+      const min = 1;
+      const max = 1025;
+      const step = 1;
+      if (max && value > max) {
+        updateOpenRouter({ ...openRouter, [key]: max });
+      } else if (min && value < min) {
+        updateOpenRouter({ ...openRouter, [key]: min });
+      } else if (!isUndefined(step) && step > 0) {
+        const stepValue = Math.round(value / step) * step;
+        updateOpenRouter({ ...openRouter, [key]: stepValue });
+      }
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-3">
-      <div>
-        <div className="mb-1 text-sm flex gap-4 items-end">
+    <div className="grid w-full items-center gap-4">
+      <div className="flex flex-col space-y-1.5">
+        <Label htmlFor="apiKey" className="flex items-center gap-2">
           <span>API Key</span>
           <a
-            href="https://serper.dev"
+            href="https://openrouter.ai/keys"
             target="_blank"
             className="text-xs text-sky-400 cursor-pointer transition-colors hover:underline hover:text-sky-500"
           >
-            ({tSetting("get-apiKey")})
+            ({tConfigure("get-apiKey")})
           </a>
-        </div>
-        <div className="flex gap-2 w-full">
-          <Input
-            className="w-full"
-            type="password"
-            allowClear
-            placeholder={tSetting("set-api-key") as string}
-            value={openRouter.apiKey}
-            onChange={(value) => onChange(value, "apiKey")}
-          />
-        </div>
-      </div>
-      <div>
-        <div className="mb-1 text-sm flex items-center gap-2">
-          {tSetting("temperature")}
-          <Tooltip title={tSetting("temperature-tip")}>
-            <Icon icon="question_line" size={18} />
-          </Tooltip>
-        </div>
-        <div className="flex items-center gap-2">
-          <Slider
-            className="flex-1"
-            max={1}
-            step={0.5}
-            defaultValue={openRouter.temperature}
-            onChange={(value) => onChange(value, "temperature")}
-          />
-          <div
-            className={cn(
-              "text-sm hidden md:flex w-28 h-8 justify-center items-center rounded-md",
-              "bg-neutral-200 dark:bg-neutral-700/90"
-            )}
-          >
-            {mapTemperature(openRouter.temperature)}
-          </div>
-        </div>
-      </div>
-      <div>
-        <div className="mb-1 text-sm flex items-center gap-2">
-          {tSetting("max-tokens")}
-          <Tooltip title={tSetting("max-tokens-tip")}>
-            <Icon icon="question_line" size={18} />
-          </Tooltip>
-        </div>
+        </Label>
         <Input
+          id="apiKey"
+          type="password"
+          placeholder={tGlobal("please-enter")}
+          value={openRouter.apiKey}
+          onChange={(e) => onChange(e.target.value, "apiKey")}
+        />
+      </div>
+      <div className="flex flex-col space-y-4">
+        <Label className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span>{tConfigure("temperature")}</span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Icon icon="question_line" size={18} />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-[calc(100vw-4rem)]">
+                  {tConfigure("temperature-tip")}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+          <span className="text-sm text-muted-foreground">
+            {mapTemperature(openRouter.temperature)}
+          </span>
+        </Label>
+        <Slider
+          className="flex-1 h-[6px]"
+          max={1}
+          step={0.5}
+          defaultValue={[openRouter.temperature]}
+          onValueChange={(value) => onChange(value[0], "temperature")}
+        />
+      </div>
+      <div className="flex flex-col space-y-1.5">
+        <Label htmlFor="max_tokens" className="flex items-center gap-2">
+          <span>{tConfigure("max-tokens")}</span>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Icon icon="question_line" size={18} />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-[calc(100vw-4rem)]">
+                {tConfigure("max-tokens-tip")}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </Label>
+        <Input
+          id="max_tokens"
           type="number"
-          allowClear
           min={1}
           max={1025}
           step={1}
-          placeholder={tSetting("set-temperature") as string}
           value={openRouter.max_tokens}
-          onChange={(value) => onChange(value, "max_tokens")}
+          onChange={(e) => onChange(Number(e.target.value), "max_tokens")}
+          onBlur={(e) => onBlur(Number(e.target.value), "max_tokens")}
         />
       </div>
     </div>

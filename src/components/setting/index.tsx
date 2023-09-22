@@ -1,16 +1,17 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Modal, Confirm, Button } from "@ltopx/lx-ui";
+import { Modal, Button } from "@ltopx/lx-ui";
 import { useOpenStore } from "@/hooks/useOpen";
 import { cn } from "@/lib";
 import { checkTTS } from "@/lib/checkEnv";
 import Icon from "@/components/icon";
 import ApiKey from "./apiKey";
+import ResetData from "./resetData";
 import ImportExport from "./importExport";
 import SendMessageType from "./sendMessageType";
 
 export default function Setting() {
-  const tSetting = useTranslations("setting");
+  const tGlobal = useTranslations("global");
   const tTTS = useTranslations("tts");
   const tPlugin = useTranslations("plugin");
 
@@ -29,11 +30,6 @@ export default function Setting() {
 
   const onClose = () => setOpen(false);
 
-  const onResetData = () => {
-    localStorage.clear();
-    window.location.reload();
-  };
-
   React.useEffect(() => {
     return () => {
       onClose();
@@ -42,30 +38,13 @@ export default function Setting() {
 
   return (
     <Modal
-      title={tSetting("title")}
+      title={`Le-AI ${tGlobal("setting")}`}
       open={open}
       onClose={onClose}
       footer={null}
     >
       <ApiKey />
-      <div
-        className={cn(
-          "flex items-center justify-between py-2 px-1 border-b",
-          "border-slate-100 dark:border-neutral-500/60"
-        )}
-      >
-        <div className="text-sm">{tSetting("reset-data")}</div>
-        <Confirm
-          title={tSetting("reset-data")}
-          content={tSetting("reset-data-tip")}
-          type="danger"
-          onOk={onResetData}
-        >
-          <Button type="danger">
-            <Icon icon="delete_2_line" size={18} />
-          </Button>
-        </Confirm>
-      </div>
+      <ResetData />
       <ImportExport />
       <SendMessageType />
       {checkTTS() && (

@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Modal, Button, Tooltip, Select, Slider, Switch } from "@ltopx/lx-ui";
+import { Modal, Button, Tooltip, Select, Switch } from "@ltopx/lx-ui";
+import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib";
 import { useOpenStore } from "@/hooks/useOpen";
 import { useTTSStore, type TTSRate } from "@/hooks/useTTS";
@@ -12,11 +13,12 @@ const mapRate = (rate: TTSRate) => {
   if (rate === "medium") return 0.5;
   if (rate === "fast") return 0.75;
   if (rate === "x-fast") return 1;
+  return 0;
 };
 
 export default function TTSSetting() {
+  const tGlobal = useTranslations("global");
   const tTTS = useTranslations("tts");
-  const tCommon = useTranslations("common");
 
   const [open, setOpen] = useOpenStore((state) => [
     state.ttsSettingOpen,
@@ -85,7 +87,7 @@ export default function TTSSetting() {
       onClose={onClose}
       footer={
         <Button type="primary" onClick={onClose}>
-          {tCommon("ok")}
+          {tGlobal("ok-spacing")}
         </Button>
       }
     >
@@ -119,8 +121,8 @@ export default function TTSSetting() {
         className="flex-1 px-1"
         max={1}
         step={0.25}
-        defaultValue={mapRate(rate)}
-        onChange={onChangeRate}
+        defaultValue={[mapRate(rate)]}
+        onValueChange={(value) => onChangeRate(value[0])}
       />
       <div
         className={cn(

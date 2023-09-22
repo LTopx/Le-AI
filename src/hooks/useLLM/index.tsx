@@ -9,7 +9,6 @@ export const PREMIUM_MODELS = [
   "gpt-4-0613",
   "gpt-4-32k",
   "gpt-4-32k-0613",
-  "Claude Instant v1",
   "Claude v2",
   "PaLM 2 Bison",
   "Llama v2 13B",
@@ -86,33 +85,32 @@ export const useLLMStore = createWithEqualityFn<LLMStore>(
           icon: (
             <Image src="/claude.webp" alt="Claude" width={16} height={16} />
           ),
-          premium: true,
         },
         {
           label: "Claude v2",
           value: "anthropic/claude-2",
+          premium: true,
           icon: (
             <Image src="/claude.webp" alt="Claude" width={16} height={16} />
           ),
-          premium: true,
         },
         {
           label: "PaLM 2 Bison",
           value: "google/palm-2-chat-bison",
-          icon: <Image src="/palm.webp" alt="PaLM" width={16} height={16} />,
           premium: true,
+          icon: <Image src="/palm.webp" alt="PaLM" width={16} height={16} />,
         },
         {
           label: "Llama v2 13B",
           value: "meta-llama/llama-2-13b-chat",
-          icon: <div>🦙</div>,
           premium: true,
+          icon: <div>🦙</div>,
         },
         {
           label: "Llama v2 70B",
           value: "meta-llama/llama-2-70b-chat",
-          icon: <div>🦙</div>,
           premium: true,
+          icon: <div>🦙</div>,
         },
       ],
     },

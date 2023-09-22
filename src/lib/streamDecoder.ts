@@ -50,7 +50,11 @@ const streamDecoder = () => {
         while (!decoderDone) {
           const { done, value } = await reader.read();
           decoderDone = done;
-          const fragment = textDecoder.decode(value);
+
+          // Configure decode options {stream: true} to fix garbled characters
+          // const fragment = textDecoder.decode(value);
+          const fragment = textDecoder.decode(value, { stream: true });
+
           const checkIsError = checkFragmentError(fragment);
           if (checkIsError) {
             decoderDone = true;

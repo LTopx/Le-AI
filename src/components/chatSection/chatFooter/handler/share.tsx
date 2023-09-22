@@ -15,7 +15,7 @@ interface ShareProps {
 
 export default function Share({ channel, llm }: ShareProps) {
   const tShare = useTranslations("share");
-  const tCommon = useTranslations("common");
+  const tGlobal = useTranslations("global");
 
   const actionRef = React.useRef<any>(null);
 
@@ -51,11 +51,11 @@ export default function Share({ channel, llm }: ShareProps) {
       .then((res) => res.json())
       .then((res) => {
         if (res.error || !res.data?.id) {
-          return toast.error(res.msg || tCommon("service-error"), {
+          return toast.error(res.msg || tGlobal("service-error"), {
             id: "share-error",
           });
         }
-        toast.success(tShare("share-success"), { id: "share-success" });
+        toast.success(tGlobal("operation-successful"), { id: "share-success" });
         actionRef.current?.init(res.data.id);
       })
       .finally(() => {
@@ -74,7 +74,7 @@ export default function Share({ channel, llm }: ShareProps) {
         loading={loading}
         onClick={onShare}
       >
-        <span className="hidden lg:block">{tShare("share")}</span>
+        <span className="hidden lg:block">{tGlobal("share")}</span>
       </Button>
       <Action ref={actionRef} />
     </>

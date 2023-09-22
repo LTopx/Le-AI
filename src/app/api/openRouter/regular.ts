@@ -4,10 +4,12 @@ import type { supportModelType } from "@/lib/calcTokens/gpt-tokens";
 import type { IFetchOpenRouter } from "./types";
 
 interface IRegular extends IFetchOpenRouter {
-  prompt?: string;
   modelLabel: supportModelType;
   userId?: string;
   headerApiKey?: string;
+  leaiApiKey?: string;
+  leai_used_quota?: number;
+  leai_userId?: string;
 }
 
 const fetchOpenRouter = async ({
@@ -22,8 +24,8 @@ const fetchOpenRouter = async ({
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${Authorization}`,
-      "HTTP-Referer": "https://chat.ltopx.com",
-      "X-Title": "L-GPT",
+      "HTTP-Referer": "https://le-ai.app",
+      "X-Title": "Le-AI",
     },
     method: "POST",
     body: JSON.stringify({
@@ -37,7 +39,6 @@ const fetchOpenRouter = async ({
 };
 
 export const regular = async ({
-  prompt,
   messages,
   fetchURL,
   Authorization,
@@ -47,9 +48,10 @@ export const regular = async ({
   max_tokens,
   userId,
   headerApiKey,
+  leaiApiKey,
+  leai_used_quota,
+  leai_userId,
 }: IRegular) => {
-  if (prompt) messages.unshift({ role: "system", content: prompt });
-
   try {
     const response = await fetchOpenRouter({
       fetchURL,
@@ -74,9 +76,19 @@ export const regular = async ({
       messages,
       model,
       modelLabel,
+      leaiApiKey,
+      leai_used_quota,
+      leai_userId,
     });
 
-    return new Response(readable, response);
+    return new Response(readable, {
+      ...response,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
   } catch (error: any) {
     console.log(error, "openrouter regular error");
     return ResErr({ msg: error?.message || "Error" });
