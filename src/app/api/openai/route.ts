@@ -16,6 +16,8 @@ const getEnvProxyUrl = () => {
   return API_PROXY;
 };
 
+export const maxDuration = 300;
+
 export async function OPTIONS() {
   return new Response(null, {
     headers: {
@@ -25,8 +27,6 @@ export async function OPTIONS() {
     },
   });
 }
-
-export const maxDuration = 2;
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);

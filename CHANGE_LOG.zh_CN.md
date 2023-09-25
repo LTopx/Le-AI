@@ -23,6 +23,7 @@
 - 重构部分页面模块 UI，迁移到 shadcn/ui
 - 调整 OpenAI API Key 的代理配置逻辑，修复 [#11](https://github.com/LTopx/Le-AI/issues/11)
 - 会话 loading 时禁止播放语音
+- 调整 Serverless Functions 的超时时间为 5 分钟
 
 ## v0.9.1
 

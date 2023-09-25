@@ -23,6 +23,7 @@
 - Reconstruct some page module UI and migrate to shadcn/ui
 - Adjust the proxy configuration logic for OpenAI API Key, fix [#11](https://github.com/LTopx/Le-AI/issues/11)
 - Disable voice playback during conversation loading.
+- Adjust the timeout time of Serverless Functions to 5 minutes.
 
 ## v0.9.1
 
