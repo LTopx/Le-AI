@@ -130,8 +130,7 @@ export default function Account() {
     <div>
       <div className="text-2xl font-semibold">{tGlobal("usage")}</div>
       <div className="text-sm mt-4 mb-8">{tAccount("usage-tip")}</div>
-      <div className="flex items-center gap-2 mb-8">
-        <div>{tGlobal("month")}</div>
+      <div className="flex items-center gap-2 mb-6">
         <SelectMonth month={month} onChange={onChange} />
       </div>
       <div
