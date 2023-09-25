@@ -11,7 +11,10 @@
     "db-gn": "prisma generate",
     "db-pull": "dotenv -e .env.local -- npx prisma db pull",
     "db-push": "dotenv -e .env.local -- npx prisma db push",
-    "pm2": "next start -p 9000"
+    "pm2": "next start -p 9000",
+    "predocker-build": "pnpm install",
+    "docker-build": "pnpm run build",
+    "postdocker-build": "pnpm store prune && rm -rf .next/cache"
   },
   "dependencies": {
     "@emotion/css": "11.11.2",
