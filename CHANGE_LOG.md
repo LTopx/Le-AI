@@ -16,6 +16,7 @@
 - Fix multiple language configuration errors
 - Fix the issue of parsing error in react-markdown caused by upgrading remark-gfm version
 - Fix the display effect of the loading icon during session loading
+- Fix the error of missing default time zone for next-intl
 
 ### Changed
 

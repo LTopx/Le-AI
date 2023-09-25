@@ -26,6 +26,8 @@ export async function OPTIONS() {
   });
 }
 
+export const maxDuration = 2;
+
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const headersList = headers();
