@@ -46,17 +46,17 @@ export default function Menu() {
   };
 
   return (
-    <div className="w-52">
+    <div className="w-52 flex flex-col gap-1">
       {menuItems.map((item) => (
         <div
           key={item.value}
           onClick={() => onClick(item)}
           className={cn(
-            "h-10 rounded-md flex items-center select-none pl-3 cursor-pointer transition-colors text-sm",
-            "text-black/70 hover:bg-neutral-200",
-            "dark:text-white/60 dark:hover:bg-neutral-700",
+            "h-9 px-4 text-sm inline-flex items-center rounded-md font-medium transition-colors select-none",
+            "cursor-pointer hover:underline",
             {
-              "text-black dark:text-white font-medium": item.path === pathname,
+              "bg-muted hover:bg-muted hover:no-underline":
+                item.path === pathname,
             }
           )}
         >

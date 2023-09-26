@@ -6,7 +6,9 @@ import { cn } from "@/lib";
 import Logo from "@/components/site/logo";
 import Avatar from "@/components/site/avatar";
 import Menu from "@/components/account/menu";
+import Title from "@/components/account/title";
 import MobileMenu from "@/components/account/mobileMenu";
+import { Separator } from "@/components/ui/separator";
 
 export default async function AccountLayout({
   children,
@@ -29,7 +31,9 @@ export default async function AccountLayout({
         <Avatar />
       </div>
       <div className="pt-10 max-h-[calc(100vh-3.5rem)] overflow-y-auto">
-        <div className="max-w-[75rem] m-auto px-6">
+        <div className="w-[1334px] max-w-[calc(100vw-2rem)] m-auto p-10 border rounded-[0.5rem] shadow">
+          <Title />
+          <Separator className="my-6" />
           <div className="flex gap-12">
             <div className="hidden md:block">
               <Menu />

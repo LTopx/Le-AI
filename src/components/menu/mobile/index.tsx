@@ -24,7 +24,7 @@ export default function MobileMenu() {
       open={open}
       onClose={onClose}
     >
-      <div className="flex flex-col h-[calc(100%-3.5rem)] px-2">
+      <div className="flex flex-col h-[calc(100%-0.5rem)] px-2">
         <AddChannel />
         <List onClose={onClose} />
         <Handler />

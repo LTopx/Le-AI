@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { Button, Dropdown, type DropdownOption } from "@ltopx/lx-ui";
 import { useFetchError } from "@/hooks/useFetchError";
 import EditToken from "@/components/account/token/edit";
+import { Separator } from "@/components/ui/separator";
 import Icon from "@/components/icon";
 import {
   Table,
@@ -135,84 +136,95 @@ export default function ManageToken() {
 
   return (
     <>
-      <div>
-        <div className="font-semibold text-2xl">{tGlobal("token")}</div>
-        <div className="flex my-4 text-sm justify-between items-center">
-          <div>{tAccount("token-manage-tip")}</div>
-          <Button type="primary" onClick={onAdd}>
-            {tGlobal("create")}
-          </Button>
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-lg font-medium">{tGlobal("token")}</h3>
+          <p className="text-sm text-muted-foreground">
+            {tAccount("token-manage-tip")}
+          </p>
         </div>
-        <Table className="min-w-[760px] overflow-x-auto">
-          <TableHeader>
-            <TableRow>
-              <TableHead>{tGlobal("name")}</TableHead>
-              <TableHead>{tGlobal("status")}</TableHead>
-              <TableHead>{tGlobal("usage")}</TableHead>
-              <TableHead>{tGlobal("remain")}</TableHead>
-              <TableHead>{tGlobal("create-time")}</TableHead>
-              <TableHead>{tGlobal("expire-date")}</TableHead>
-              <TableHead>{tGlobal("action")}</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {list.map((item) => (
-              <TableRow key={item.key}>
-                <TableCell className="whitespace-nowrap">{item.name}</TableCell>
-                <TableCell>
-                  <Button
-                    className="h-6 text-xs px-2"
-                    size="sm"
-                    type={item.status ? "success" : "danger"}
-                    outline
-                  >
-                    {item.status ? tGlobal("enabled") : tGlobal("disabled")}
-                  </Button>
-                </TableCell>
-                <TableCell className="text-center">{item.used_quota}</TableCell>
-                <TableCell className="text-center">
-                  {item.total_quota === -1
-                    ? tGlobal("unlimited")
-                    : item.total_quota - item.used_quota}
-                </TableCell>
-                <TableCell className="whitespace-nowrap">
-                  {format.dateTime(new Date(item.createdAt), {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    second: "numeric",
-                  })}
-                </TableCell>
-                <TableCell className="whitespace-nowrap">
-                  {item.expire
-                    ? format.dateTime(new Date(item.expire), {
-                        year: "numeric",
-                        month: "numeric",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                        second: "numeric",
-                      })
-                    : tGlobal("forever")}
-                </TableCell>
-                <TableCell>
-                  <Dropdown
-                    options={getOptions(item.status)}
-                    onSelect={(type) => onSelect(item, type)}
-                  >
-                    <div className="flex">
-                      <Button size="sm">
-                        <Icon icon="more_1_fill" />
-                      </Button>
-                    </div>
-                  </Dropdown>
-                </TableCell>
+        <Separator />
+        <div className="space-y-2">
+          <div className="flex justify-end">
+            <Button type="primary" onClick={onAdd}>
+              {tGlobal("create")}
+            </Button>
+          </div>
+          <Table className="min-w-[760px] overflow-x-auto">
+            <TableHeader>
+              <TableRow>
+                <TableHead>{tGlobal("name")}</TableHead>
+                <TableHead>{tGlobal("status")}</TableHead>
+                <TableHead>{tGlobal("usage")}</TableHead>
+                <TableHead>{tGlobal("remain")}</TableHead>
+                <TableHead>{tGlobal("create-time")}</TableHead>
+                <TableHead>{tGlobal("expire-date")}</TableHead>
+                <TableHead>{tGlobal("action")}</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {list.map((item) => (
+                <TableRow key={item.key}>
+                  <TableCell className="whitespace-nowrap">
+                    {item.name}
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      className="h-6 text-xs px-2"
+                      size="sm"
+                      type={item.status ? "success" : "danger"}
+                      outline
+                    >
+                      {item.status ? tGlobal("enabled") : tGlobal("disabled")}
+                    </Button>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {item.used_quota}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {item.total_quota === -1
+                      ? tGlobal("unlimited")
+                      : item.total_quota - item.used_quota}
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    {format.dateTime(new Date(item.createdAt), {
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      second: "numeric",
+                    })}
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    {item.expire
+                      ? format.dateTime(new Date(item.expire), {
+                          year: "numeric",
+                          month: "numeric",
+                          day: "numeric",
+                          hour: "numeric",
+                          minute: "numeric",
+                          second: "numeric",
+                        })
+                      : tGlobal("forever")}
+                  </TableCell>
+                  <TableCell>
+                    <Dropdown
+                      options={getOptions(item.status)}
+                      onSelect={(type) => onSelect(item, type)}
+                    >
+                      <div className="flex">
+                        <Button size="sm">
+                          <Icon icon="more_1_fill" />
+                        </Button>
+                      </div>
+                    </Dropdown>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
       <EditToken ref={editTokenRef} onLoad={getData} />
     </>

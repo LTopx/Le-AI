@@ -23,7 +23,7 @@ export default function Handler() {
     <div className={cn("flex flex-col border-t gap-1 pt-1", height)}>
       {checkAuth() && <LicenseActivate />}
       <Tokens mobile />
-      <Notice />
+      {/* <Notice /> */}
       <div className="flex h-[43px] items-center justify-center">
         <Github />
         <Telegram />

@@ -6,6 +6,8 @@ import { ResErr, checkAuth } from "@/lib";
 import { PREMIUM_MODELS } from "@/hooks/useLLM";
 import { regular } from "./regular";
 
+export const maxDuration = 300;
+
 export async function OPTIONS() {
   return new Response(null, {
     headers: {

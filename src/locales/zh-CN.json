@@ -1,6 +1,7 @@
 {
   "global": {
     "account-center": "账户中心",
+    "account-center-tip": "管理查看您的账户设置并生成令牌",
     "action": "操作",
     "all": "所有",
     "apply": "应用",
@@ -84,7 +85,8 @@
     "unlimited": "无限",
     "unnamed": "未命名",
     "usage": "使用情况",
-    "user-info": "用户信息"
+    "user-info": "用户信息",
+    "user-info-tip": "检查并修改您的用户信息。"
   },
   "account": {
     "expire-date": "过期时间",
@@ -102,6 +104,7 @@
     "auth-failed": "验证失败",
     "auth-success": "验证成功",
     "change-password": "修改密码",
+    "change-password-tip": "修改您的账户登录密码。",
     "check-mail": "检查您的邮箱",
     "continue-gpt": "继续使用 Le-AI",
     "continue-with-github": "使用 Github 登录",

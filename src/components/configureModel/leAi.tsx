@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { Input } from "@ltopx/lx-ui";
+import { Input } from "@/components/ui/input";
 import { useOpenAIStore } from "@/hooks/useOpenAI";
 
 export default function LeAi() {
@@ -34,11 +34,10 @@ export default function LeAi() {
       <div>
         <div className="mb-1 text-sm">Le-AI API Key</div>
         <Input
-          allowClear
           placeholder={tConfigure("set-leai-api-key")}
           type="password"
           value={leAIKey}
-          onChange={updateLeAIKey}
+          onChange={(e) => updateLeAIKey(e.target.value)}
           onBlur={onBlur}
         />
       </div>

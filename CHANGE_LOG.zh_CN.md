@@ -2,7 +2,7 @@
 
 ## v0.9.2
 
-> 2023-09-22
+> 2023-09-26
 
 ### 新增
 
@@ -16,12 +16,15 @@
 - 修复多语言配置错误
 - 修复 remark-gfm 版本升级后造成 react-markdown 内容解析错误的问题
 - 修复会话 loading 时的 Loading 图标显示效果
+- 修复 next-intl 缺少默认时区报错的问题
 
 ### 调整
 
 - 重构部分页面模块 UI，迁移到 shadcn/ui
 - 调整 OpenAI API Key 的代理配置逻辑，修复 [#11](https://github.com/LTopx/Le-AI/issues/11)
 - 会话 loading 时禁止播放语音
+- 调整 Serverless Functions 的超时时间为 5 分钟
+- 调整账户中心 UI 界面
 
 ## v0.9.1
 
