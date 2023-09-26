@@ -25,12 +25,12 @@ export default function SelectMonth({ month, onChange }: Props) {
   if (!month) return null;
 
   return (
-    <div className="flex flex-col space-y-1.5 w-full">
+    <div className="flex flex-col space-y-2 w-full">
       <Label htmlFor="month">{tGlobal("month")}</Label>
       <Select value={month} onValueChange={onChange}>
         <SelectTrigger
           id="month"
-          className="w-[500px] max-w-[calc(100vw-3rem)]"
+          className="w-[500px] max-w-[calc(100vw-6.8rem)] h-9"
         >
           <SelectValue />
         </SelectTrigger>

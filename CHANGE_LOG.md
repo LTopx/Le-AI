@@ -2,7 +2,7 @@
 
 ## v0.9.2
 
-> 2023-09-25
+> 2023-09-26
 
 ### Add
 
@@ -24,6 +24,7 @@
 - Adjust the proxy configuration logic for OpenAI API Key, fix [#11](https://github.com/LTopx/Le-AI/issues/11)
 - Disable voice playback during conversation loading.
 - Adjust the timeout time of Serverless Functions to 5 minutes.
+- Adjust account center UI interface.
 
 ## v0.9.1
 

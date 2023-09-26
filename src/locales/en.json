@@ -1,6 +1,7 @@
 {
   "global": {
     "account-center": "Account Center",
+    "account-center-tip": "Manage and view your account settings and generate tokens.",
     "action": "Action",
     "all": "All",
     "apply": "Apply",
@@ -84,7 +85,8 @@
     "unlimited": "Unlimited",
     "unnamed": "Unnamed",
     "usage": "Usage",
-    "user-info": "User Info"
+    "user-info": "User Info",
+    "user-info-tip": "Check and modify your user information."
   },
   "account": {
     "expire-date": "Expiration Date",
@@ -102,6 +104,7 @@
     "auth-failed": "Authentication failed",
     "auth-success": "Authentication success",
     "change-password": "Change Password",
+    "change-password-tip": "Change your password.",
     "check-mail": "Check your email",
     "continue-gpt": "Continue to Le-AI",
     "continue-with-github": "Continue with Github",
