@@ -168,11 +168,15 @@ export default function Avatar() {
         break;
       case "license":
         if (pathname !== "/") return;
-        updatePremiumOpen(true);
+        setTimeout(() => {
+          updatePremiumOpen(true);
+        }, 0);
         break;
       case "more-license":
         if (pathname !== "/") return;
-        updatePremiumOpen(true);
+        setTimeout(() => {
+          updatePremiumOpen(true);
+        }, 0);
         break;
       case "account":
         if (pathname.includes("/account")) return;

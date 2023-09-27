@@ -1,5 +1,13 @@
 # Le-AI Change Log
 
+## v0.9.3
+
+> 2023-09-27
+
+### Fixed
+
+- Fix the issue where the pop-up window under the avatar dropdown menu cannot be displayed properly.
+
 ## v0.9.2
 
 > 2023-09-27
