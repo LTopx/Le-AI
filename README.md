@@ -60,9 +60,9 @@ Project documentation: [https://docs.le-ai.app](https://docs.le-ai.app/)
 
 - [x] Support custom prompt repository
 - [x] Support Function call for implementing more functionalities
-- [x] Support for large language model APIs such as Claude, PaLM, and Llama 2.
-- [x] Support distributing keys for use in an unauthenticated state.
-- [ ] Support long conversations
+- [x] Support for large language model APIs such as Claude, PaLM, and Llama 2
+- [x] Support distributing keys for use in an unauthenticated state
+- [x] Support unlimited sessions
 - [ ] Support integration of Midjourney drawing
 - [ ] Desktop version development
 
