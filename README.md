@@ -77,6 +77,14 @@ docker pull ltopx/le-ai:latest
 docker run -d -p 3000:3000 ltopx/le-ai:latest
 ```
 
+### Docker Local Deployment
+
+```
+docker build -t ltopx/le-ai .
+
+docker run -d -p 3000:3000 ltopx/le-ai
+```
+
 ### One-click Deployment
 
 Currently supports one-click deployment to Vercel.

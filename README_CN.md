@@ -77,9 +77,17 @@ docker pull ltopx/le-ai:latest
 docker run -d -p 3000:3000 ltopx/le-ai:latest
 ```
 
+### Docker 本地部署
+
+```
+docker build -t ltopx/le-ai .
+
+docker run -d -p 3000:3000 ltopx/le-ai
+```
+
 ### 一键部署
 
-目前支持一键部署到 Vercel。
+支持一键部署到 Vercel。
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/Le-AI)
 

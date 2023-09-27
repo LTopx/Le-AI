@@ -322,11 +322,9 @@
   "zLog": {
     "full-log": "Click to view the full update log",
     "menu-notice": "Download Le-AI client",
-    "title": "v0.9.1 Update 🔥🔥",
-    "text1": "Added support for account password login",
-    "text2": "Added compatibility to configure other third-party OpenAI API Keys. For example: nextweb, API2D",
-    "text3": "Fixed the issue of character limit for prompts and welcome messages when creating a new role",
-    "text4": "Fixed the issue of garbled response in some cases",
-    "text5": "Other UI details optimization"
+    "title": "v0.9.2 Update 🔥🔥",
+    "text1": "Support Docker deployment",
+    "text2": "Support unlimited sessions, and adjust the coherence of session by modifying the threshold of content summarization in session settings",
+    "text3": "UI optimization for other modules"
   }
 }
