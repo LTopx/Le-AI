@@ -8,6 +8,6 @@ COPY . /data/$NAME
 RUN npm install -g $NPM
 RUN $NPM run docker-build
 
-CMD [$NPM, "start"]
+CMD ["npm", "start"]
 EXPOSE 3000
 
