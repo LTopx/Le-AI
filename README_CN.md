@@ -54,6 +54,7 @@
 - 支持 OpenAI 和 Azure OpenAI
 - 支持自定义角色模板，创造更多 AI 可能性
 - 支持 i18n 多语言国际化: English、简体中文
+- 支持 Docker 部署
 - 了解更多，更多请查阅 [帮助文档](https://docs.le-ai.app/)
 
 ## 📍 开发计划
@@ -66,7 +67,17 @@
 - [ ] 支持接入 Midjourney 绘画
 - [ ] 桌面版本开发
 
-## 💿 一键部署
+## 💿 部署
+
+### Docker 部署 (推荐)
+
+```
+docker pull ltopx/le-ai:latest
+
+docker run -d -p 3000:3000 ltopx/le-ai:latest
+```
+
+### 一键部署
 
 目前支持一键部署到 Vercel。
 

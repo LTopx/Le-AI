@@ -6,6 +6,7 @@
 
 ### Add
 
+- Support Docker deployment, [#15](https://github.com/LTopx/Le-AI/pull/15)
 - Added support for configuring a member threshold for session summarization to achieve the effect of "unlimited sessions"
 - "Session Settings" added support for configuring the threshold of message compression for historical messages.
 

@@ -54,6 +54,7 @@ Project documentation: [https://docs.le-ai.app](https://docs.le-ai.app/)
 - Supports OpenAI and Azure OpenAI
 - Supports custom role templates to create more AI possibilities
 - Supports i18n multilingual internationalization: English, Simplified Chinese
+- Support Docker deployment
 - For more information, please refer to the [documentation](https://docs.le-ai.app/)
 
 ## 📍 Development Plan
@@ -66,10 +67,19 @@ Project documentation: [https://docs.le-ai.app](https://docs.le-ai.app/)
 - [ ] Support integration of Midjourney drawing
 - [ ] Desktop version development
 
-## 💿 One-click Deployment
+## 💿 Deployment
+
+### Docker Deployment (Recommended)
+
+```
+docker pull ltopx/le-ai:latest
+
+docker run -d -p 3000:3000 ltopx/le-ai:latest
+```
+
+### One-click Deployment
 
 Currently supports one-click deployment to Vercel.
-
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LTopx/Le-AI)
 
 ## 🪄 Local Development
