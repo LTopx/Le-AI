@@ -19,6 +19,7 @@
 - 修复会话 loading 时的 Loading 图标显示效果
 - 修复 next-intl 缺少默认时区报错的问题
 - 修复部分情况下系统设置菜单无法正常打开的问题
+- 修复 [#10](https://github.com/LTopx/Le-AI/issues/10)
 
 ### 调整
 

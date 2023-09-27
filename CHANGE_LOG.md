@@ -19,6 +19,7 @@
 - Fix the display effect of the loading icon during session loading
 - Fix the error of missing default time zone for next-intl
 - Fix the issue where the system settings menu cannot be opened properly in some cases
+- Fixed [#10](https://github.com/LTopx/Le-AI/issues/10)
 
 ### Changed
 
