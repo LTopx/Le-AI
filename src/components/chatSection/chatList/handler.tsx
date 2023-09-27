@@ -3,19 +3,23 @@ import { useTranslations } from "next-intl";
 import { Button, Confirm, Tooltip } from "@ltopx/lx-ui";
 import Icon from "@/components/icon";
 import CopyIcon from "@/components/site/copyIcon";
+import Edit from "./edit";
+import type { ChatItem } from "@/hooks/useChannel/types";
 
 interface HandlerProps {
+  item: ChatItem;
   content: string;
   onDelete: () => void;
   onRegenerate: () => void;
-  onEdit: () => void;
+  onReSummarize: () => void;
 }
 
 export default function Handler({
+  item,
   content,
   onDelete,
   onRegenerate,
-  onEdit,
+  onReSummarize,
 }: HandlerProps) {
   const tChat = useTranslations("chat");
   const tGlobal = useTranslations("global");
@@ -28,19 +32,7 @@ export default function Handler({
             <CopyIcon size={16} content={content} />
           </Button>
         </Tooltip>
-        <Tooltip title={tChat("edit-content")}>
-          <Button
-            className="h-6 px-2"
-            type="primary"
-            outline
-            size="sm"
-            rounded
-            onClick={onEdit}
-          >
-            <Icon icon="pencil_line" size={16} />
-          </Button>
-        </Tooltip>
-
+        <Edit item={item} onReSummarize={onReSummarize} />
         <Confirm
           title={tChat("delete-chat")}
           content={tChat("delete-chat-tip")}

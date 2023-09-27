@@ -22,7 +22,6 @@ import Handler from "./handler";
 import ChatConfigure from "../chatConfigure";
 import ChatContent from "../chatContent";
 import ChatTTS from "../chatTTS";
-import ChatEdit from "./edit";
 
 export default function ChatList() {
   const format = useFormatter();
@@ -35,7 +34,6 @@ export default function ChatList() {
   const tPoints = useTranslations("points");
   const tPremium = useTranslations("premium");
 
-  const chatEditRef = React.useRef<any>(null);
   const { catchError } = useFetchError();
 
   const [activeId, list] = useChannelStore((state) => [
@@ -212,8 +210,6 @@ export default function ChatList() {
     }
   };
 
-  const onEdit = (item: ChatItem) => chatEditRef.current?.init(item);
-
   const onRead = (item: ChatItem, channel_id: string) => {
     if (license_type !== "premium" && license_type !== "team") {
       return toast.error(tGlobal("license-check-error"), {
@@ -299,10 +295,11 @@ export default function ChatList() {
                   second: "numeric",
                 })}
                 <Handler
+                  item={item}
                   content={item.content}
                   onDelete={() => run(item)}
                   onRegenerate={() => onRegenerate(item)}
-                  onEdit={() => onEdit(item)}
+                  onReSummarize={onReSummarize}
                 />
               </div>
               <div
@@ -345,7 +342,6 @@ export default function ChatList() {
         )}
       </div>
       <div className="h-32 overflow-hidden" />
-      <ChatEdit ref={chatEditRef} onReSummarize={onReSummarize} />
     </>
   );
 }

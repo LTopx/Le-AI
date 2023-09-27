@@ -50,7 +50,9 @@ export default function SettingMenus() {
         toast.error(tCode("20001"), { id: "login-first" });
       }
     } else if (value === "setting") {
-      updateSettingOpen(true);
+      setTimeout(() => {
+        updateSettingOpen(true);
+      }, 0);
     }
   };
 

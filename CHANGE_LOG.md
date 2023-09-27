@@ -2,7 +2,7 @@
 
 ## v0.9.2
 
-> 2023-09-26
+> 2023-09-27
 
 ### Add
 
@@ -17,6 +17,7 @@
 - Fix the issue of parsing error in react-markdown caused by upgrading remark-gfm version
 - Fix the display effect of the loading icon during session loading
 - Fix the error of missing default time zone for next-intl
+- Fix the issue where the system settings menu cannot be opened properly in some cases
 
 ### Changed
 
