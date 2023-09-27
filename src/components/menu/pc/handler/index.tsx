@@ -13,7 +13,7 @@ export default function Handler() {
     <div className="border-t flex flex-col pt-2 gap-1 dark:border-white/20">
       {checkAuth() && <LicenseActivate />}
       <Tokens />
-      <Notice />
+      {/* <Notice /> */}
       <div className="flex h-11 items-center justify-center">
         <Github />
         <Telegram />

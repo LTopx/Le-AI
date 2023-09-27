@@ -27,9 +27,9 @@ export default function List() {
   };
 
   const height = React.useMemo(() => {
-    if (session.data) return "h-[calc(100vh-19rem)]";
-    if (!checkAuth()) return "h-[calc(100vh-13rem)]";
-    return "h-[calc(100vh-16rem)]";
+    if (session.data) return "h-[calc(100vh-16rem)]";
+    if (!checkAuth()) return "h-[calc(100vh-10rem)]";
+    return "h-[calc(100vh-13rem)]";
   }, [session.data]);
 
   return (

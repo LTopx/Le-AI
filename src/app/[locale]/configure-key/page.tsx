@@ -46,7 +46,7 @@ export default function ConfigureKey() {
           <Button
             variant="outline"
             size="icon"
-            className="h-8 w-8"
+            className="h-8 w-8 flex"
             disabled={loadingBack}
             onClick={onBack}
           >

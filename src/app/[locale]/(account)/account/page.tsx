@@ -9,6 +9,7 @@ import { BarChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
 import Icon from "@/components/icon";
 import SelectMonth from "@/components/account/selectMonth";
+import { Separator } from "@/components/ui/separator";
 
 echarts.use([GridComponent, TooltipComponent, BarChart, CanvasRenderer]);
 
@@ -127,16 +128,16 @@ export default function Account() {
   }, []);
 
   return (
-    <div>
-      <div className="text-2xl font-semibold">{tGlobal("usage")}</div>
-      <div className="text-sm mt-4 mb-8">{tAccount("usage-tip")}</div>
-      <div className="flex items-center gap-2 mb-8">
-        <div>{tGlobal("month")}</div>
-        <SelectMonth month={month} onChange={onChange} />
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium">{tGlobal("usage")}</h3>
+        <p className="text-sm text-muted-foreground">{tAccount("usage-tip")}</p>
       </div>
+      <Separator />
+      <SelectMonth month={month} onChange={onChange} />
       <div
         ref={costRef}
-        className="w-full h-80 border dark:border-neutral-500 rounded-md flex justify-center items-center"
+        className="w-full h-80 border border-input rounded-md flex justify-center items-center"
       >
         <Icon className="animate-spin" icon="loading_line" />
       </div>

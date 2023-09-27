@@ -2,7 +2,7 @@
 
 ## v0.9.2
 
-> 2023-09-22
+> 2023-09-26
 
 ### Add
 
@@ -16,12 +16,15 @@
 - Fix multiple language configuration errors
 - Fix the issue of parsing error in react-markdown caused by upgrading remark-gfm version
 - Fix the display effect of the loading icon during session loading
+- Fix the error of missing default time zone for next-intl
 
 ### Changed
 
 - Reconstruct some page module UI and migrate to shadcn/ui
 - Adjust the proxy configuration logic for OpenAI API Key, fix [#11](https://github.com/LTopx/Le-AI/issues/11)
 - Disable voice playback during conversation loading.
+- Adjust the timeout time of Serverless Functions to 5 minutes.
+- Adjust account center UI interface.
 
 ## v0.9.1
 

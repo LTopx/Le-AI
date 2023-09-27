@@ -1,6 +1,7 @@
 {
   "global": {
     "account-center": "アカウントセンター",
+    "account-center-tip": "アカウント設定を管理し、トークンを生成します。",
     "action": "操作",
     "all": "すべて",
     "apply": "適用する",
@@ -84,7 +85,8 @@
     "unlimited": "無制限の",
     "unnamed": "未命名",
     "usage": "使用状況",
-    "user-info": "ユーザー情報"
+    "user-info": "ユーザー情報",
+    "user-info-tip": "ユーザー情報を確認して修正してください。"
   },
   "account": {
     "expire-date": "有効期限",
@@ -102,6 +104,7 @@
     "auth-failed": "認証に失敗しました",
     "auth-success": "認証に成功しました",
     "change-password": "パスワードの変更",
+    "change-password-tip": "アカウントのログインパスワードを変更してください。",
     "check-mail": "メールを確認してください",
     "continue-gpt": "Le-AIを続ける",
     "continue-with-github": "GitHubでログインする",

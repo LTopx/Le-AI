@@ -10,6 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 export default function ChangePwd() {
   const tGlobal = useTranslations("global");
@@ -85,10 +86,14 @@ export default function ChangePwd() {
   }, []);
 
   return (
-    <div className="pb-1">
-      <div className="font-semibold mb-8 text-2xl">
-        {tAuth("change-password")}
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium">{tAuth("change-password")}</h3>
+        <p className="text-sm text-muted-foreground">
+          {tAuth("change-password-tip")}
+        </p>
       </div>
+      <Separator />
       {loading ? (
         <div className="flex flex-col gap-4">
           <div className="flex space-x-4 items-center">
@@ -110,42 +115,36 @@ export default function ChangePwd() {
           </div>
         </div>
       ) : (
-        <>
-          <div className="w-full grid pb-6 gap-4 items-center">
-            {hasPwd && (
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="password">{tAuth("current-password")}</Label>
-                <Input
-                  ref={passwordRef}
-                  id="password"
-                  type="password"
-                  className="max-w-[calc(100vw-3rem)] w-[600px]"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-            )}
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="new_password">{tAuth("new-password")}</Label>
+        <div className="space-y-8">
+          {hasPwd && (
+            <div className="space-y-2">
+              <Label htmlFor="password">{tAuth("current-password")}</Label>
               <Input
-                ref={newPasswordRef}
-                id="new_password"
+                ref={passwordRef}
+                id="password"
                 type="password"
-                className="max-w-[calc(100vw-3rem)] w-[600px]"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                className="max-w-[calc(100vw-6.9rem)] w-[600px]"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+          )}
+          <div className="space-y-2">
+            <Label htmlFor="new_password">{tAuth("new-password")}</Label>
+            <Input
+              ref={newPasswordRef}
+              id="new_password"
+              type="password"
+              className="max-w-[calc(100vw-6.9rem)] w-[600px]"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
           </div>
-          <div>
-            <Button onClick={onHandlePwd} disabled={loadingSubmit}>
-              {loadingSubmit && (
-                <Loader2 className="h-4 mr-2 animate-spin w-4" />
-              )}
-              {hasPwd ? tAuth("change-password") : tAuth("set-password")}
-            </Button>
-          </div>
-        </>
+          <Button onClick={onHandlePwd} disabled={loadingSubmit}>
+            {loadingSubmit && <Loader2 className="h-4 mr-2 animate-spin w-4" />}
+            {hasPwd ? tAuth("change-password") : tAuth("set-password")}
+          </Button>
+        </div>
       )}
     </div>
   );
