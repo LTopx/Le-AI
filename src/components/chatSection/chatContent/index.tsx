@@ -20,10 +20,10 @@ export default function ChatContent({ data }: ChatContentProps) {
       remarkPlugins={[remarkGfm, remarkMath]}
       rehypePlugins={[rehypeKatex]}
       components={{
-        code({ node, inline, className, children, ...props }) {
+        code({ node, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || "");
 
-          return !inline && match ? (
+          return match ? (
             <CodeBlock
               key={Math.random()}
               language={match[1]}
