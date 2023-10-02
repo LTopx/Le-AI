@@ -1,3 +1,5 @@
+"use client";
+
 import { createWithEqualityFn } from "zustand/traditional";
 import Image from "next/image";
 import { shallow } from "zustand/shallow";
