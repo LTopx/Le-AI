@@ -7,7 +7,7 @@ import { ResErr, checkAuth } from "@/lib";
 import { regular } from "./regular";
 import { function_call } from "./function_call";
 
-export const PREMIUM_MODELS = [
+const PREMIUM_MODELS = [
   "gpt-4",
   "gpt-4-0613",
   "gpt-4-32k",
