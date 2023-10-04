@@ -3,9 +3,20 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/utils/plugin/auth";
 import { prisma } from "@/lib/prisma";
 import { ResErr, checkAuth } from "@/lib";
-import { PREMIUM_MODELS } from "@/hooks/useLLM";
+// import { PREMIUM_MODELS } from "@/hooks/useLLM";
 import { regular } from "./regular";
 import { function_call } from "./function_call";
+
+export const PREMIUM_MODELS = [
+  "gpt-4",
+  "gpt-4-0613",
+  "gpt-4-32k",
+  "gpt-4-32k-0613",
+  "Claude v2",
+  "PaLM 2 Bison",
+  "Llama v2 13B",
+  "Llama v2 70B",
+];
 
 const getEnvProxyUrl = () => {
   const API_PROXY = process.env.NEXT_PUBLIC_OPENAI_API_PROXY;
@@ -90,6 +101,9 @@ export async function POST(request: Request) {
     }
 
     if (!user) return ResErr({ error: 20002 });
+
+    console.log(124124);
+    console.log(JSON.stringify(PREMIUM_MODELS), "PREMIUM_MODELS");
 
     // audit user license
     if (
