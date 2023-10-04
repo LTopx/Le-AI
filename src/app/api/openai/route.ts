@@ -102,9 +102,6 @@ export async function POST(request: Request) {
 
     if (!user) return ResErr({ error: 20002 });
 
-    console.log(124124);
-    console.log(JSON.stringify(PREMIUM_MODELS), "PREMIUM_MODELS");
-
     // audit user license
     if (
       user.license_type !== "premium" &&

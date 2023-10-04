@@ -7,6 +7,7 @@
 ### Fixed
 
 - Fix the issue where the pop-up window under the avatar dropdown menu cannot be displayed properly.
+- Fix the issue where metadata image cannot be displayed properly.
 
 ## v0.9.2
 
