@@ -19,35 +19,56 @@
   border-radius: 9999px;
 }
 
-div {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
+.code-block {
+  color: #d6deeb;
+  background-color: #011627;
+  font-family:
+    Consolas,
+    Monaco,
+    Andale Mono,
+    Ubuntu Mono,
+    monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  hyphens: none;
+  padding: 1em;
+  overflow: auto;
+  color-scheme: dark;
 }
 
-@media (max-width: 768px) {
-  pre {
-    width: calc(100vw - 110px);
-  }
+.inline-code {
+  border-radius: 0.25rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(228 228 231 / var(--tw-bg-opacity));
+  padding: 3px 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
-pre:has(div.codeblock) {
-  padding: 0;
-}
-
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: #fff;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type="number"] {
-  -moz-appearance: textfield;
+code,
+kbd,
+pre,
+samp {
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  font-size: 1em;
 }
 
 @layer base {
@@ -58,8 +79,7 @@ input[type="number"] {
     --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
-    --primary: 199 93% 61%;
-    /* --primary: 220.9 39.3% 11%; */
+    --primary: 220.9 39.3% 11%;
     --primary-foreground: 210 20% 98%;
     --secondary: 220 14.3% 95.9%;
     --secondary-foreground: 220.9 39.3% 11%;
@@ -71,9 +91,8 @@ input[type="number"] {
     --destructive-foreground: 210 20% 98%;
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 199 93% 61%;
-    /* --ring: 224 71.4% 4.1%; */
-    --radius: 0.5rem;
+    --ring: 224 71.4% 4.1%;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -95,8 +114,7 @@ input[type="number"] {
     --destructive-foreground: 210 20% 98%;
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
-    --ring: 203 80% 57%;
-    /* --ring: 216 12.2% 83.9%; */
+    --ring: 216 12.2% 83.9%;
   }
 }
 
