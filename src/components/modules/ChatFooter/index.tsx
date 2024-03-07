@@ -5,7 +5,7 @@ import type { KeyboardEvent } from 'react'
 
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
-import { useChatStore } from '@/store/chat'
+import { LOADING_STATE, useChatStore } from '@/store/chat'
 
 export function ChatFooter() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -13,9 +13,11 @@ export function ChatFooter() {
   const [value, setValue] = useState('')
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
 
-  const addMessage = useChatStore((state) => state.addMessage)
+  const activeList = list.find((item) => item.chat_id === activeId)
+  const isLoading = activeList?.chat_state !== LOADING_STATE.NONE
 
-  const isLoading = false
+  const addMessage = useChatStore((state) => state.addMessage)
+  const sendChat = useChatStore((state) => state.sendChat)
 
   const onResize = () => {
     if (!textareaRef.current) return
@@ -36,10 +38,12 @@ export function ChatFooter() {
   }
 
   const onSubmit = async () => {
+    if (isLoading) return
     if (!value?.trim()) return textareaRef.current?.focus()
 
     setValue('')
     addMessage({ chat_id: activeId, message: value.trim(), role: 'user' })
+    sendChat(activeId)
   }
 
   useEffect(() => {
@@ -80,7 +84,7 @@ export function ChatFooter() {
             className={cn(
               'flex h-8 w-8 items-center justify-center rounded-full transition-colors md:rounded-xl',
               !!value?.trim()
-                ? 'bg-theme hover:bg-theme/90 cursor-pointer text-white'
+                ? 'cursor-pointer bg-theme text-white hover:bg-theme/90'
                 : 'text-muted-foreground',
             )}
           >

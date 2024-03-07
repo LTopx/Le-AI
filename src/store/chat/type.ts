@@ -56,6 +56,11 @@ export type ChatStore = {
     role: ChatRole
   }) => void
 
+  // Action
+  sendChat: (chat_id: string) => void
+  generateChatName: (chat_id: string) => void
+  stopChat: (chat_id: string) => void
+
   // Hydration
   _hasHydrated: boolean
   setHasHydrated: (state: boolean) => void

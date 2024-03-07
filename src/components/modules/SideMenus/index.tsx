@@ -51,6 +51,14 @@ function Menus({ className }: { className?: string }) {
             )}
             onClick={() => switchChat(item.chat_id)}
           >
+            <span
+              className={cn(
+                'text-[#4b4b4b]',
+                item.chat_state !== LOADING_STATE.NONE
+                  ? 'i-mingcute-loading-line animate-spin'
+                  : 'i-mingcute-message-3-line',
+              )}
+            />
             <div className=" flex-1 select-none truncate whitespace-nowrap text-sm text-[#4b4b4b]">
               {item.chat_name || 'Untitled'}
             </div>
