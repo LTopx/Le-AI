@@ -42,7 +42,7 @@ export function AlertDialog({
         <AlertDialogFooter>
           <AlertDialogCancel>{cancelText || 'Cancel'}</AlertDialogCancel>
           <AlertDialogAction className={actionClassName} onClick={onOk}>
-            {okText || 'Ok'}
+            {okText || 'OK'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

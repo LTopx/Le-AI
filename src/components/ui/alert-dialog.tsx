@@ -113,6 +113,9 @@ const AlertDialogAction = React.forwardRef<
       'rounded-xl bg-[#c6c6c5] hover:bg-[#babbba]',
       className,
     )}
+    style={{
+      boxShadow: 'none',
+    }}
     {...props}
   />
 ))
@@ -129,6 +132,9 @@ const AlertDialogCancel = React.forwardRef<
       'mt-2 rounded-xl bg-[#c6c6c5] text-[#414141] hover:bg-[#babbba] sm:mt-0',
       className,
     )}
+    style={{
+      boxShadow: 'none',
+    }}
     {...props}
   />
 ))

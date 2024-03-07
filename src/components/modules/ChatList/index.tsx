@@ -11,21 +11,9 @@ export function ChatList() {
 
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  // // const activeChat = list.find((item) => item.chat_id === activeId)
-
-  // // console.log(activeId, 'activeId')
-  // // console.log(list, 'list')
-  // const activeChat = useMemo(() => {
-  //   return list.find((item) => item.chat_id === activeId)
-  // }, [activeId, list])
-
-  // console.log(activeChat?.chat_list, 'activeChat')
   const activeChat = list.find((item) => item.chat_id === activeId)
 
   useEffect(() => {
-    // const findChat = list.find((item) => item.chat_id === activeId)
-    // setMessages(findChat?.chat_list || [])
-
     setTimeout(() => {
       scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight)
     }, 0)
@@ -36,9 +24,13 @@ export function ChatList() {
   return (
     <div className="flex-1 overflow-y-auto" ref={scrollRef}>
       <div className="container max-w-4xl">
-        <div className="flex flex-col gap-6 py-10">
-          {activeChat.chat_list.map((item) => (
-            <ChatItem key={item.id} item={item} />
+        <div className="flex flex-col gap-7 py-10">
+          {activeChat.chat_list.map((item, index) => (
+            <ChatItem
+              key={item.id}
+              item={item}
+              isLast={index === activeChat.chat_list.length - 1}
+            />
           ))}
         </div>
       </div>

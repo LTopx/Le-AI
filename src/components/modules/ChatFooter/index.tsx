@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
 
+import { AlertDialog } from '@/components/common/alertDialog'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
 import { LOADING_STATE, useChatStore } from '@/store/chat'
@@ -17,6 +18,7 @@ export function ChatFooter() {
   const isLoading = activeList?.chat_state !== LOADING_STATE.NONE
 
   const addMessage = useChatStore((state) => state.addMessage)
+  const clearMessage = useChatStore((state) => state.clearMessage)
   const sendChat = useChatStore((state) => state.sendChat)
 
   const onResize = () => {
@@ -61,6 +63,10 @@ export function ChatFooter() {
     }
   }, [])
 
+  useEffect(() => {
+    textareaRef.current?.focus()
+  }, [activeId])
+
   return (
     <div className="border-t py-2">
       <div className="container flex max-w-4xl flex-col gap-1">
@@ -76,9 +82,23 @@ export function ChatFooter() {
           onKeyDown={onKeyDown}
         />
         <div className="flex justify-between">
-          <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]">
-            <span className="i-ri-settings-3-line h-[18px] w-[18px]" />
+          <div className="flex gap-1.5">
+            <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]">
+              <span className="i-mingcute-classify-add-2-line h-[18px] w-[18px]" />
+            </div>
+            <AlertDialog
+              trigger={
+                <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]">
+                  <span className="i-mdi-tooltip-remove-outline h-[18px] w-[18px]" />
+                </div>
+              }
+              title="Clear current session messages"
+              description="This action cannot be undone"
+              actionClassName="text-[#f53126]"
+              onOk={() => clearMessage(activeId)}
+            />
           </div>
+
           <div
             onClick={onSubmit}
             className={cn(

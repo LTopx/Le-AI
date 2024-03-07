@@ -44,6 +44,8 @@ export type ChatStore = {
   switchChat: (chat_id: string) => void
   addChat: () => void
   deleteChat: (chat_id: string) => void
+  updateChat: (chat_id: string, data: Partial<ChatListItem>) => void
+  clearChat: () => void
 
   // Message
   addMessage: ({
@@ -55,6 +57,9 @@ export type ChatStore = {
     message: string
     role: ChatRole
   }) => void
+  deleteMessage: (message_id: string) => void
+  updateMessage: (message_id: string, content: string) => void
+  clearMessage: (chat_id: string) => void
 
   // Action
   sendChat: (chat_id: string) => void

@@ -5,12 +5,15 @@ import { Logo } from '@/components/modules/Logo'
 import { cn } from '@/lib/utils'
 import { LOADING_STATE, useChatStore } from '@/store/chat'
 
+import { EditChatName } from './editChatName'
+
 function Menus({ className }: { className?: string }) {
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
 
   const switchChat = useChatStore((state) => state.switchChat)
   const addChat = useChatStore((state) => state.addChat)
   const deleteChat = useChatStore((state) => state.deleteChat)
+  const clearChat = useChatStore((state) => state.clearChat)
 
   return (
     <div
@@ -37,8 +40,9 @@ function Menus({ className }: { className?: string }) {
             </div>
           }
           title="Are you sure?"
-          description="Are you sure you want to clear the chat?"
+          description="Are you sure you want to clear all chat?"
           actionClassName="text-[#f53126]"
+          onOk={clearChat}
         />
       </div>
       <div className="my-2 flex flex-1 flex-col gap-1 overflow-y-auto px-2.5">
@@ -63,7 +67,7 @@ function Menus({ className }: { className?: string }) {
               {item.chat_name || 'Untitled'}
             </div>
             <div className="hidden gap-1.5 group-hover:flex">
-              <span className="i-ri-edit-line" />
+              <EditChatName />
               <AlertDialog
                 trigger={<span className="i-f7-trash h-[15.5px] w-[15.5px]" />}
                 title="Are you sure?"

@@ -56,6 +56,18 @@ export const useChatStore = create<ChatStore>()(
           }
         })
       },
+      updateChat: (chat_id, data) => {
+        const findChat = get().list.find((item) => item.chat_id === chat_id)
+        if (!findChat) return
+
+        findChat.chat_name = data.chat_name || findChat.chat_name
+        findChat.chat_list = data.chat_list || findChat.chat_list
+
+        set(() => ({ list: get().list }))
+      },
+      clearChat: () => {
+        set(() => ({ activeId: initChatItem.chat_id, list: [initChatItem] }))
+      },
 
       // Message
       addMessage: ({ chat_id, message, role }) => {
@@ -69,6 +81,37 @@ export const useChatStore = create<ChatStore>()(
           time: String(+new Date()),
         })
 
+        set(() => ({ list: get().list }))
+      },
+      deleteMessage: (message_id) => {
+        const activeId = get().activeId
+        const findChat = get().list.find((item) => item.chat_id === activeId)
+        if (!findChat) return
+
+        findChat.chat_list = findChat.chat_list.filter(
+          (item) => item.id !== message_id,
+        )
+
+        set(() => ({ list: get().list }))
+      },
+      updateMessage: (message_id, content) => {
+        const activeId = get().activeId
+        const findChat = get().list.find((item) => item.chat_id === activeId)
+        if (!findChat) return
+
+        const findMessage = findChat.chat_list.find(
+          (item) => item.id === message_id,
+        )
+        if (!findMessage) return
+
+        findMessage.content = content
+
+        set(() => ({ list: get().list }))
+      },
+      clearMessage: (chat_id) => {
+        const findChat = get().list.find((item) => item.chat_id === chat_id)
+        if (!findChat) return
+        findChat.chat_list = []
         set(() => ({ list: get().list }))
       },
 
