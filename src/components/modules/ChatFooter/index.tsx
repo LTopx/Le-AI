@@ -21,6 +21,7 @@ export function ChatFooter() {
   const clearMessage = useChatStore((state) => state.clearMessage)
   const sendChat = useChatStore((state) => state.sendChat)
   const stopChat = useChatStore((state) => state.stopChat)
+  const regenerateChat = useChatStore((state) => state.regenerateChat)
 
   const onResize = () => {
     if (!textareaRef.current) return
@@ -31,6 +32,14 @@ export function ChatFooter() {
       textareaRef.current.scrollHeight
         ? 'hidden'
         : 'auto'
+  }
+
+  const onRegenerate = () => {
+    const assistantLists = activeList?.chat_list.filter(
+      (item) => item.role === 'assistant',
+    )
+    if (!assistantLists?.length) return
+    regenerateChat(assistantLists[assistantLists.length - 1].id)
   }
 
   const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -89,6 +98,23 @@ export function ChatFooter() {
             <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]">
               <span className="i-mingcute-classify-add-2-line h-[18px] w-[18px]" />
             </div>
+            {!!activeList?.chat_list?.length &&
+              activeList.chat_state === LOADING_STATE.NONE && (
+                <div
+                  className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]"
+                  onClick={onRegenerate}
+                >
+                  <span className="i-mingcute-refresh-3-line h-[18px] w-[18px]" />
+                </div>
+              )}
+            {activeList?.chat_state !== LOADING_STATE.NONE && (
+              <div
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]"
+                onClick={() => stopChat(activeId)}
+              >
+                <span className="i-ri-stop-circle-fill h-[18px] w-[18px] text-red-500" />
+              </div>
+            )}
             <AlertDialog
               trigger={
                 <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]">
@@ -100,14 +126,6 @@ export function ChatFooter() {
               actionClassName="text-[#f53126]"
               onOk={() => clearMessage(activeId)}
             />
-            {activeList?.chat_state !== LOADING_STATE.NONE && (
-              <div
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]"
-                onClick={() => stopChat(activeId)}
-              >
-                <span className="i-ri-stop-circle-fill h-[18px] w-[18px] text-red-500" />
-              </div>
-            )}
           </div>
 
           <div

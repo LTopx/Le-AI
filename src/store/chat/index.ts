@@ -203,6 +203,31 @@ export const useChatStore = create<ChatStore>()(
           },
         })
       },
+      regenerateChat: (message_id) => {
+        const activeId = get().activeId
+        const findChat = get().list.find((item) => item.chat_id === activeId)
+        if (!findChat) return
+
+        const findMessage = findChat.chat_list.find(
+          (item) => item.id === message_id,
+        )
+        const findMessageIndex = findChat.chat_list.findIndex(
+          (item) => item.id === message_id,
+        )
+        if (!findMessage) return
+
+        let arr: Message[] = []
+
+        if (findMessage.role === 'assistant') {
+          arr = findChat.chat_list.slice(0, findMessageIndex)
+        } else if (findMessage.role === 'user') {
+          arr = findChat.chat_list.slice(0, findMessageIndex + 1)
+        }
+
+        findChat.chat_list = arr
+        set(() => ({ list: get().list }))
+        get().sendChat(activeId)
+      },
       generateChatName: (chat_id) => {
         const findChat = get().list.find((item) => item.chat_id === chat_id)
         if (!findChat) return

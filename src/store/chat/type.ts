@@ -63,6 +63,7 @@ export type ChatStore = {
 
   // Action
   sendChat: (chat_id: string) => void
+  regenerateChat: (message_id: string) => void
   generateChatName: (chat_id: string) => void
   stopChat: (chat_id: string) => void
 
