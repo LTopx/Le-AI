@@ -12,10 +12,16 @@ interface ChatItemProps {
 export function ChatItem({ item, isLast }: ChatItemProps) {
   return (
     <div className="group">
-      <div className="flex gap-3">
-        <Avatar role={item.role} />
+      <div className="relative pl-12">
+        <div className="absolute left-0">
+          <Avatar role={item.role} />
+        </div>
         <Content role={item.role} content={item.content} />
       </div>
+      {/* <div className="flex gap-3">
+        <Avatar role={item.role} />
+        <Content role={item.role} content={item.content} />
+      </div> */}
       <Menus isLast={isLast} item={item} />
     </div>
   )

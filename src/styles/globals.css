@@ -19,7 +19,21 @@
   border-radius: 9999px;
 }
 
-.code-block {
+.prose > pre {
+  padding: 0;
+  border: 1px solid #ebeaeb;
+}
+
+.prose pre {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.prose span {
+  background-color: #fff;
+}
+
+/* .code-block {
   color: #d6deeb;
   background-color: #011627;
   font-family:
@@ -51,9 +65,9 @@
   padding: 3px 0.25rem;
   font-size: 0.75rem;
   line-height: 1rem;
-}
+} */
 
-code,
+/* code,
 kbd,
 pre,
 samp {
@@ -69,7 +83,7 @@ samp {
   font-feature-settings: normal;
   font-variation-settings: normal;
   font-size: 1em;
-}
+} */
 
 @layer base {
   :root {
