@@ -64,6 +64,8 @@ export function ChatFooter() {
   }, [])
 
   useEffect(() => {
+    if (window.innerWidth < 768) return
+
     textareaRef.current?.focus()
   }, [activeId])
 

@@ -23,7 +23,7 @@ export function ChatList() {
 
   return (
     <div className="flex-1 overflow-y-auto" ref={scrollRef}>
-      <div className="container max-w-4xl">
+      <div className="container max-w-4xl px-5">
         <div className="flex flex-col gap-7 py-10">
           {activeChat.chat_list.map((item, index) => (
             <ChatItem

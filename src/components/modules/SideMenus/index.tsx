@@ -1,25 +1,37 @@
 'use client'
 
+import { useEffect } from 'react'
+
 import { AlertDialog } from '@/components/common/alertDialog'
 import { Logo } from '@/components/modules/Logo'
 import { cn } from '@/lib/utils'
 import { LOADING_STATE, useChatStore } from '@/store/chat'
+import { useCommonStore } from '@/store/common'
 
 import { EditChatName } from './editChatName'
 
-function Menus({ className }: { className?: string }) {
+export function SideMenus() {
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
+  const isPCSideMenuOpen = useCommonStore((state) => state.isPCSideMenuOpen)
+  const isMSideMenuOpen = useCommonStore((state) => state.isMSideMenuOpen)
+  const toggleMSideMenu = useCommonStore((state) => state.toggleMSideMenu)
 
   const switchChat = useChatStore((state) => state.switchChat)
   const addChat = useChatStore((state) => state.addChat)
   const deleteChat = useChatStore((state) => state.deleteChat)
   const clearChat = useChatStore((state) => state.clearChat)
 
+  useEffect(() => {
+    if (isMSideMenuOpen) toggleMSideMenu()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeId])
+
   return (
     <div
       className={cn(
-        'absolute bottom-0 top-0 hidden w-[260px] flex-col bg-[#e1e3e3] md:flex',
-        className,
+        'absolute bottom-0 top-0 z-20 flex w-[260px] flex-col bg-[#e1e3e3] transition-all duration-300',
+        isPCSideMenuOpen ? 'md:translate-x-0' : 'md:-translate-x-full',
+        isMSideMenuOpen ? '' : '-translate-x-full',
       )}
     >
       <div className="flex h-12 items-center px-2.5">
@@ -82,8 +94,4 @@ function Menus({ className }: { className?: string }) {
       <div className="h-12 border-t border-t-black">Footer</div>
     </div>
   )
-}
-
-export function SideMenus() {
-  return <Menus className="" />
 }

@@ -137,7 +137,7 @@ export const useChatStore = create<ChatStore>()(
 
         const controller = new AbortController()
 
-        fetchEventSource('http://localhost:3001/api/chat', {
+        fetchEventSource('http://10.91.1.129:3001/api/chat', {
           method: 'POST',
           signal: controller.signal,
           openWhenHidden: true,
@@ -212,7 +212,7 @@ export const useChatStore = create<ChatStore>()(
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_DEV_API_KEY}`,
         }
 
-        fetchEventSource('http://localhost:3001/api/chat', {
+        fetchEventSource('http://10.91.1.129:3001/api/chat', {
           method: 'POST',
           openWhenHidden: true,
           headers,
