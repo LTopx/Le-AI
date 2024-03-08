@@ -20,7 +20,7 @@ export function Menus({ isLast, item }: { isLast: boolean; item: Message }) {
         <Copy className="h-full w-full" text={item.content} />
       </div>
       <EditContent item={item} />
-      {item.role === 'assistant' && (
+      {item.role === 'user' && (
         <div
           className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md transition-colors hover:bg-[#f2f2f2]"
           onClick={() => regenerateChat(item.id)}
