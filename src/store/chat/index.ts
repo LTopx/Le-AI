@@ -33,13 +33,20 @@ export const useChatStore = create<ChatStore>()(
       activeId: initChatItem.chat_id,
       list: [initChatItem],
       abort: {},
+      recentModel: {
+        type: 'openai',
+        name: 'gpt-3.5-turbo',
+      },
 
       // Chat
       switchChat: (chat_id) => set({ activeId: chat_id }),
       addChat: () => {
         const chat_id = nanoid()
         set((state) => ({
-          list: [...state.list, { ...clone(initChatItem), chat_id }],
+          list: [
+            ...state.list,
+            { ...clone(initChatItem), chat_id, chat_model: get().recentModel },
+          ],
           activeId: chat_id,
         }))
       },
@@ -63,9 +70,18 @@ export const useChatStore = create<ChatStore>()(
         const findChat = get().list.find((item) => item.chat_id === chat_id)
         if (!findChat) return
 
-        findChat.chat_name = data.chat_name || findChat.chat_name
-        findChat.chat_list = data.chat_list || findChat.chat_list
-        findChat.chat_model = data.chat_model || findChat.chat_model
+        if (data.chat_name) {
+          findChat.chat_name = data.chat_name
+        }
+
+        if (data.chat_list) {
+          findChat.chat_list = data.chat_list
+        }
+
+        if (data.chat_model) {
+          findChat.chat_model = data.chat_model
+          get().updateRecentModel(data.chat_model)
+        }
 
         set(() => ({ list: get().list }))
       },
@@ -294,6 +310,9 @@ export const useChatStore = create<ChatStore>()(
 
         set(() => ({ abort: get().abort, list: get().list }))
       },
+
+      // Other
+      updateRecentModel: (recentModel) => set({ recentModel }),
 
       // Hydration
       _hasHydrated: false,

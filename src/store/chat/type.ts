@@ -41,6 +41,7 @@ export type ChatStore = {
   activeId: string
   list: ChatListItem[]
   abort: Record<string, AbortController>
+  recentModel: ChatModel
 
   // Chat
   switchChat: (chat_id: string) => void
@@ -68,6 +69,9 @@ export type ChatStore = {
   regenerateChat: (message_id: string) => void
   generateChatName: (chat_id: string) => void
   stopChat: (chat_id: string) => void
+
+  // Other
+  updateRecentModel: (model: ChatModel) => void
 
   // Hydration
   _hasHydrated: boolean

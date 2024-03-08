@@ -41,10 +41,13 @@ export function ModelSelect() {
   }, [activeChat?.chat_model.name])
 
   const onModelChange = (value: string) => {
-    if (!model) return
+    const findProvider = MODEL_LISTS.find((val) => {
+      return val.model_list.find((item) => item.model_value === value)
+    })
+    if (!findProvider) return
 
     updateChat(activeId, {
-      chat_model: { type: provider as ModelProvider, name: value },
+      chat_model: { type: findProvider.model_provider, name: value },
     })
   }
 
