@@ -136,6 +136,7 @@ export const useChatStore = create<ChatStore>()(
         }
 
         const controller = new AbortController()
+        set((state) => ({ abort: { ...state.abort, [chat_id]: controller } }))
 
         fetchEventSource('http://10.91.1.129:3001/api/chat', {
           method: 'POST',
@@ -244,7 +245,18 @@ export const useChatStore = create<ChatStore>()(
           },
         })
       },
-      stopChat: () => {},
+      stopChat: (chat_id) => {
+        const findController = get().abort[chat_id]
+        const findChat = get().list.find((item) => item.chat_id === chat_id)
+        if (!findController || !findChat) return
+
+        findController.abort()
+        delete get().abort[chat_id]
+
+        findChat.chat_state = LOADING_STATE.NONE
+
+        set(() => ({ abort: get().abort, list: get().list }))
+      },
 
       // Hydration
       _hasHydrated: false,

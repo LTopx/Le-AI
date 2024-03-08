@@ -20,6 +20,7 @@ export function ChatFooter() {
   const addMessage = useChatStore((state) => state.addMessage)
   const clearMessage = useChatStore((state) => state.clearMessage)
   const sendChat = useChatStore((state) => state.sendChat)
+  const stopChat = useChatStore((state) => state.stopChat)
 
   const onResize = () => {
     if (!textareaRef.current) return
@@ -99,6 +100,14 @@ export function ChatFooter() {
               actionClassName="text-[#f53126]"
               onOk={() => clearMessage(activeId)}
             />
+            {activeList?.chat_state !== LOADING_STATE.NONE && (
+              <div
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]"
+                onClick={() => stopChat(activeId)}
+              >
+                <span className="i-ri-stop-circle-fill h-[18px] w-[18px] text-red-500" />
+              </div>
+            )}
           </div>
 
           <div
