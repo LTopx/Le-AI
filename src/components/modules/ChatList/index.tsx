@@ -1,29 +1,26 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
+import { scrollToBottom } from '@/lib/scroll'
 import { cn } from '@/lib/utils'
-import { LOADING_STATE, Message, useChatStore } from '@/store/chat'
+import { LOADING_STATE, useChatStore } from '@/store/chat'
 
 import { ChatItem } from './Item'
 
 export function ChatList() {
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
 
-  const scrollRef = useRef<HTMLDivElement>(null)
-
   const activeChat = list.find((item) => item.chat_id === activeId)
 
   useEffect(() => {
-    setTimeout(() => {
-      scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight)
-    }, 0)
+    scrollToBottom()
   }, [activeId, list])
 
   if (!activeChat?.chat_list?.length) return <div className="flex-1" />
 
   return (
-    <div className="flex-1 overflow-y-auto" ref={scrollRef}>
+    <div className="auto-scroll-to-bottom flex-1 overflow-y-auto">
       <div className="container max-w-4xl px-5">
         <div
           className={cn('flex flex-col gap-7 pb-10 pt-10', {
