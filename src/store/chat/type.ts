@@ -1,5 +1,7 @@
+import type { ModelProvider } from '@/constants/models'
+
 export type ChatModel = {
-  type: string
+  type: ModelProvider
   name: string
 }
 

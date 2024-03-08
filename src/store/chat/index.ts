@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { BASE_PROMPT, GENERATE_CHAT_NAME_PROMPT } from '@/lib/constant'
+import { BASE_PROMPT, GENERATE_CHAT_NAME_PROMPT } from '@/constants/prompt'
 import { scrollToBottom } from '@/lib/scroll'
 import { fetchEventSource } from '@fortaine/fetch-event-source'
 
@@ -63,6 +63,7 @@ export const useChatStore = create<ChatStore>()(
 
         findChat.chat_name = data.chat_name || findChat.chat_name
         findChat.chat_list = data.chat_list || findChat.chat_list
+        findChat.chat_model = data.chat_model || findChat.chat_model
 
         set(() => ({ list: get().list }))
       },

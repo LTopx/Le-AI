@@ -101,6 +101,7 @@ const config = {
         'mdi',
         'ri',
         'simple-icons',
+        'logos',
       ]),
       // If you want to use all icons from @iconify/json, you can do this:
       // collections: getIconCollections("all"),
