@@ -3,7 +3,9 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 import { BASE_PROMPT, GENERATE_CHAT_NAME_PROMPT } from '@/constants/prompt'
+import { getCheapModel } from '@/lib/model'
 import { scrollToBottom } from '@/lib/scroll'
+import { clone } from '@/lib/utils'
 import { fetchEventSource } from '@fortaine/fetch-event-source'
 
 import { ChatListItem, ChatStore, LOADING_STATE, Message } from './type'
@@ -37,7 +39,7 @@ export const useChatStore = create<ChatStore>()(
       addChat: () => {
         const chat_id = nanoid()
         set((state) => ({
-          list: [...state.list, { ...initChatItem, chat_id }],
+          list: [...state.list, { ...clone(initChatItem), chat_id }],
           activeId: chat_id,
         }))
       },
@@ -45,7 +47,7 @@ export const useChatStore = create<ChatStore>()(
         set((state) => {
           if (state.list.length <= 1) {
             const activeId = initChatItem.chat_id
-            return { activeId, list: [initChatItem] }
+            return { activeId, list: [clone(initChatItem)] }
           } else {
             const list = state.list.filter((item) => item.chat_id !== chat_id)
 
@@ -68,7 +70,10 @@ export const useChatStore = create<ChatStore>()(
         set(() => ({ list: get().list }))
       },
       clearChat: () => {
-        set(() => ({ activeId: initChatItem.chat_id, list: [initChatItem] }))
+        set(() => ({
+          activeId: initChatItem.chat_id,
+          list: [clone(initChatItem)],
+        }))
       },
 
       // Message
@@ -148,7 +153,7 @@ export const useChatStore = create<ChatStore>()(
           headers,
           body: JSON.stringify({
             stream: true,
-            model: 'gpt-3.5-turbo',
+            model: findChat.chat_model.name,
             messages,
           }),
           onopen: async (res) => {
@@ -250,7 +255,8 @@ export const useChatStore = create<ChatStore>()(
           headers,
           body: JSON.stringify({
             stream: true,
-            model: 'gpt-3.5-turbo',
+            // Generate the title using the cheapest model available from the current supplier.
+            model: getCheapModel(findChat.chat_model.type),
             messages: [
               ...messages,
               { role: 'user', content: GENERATE_CHAT_NAME_PROMPT },
