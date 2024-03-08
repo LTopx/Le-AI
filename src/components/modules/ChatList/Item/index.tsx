@@ -18,10 +18,6 @@ export function ChatItem({ item, isLast }: ChatItemProps) {
         </div>
         <Content role={item.role} content={item.content} />
       </div>
-      {/* <div className="flex gap-3">
-        <Avatar role={item.role} />
-        <Content role={item.role} content={item.content} />
-      </div> */}
       <Menus isLast={isLast} item={item} />
     </div>
   )

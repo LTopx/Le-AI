@@ -77,7 +77,13 @@ export function Content({
               language={match[1]}
             />
           ) : (
-            <code {...rest} className={className}>
+            <code
+              {...rest}
+              className={cn(
+                'rounded-[6px] border border-gray-300/60 bg-gray-200/80 px-1 py-0.5',
+                className,
+              )}
+            >
               {children}
             </code>
           )

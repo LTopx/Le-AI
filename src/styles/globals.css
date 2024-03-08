@@ -33,6 +33,13 @@
   background-color: #fff;
 }
 
+.prose code::before {
+  content: '';
+}
+.prose code::after {
+  content: '';
+}
+
 /* .code-block {
   color: #d6deeb;
   background-color: #011627;
