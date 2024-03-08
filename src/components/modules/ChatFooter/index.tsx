@@ -5,6 +5,7 @@ import type { KeyboardEvent } from 'react'
 
 import { AlertDialog } from '@/components/common/alertDialog'
 import { Textarea } from '@/components/ui/textarea'
+import { getPlatform } from '@/lib/platform'
 import { cn } from '@/lib/utils'
 import { LOADING_STATE, useChatStore } from '@/store/chat'
 
@@ -43,9 +44,18 @@ export function ChatFooter() {
   }
 
   const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault()
-      onSubmit()
+    const platform = getPlatform()
+
+    if (platform === 'mac') {
+      if (event.keyCode === 13 && !event.shiftKey) {
+        event.preventDefault()
+        onSubmit()
+      }
+    } else if (platform === 'windows') {
+      if ((event.keyCode === 13 || event.keyCode === 10) && !event.shiftKey) {
+        event.preventDefault()
+        onSubmit()
+      }
     }
   }
 

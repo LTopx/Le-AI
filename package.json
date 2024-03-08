@@ -37,7 +37,7 @@
     "remark-math": "6.0.0",
     "tailwind-merge": "2.2.1",
     "tailwindcss-animate": "1.0.7",
-    "usehooks-ts": "2.16.0",
+    "usehooks-ts": "3.0.1",
     "zod": "3.22.4",
     "zustand": "4.5.2"
   },
