@@ -28,8 +28,7 @@
 }
 
 .prose > pre > .text-only {
-  /* padding: 1em; */
-  padding-top: 50px;
+  padding-top: 36px;
   padding-left: 1em;
   padding-right: 1em;
   padding-bottom: 1em;
@@ -55,6 +54,7 @@
 .prose :not(pre) .text-only.assistant {
   background-color: #e8e9ed;
   border: 1px solid #dadde3;
+  margin: 0 5px;
 }
 
 @layer base {

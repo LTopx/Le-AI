@@ -89,7 +89,7 @@ export function Content({
                     )}
                   </span>
                 </span>
-                <span>{children}</span>
+                <span className="whitespace-pre-wrap">{children}</span>
               </span>
             )
           }
