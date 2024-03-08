@@ -57,6 +57,8 @@ export function Content({
   content: string
   role: Message['role']
 }) {
+  const [isCopied, copy] = useCopy()
+
   return (
     <MemoizedReactMarkdown
       className={cn(
@@ -70,6 +72,28 @@ export function Content({
       components={{
         code(props) {
           const { children, className, ...rest } = props
+
+          if (!className) {
+            return (
+              <span className={cn('text-only', role)}>
+                <span className="text-only-header absolute left-0 right-0 top-0 flex h-9 items-center justify-between border-b border-b-[#ebeaeb] bg-[#fafafa] px-4 text-xs leading-[18px] text-[#666666]">
+                  <span className="capitalize">Text</span>
+                  <span
+                    className="flex cursor-pointer items-center rounded-sm p-1.5 transition-colors hover:bg-gray-200"
+                    onClick={() => copy(children as string)}
+                  >
+                    {isCopied ? (
+                      <span className="i-mingcute-check-line h-4 w-4 !bg-green-400" />
+                    ) : (
+                      <span className="i-mingcute-copy-2-line h-4 w-4 !bg-muted-foreground" />
+                    )}
+                  </span>
+                </span>
+                <span>{children}</span>
+              </span>
+            )
+          }
+
           const match = /language-(\w+)/.exec(className || '')
           return match ? (
             <CodeBlock
@@ -77,13 +101,7 @@ export function Content({
               language={match[1]}
             />
           ) : (
-            <code
-              {...rest}
-              className={cn(
-                'rounded-[6px] border border-gray-300/60 bg-gray-200/80 px-1 py-0.5',
-                className,
-              )}
-            >
+            <code {...rest} className={className}>
               {children}
             </code>
           )

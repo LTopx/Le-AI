@@ -22,75 +22,40 @@
 .prose > pre {
   padding: 0;
   border: 1px solid #ebeaeb;
-}
-
-.prose pre {
-  background-color: #fff;
   border-radius: 10px;
+  background-color: #fff;
+  position: relative;
 }
 
-.prose span {
+.prose > pre > .text-only {
+  /* padding: 1em; */
+  padding-top: 50px;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+  display: inline-block;
+}
+
+.prose > pre .text-only {
+  color: rgb(56, 58, 66);
+}
+
+.prose > pre code span {
   background-color: #fff;
 }
 
-.prose code::before {
-  content: '';
+.prose :not(pre) .text-only {
+  border-radius: 6px;
+  padding: 2px 4px;
 }
-.prose code::after {
-  content: '';
-}
-
-/* .code-block {
-  color: #d6deeb;
-  background-color: #011627;
-  font-family:
-    Consolas,
-    Monaco,
-    Andale Mono,
-    Ubuntu Mono,
-    monospace;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  line-height: 1.5;
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-  -webkit-hyphens: none;
-  hyphens: none;
-  padding: 1em;
-  overflow: auto;
-  color-scheme: dark;
+.prose :not(pre) .text-only .text-only-header {
+  display: none;
 }
 
-.inline-code {
-  border-radius: 0.25rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(228 228 231 / var(--tw-bg-opacity));
-  padding: 3px 0.25rem;
-  font-size: 0.75rem;
-  line-height: 1rem;
-} */
-
-/* code,
-kbd,
-pre,
-samp {
-  font-family:
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    Liberation Mono,
-    Courier New,
-    monospace;
-  font-feature-settings: normal;
-  font-variation-settings: normal;
-  font-size: 1em;
-} */
+.prose :not(pre) .text-only.assistant {
+  background-color: #e8e9ed;
+  border: 1px solid #dadde3;
+}
 
 @layer base {
   :root {
