@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -24,7 +24,7 @@ export function EditContent({ item }: { item: Message }) {
     const content = textareaRef.current?.value?.trim()
     if (!content) {
       textareaRef.current?.focus()
-      return toast.error('Cannot be empty', { id: 'cannot-be-empty' })
+      return toast.error('Cannot be empty')
     }
 
     updateMessage(item.id, content)

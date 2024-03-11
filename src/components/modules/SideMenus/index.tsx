@@ -9,6 +9,7 @@ import { LOADING_STATE, useChatStore } from '@/store/chat'
 import { useCommonStore } from '@/store/common'
 
 import { EditChatName } from './editChatName'
+import { Footer } from './footer'
 
 export function SideMenus() {
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
@@ -91,7 +92,7 @@ export function SideMenus() {
           </div>
         ))}
       </div>
-      <div className="h-12 border-t border-t-black">Footer</div>
+      <Footer />
     </div>
   )
 }

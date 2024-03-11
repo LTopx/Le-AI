@@ -1,6 +1,7 @@
-import { Toaster } from 'react-hot-toast'
 import { GeistSans } from 'geist/font/sans'
 import type { Metadata, Viewport } from 'next'
+
+import { Toaster } from '@/components/ui/sonner'
 
 import Providers from './providers'
 

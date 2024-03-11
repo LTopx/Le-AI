@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -26,7 +26,7 @@ export function EditChatName() {
   const onSave = () => {
     if (!inputRef.current?.value?.trim()) {
       inputRef.current?.focus()
-      return toast.error('Cannot be empty', { id: 'cannot-be-empty' })
+      return toast.error('Cannot be empty')
     }
     updateChat(activeId, { chat_name: inputRef.current.value.trim() })
     setOpen(false)

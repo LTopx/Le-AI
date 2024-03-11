@@ -1,14 +1,20 @@
 import { nanoid } from 'nanoid'
+import { toast } from 'sonner'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import type { ModelProvider } from '@/constants/models'
 
 import { BASE_PROMPT, GENERATE_CHAT_NAME_PROMPT } from '@/constants/prompt'
 import { getCheapModel } from '@/lib/model'
 import { scrollToBottom } from '@/lib/scroll'
 import { clone } from '@/lib/utils'
-import { fetchEventSource } from '@fortaine/fetch-event-source'
+import {
+  fetchEventSource,
+  FetchEventSourceInit,
+} from '@fortaine/fetch-event-source'
 
 import { ChatListItem, ChatStore, LOADING_STATE, Message } from './type'
+import { generateFetchEventSource } from './utils'
 
 export type { Message }
 export { LOADING_STATE }
@@ -144,6 +150,18 @@ export const useChatStore = create<ChatStore>()(
         const findChat = get().list.find((item) => item.chat_id === chat_id)
         if (!findChat) return
 
+        let headers: Record<string, string>
+        let endpoint: string
+
+        try {
+          const res = generateFetchEventSource(findChat.chat_model.type)
+          headers = res.headers
+          endpoint = res.endpoint
+        } catch (error: any) {
+          toast.error(error.message)
+          return
+        }
+
         findChat.chat_state = LOADING_STATE.CONNECTING
 
         set(() => ({ list: get().list }))
@@ -154,19 +172,14 @@ export const useChatStore = create<ChatStore>()(
           content: item.content,
         }))
 
-        const headers: Record<string, string> = {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_DEV_API_KEY}`,
-        }
-
         const controller = new AbortController()
         set((state) => ({ abort: { ...state.abort, [chat_id]: controller } }))
 
-        fetchEventSource('http://10.91.1.129:3001/api/chat', {
+        fetchEventSource(`${endpoint}/v1/chat/completions`, {
+          headers,
           method: 'POST',
           signal: controller.signal,
           openWhenHidden: true,
-          headers,
           body: JSON.stringify({
             stream: true,
             model: findChat.chat_model.name,
@@ -254,21 +267,28 @@ export const useChatStore = create<ChatStore>()(
         const findChat = get().list.find((item) => item.chat_id === chat_id)
         if (!findChat) return
 
+        let headers: Record<string, string>
+        let endpoint: string
+
+        try {
+          const res = generateFetchEventSource(findChat.chat_model.type)
+          headers = res.headers
+          endpoint = res.endpoint
+        } catch (error: any) {
+          toast.error(error.message)
+          return
+        }
+
         // last 10 messages
         const messages = findChat.chat_list.slice(-10).map((item) => ({
           role: item.role,
           content: item.content,
         }))
 
-        const headers: Record<string, string> = {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_DEV_API_KEY}`,
-        }
-
-        fetchEventSource('http://10.91.1.129:3001/api/chat', {
+        fetchEventSource(`${endpoint}/v1/chat/completions`, {
+          headers,
           method: 'POST',
           openWhenHidden: true,
-          headers,
           body: JSON.stringify({
             stream: true,
             // Generate the title using the cheapest model available from the current supplier.
