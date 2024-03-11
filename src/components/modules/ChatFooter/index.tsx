@@ -69,21 +69,6 @@ export function ChatFooter() {
   }
 
   useEffect(() => {
-    const keydownHandler = (e: any) => {
-      if (e.key === '/') {
-        e.preventDefault()
-        textareaRef.current?.focus()
-      }
-    }
-
-    document.addEventListener('keydown', keydownHandler)
-
-    return () => {
-      document.removeEventListener('keydown', keydownHandler)
-    }
-  }, [])
-
-  useEffect(() => {
     if (window.innerWidth < 768) return
 
     textareaRef.current?.focus()
@@ -97,7 +82,7 @@ export function ChatFooter() {
           className="max-h-56 min-h-min resize-none rounded-xl border-none bg-transparent outline-none transition-all"
           rows={1}
           style={{ boxShadow: 'none' }}
-          placeholder={`Press "/" to focus input`}
+          placeholder={'Enter your message here...'}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onInput={onResize}
