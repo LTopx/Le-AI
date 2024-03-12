@@ -6,15 +6,20 @@ export type ModelStore = {
   openai: {
     key: string
     endpoint: string
+    error: boolean
   }
   claude: {
     key: string
     endpoint: string
+    error: boolean
   }
 
   // Actions
-  updateOpenai: (openai: { key: string; endpoint: string }) => void
-  // updateRecentModel: (recentModel: ChatModel) => void
+  updateOpenai: (openai: {
+    key: string
+    endpoint: string
+    error: boolean
+  }) => void
 }
 
 export const useModelsStore = create<ModelStore>()(
@@ -24,10 +29,12 @@ export const useModelsStore = create<ModelStore>()(
       openai: {
         key: '',
         endpoint: '',
+        error: true,
       },
       claude: {
         key: '',
         endpoint: '',
+        error: true,
       },
 
       // Actions

@@ -16,6 +16,12 @@ export function OpenAI() {
     state.updateOpenai,
   ])
 
+  const onRemove = () => {
+    setOpenAI({ key: '', endpoint: '', error: true })
+    keyRef.current!.value = ''
+    endpointRef.current!.value = ''
+  }
+
   const validate = () => {
     const key = keyRef.current?.value?.trim() || ''
     const endpoint = endpointRef.current?.value?.trim() || ''
@@ -46,15 +52,17 @@ export function OpenAI() {
           toast.error(
             'Invalid API key. Please make sure your API key is still working properly.',
           )
+          onRemove()
         } else {
           toast.success('API key is valid.')
-          setOpenAI({ key, endpoint })
+          setOpenAI({ key, endpoint, error: false })
         }
       })
       .catch(() => {
         toast.error(
           'Invalid API key. Please make sure your API key is still working properly.',
         )
+        onRemove()
       })
       .finally(() => {
         setLoading(false)
@@ -64,8 +72,13 @@ export function OpenAI() {
   return (
     <Card>
       <CardHeader className="p-[18px]">
-        <h4 className="scroll-m-20 text-lg font-semibold tracking-tight">
-          OpenAI
+        <h4 className="flex scroll-m-20 items-center gap-2 text-lg font-semibold tracking-tight">
+          <span>OpenAI</span>
+          {openai.error ? (
+            <span className="i-ri-error-warning-fill h-5 w-5 text-red-500" />
+          ) : (
+            <span className="i-mingcute-check-circle-fill h-5 w-5 text-lime-500" />
+          )}
         </h4>
       </CardHeader>
       <CardContent className="px-[18px] pb-[18px]">
@@ -106,11 +119,7 @@ export function OpenAI() {
               size="sm"
               variant="destructive"
               className="select-none gap-2"
-              onClick={() => {
-                setOpenAI({ key: '', endpoint: '' })
-                keyRef.current!.value = ''
-                endpointRef.current!.value = ''
-              }}
+              onClick={onRemove}
             >
               <span className="i-mingcute-delete-2-line" />
               Remove

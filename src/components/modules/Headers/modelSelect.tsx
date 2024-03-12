@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { MODEL_LISTS, ModelProvider } from '@/constants/models'
+import { MODEL_LIST, ModelProvider } from '@/constants/models'
 import { useChatStore } from '@/store/chat'
 
 export function ModelSelect() {
@@ -25,7 +25,7 @@ export function ModelSelect() {
 
   const { provider, model, name } = useMemo(() => {
     const model = activeChat?.chat_model.name
-    const findProvider = MODEL_LISTS.find((val) => {
+    const findProvider = MODEL_LIST.find((val) => {
       return val.model_list.find((item) => item.model_value === model)
     })
     if (!findProvider) return { provider: '', model: '' }
@@ -41,7 +41,7 @@ export function ModelSelect() {
   }, [activeChat?.chat_model.name])
 
   const onModelChange = (value: string) => {
-    const findProvider = MODEL_LISTS.find((val) => {
+    const findProvider = MODEL_LIST.find((val) => {
       return val.model_list.find((item) => item.model_value === value)
     })
     if (!findProvider) return
@@ -73,9 +73,12 @@ export function ModelSelect() {
       <DropdownMenuContent className="w-56" align="start" sideOffset={3}>
         <DropdownMenuLabel>Models</DropdownMenuLabel>
         <div className="max-h-96 overflow-y-auto overflow-x-hidden">
-          {MODEL_LISTS.map((models) => (
+          {MODEL_LIST.map((models) => (
             <div key={models.model_provider}>
               <DropdownMenuSeparator />
+              <DropdownMenuLabel>
+                {models.model_provider_label}
+              </DropdownMenuLabel>
               <DropdownMenuRadioGroup
                 value={model}
                 onValueChange={onModelChange}

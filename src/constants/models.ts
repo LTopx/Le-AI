@@ -10,12 +10,14 @@ export type Model = {
 
 export interface ModelList {
   model_provider: ModelProvider
+  model_provider_label: string
   model_list: Model[]
 }
 
-export const MODEL_LISTS: ModelList[] = [
+export const MODEL_LIST: ModelList[] = [
   {
     model_provider: 'openai',
+    model_provider_label: 'OpenAI',
     model_list: [
       {
         model_name: 'GPT-3.5',
@@ -63,6 +65,7 @@ export const MODEL_LISTS: ModelList[] = [
   },
   {
     model_provider: 'claude',
+    model_provider_label: 'Claude',
     model_list: [
       {
         model_name: 'Claude 3 Opus',
