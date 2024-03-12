@@ -2,16 +2,12 @@ import { nanoid } from 'nanoid'
 import { toast } from 'sonner'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { ModelProvider } from '@/constants/models'
 
 import { BASE_PROMPT, GENERATE_CHAT_NAME_PROMPT } from '@/constants/prompt'
 import { getCheapModel } from '@/lib/model'
 import { scrollToBottom } from '@/lib/scroll'
 import { clone } from '@/lib/utils'
-import {
-  fetchEventSource,
-  FetchEventSourceInit,
-} from '@fortaine/fetch-event-source'
+import { fetchEventSource } from '@fortaine/fetch-event-source'
 
 import { ChatListItem, ChatStore, LOADING_STATE, Message } from './type'
 import { generateFetchEventSource } from './utils'
