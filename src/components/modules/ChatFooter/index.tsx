@@ -110,17 +110,19 @@ export function ChatFooter() {
                 <span className="i-ri-stop-circle-fill h-[18px] w-[18px] text-red-500" />
               </div>
             )}
-            <AlertDialog
-              trigger={
-                <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]">
-                  <span className="i-mdi-tooltip-remove-outline h-[18px] w-[18px]" />
-                </div>
-              }
-              title="Clear current session messages"
-              description="This action cannot be undone"
-              actionClassName="text-[#f53126]"
-              onOk={() => clearMessage(activeId)}
-            />
+            {!!activeList?.chat_list?.length && (
+              <AlertDialog
+                trigger={
+                  <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]">
+                    <span className="i-mdi-tooltip-remove-outline h-[18px] w-[18px]" />
+                  </div>
+                }
+                title="Clear current session messages"
+                description="This action cannot be undone"
+                actionClassName="text-[#f53126]"
+                onOk={() => clearMessage(activeId)}
+              />
+            )}
           </div>
 
           <div
