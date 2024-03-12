@@ -1,13 +1,23 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 interface SettingsStore {
-  // Side Menu State
-  open: boolean
+  // State
+  avatar: string
 
-  updateOpen: () => void
+  // Action
+  updateAvatar: (avatar: string) => void
 }
 
-export const useSettingsStore = create<SettingsStore>((set, get) => ({
-  open: false,
-  updateOpen: () => set({ open: !get().open }),
-}))
+export const useSettingsStore = create<SettingsStore>()(
+  persist(
+    (set, get) => ({
+      // State
+      avatar: '',
+
+      // Actions
+      updateAvatar: (avatar) => set({ avatar }),
+    }),
+    { name: 'chat-settings' },
+  ),
+)

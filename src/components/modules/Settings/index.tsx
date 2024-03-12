@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
-import { useSettingsStore } from '@/store/settings'
+import { useCommonStore } from '@/store/common'
 
 import { About } from './about'
 import { EndPoint } from './endPoint'
@@ -43,9 +43,9 @@ const menus = [
 
 export function Settings() {
   const [activeMenu, setActiveMenu] = useState(menus[0].value)
-  const [open, setOpen] = useSettingsStore((state) => [
-    state.open,
-    state.updateOpen,
+  const [open, setOpen] = useCommonStore((state) => [
+    state.settingsOpen,
+    state.updateSettingsOpen,
   ])
 
   useLayoutEffect(() => {

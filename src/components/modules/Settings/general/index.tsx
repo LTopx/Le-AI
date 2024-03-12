@@ -1,7 +1,9 @@
+import { Avatar } from './avatar'
+
 export function General() {
   return (
     <div>
-      <h1>General</h1>
+      <Avatar />
     </div>
   )
 }

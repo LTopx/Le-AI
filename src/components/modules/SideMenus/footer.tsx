@@ -1,7 +1,7 @@
-import { useSettingsStore } from '@/store/settings'
+import { useCommonStore } from '@/store/common'
 
 export function Footer() {
-  const updateOpen = useSettingsStore((state) => state.updateOpen)
+  const updateOpen = useCommonStore((state) => state.updateSettingsOpen)
 
   return (
     <div className="flex h-12 items-center justify-between border-t border-t-zinc-300 px-2.5">
