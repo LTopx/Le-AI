@@ -70,7 +70,7 @@ export function ModelSelect() {
           <span className="i-mingcute-down-fill h-4 w-4 text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="start" sideOffset={3}>
+      <DropdownMenuContent className="w-64" align="start" sideOffset={3}>
         <DropdownMenuLabel>Models</DropdownMenuLabel>
         <div className="max-h-96 overflow-y-auto overflow-x-hidden">
           {MODEL_LIST.map((models) => (
@@ -87,16 +87,22 @@ export function ModelSelect() {
                   <DropdownMenuRadioItem
                     key={model.model_value}
                     value={model.model_value}
-                    className="gap-2"
+                    className="justify-between"
                   >
-                    <Model
-                      className="rounded"
-                      type={models.model_provider}
-                      name={model.model_value}
-                      size={6}
-                      iconSize={4.5}
-                    />
-                    {model.model_name}
+                    <div className="flex items-center gap-2">
+                      <Model
+                        className="rounded"
+                        type={models.model_provider}
+                        name={model.model_value}
+                        size={6}
+                        iconSize={4.5}
+                      />
+                      {model.model_name}
+                    </div>
+                    <div className="flex w-[52px] items-center gap-1 text-xs text-muted-foreground">
+                      <span className="i-mingcute-aiming-2-fill h-4 w-4 text-green-400" />
+                      {model.model_token_limits}
+                    </div>
                   </DropdownMenuRadioItem>
                 ))}
               </DropdownMenuRadioGroup>
