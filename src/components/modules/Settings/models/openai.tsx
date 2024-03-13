@@ -52,7 +52,7 @@ export function OpenAI() {
           toast.error(
             'Invalid API key. Please make sure your API key is still working properly.',
           )
-          onRemove()
+          setOpenAI({ key: '', endpoint: '', error: true })
         } else {
           toast.success('API key is valid.')
           setOpenAI({ key, endpoint, error: false })
@@ -62,7 +62,7 @@ export function OpenAI() {
         toast.error(
           'Invalid API key. Please make sure your API key is still working properly.',
         )
-        onRemove()
+        setOpenAI({ key: '', endpoint: '', error: true })
       })
       .finally(() => {
         setLoading(false)
