@@ -9,6 +9,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import { useCommonStore } from '@/store/common'
@@ -62,8 +69,26 @@ export function Settings() {
           <DialogTitle>Settings</DialogTitle>
         </DialogHeader>
         <Separator />
-        <div className="flex gap-6 px-6">
-          <div className="flex w-48 flex-col gap-1">
+        <div className="flex flex-col gap-6 px-6 md:flex-row">
+          <Select value={activeMenu} onValueChange={setActiveMenu}>
+            <SelectTrigger
+              className="w-full md:hidden"
+              style={{ boxShadow: 'none' }}
+            >
+              <SelectValue placeholder="Select a fruit" />
+            </SelectTrigger>
+            <SelectContent>
+              {menus.map((menu) => (
+                <SelectItem key={menu.value} value={menu.value}>
+                  <div className="flex items-center gap-2.5 text-zinc-600">
+                    <span className={cn('h-[18px] w-[18px]', menu.icon)} />
+                    {menu.label}
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <div className="hidden w-48 flex-col gap-1 md:flex">
             {menus.map((menu) => (
               <Button
                 key={menu.value}
@@ -84,7 +109,7 @@ export function Settings() {
               </Button>
             ))}
           </div>
-          <div className="flex-1">
+          <div className="max-h-[calc(100vh-300px)] flex-1 overflow-y-auto                                                                                  ">
             {activeMenu === 'general' && <General />}
             {activeMenu === 'endPoint' && <EndPoint />}
             {activeMenu === 'models' && <Models />}
