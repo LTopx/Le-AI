@@ -20,6 +20,11 @@ export type ModelStore = {
     endpoint: string
     error: boolean
   }) => void
+  updateClaude: (claude: {
+    key: string
+    endpoint: string
+    error: boolean
+  }) => void
 }
 
 export const useModelsStore = create<ModelStore>()(
@@ -39,6 +44,7 @@ export const useModelsStore = create<ModelStore>()(
 
       // Actions
       updateOpenai: (openai) => set({ openai }),
+      updateClaude: (claude) => set({ claude }),
     }),
     { name: 'chat-models' },
   ),

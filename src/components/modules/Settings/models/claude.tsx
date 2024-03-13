@@ -8,17 +8,18 @@ import { Label } from '@/components/ui/label'
 import { getRequestInfo } from '@/store/chat/utils'
 import { useModelsStore } from '@/store/models'
 
-export function OpenAI() {
+export function Claude() {
   const keyRef = useRef<HTMLInputElement>(null)
   const endpointRef = useRef<HTMLInputElement>(null)
   const [loading, setLoading] = useState(false)
-  const [openai, setOpenAI] = useModelsStore((state) => [
-    state.openai,
-    state.updateOpenai,
+
+  const [claude, setClaude] = useModelsStore((state) => [
+    state.claude,
+    state.updateClaude,
   ])
 
   const onRemove = () => {
-    setOpenAI({ key: '', endpoint: '', error: true })
+    setClaude({ key: '', endpoint: '', error: true })
     keyRef.current!.value = ''
     endpointRef.current!.value = ''
   }
@@ -35,9 +36,9 @@ export function OpenAI() {
       return toast.error('API Key is required.')
     }
 
-    const requestInfo = getRequestInfo('openai', key, endpoint)
+    const requestInfo = getRequestInfo('claude', key, endpoint)
 
-    const url = `${requestInfo.endpoint}/v1/chat/completions`
+    const url = `${requestInfo.endpoint}/v1/messages`
 
     setLoading(true)
 
@@ -45,7 +46,7 @@ export function OpenAI() {
       method: 'POST',
       headers: requestInfo.headers,
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: 'claude-instant-1.2',
         messages: [{ role: 'user', content: 'say hello' }],
       }),
     })
@@ -55,17 +56,17 @@ export function OpenAI() {
           toast.error(
             'Invalid API key. Please make sure your API key is still working properly.',
           )
-          setOpenAI({ key: '', endpoint: '', error: true })
+          setClaude({ key: '', endpoint: '', error: true })
         } else {
           toast.success('API key is valid.')
-          setOpenAI({ key, endpoint, error: false })
+          setClaude({ key, endpoint, error: false })
         }
       })
       .catch(() => {
         toast.error(
           'Invalid API key. Please make sure your API key is still working properly.',
         )
-        setOpenAI({ key: '', endpoint: '', error: true })
+        setClaude({ key: '', endpoint: '', error: true })
       })
       .finally(() => {
         setLoading(false)
@@ -76,8 +77,8 @@ export function OpenAI() {
     <Card>
       <CardHeader className="p-[18px]">
         <h4 className="flex scroll-m-20 items-center gap-2 text-lg font-semibold tracking-tight">
-          <span>OpenAI</span>
-          {openai.error ? (
+          <span>Claude</span>
+          {claude.error ? (
             <span className="i-ri-error-warning-fill h-5 w-5 text-red-500" />
           ) : (
             <span className="i-mingcute-check-circle-fill h-5 w-5 text-lime-500" />
@@ -91,8 +92,8 @@ export function OpenAI() {
             <Input
               id="openai-key"
               ref={keyRef}
-              placeholder="sk-xxxxxx"
-              defaultValue={openai.key}
+              placeholder="sk-ant-xxxxxx"
+              defaultValue={claude.key}
               onKeyDown={(e) =>
                 e.key === 'Enter' && endpointRef.current?.focus()
               }
@@ -103,8 +104,8 @@ export function OpenAI() {
             <Input
               id="openai-endpoint"
               ref={endpointRef}
-              placeholder="https://api.openai.com"
-              defaultValue={openai.endpoint}
+              placeholder="https://api.anthropic.com"
+              defaultValue={claude.endpoint}
               onKeyDown={(e) => e.key === 'Enter' && validate()}
             />
           </div>

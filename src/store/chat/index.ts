@@ -9,8 +9,9 @@ import { scrollToBottom } from '@/lib/scroll'
 import { clone } from '@/lib/utils'
 import { fetchEventSource } from '@fortaine/fetch-event-source'
 
+import { useModelsStore } from '../models'
 import { ChatListItem, ChatStore, LOADING_STATE, Message } from './type'
-import { generateFetchEventSource } from './utils'
+import { getEventSourceContent, getRequestInfo } from './utils'
 
 export type { Message }
 export { LOADING_STATE }
@@ -146,17 +147,13 @@ export const useChatStore = create<ChatStore>()(
         const findChat = get().list.find((item) => item.chat_id === chat_id)
         if (!findChat) return
 
-        let headers: Record<string, string>
-        let endpoint: string
-
-        try {
-          const res = generateFetchEventSource(findChat.chat_model.type)
-          headers = res.headers
-          endpoint = res.endpoint
-        } catch (error: any) {
-          toast.error(error.message)
-          return
+        if (!useModelsStore.getState()[findChat.chat_model.type]?.key) {
+          return toast.error('API key is required')
         }
+
+        const { headers, endpoint, path } = getRequestInfo(
+          findChat.chat_model.type,
+        )
 
         findChat.chat_state = LOADING_STATE.CONNECTING
 
@@ -171,7 +168,7 @@ export const useChatStore = create<ChatStore>()(
         const controller = new AbortController()
         set((state) => ({ abort: { ...state.abort, [chat_id]: controller } }))
 
-        fetchEventSource(`${endpoint}/v1/chat/completions`, {
+        fetchEventSource(`${endpoint}${path.chat}`, {
           headers,
           method: 'POST',
           signal: controller.signal,
@@ -205,7 +202,11 @@ export const useChatStore = create<ChatStore>()(
               const lastItem = findChat.chat_list.at(-1)
               if (!lastItem) return
 
-              const content = JSON.parse(res.data).choices[0].delta.content
+              const content = getEventSourceContent(
+                res.data,
+                findChat.chat_model.type,
+              )
+
               if (!content) return
 
               findChat.chat_state = LOADING_STATE.RESPONDING
@@ -263,17 +264,13 @@ export const useChatStore = create<ChatStore>()(
         const findChat = get().list.find((item) => item.chat_id === chat_id)
         if (!findChat) return
 
-        let headers: Record<string, string>
-        let endpoint: string
-
-        try {
-          const res = generateFetchEventSource(findChat.chat_model.type)
-          headers = res.headers
-          endpoint = res.endpoint
-        } catch (error: any) {
-          toast.error(error.message)
-          return
+        if (!useModelsStore.getState()[findChat.chat_model.type]?.key) {
+          return toast.error('API key is required')
         }
+
+        const { headers, endpoint, path } = getRequestInfo(
+          findChat.chat_model.type,
+        )
 
         // last 10 messages
         const messages = findChat.chat_list.slice(-10).map((item) => ({
@@ -281,7 +278,7 @@ export const useChatStore = create<ChatStore>()(
           content: item.content,
         }))
 
-        fetchEventSource(`${endpoint}/v1/chat/completions`, {
+        fetchEventSource(`${endpoint}${path.chat}`, {
           headers,
           method: 'POST',
           openWhenHidden: true,
@@ -300,7 +297,10 @@ export const useChatStore = create<ChatStore>()(
             if (res.data === '[DONE]') return
 
             try {
-              const content = JSON.parse(res.data).choices[0].delta.content
+              const content = getEventSourceContent(
+                res.data,
+                findChat.chat_model.type,
+              )
               if (!content) return
 
               findChat.chat_name += content
