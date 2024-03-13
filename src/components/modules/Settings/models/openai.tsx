@@ -23,8 +23,11 @@ export function OpenAI() {
   }
 
   const validate = () => {
+    if (loading) return
+
     const key = keyRef.current?.value?.trim() || ''
-    const endpoint = endpointRef.current?.value?.trim() || ''
+    let endpoint = endpointRef.current?.value?.trim() || ''
+    if (endpoint.endsWith('/')) endpoint = endpoint.slice(0, -1)
 
     if (!key) {
       keyRef.current?.focus()
@@ -90,6 +93,9 @@ export function OpenAI() {
               ref={keyRef}
               placeholder="sk-xxxxxx"
               defaultValue={openai.key}
+              onKeyDown={(e) =>
+                e.key === 'Enter' && endpointRef.current?.focus()
+              }
             />
           </div>
           <div className="flex flex-col space-y-1.5">
@@ -99,6 +105,7 @@ export function OpenAI() {
               ref={endpointRef}
               placeholder="https://api.openai.com"
               defaultValue={openai.endpoint}
+              onKeyDown={(e) => e.key === 'Enter' && validate()}
             />
           </div>
           <div className="flex gap-2">
