@@ -5,7 +5,15 @@ import { Message, useChatStore } from '@/store/chat'
 
 import { EditContent } from './editContent'
 
-export function Menus({ isLast, item }: { isLast: boolean; item: Message }) {
+export function Menus({
+  item,
+  isLast,
+  isLoading,
+}: {
+  item: Message
+  isLast: boolean
+  isLoading: boolean
+}) {
   const deleteMessage = useChatStore((state) => state.deleteMessage)
   const regenerateChat = useChatStore((state) => state.regenerateChat)
 
@@ -20,7 +28,7 @@ export function Menus({ isLast, item }: { isLast: boolean; item: Message }) {
         <Copy className="h-full w-full" text={item.content} />
       </div>
       <EditContent item={item} />
-      {item.role === 'user' && (
+      {item.role === 'user' && !isLoading && (
         <div
           className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md transition-colors hover:bg-[#f2f2f2]"
           onClick={() => regenerateChat(item.id)}

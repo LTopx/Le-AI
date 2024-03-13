@@ -12,6 +12,7 @@ export function ChatList() {
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
 
   const activeChat = list.find((item) => item.chat_id === activeId)
+  const isLoading = activeChat?.chat_state !== LOADING_STATE.NONE
 
   useEffect(() => {
     scrollToBottom()
@@ -24,7 +25,7 @@ export function ChatList() {
       <div className="container max-w-4xl px-5">
         <div
           className={cn('flex flex-col gap-7 pb-10 pt-10', {
-            'pb-0': activeChat.chat_state !== LOADING_STATE.NONE,
+            'pb-0': isLoading,
           })}
         >
           {activeChat.chat_list.map((item, index) => (
@@ -32,10 +33,11 @@ export function ChatList() {
               key={item.id}
               item={item}
               isLast={index === activeChat.chat_list.length - 1}
+              isLoading={isLoading}
             />
           ))}
         </div>
-        {activeChat.chat_state !== LOADING_STATE.NONE && (
+        {isLoading && (
           <div className="mt-4 flex items-center gap-2 pb-10 pl-12 text-muted-foreground">
             <span className="i-mingcute-loading-line h-[18px] w-[18px] animate-spin" />
             <span>

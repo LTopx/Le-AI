@@ -7,9 +7,10 @@ import { Menus } from './menus'
 interface ChatItemProps {
   item: Message
   isLast: boolean
+  isLoading: boolean
 }
 
-export function ChatItem({ item, isLast }: ChatItemProps) {
+export function ChatItem({ item, isLast, isLoading }: ChatItemProps) {
   return (
     <div className="group">
       <div className="relative pl-12">
@@ -18,7 +19,7 @@ export function ChatItem({ item, isLast }: ChatItemProps) {
         </div>
         <Content role={item.role} content={item.content} />
       </div>
-      <Menus isLast={isLast} item={item} />
+      <Menus item={item} isLast={isLast} isLoading={isLoading} />
     </div>
   )
 }
