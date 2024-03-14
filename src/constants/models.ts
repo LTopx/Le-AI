@@ -68,6 +68,13 @@ export const MODEL_LIST: ModelList[] = [
     model_provider_label: 'Claude',
     model_list: [
       {
+        model_name: 'Claude 3 Haiku',
+        model_value: 'claude-3-haiku-20240307',
+        model_token_limits: '200K',
+        model_vision: true,
+        model_plugin: false,
+      },
+      {
         model_name: 'Claude 3 Sonnet',
         model_value: 'claude-3-sonnet-20240229',
         model_token_limits: '200K',

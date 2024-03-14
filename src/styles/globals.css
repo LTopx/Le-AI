@@ -19,12 +19,16 @@
   border-radius: 9999px;
 }
 
-.prose > pre {
+.prose pre {
   padding: 0;
   border: 1px solid #ebeaeb;
   border-radius: 10px;
   background-color: #fff;
   position: relative;
+}
+
+.prose pre pre {
+  border: none;
 }
 
 .prose > pre > .text-only {
@@ -37,6 +41,10 @@
 
 .prose > pre .text-only {
   color: rgb(56, 58, 66);
+}
+
+.prose pre code {
+  background-color: #fff !important;
 }
 
 .prose > pre code span {
