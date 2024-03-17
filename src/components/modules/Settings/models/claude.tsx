@@ -77,6 +77,7 @@ export function Claude() {
     <Card>
       <CardHeader className="p-[18px]">
         <h4 className="flex scroll-m-20 items-center gap-2 text-lg font-semibold tracking-tight">
+          <span className="i-logos-anthropic-icon -mr-1" />
           <span>Claude</span>
           {claude.error ? (
             <span className="i-ri-error-warning-fill h-5 w-5 text-red-500" />
@@ -88,9 +89,9 @@ export function Claude() {
       <CardContent className="px-[18px] pb-[18px]">
         <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
-            <Label htmlFor="openai-key">API Key</Label>
+            <Label htmlFor="claude-key">API Key</Label>
             <Input
-              id="openai-key"
+              id="claude-key"
               ref={keyRef}
               placeholder="sk-ant-xxxxxx"
               defaultValue={claude.key}
@@ -100,9 +101,9 @@ export function Claude() {
             />
           </div>
           <div className="flex flex-col space-y-1.5">
-            <Label htmlFor="openai-endpoint">API Endpoint</Label>
+            <Label htmlFor="claude-endpoint">API Endpoint</Label>
             <Input
-              id="openai-endpoint"
+              id="claude-endpoint"
               ref={endpointRef}
               placeholder="https://api.anthropic.com"
               defaultValue={claude.endpoint}

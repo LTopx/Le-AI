@@ -51,9 +51,10 @@ export function OpenAI() {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.error) {
+        if (res.code || res.error) {
           toast.error(
-            'Invalid API key. Please make sure your API key is still working properly.',
+            res.msg ||
+              'Invalid API key. Please make sure your API key is still working properly.',
           )
           setOpenAI({ key: '', endpoint: '', error: true })
         } else {
@@ -76,6 +77,7 @@ export function OpenAI() {
     <Card>
       <CardHeader className="p-[18px]">
         <h4 className="flex scroll-m-20 items-center gap-2 text-lg font-semibold tracking-tight">
+          <span className="i-logos-openai-icon -mr-1" />
           <span>OpenAI</span>
           {openai.error ? (
             <span className="i-ri-error-warning-fill h-5 w-5 text-red-500" />
