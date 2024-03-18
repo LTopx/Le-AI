@@ -36,11 +36,11 @@ export function ChatFooter() {
   }
 
   const onRegenerate = () => {
-    const assistantLists = activeList?.chat_list.filter(
-      (item) => item.role === 'assistant',
+    const userLists = activeList?.chat_list.filter(
+      (item) => item.role === 'user',
     )
-    if (!assistantLists?.length) return
-    regenerateChat(assistantLists[assistantLists.length - 1].id)
+    if (!userLists?.length) return
+    regenerateChat(userLists[userLists.length - 1].id)
   }
 
   const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
