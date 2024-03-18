@@ -46,15 +46,16 @@ export function Claude() {
       method: 'POST',
       headers: requestInfo.headers,
       body: JSON.stringify({
-        model: 'claude-instant-1.2',
+        model: 'claude-3-haiku-20240307',
         messages: [{ role: 'user', content: 'say hello' }],
       }),
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.error) {
+        if (res.code || res.error) {
           toast.error(
-            'Invalid API key. Please make sure your API key is still working properly.',
+            res.msg ||
+              'Invalid API key. Please make sure your API key is still working properly.',
           )
           setClaude({ key: '', endpoint: '', error: true })
         } else {
