@@ -89,9 +89,11 @@ export const useChatStore = create<ChatStore>()(
         set(() => ({ list: get().list }))
       },
       clearChat: () => {
+        const recentModel = get().recentModel
+
         set(() => ({
           activeId: initChatItem.chat_id,
-          list: [clone(initChatItem)],
+          list: [{ ...clone(initChatItem), chat_model: recentModel }],
         }))
       },
 
@@ -227,7 +229,7 @@ export const useChatStore = create<ChatStore>()(
                 set(() => ({ list: get().list }))
 
                 // auto-scroll-to-bottom
-                scrollToBottom()
+                if (chat_id === get().activeId) scrollToBottom()
               } catch {}
             },
             onerror: () => {
