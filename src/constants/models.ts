@@ -4,6 +4,7 @@ export type Model = {
   model_name: string
   model_value: string
   model_token_limits: string
+  model_function_calling?: boolean
   model_vision: boolean
   model_plugin: boolean
 }
@@ -23,6 +24,7 @@ export const MODEL_LIST: ModelList[] = [
         model_name: 'GPT-3.5',
         model_value: 'gpt-3.5-turbo',
         model_token_limits: '16K',
+        model_function_calling: true,
         model_vision: false,
         model_plugin: true,
       },
@@ -30,6 +32,7 @@ export const MODEL_LIST: ModelList[] = [
         model_name: 'GPT-3.5 (0125)',
         model_value: 'gpt-3.5-turbo-0125',
         model_token_limits: '16K',
+        model_function_calling: true,
         model_vision: false,
         model_plugin: true,
       },
@@ -44,6 +47,7 @@ export const MODEL_LIST: ModelList[] = [
         model_name: 'GPT-4',
         model_value: 'gpt-4',
         model_token_limits: '8K',
+        model_function_calling: true,
         model_vision: false,
         model_plugin: true,
       },
@@ -51,6 +55,7 @@ export const MODEL_LIST: ModelList[] = [
         model_name: 'GPT-4 Turbo',
         model_value: 'gpt-4-turbo-preview',
         model_token_limits: '128K',
+        model_function_calling: true,
         model_vision: false,
         model_plugin: true,
       },
