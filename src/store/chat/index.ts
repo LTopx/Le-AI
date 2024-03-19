@@ -144,96 +144,102 @@ export const useChatStore = create<ChatStore>()(
 
       // Action
       sendChat: (chat_id) => {
-        const findChat = get().list.find((item) => item.chat_id === chat_id)
-        if (!findChat) return
+        try {
+          const findChat = get().list.find((item) => item.chat_id === chat_id)
+          if (!findChat) return
 
-        if (!useModelsStore.getState()[findChat.chat_model.type]?.key) {
-          return toast.error('API key is required')
-        }
+          if (!useModelsStore.getState()[findChat.chat_model.type]?.key) {
+            return toast.error('API key is required')
+          }
 
-        const { headers, endpoint, path } = getRequestInfo(
-          findChat.chat_model.type,
-        )
+          const { headers, endpoint, path } = getRequestInfo(
+            findChat.chat_model.type,
+          )
 
-        findChat.chat_state = LOADING_STATE.CONNECTING
+          findChat.chat_state = LOADING_STATE.CONNECTING
 
-        set(() => ({ list: get().list }))
+          set(() => ({ list: get().list }))
 
-        // last 10 messages
-        const messages = findChat.chat_list.slice(-10).map((item) => ({
-          role: item.role,
-          content: item.content,
-        }))
+          // last 10 messages
+          const messages = findChat.chat_list.slice(-10).map((item) => ({
+            role: item.role,
+            content: item.content,
+          }))
 
-        const controller = new AbortController()
-        set((state) => ({ abort: { ...state.abort, [chat_id]: controller } }))
+          const controller = new AbortController()
+          set((state) => ({ abort: { ...state.abort, [chat_id]: controller } }))
+          fetchEventSource(`${endpoint}${path.chat}`, {
+            headers,
+            method: 'POST',
+            signal: controller.signal,
+            openWhenHidden: true,
+            body: JSON.stringify({
+              stream: true,
+              model: findChat.chat_model.name,
+              messages,
+            }),
+            onopen: async (res) => {
+              const resError = !res.ok || res.status !== 200 || !res.body
+              if (!resError) return
 
-        fetchEventSource(`${endpoint}${path.chat}`, {
-          headers,
-          method: 'POST',
-          signal: controller.signal,
-          openWhenHidden: true,
-          body: JSON.stringify({
-            stream: true,
-            model: findChat.chat_model.name,
-            messages,
-          }),
-          onopen: async (res) => {
-            const resError = !res.ok || res.status !== 200 || !res.body
-            if (!resError) return
+              const error = await res.json()
+              toast.error(error.msg || 'Internal server error')
 
-            findChat.chat_state = LOADING_STATE.NONE
-            set(() => ({ list: get().list }))
-          },
-          onmessage: (res) => {
-            if (res.data === '[DONE]') {
               findChat.chat_state = LOADING_STATE.NONE
+              set(() => ({ list: get().list }))
+            },
+            onmessage: (res) => {
+              if (res.data === '[DONE]') {
+                findChat.chat_state = LOADING_STATE.NONE
 
-              if (!findChat.chat_name) {
-                get().generateChatName(chat_id)
+                if (!findChat.chat_name) {
+                  get().generateChatName(chat_id)
+                }
+
+                set(() => ({ list: get().list }))
+
+                return
               }
 
+              try {
+                const lastItem = findChat.chat_list.at(-1)
+                if (!lastItem) return
+
+                const content = getEventSourceContent(
+                  res.data,
+                  findChat.chat_model.type,
+                )
+
+                if (!content) return
+
+                findChat.chat_state = LOADING_STATE.RESPONDING
+
+                if (lastItem.role === 'user') {
+                  findChat.chat_list.push({
+                    id: nanoid(),
+                    role: 'assistant',
+                    time: String(+new Date()),
+                    content,
+                  })
+                } else {
+                  lastItem.content += content
+                }
+                set(() => ({ list: get().list }))
+
+                // auto-scroll-to-bottom
+                scrollToBottom()
+              } catch {}
+            },
+            onerror: () => {
+              findChat.chat_state = LOADING_STATE.NONE
               set(() => ({ list: get().list }))
 
-              return
-            }
-
-            try {
-              const lastItem = findChat.chat_list.at(-1)
-              if (!lastItem) return
-
-              const content = getEventSourceContent(
-                res.data,
-                findChat.chat_model.type,
-              )
-
-              if (!content) return
-
-              findChat.chat_state = LOADING_STATE.RESPONDING
-
-              if (lastItem.role === 'user') {
-                findChat.chat_list.push({
-                  id: nanoid(),
-                  role: 'assistant',
-                  time: String(+new Date()),
-                  content,
-                })
-              } else {
-                lastItem.content += content
-              }
-              set(() => ({ list: get().list }))
-
-              // auto-scroll-to-bottom
-              scrollToBottom()
-            } catch {}
-          },
-          onerror: () => {
-            findChat.chat_state = LOADING_STATE.NONE
-            set(() => ({ list: get().list }))
-
-            throw null
-          },
-        })
+              throw null
+            },
+          })
+        } catch (error: any) {
+          toast.error(error.message || 'Internal server error')
+        }
       },
       regenerateChat: (message_id) => {
         const activeId = get().activeId
@@ -292,7 +298,13 @@ export const useChatStore = create<ChatStore>()(
             ],
           }),
           // Not set onopen will lead to content-type error: `Error: Expected content-type to be text/event-stream, Actual: null`
-          onopen: async () => {},
+          onopen: async (res) => {
+            const resError = !res.ok || res.status !== 200 || !res.body
+            if (!resError) return
+
+            const error = await res.json()
+            toast.error(error.msg || 'Internal server error')
+          },
           onmessage: (res) => {
             if (res.data === '[DONE]') return
 
