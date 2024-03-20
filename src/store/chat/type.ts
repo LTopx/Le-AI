@@ -34,6 +34,7 @@ export type ChatListItem = {
   chat_state: LOADING_STATE
   chat_context_length: number
   chat_list: Message[]
+  chat_plugins: string[]
 }
 
 export type ChatStore = {

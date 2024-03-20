@@ -28,6 +28,7 @@ export const initChatItem: ChatListItem = {
   chat_state: LOADING_STATE.NONE,
   chat_context_length: 8,
   chat_list: [],
+  chat_plugins: [],
 }
 
 export const useChatStore = create<ChatStore>()(
@@ -85,6 +86,10 @@ export const useChatStore = create<ChatStore>()(
         if (data.chat_model) {
           findChat.chat_model = data.chat_model
           get().updateRecentModel(data.chat_model)
+        }
+
+        if (data.chat_plugins) {
+          findChat.chat_plugins = data.chat_plugins
         }
 
         set(() => ({ list: get().list }))
@@ -149,6 +154,8 @@ export const useChatStore = create<ChatStore>()(
           const findChat = get().list.find((item) => item.chat_id === chat_id)
           if (!findChat) return
 
+          console.log(findChat, 'findChat')
+
           if (!useModelsStore.getState()[findChat.chat_model.type]?.key) {
             return toast.error('API key is required')
           }
@@ -178,7 +185,7 @@ export const useChatStore = create<ChatStore>()(
               stream: true,
               model: findChat.chat_model.name,
               messages,
-              function_calling: ['google_search'],
+              function_calling: findChat.chat_plugins,
             }),
             onopen: async (res) => {
               const resError = !res.ok || res.status !== 200 || !res.body
@@ -391,6 +398,8 @@ export const useChatStore = create<ChatStore>()(
                 name: MODEL_LIST[0].model_list[0].model_value,
               }
             }
+
+            if (!item.chat_plugins) item.chat_plugins = []
           })
         }
 

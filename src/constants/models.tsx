@@ -1,9 +1,11 @@
+import React from 'react'
+
 export type ModelProvider = 'openai' | 'claude'
 
 export type ModelPlugin = {
   label: string
   value: string
-  icon: string
+  icon: string | React.ReactNode
 }
 
 export type Model = {
@@ -28,12 +30,16 @@ export const MODEL_PLUGINS: ModelPlugin[] = [
   {
     label: 'Google Search',
     value: 'google_search',
-    icon: 'search',
+    icon: <span className="class-name i-logos-google-icon h-5 w-5" />,
   },
   {
     label: 'DALL·E 3',
     value: 'dall_e_3',
-    icon: 'dall',
+    icon: (
+      <div className="flex h-5 w-5 items-center justify-center rounded-sm bg-[#df6b29]">
+        <span className="i-simple-icons-openai text-white" />
+      </div>
+    ),
   },
 ]
 
@@ -42,6 +48,7 @@ export const MODEL_LIST: ModelList[] = [
     model_provider: 'openai',
     model_provider_label: 'OpenAI',
     model_list: [
+      // gpt-3.5
       {
         model_name: 'GPT-3.5',
         model_value: 'gpt-3.5-turbo',
@@ -63,6 +70,7 @@ export const MODEL_LIST: ModelList[] = [
         model_vision: false,
         model_plugin: true,
       },
+      // gpt-4
       {
         model_name: 'GPT-4',
         model_value: 'gpt-4',
