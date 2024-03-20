@@ -1,12 +1,17 @@
 export type ModelProvider = 'openai' | 'claude'
 
+export type ModelPlugin = {
+  label: string
+  value: string
+  icon: string
+}
+
 export type Model = {
   model_name: string
   model_value: string
   model_token_limits: string
-  model_function_calling?: boolean
   model_vision: boolean
-  model_plugin: boolean
+  model_plugin?: boolean
 }
 
 export interface ModelList {
@@ -14,6 +19,23 @@ export interface ModelList {
   model_provider_label: string
   model_list: Model[]
 }
+
+/**
+ * Plugins based on function calling
+ * The premise is that the model must support function calling.
+ */
+export const MODEL_PLUGINS: ModelPlugin[] = [
+  {
+    label: 'Google Search',
+    value: 'google_search',
+    icon: 'search',
+  },
+  {
+    label: 'DALL·E 3',
+    value: 'dall_e_3',
+    icon: 'dall',
+  },
+]
 
 export const MODEL_LIST: ModelList[] = [
   {
@@ -24,7 +46,6 @@ export const MODEL_LIST: ModelList[] = [
         model_name: 'GPT-3.5',
         model_value: 'gpt-3.5-turbo',
         model_token_limits: '16K',
-        model_function_calling: true,
         model_vision: false,
         model_plugin: true,
       },
@@ -32,13 +53,12 @@ export const MODEL_LIST: ModelList[] = [
         model_name: 'GPT-3.5 (0125)',
         model_value: 'gpt-3.5-turbo-0125',
         model_token_limits: '16K',
-        model_function_calling: true,
         model_vision: false,
         model_plugin: true,
       },
       {
-        model_name: 'GPT-3.5 16K',
-        model_value: 'gpt-3.5-turbo-16k',
+        model_name: 'GPT-3.5 (1106)',
+        model_value: 'gpt-3.5-turbo-1106',
         model_token_limits: '16K',
         model_vision: false,
         model_plugin: true,
@@ -47,7 +67,6 @@ export const MODEL_LIST: ModelList[] = [
         model_name: 'GPT-4',
         model_value: 'gpt-4',
         model_token_limits: '8K',
-        model_function_calling: true,
         model_vision: false,
         model_plugin: true,
       },
@@ -55,7 +74,6 @@ export const MODEL_LIST: ModelList[] = [
         model_name: 'GPT-4 Turbo',
         model_value: 'gpt-4-turbo-preview',
         model_token_limits: '128K',
-        model_function_calling: true,
         model_vision: false,
         model_plugin: true,
       },

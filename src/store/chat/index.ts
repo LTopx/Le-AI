@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+import { MODEL_LIST } from '@/constants/models'
 import { BASE_PROMPT, GENERATE_CHAT_NAME_PROMPT } from '@/constants/prompt'
 import { getCheapModel } from '@/lib/model'
 import { scrollToBottom } from '@/lib/scroll'
@@ -89,11 +90,9 @@ export const useChatStore = create<ChatStore>()(
         set(() => ({ list: get().list }))
       },
       clearChat: () => {
-        const recentModel = get().recentModel
-
         set(() => ({
           activeId: initChatItem.chat_id,
-          list: [{ ...clone(initChatItem), chat_model: recentModel }],
+          list: [{ ...clone(initChatItem), chat_model: get().recentModel }],
         }))
       },
 
@@ -179,6 +178,7 @@ export const useChatStore = create<ChatStore>()(
               stream: true,
               model: findChat.chat_model.name,
               messages,
+              function_calling: ['google_search'],
             }),
             onopen: async (res) => {
               const resError = !res.ok || res.status !== 200 || !res.body
@@ -355,8 +355,42 @@ export const useChatStore = create<ChatStore>()(
         // reset data
         if (persistedState) {
           persistedState.abort = {}
+
+          // If a model is deprecated and cannot be matched with existing models, it needs to be reset to the latest initial model.
+          // 1. check recentModel
+          if (
+            !MODEL_LIST.some(
+              (item) =>
+                item.model_provider === persistedState.recentModel.type &&
+                item.model_list.some(
+                  (model) =>
+                    model.model_value === persistedState.recentModel.name,
+                ),
+            )
+          ) {
+            persistedState.recentModel = {
+              type: MODEL_LIST[0].model_provider,
+              name: MODEL_LIST[0].model_list[0].model_value,
+            }
+          }
+          // 2. check list chat_model
           persistedState.list.forEach((item: any) => {
             item.chat_state = LOADING_STATE.NONE
+
+            if (
+              !MODEL_LIST.some(
+                (model) =>
+                  model.model_provider === item.chat_model.type &&
+                  model.model_list.some(
+                    (model) => model.model_value === item.chat_model.name,
+                  ),
+              )
+            ) {
+              item.chat_model = {
+                type: MODEL_LIST[0].model_provider,
+                name: MODEL_LIST[0].model_list[0].model_value,
+              }
+            }
           })
         }
 
