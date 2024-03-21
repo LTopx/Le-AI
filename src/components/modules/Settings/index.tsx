@@ -1,7 +1,5 @@
 'use client'
 
-import { useLayoutEffect, useState } from 'react'
-
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -21,9 +19,9 @@ import { cn } from '@/lib/utils'
 import { useCommonStore } from '@/store/common'
 
 import { About } from './about'
-import { EndPoint } from './endPoint'
 import { General } from './general'
 import { Models } from './models'
+import { Plugins } from './plugins'
 
 const menus = [
   {
@@ -32,14 +30,14 @@ const menus = [
     icon: 'i-mingcute-settings-4-fill',
   },
   {
-    label: 'EndPoint',
-    value: 'endPoint',
-    icon: 'i-mingcute-cloud-fill',
-  },
-  {
     label: 'Models',
     value: 'models',
     icon: 'i-mdi-database',
+  },
+  {
+    label: 'Plugins',
+    value: 'plugins',
+    icon: 'i-mingcute-cloud-fill',
   },
   {
     label: 'About',
@@ -49,15 +47,14 @@ const menus = [
 ]
 
 export function Settings() {
-  const [activeMenu, setActiveMenu] = useState(menus[0].value)
+  const [activeMenu, setActiveMenu] = useCommonStore((state) => [
+    state.activeSettingsMenu,
+    state.updateActiveSettingsMenu,
+  ])
   const [open, setOpen] = useCommonStore((state) => [
     state.settingsOpen,
     state.updateSettingsOpen,
   ])
-
-  useLayoutEffect(() => {
-    if (open) setActiveMenu(menus[0].value)
-  }, [open])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -109,10 +106,10 @@ export function Settings() {
               </Button>
             ))}
           </div>
-          <div className="max-h-[calc(100vh-300px)] flex-1 overflow-y-auto                                                                                  ">
+          <div className="h-[600px] max-h-[calc(100vh-300px)] flex-1 overflow-y-auto">
             {activeMenu === 'general' && <General />}
-            {activeMenu === 'endPoint' && <EndPoint />}
             {activeMenu === 'models' && <Models />}
+            {activeMenu === 'plugins' && <Plugins />}
             {activeMenu === 'about' && <About />}
           </div>
         </div>

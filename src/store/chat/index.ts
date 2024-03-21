@@ -11,6 +11,7 @@ import { clone } from '@/lib/utils'
 import { fetchEventSource } from '@fortaine/fetch-event-source'
 
 import { useModelsStore } from '../models'
+import { usePluginsStore } from '../plugins'
 import { ChatListItem, ChatStore, LOADING_STATE, Message } from './type'
 import { getEventSourceContent, getRequestInfo } from './utils'
 
@@ -174,6 +175,15 @@ export const useChatStore = create<ChatStore>()(
 
           const controller = new AbortController()
           set((state) => ({ abort: { ...state.abort, [chat_id]: controller } }))
+
+          const function_calling_extra: any = {}
+          findChat.chat_plugins.forEach((plugin) => {
+            if (plugin === 'dall_e_3') {
+              function_calling_extra[plugin] =
+                usePluginsStore.getState()[plugin]
+            }
+          })
+
           fetchEventSource(`${endpoint}${path.chat}`, {
             headers,
             method: 'POST',
@@ -184,6 +194,7 @@ export const useChatStore = create<ChatStore>()(
               model: findChat.chat_model.name,
               messages,
               function_calling: findChat.chat_plugins,
+              function_calling_extra,
             }),
             onopen: async (res) => {
               const resError = !res.ok || res.status !== 200 || !res.body
@@ -237,7 +248,7 @@ export const useChatStore = create<ChatStore>()(
                 if (chat_id === get().activeId) scrollToBottom()
               } catch {}
             },
-            onerror: () => {
+            onerror: (error) => {
               findChat.chat_state = LOADING_STATE.NONE
               set(() => ({ list: get().list }))
 

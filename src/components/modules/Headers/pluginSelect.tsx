@@ -14,6 +14,7 @@ import { Switch } from '@/components/ui/switch'
 import { MODEL_LIST, MODEL_PLUGINS } from '@/constants/models'
 import { cn } from '@/lib/utils'
 import { useChatStore } from '@/store/chat'
+import { useCommonStore } from '@/store/common'
 
 export function PluginSelect() {
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
@@ -21,6 +22,10 @@ export function PluginSelect() {
   const activeChat = list.find((item) => item.chat_id === activeId)
 
   const updateChat = useChatStore((state) => state.updateChat)
+  const updateSettingsOpen = useCommonStore((state) => state.updateSettingsOpen)
+  const updateActiveSettingsMenu = useCommonStore(
+    (state) => state.updateActiveSettingsMenu,
+  )
 
   const findModelProvider = MODEL_LIST.find((val) => {
     return val.model_list.find(
@@ -96,6 +101,16 @@ export function PluginSelect() {
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={() => {
+            updateActiveSettingsMenu('plugins')
+            updateSettingsOpen()
+          }}
+        >
+          <span className="i-icon-park-solid-more-app mr-2 h-5 w-5" />
+          <span>Plugins Setting</span>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

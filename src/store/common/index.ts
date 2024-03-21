@@ -10,7 +10,32 @@ interface CommonStore {
   // Settings
   settingsOpen: boolean
   updateSettingsOpen: () => void
+  activeSettingsMenu: string
+  updateActiveSettingsMenu: (menu: string) => void
 }
+
+export const menus = [
+  {
+    label: 'General',
+    value: 'general',
+    icon: 'i-mingcute-settings-4-fill',
+  },
+  {
+    label: 'Models',
+    value: 'models',
+    icon: 'i-mdi-database',
+  },
+  {
+    label: 'Plugins',
+    value: 'plugins',
+    icon: 'i-mingcute-cloud-fill',
+  },
+  {
+    label: 'About',
+    value: 'about',
+    icon: 'i-mdi-information',
+  },
+]
 
 export const useCommonStore = create<CommonStore>((set, get) => ({
   // Side Menu
@@ -23,6 +48,16 @@ export const useCommonStore = create<CommonStore>((set, get) => ({
 
   // Settings
   settingsOpen: false,
-  updateSettingsOpen: () =>
-    set((state) => ({ settingsOpen: !state.settingsOpen })),
+  updateSettingsOpen: () => {
+    set((state) => ({ settingsOpen: !state.settingsOpen }))
+  },
+  activeSettingsMenu: menus[0].value,
+  updateActiveSettingsMenu: (menu: string) => {
+    const findMenu = menus.find((item) => item.value === menu)
+    if (!findMenu) {
+      set(() => ({ activeSettingsMenu: menus[0].value }))
+    } else {
+      set(() => ({ activeSettingsMenu: menu }))
+    }
+  },
 }))

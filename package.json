@@ -13,6 +13,7 @@
   "dependencies": {
     "@fortaine/fetch-event-source": "3.0.6",
     "@radix-ui/react-alert-dialog": "1.0.5",
+    "@radix-ui/react-collapsible": "1.0.3",
     "@radix-ui/react-dialog": "1.0.5",
     "@radix-ui/react-dropdown-menu": "2.0.6",
     "@radix-ui/react-label": "2.0.2",
@@ -47,12 +48,13 @@
   "devDependencies": {
     "@egoist/tailwindcss-icons": "1.7.4",
     "@iconify-json/f7": "1.1.0",
+    "@iconify-json/icon-park-solid": "1.1.14",
     "@iconify-json/logos": "1.1.42",
     "@iconify-json/mdi": "1.1.64",
     "@iconify-json/mingcute": "1.1.16",
     "@iconify-json/ri": "1.1.20",
     "@iconify-json/simple-icons": "1.1.96",
-    "@innei/prettier": "0.12.4",
+    "@innei/prettier": "0.12.6",
     "@tailwindcss/typography": "0.5.10",
     "@tauri-apps/cli": "2.0.0-beta.5",
     "@types/node": "20.11.30",
