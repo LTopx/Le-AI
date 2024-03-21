@@ -19,6 +19,10 @@
   border-radius: 9999px;
 }
 
+.prose img {
+  border-radius: 12px;
+}
+
 .prose pre {
   padding: 0;
   border: 1px solid #ebeaeb;

@@ -154,8 +154,6 @@ export const useChatStore = create<ChatStore>()(
           const findChat = get().list.find((item) => item.chat_id === chat_id)
           if (!findChat) return
 
-          console.log(findChat, 'findChat')
-
           if (!useModelsStore.getState()[findChat.chat_model.type]?.key) {
             return toast.error('API key is required')
           }

@@ -48,7 +48,7 @@ export function PluginSelect() {
           <span className="i-mingcute-plugin-2-fill h-6 w-6 text-sky-400" />
           <div
             className={cn(
-              'absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded-full text-xs transition-colors',
+              'absolute right-6 top-0.5 flex h-4 w-4 items-center justify-center rounded-full text-xs transition-colors',
               chat_plugins.length
                 ? 'bg-green-400 text-white'
                 : 'bg-green-300 text-white',
@@ -56,6 +56,7 @@ export function PluginSelect() {
           >
             {chat_plugins.length}
           </div>
+          <span className="i-mingcute-down-fill ml-2 h-4 w-4 text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start" sideOffset={3}>
@@ -76,7 +77,6 @@ export function PluginSelect() {
                 onClick={(e) => e.preventDefault()}
               >
                 <Switch
-                  disabled={plugin.value === 'dall_e_3'}
                   checked={chat_plugins.includes(plugin.value)}
                   onCheckedChange={(e) => {
                     if (e) {
