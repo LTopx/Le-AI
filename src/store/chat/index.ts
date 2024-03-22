@@ -30,12 +30,15 @@ export const initChatItem: ChatListItem = {
   chat_context_length: 8,
   chat_list: [],
   chat_plugins: [],
+  chat_recommendation: [],
+  chat_recommendation_loading: false,
 }
 
 export const useChatStore = create<ChatStore>()(
   persist(
     (set, get) => ({
       // State
+      inputValue: '',
       activeId: initChatItem.chat_id,
       list: [initChatItem],
       abort: {},
@@ -150,6 +153,7 @@ export const useChatStore = create<ChatStore>()(
       },
 
       // Action
+      updateInputValue: (inputValue) => set({ inputValue }),
       sendChat: (chat_id) => {
         try {
           const findChat = get().list.find((item) => item.chat_id === chat_id)
@@ -164,6 +168,8 @@ export const useChatStore = create<ChatStore>()(
           )
 
           findChat.chat_state = LOADING_STATE.CONNECTING
+          findChat.chat_recommendation = []
+          findChat.chat_recommendation_loading = false
 
           set(() => ({ list: get().list }))
 
@@ -214,6 +220,8 @@ export const useChatStore = create<ChatStore>()(
                   get().generateChatName(chat_id)
                 }
 
+                get().generateRecommendation(chat_id)
+
                 set(() => ({ list: get().list }))
 
                 return
@@ -248,7 +256,7 @@ export const useChatStore = create<ChatStore>()(
                 if (chat_id === get().activeId) scrollToBottom()
               } catch {}
             },
-            onerror: (error) => {
+            onerror: () => {
               findChat.chat_state = LOADING_STATE.NONE
               set(() => ({ list: get().list }))
 
@@ -344,6 +352,57 @@ export const useChatStore = create<ChatStore>()(
           },
         })
       },
+      generateRecommendation: (chat_id) => {
+        try {
+          const findChat = get().list.find((item) => item.chat_id === chat_id)
+          if (!findChat) return
+
+          if (!useModelsStore.getState()[findChat.chat_model.type]?.key) {
+            return toast.error('API key is required')
+          }
+
+          const { headers, endpoint, path } = getRequestInfo(
+            findChat.chat_model.type,
+          )
+
+          const content = findChat.chat_list.slice(-1)[0]?.content
+          if (!content) return
+
+          findChat.chat_recommendation_loading = true
+
+          set(() => ({ list: get().list }))
+
+          fetch(`${endpoint}${path.chat}`, {
+            headers,
+            method: 'POST',
+            body: JSON.stringify({
+              model: getCheapModel(findChat.chat_model.type),
+              messages: [
+                {
+                  role: 'user',
+                  content: `Rules:\n- You will read a message and return some keywords to search on google to learn more about the concepts mentioned in the message\n- Only gives the keywords that are necessary to explore more on the context of the message, don\'t list the obvious keywords\n- You must only output in a strict valid JSON string, the json must be an array of strings, for example ["keyword 1", "keyword 2"]\n- It\'s very important that you must only output JSON, do not include any other text\n- If you don\'t have any worthy keywords to suggest, return []\n- You only returns maximum 5 keywords.\n\nHere is the message:\n\n${content}\n\nNow you respond with a JSON string.`,
+                },
+              ],
+            }),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              try {
+                findChat.chat_recommendation = JSON.parse(
+                  res.choices[0].message.content,
+                )
+                set(() => ({ list: get().list }))
+
+                // auto-scroll-to-bottom
+                if (chat_id === get().activeId) scrollToBottom()
+              } catch {}
+            })
+            .finally(() => {
+              findChat.chat_recommendation_loading = false
+              set(() => ({ list: get().list }))
+            })
+        } catch (error) {}
+      },
       stopChat: (chat_id) => {
         const findController = get().abort[chat_id]
         const findChat = get().list.find((item) => item.chat_id === chat_id)
@@ -409,6 +468,10 @@ export const useChatStore = create<ChatStore>()(
             }
 
             if (!item.chat_plugins) item.chat_plugins = []
+
+            // recommendation
+            if (!item.chat_recommendation) item.chat_recommendation = []
+            item.chat_recommendation_state = false
           })
         }
 

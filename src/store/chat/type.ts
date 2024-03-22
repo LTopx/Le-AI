@@ -35,10 +35,13 @@ export type ChatListItem = {
   chat_context_length: number
   chat_list: Message[]
   chat_plugins: string[]
+  chat_recommendation: string[]
+  chat_recommendation_loading: boolean
 }
 
 export type ChatStore = {
   // State
+  inputValue: string
   activeId: string
   list: ChatListItem[]
   abort: Record<string, AbortController>
@@ -66,9 +69,11 @@ export type ChatStore = {
   clearMessage: (chat_id: string) => void
 
   // Action
+  updateInputValue: (value: string) => void
   sendChat: (chat_id: string) => void
   regenerateChat: (message_id: string) => void
   generateChatName: (chat_id: string) => void
+  generateRecommendation: (chat_id: string) => void
   stopChat: (chat_id: string) => void
 
   // Other

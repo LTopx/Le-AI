@@ -51,8 +51,8 @@ dependencies:
     specifier: 1.2.2
     version: 1.2.2(next@14.1.4)
   lucide-react:
-    specifier: 0.359.0
-    version: 0.359.0(react@18.2.0)
+    specifier: 0.360.0
+    version: 0.360.0(react@18.2.0)
   nanoid:
     specifier: 5.0.6
     version: 5.0.6
@@ -87,8 +87,8 @@ dependencies:
     specifier: 6.0.0
     version: 6.0.0
   sonner:
-    specifier: 1.4.32
-    version: 1.4.32(react-dom@18.2.0)(react@18.2.0)
+    specifier: 1.4.41
+    version: 1.4.41(react-dom@18.2.0)(react@18.2.0)
   tailwind-merge:
     specifier: 2.2.2
     version: 2.2.2
@@ -3872,8 +3872,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /lucide-react@0.359.0(react@18.2.0):
-    resolution: {integrity: sha512-bxVL+rM/wacjpT0BKShA6r5IIKb6LCRg+ltFG9pnnIwaRX8kK3hq8v5JwMpT7RC6XeqB5cSaaV6GapPWWmtliw==}
+  /lucide-react@0.360.0(react@18.2.0):
+    resolution: {integrity: sha512-MskvbEsAhD2zxgx/I05vXq1cjFQXrmhL97YFIi4wSaKH793ZMvU/Com4d+DE7OB3QMmZig1fY1q94aTX5skozw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -5308,8 +5308,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /sonner@1.4.32(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-MYdvJgx2wM8a7fnzZr7KWZJY2ukSoqh7fsshZYEVljTSuJKNesMgfQ95+kyduGh6t500wxvLm6jjffxB4M58ZA==}
+  /sonner@1.4.41(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-uG511ggnnsw6gcn/X+YKkWPo5ep9il9wYi3QJxHsYe7yTZ4+cOd1wuodOUmOpFuXL+/RE3R04LczdNCDygTDgQ==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0

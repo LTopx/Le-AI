@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import type { KeyboardEvent } from 'react'
 
 import { AlertDialog } from '@/components/common/alertDialog'
@@ -12,7 +12,10 @@ import { LOADING_STATE, useChatStore } from '@/store/chat'
 export function ChatFooter() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const [value, setValue] = useState('')
+  const [value, setValue] = useChatStore((state) => [
+    state.inputValue,
+    state.updateInputValue,
+  ])
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
 
   const activeList = list.find((item) => item.chat_id === activeId)
@@ -78,6 +81,7 @@ export function ChatFooter() {
     <div className="border-t py-2">
       <div className="container flex max-w-4xl flex-col gap-1">
         <Textarea
+          id="chat-textarea"
           ref={textareaRef}
           className="max-h-56 min-h-min resize-none rounded-xl border-none bg-transparent outline-none transition-all"
           rows={1}
