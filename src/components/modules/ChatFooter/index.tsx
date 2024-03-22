@@ -1,10 +1,14 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import type { KeyboardEvent } from 'react'
 
 import { AlertDialog } from '@/components/common/alertDialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { MODEL_LIST } from '@/constants/models'
 import { getPlatform } from '@/lib/platform'
 import { cn } from '@/lib/utils'
 import { LOADING_STATE, useChatStore } from '@/store/chat'
@@ -17,9 +21,16 @@ export function ChatFooter() {
     state.updateInputValue,
   ])
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
+  const [images, setImages] = useState<string[]>([])
 
   const activeList = list.find((item) => item.chat_id === activeId)
   const isLoading = activeList?.chat_state !== LOADING_STATE.NONE
+
+  const model_vision = MODEL_LIST.find(
+    (val) => val.model_provider === activeList?.chat_model.type,
+  )?.model_list.find(
+    (item) => item.model_value === activeList?.chat_model.name,
+  )?.model_vision
 
   const addMessage = useChatStore((state) => state.addMessage)
   const clearMessage = useChatStore((state) => state.clearMessage)
@@ -92,11 +103,40 @@ export function ChatFooter() {
           onInput={onResize}
           onKeyDown={onKeyDown}
         />
+        <div>
+          {images.map((img, index) => (
+            <Image key={index} src={img} alt="img" width={100} height={100} />
+          ))}
+        </div>
         <div className="flex justify-between">
           <div className="flex gap-1.5">
             <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]">
               <span className="i-mingcute-classify-add-2-line h-[18px] w-[18px]" />
             </div>
+            {/* Dealing with base64 image temporarily */}
+            {!!model_vision && (
+              <>
+                <Label
+                  htmlFor="picture"
+                  className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]"
+                >
+                  <span className="i-ri-attachment-2 h-[18px] w-[18px]" />
+                </Label>
+                <Input
+                  id="picture"
+                  type="file"
+                  className="sr-only"
+                  onChange={(e) => {
+                    // const imgFile = new FileReader()
+                    // imgFile.readAsDataURL(e.target.files?.[0]!)
+                    // imgFile.onload = function () {
+                    //   const imgData = this.result
+                    //   setImages((prev) => [...prev, imgData as string])
+                    // }
+                  }}
+                />
+              </>
+            )}
             {!!activeList?.chat_list?.length &&
               activeList.chat_state === LOADING_STATE.NONE && (
                 <div

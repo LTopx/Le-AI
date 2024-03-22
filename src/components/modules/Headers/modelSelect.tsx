@@ -103,6 +103,9 @@ export function ModelSelect() {
                       {model.model_plugin && (
                         <span className="i-mingcute-plugin-2-fill h-4 w-4 text-sky-400" />
                       )}
+                      {model.model_vision && (
+                        <span className="i-mingcute-eye-2-fill h-4 w-4 text-[#ef424f]" />
+                      )}
                       <div className="flex w-[52px] items-center gap-1 text-xs text-muted-foreground">
                         <span className="i-mingcute-aiming-2-fill h-4 w-4 text-green-400" />
                         {model.model_token_limits}
