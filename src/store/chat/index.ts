@@ -12,6 +12,7 @@ import { fetchEventSource } from '@fortaine/fetch-event-source'
 
 import { useModelsStore } from '../models'
 import { usePluginsStore } from '../plugins'
+import { useSettingsStore } from '../settings'
 import { ChatListItem, ChatStore, LOADING_STATE, Message } from './type'
 import { getEventSourceContent, getRequestInfo } from './utils'
 
@@ -220,7 +221,11 @@ export const useChatStore = create<ChatStore>()(
                   get().generateChatName(chat_id)
                 }
 
-                get().generateRecommendation(chat_id)
+                if (
+                  useSettingsStore.getState().generate_recommended_questions
+                ) {
+                  get().generateRecommendation(chat_id)
+                }
 
                 set(() => ({ list: get().list }))
 

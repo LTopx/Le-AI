@@ -16,35 +16,13 @@ import {
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
-import { useCommonStore } from '@/store/common'
+import { menus, useCommonStore } from '@/store/common'
 
 import { About } from './about'
+import { Chat } from './chat'
 import { General } from './general'
 import { Models } from './models'
 import { Plugins } from './plugins'
-
-const menus = [
-  {
-    label: 'General',
-    value: 'general',
-    icon: 'i-mingcute-settings-4-fill',
-  },
-  {
-    label: 'Models',
-    value: 'models',
-    icon: 'i-mdi-database',
-  },
-  {
-    label: 'Plugins',
-    value: 'plugins',
-    icon: 'i-mingcute-cloud-fill',
-  },
-  {
-    label: 'About',
-    value: 'about',
-    icon: 'i-mdi-information',
-  },
-]
 
 export function Settings() {
   const [activeMenu, setActiveMenu] = useCommonStore((state) => [
@@ -108,6 +86,7 @@ export function Settings() {
           </div>
           <div className="h-[600px] max-h-[calc(100vh-300px)] flex-1 overflow-y-auto">
             {activeMenu === 'general' && <General />}
+            {activeMenu === 'chat' && <Chat />}
             {activeMenu === 'models' && <Models />}
             {activeMenu === 'plugins' && <Plugins />}
             {activeMenu === 'about' && <About />}

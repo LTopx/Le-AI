@@ -21,6 +21,11 @@ export const menus = [
     icon: 'i-mingcute-settings-4-fill',
   },
   {
+    label: 'Chat',
+    value: 'chat',
+    icon: 'i-mingcute-message-3-fill',
+  },
+  {
     label: 'Models',
     value: 'models',
     icon: 'i-mdi-database',
