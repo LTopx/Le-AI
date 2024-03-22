@@ -1,6 +1,6 @@
 import React from 'react'
 
-export type ModelProvider = 'openai' | 'claude'
+export type ModelProvider = 'openai' | 'claude' | 'groq'
 
 export type ModelPlugin = {
   label: string
@@ -117,6 +117,36 @@ export const MODEL_LIST: ModelList[] = [
         model_value: 'claude-3-opus-20240229',
         model_token_limits: '200K',
         model_vision: true,
+        model_plugin: false,
+      },
+    ],
+  },
+  {
+    model_provider: 'groq',
+    model_provider_label: 'GroqCloud',
+    model_list: [
+      // Meta
+      {
+        model_name: 'LLaMA2-70b',
+        model_value: 'llama2-70b-4096',
+        model_token_limits: '4K',
+        model_vision: false,
+        model_plugin: false,
+      },
+      // Mistral AI
+      {
+        model_name: 'Mixtral-8x7b',
+        model_value: 'mixtral-8x7b-32768',
+        model_token_limits: '32K',
+        model_vision: false,
+        model_plugin: false,
+      },
+      // Google
+      {
+        model_name: 'Gemma-7b-it',
+        model_value: 'gemma-7b-it',
+        model_token_limits: '8K',
+        model_vision: false,
         model_plugin: false,
       },
     ],

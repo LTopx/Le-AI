@@ -200,8 +200,8 @@ export const useChatStore = create<ChatStore>()(
               stream: true,
               model: findChat.chat_model.name,
               messages,
-              function_calling: findChat.chat_plugins,
-              function_calling_extra,
+              // function_calling: findChat.chat_plugins,
+              // function_calling_extra,
             }),
             onopen: async (res) => {
               const resError = !res.ok || res.status !== 200 || !res.body

@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import { ModelProvider } from '@/constants/models'
 import { cn } from '@/lib/utils'
 
@@ -59,6 +61,24 @@ export function Model({
         <span
           className="i-logos-anthropic-icon !text-white"
           style={{ width: 4 * iconSize, height: 4 * iconSize }}
+        />
+      </div>
+    )
+  }
+
+  if (type === 'groq') {
+    return (
+      <div
+        className={cn(
+          'flex flex-shrink-0 items-center justify-center overflow-hidden rounded-md',
+          className,
+        )}
+      >
+        <Image
+          src="/models/groq.png"
+          alt="groq"
+          width={4 * size}
+          height={4 * size}
         />
       </div>
     )

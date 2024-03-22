@@ -13,6 +13,11 @@ export type ModelStore = {
     endpoint: string
     error: boolean
   }
+  groq: {
+    key: string
+    endpoint: string
+    error: boolean
+  }
 
   // Actions
   updateOpenai: (openai: {
@@ -25,6 +30,7 @@ export type ModelStore = {
     endpoint: string
     error: boolean
   }) => void
+  updateGroq: (groq: { key: string; endpoint: string; error: boolean }) => void
 }
 
 export const useModelsStore = create<ModelStore>()(
@@ -41,10 +47,16 @@ export const useModelsStore = create<ModelStore>()(
         endpoint: '',
         error: true,
       },
+      groq: {
+        key: '',
+        endpoint: '',
+        error: true,
+      },
 
       // Actions
       updateOpenai: (openai) => set({ openai }),
       updateClaude: (claude) => set({ claude }),
+      updateGroq: (groq) => set({ groq }),
     }),
     { name: 'chat-models' },
   ),

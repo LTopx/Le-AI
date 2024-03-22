@@ -37,6 +37,19 @@ export function getRequestInfo(
         chat: '/v1/messages',
       },
     }
+  } else if (provider === 'groq') {
+    const model = useModelsStore.getState().groq
+
+    return {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${key || model.key}`,
+      },
+      endpoint: endpoint || model.endpoint || 'https://api.groq.com/openai',
+      path: {
+        chat: '/v1/chat/completions',
+      },
+    }
   }
 
   return {
@@ -50,7 +63,8 @@ export function getRequestInfo(
 
 export function getEventSourceContent(value: string, provider: ModelProvider) {
   try {
-    if (provider === 'openai') return JSON.parse(value).choices[0].delta.content
+    if (provider === 'openai' || provider === 'groq')
+      return JSON.parse(value).choices[0].delta.content
     if (provider === 'claude') {
       return (
         JSON.parse(value).content_block?.text || JSON.parse(value).delta?.text
