@@ -51,8 +51,8 @@ dependencies:
     specifier: 1.2.2
     version: 1.2.2(next@14.1.4)
   lucide-react:
-    specifier: 0.361.0
-    version: 0.361.0(react@18.2.0)
+    specifier: 0.362.0
+    version: 0.362.0(react@18.2.0)
   nanoid:
     specifier: 5.0.6
     version: 5.0.6
@@ -96,8 +96,8 @@ dependencies:
     specifier: 1.0.7
     version: 1.0.7(tailwindcss@3.4.1)
   usehooks-ts:
-    specifier: 3.0.1
-    version: 3.0.1(react@18.2.0)
+    specifier: 3.0.2
+    version: 3.0.2(react@18.2.0)
   zod:
     specifier: 3.22.4
     version: 3.22.4
@@ -122,8 +122,8 @@ devDependencies:
     specifier: 1.1.64
     version: 1.1.64
   '@iconify-json/mingcute':
-    specifier: 1.1.16
-    version: 1.1.16
+    specifier: 1.1.17
+    version: 1.1.17
   '@iconify-json/ri':
     specifier: 1.1.20
     version: 1.1.20
@@ -541,8 +541,8 @@ packages:
       '@iconify/types': 2.0.0
     dev: true
 
-  /@iconify-json/mingcute@1.1.16:
-    resolution: {integrity: sha512-iiVYjOPFyftzvBqN3cqYVfzuqSJL2n7vduX8UsmaaIB33EM6hKNJPntxVt700jHwyux/ibHsgUo8paeHBoxpWQ==}
+  /@iconify-json/mingcute@1.1.17:
+    resolution: {integrity: sha512-WTKnn5OicUo18dE3rkJs00sUjOIAui8Ut9yZSXamRfjzmLxuX9FKqYQAbFXaV6lw0T4QwBQ8/y4ftaWl/1Entg==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
@@ -3872,8 +3872,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /lucide-react@0.361.0(react@18.2.0):
-    resolution: {integrity: sha512-KCVhtRvHxHdxvTfqKKbl9piHS8nq4RNsb8GtFk025AF57mHjJ2oe2PqUe3ChaakHvonGyFlEczzu8GOjZlACsg==}
+  /lucide-react@0.362.0(react@18.2.0):
+    resolution: {integrity: sha512-0S+JudK0AD9vyB0zbu1K0aQsy8k9Wq2l03bio6wxqF2FhK2TSp/y+22HfMyv40EURifgxoSwdU8eIcOv0a8gBA==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -5790,8 +5790,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /usehooks-ts@3.0.1(react@18.2.0):
-    resolution: {integrity: sha512-bgJ8S9w/SnQyACd3RvWp3CGncROxEENGqQLCsdaoyTb0zTENIna7MIV3OW6ywCfPaYYD2OPokw7oLPmSLLWP4w==}
+  /usehooks-ts@3.0.2(react@18.2.0):
+    resolution: {integrity: sha512-qJScCj8YOxa8RV3Iz2T+2IsydLG0EID5FouTGE7aNFEpFlCXmRrnJiPCESDArKr1FLTaUQSfDQ43UDn7yMLExw==}
     engines: {node: '>=16.15.0'}
     peerDependencies:
       react: ^16.8.0  || ^17 || ^18
