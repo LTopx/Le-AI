@@ -14,25 +14,40 @@ export function getRequestInfo(
   if (provider === 'openai') {
     const model = useModelsStore.getState().openai
 
+    let finalEndpoint = ''
+    if (endpoint !== undefined) {
+      finalEndpoint = endpoint || 'https://api.openai.com'
+    } else {
+      finalEndpoint = model.endpoint || 'https://api.openai.com'
+    }
+
     return {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${key || model.key}`,
       },
-      endpoint: endpoint || model.endpoint || 'https://api.openai.com',
+      endpoint: finalEndpoint,
       path: {
         chat: '/v1/chat/completions',
       },
     }
   } else if (provider === 'claude') {
     const model = useModelsStore.getState().claude
+
+    let finalEndpoint = ''
+    if (endpoint !== undefined) {
+      finalEndpoint = endpoint || 'https://api.anthropic.com'
+    } else {
+      finalEndpoint = model.endpoint || 'https://api.anthropic.com'
+    }
+
     return {
       headers: {
         'Content-Type': 'application/json',
         'anthropic-version': '2023-06-01',
         'x-api-key': key || model.key,
       },
-      endpoint: endpoint || model.endpoint || 'https://api.anthropic.com',
+      endpoint: finalEndpoint,
       path: {
         chat: '/v1/messages',
       },
@@ -40,12 +55,19 @@ export function getRequestInfo(
   } else if (provider === 'groq') {
     const model = useModelsStore.getState().groq
 
+    let finalEndpoint = ''
+    if (endpoint !== undefined) {
+      finalEndpoint = endpoint || 'https://api.groq.com/openai'
+    } else {
+      finalEndpoint = model.endpoint || 'https://api.groq.com/openai'
+    }
+
     return {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${key || model.key}`,
+        Authorization: `Bearer ${key ?? model.key}`,
       },
-      endpoint: endpoint || model.endpoint || 'https://api.groq.com/openai',
+      endpoint: finalEndpoint,
       path: {
         chat: '/v1/chat/completions',
       },
