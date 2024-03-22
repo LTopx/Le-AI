@@ -191,18 +191,22 @@ export const useChatStore = create<ChatStore>()(
             }
           })
 
+          const params: any = {
+            stream: true,
+            model: findChat.chat_model.name,
+            messages,
+          }
+          if (findChat.chat_model.type !== 'groq') {
+            params['function_calling'] = findChat.chat_plugins
+            params['function_calling_extra'] = function_calling_extra
+          }
+
           fetchEventSource(`${endpoint}${path.chat}`, {
             headers,
             method: 'POST',
             signal: controller.signal,
             openWhenHidden: true,
-            body: JSON.stringify({
-              stream: true,
-              model: findChat.chat_model.name,
-              messages,
-              // function_calling: findChat.chat_plugins,
-              // function_calling_extra,
-            }),
+            body: JSON.stringify(params),
             onopen: async (res) => {
               const resError = !res.ok || res.status !== 200 || !res.body
               if (!resError) return
