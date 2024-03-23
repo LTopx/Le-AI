@@ -1,6 +1,7 @@
 import { ModelSelect } from './modelSelect'
 import { PluginSelect } from './pluginSelect'
 import { ToggleMenu } from './toggleMenu'
+import { Vision } from './vision'
 
 export function Headers() {
   return (
@@ -8,6 +9,7 @@ export function Headers() {
       <ToggleMenu />
       <ModelSelect />
       <PluginSelect />
+      <Vision />
     </div>
   )
 }

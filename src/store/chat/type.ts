@@ -19,11 +19,17 @@ export enum LOADING_STATE {
   RESPONDING, // Responding from server
 }
 
+export type MessageAttachment = {
+  type: 'image' | 'file'
+  url: string
+}
+
 export type Message = {
   id: string
   role: ChatRole
   time: string
   content: string
+  attachment?: MessageAttachment[]
 }
 
 export type ChatListItem = {
