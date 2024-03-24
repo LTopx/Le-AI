@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/sonner'
 
 import Providers from './providers'
 
+import 'react-photo-view/dist/react-photo-view.css'
 import '../styles/globals.css'
 
 export const metadata: Metadata = {

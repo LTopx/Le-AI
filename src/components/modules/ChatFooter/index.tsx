@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { PhotoProvider, PhotoView } from 'react-photo-view'
 import Image from 'next/image'
 import { toast } from 'sonner'
 import type { KeyboardEvent } from 'react'
@@ -107,27 +108,34 @@ export function ChatFooter() {
           onInput={onResize}
           onKeyDown={onKeyDown}
         />
-        <div className="flex gap-4">
-          {attachments.map((attachment, index) => (
-            <div key={index} className="relative h-20 w-20">
-              <Image
-                src={attachment.url}
-                alt="img"
-                width={80}
-                height={80}
-                className="h-full w-full rounded-md border object-contain"
-              />
-              <div
-                onClick={() => {
-                  setAttachments((prev) => prev.filter((_, i) => i !== index))
-                }}
-                className="absolute -right-2 -top-2 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border bg-white transition-colors hover:bg-slate-100"
-              >
-                <span className="i-mingcute-close-line h-[14px] w-[14px]" />
-              </div>
-            </div>
-          ))}
-        </div>
+        <PhotoProvider>
+          <div className="flex gap-4">
+            {attachments.map((attachment, index) => (
+              <PhotoView key={index} src={attachment.url}>
+                <div className="relative h-20 w-20 cursor-pointer">
+                  <Image
+                    src={attachment.url}
+                    alt="img"
+                    width={80}
+                    height={80}
+                    className="h-full w-full rounded-md border object-contain"
+                  />
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setAttachments((prev) =>
+                        prev.filter((_, i) => i !== index),
+                      )
+                    }}
+                    className="absolute -right-2 -top-2 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border bg-white transition-colors hover:bg-slate-100"
+                  >
+                    <span className="i-mingcute-close-line h-[14px] w-[14px]" />
+                  </div>
+                </div>
+              </PhotoView>
+            ))}
+          </div>
+        </PhotoProvider>
         <div className="flex justify-between">
           <div className="flex gap-1.5">
             <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]">
@@ -162,6 +170,7 @@ export function ChatFooter() {
                         { type: 'image', url: imgData as string },
                       ])
                       inputRef.current!.value = ''
+                      textareaRef.current?.focus()
                     }
                   }}
                 />

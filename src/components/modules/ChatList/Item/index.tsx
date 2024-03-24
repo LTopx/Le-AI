@@ -1,3 +1,4 @@
+import { PhotoProvider, PhotoView } from 'react-photo-view'
 import Image from 'next/image'
 
 import { cn } from '@/lib/utils'
@@ -30,19 +31,23 @@ export function ChatItem({ item, isLast, isLoading }: ChatItemProps) {
         >
           <Content role={item.role} content={item.content} />
           {!!item.attachments?.length && (
-            <div className="flex gap-4 px-3 pb-1.5">
-              {item.attachments.map((attachment, index) => (
-                <div key={index} className="h-16 w-16">
-                  <Image
-                    className="h-full w-full rounded-md border border-slate-300 object-contain"
-                    src={attachment.url}
-                    alt="attachment"
-                    width={64}
-                    height={64}
-                  />
-                </div>
-              ))}
-            </div>
+            <PhotoProvider>
+              <div className="flex gap-4 px-3 pb-1.5">
+                {item.attachments.map((attachment, index) => (
+                  <PhotoView key={index} src={attachment.url}>
+                    <div className="h-16 w-16 cursor-pointer">
+                      <Image
+                        className="h-full w-full rounded-md border border-slate-300 object-contain"
+                        src={attachment.url}
+                        alt="attachment"
+                        width={64}
+                        height={64}
+                      />
+                    </div>
+                  </PhotoView>
+                ))}
+              </div>
+            </PhotoProvider>
           )}
         </div>
       </div>
