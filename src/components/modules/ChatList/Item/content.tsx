@@ -62,10 +62,8 @@ export function Content({
   return (
     <MemoizedReactMarkdown
       className={cn(
-        'prose w-fit max-w-full rounded-lg px-3 py-1.5 text-base dark:prose-invert',
-        role === 'user'
-          ? 'bg-[#2c9bfd] text-white'
-          : 'bg-gray-100 text-[#272727]',
+        'prose max-w-full rounded-lg px-3 py-1.5 text-base dark:prose-invert',
+        role === 'user' ? 'text-white' : 'text-[#272727]',
       )}
       remarkPlugins={[RemarkGfm, RemarkMath, RemarkBreaks]}
       rehypePlugins={[RehypeKatex]}

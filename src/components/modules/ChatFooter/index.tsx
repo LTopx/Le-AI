@@ -2,35 +2,33 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import { toast } from 'sonner'
 import type { KeyboardEvent } from 'react'
 
 import { AlertDialog } from '@/components/common/alertDialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { MODEL_LIST } from '@/constants/models'
+import { isVisionModel } from '@/lib/model'
 import { getPlatform } from '@/lib/platform'
 import { cn } from '@/lib/utils'
-import { LOADING_STATE, useChatStore } from '@/store/chat'
+import { LOADING_STATE, MessageAttachment, useChatStore } from '@/store/chat'
 
 export function ChatFooter() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const [value, setValue] = useChatStore((state) => [
     state.inputValue,
     state.updateInputValue,
   ])
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
-  const [images, setImages] = useState<string[]>([])
+  const [attachments, setAttachments] = useState<MessageAttachment[]>([])
 
   const activeList = list.find((item) => item.chat_id === activeId)
   const isLoading = activeList?.chat_state !== LOADING_STATE.NONE
 
-  const model_vision = MODEL_LIST.find(
-    (val) => val.model_provider === activeList?.chat_model.type,
-  )?.model_list.find(
-    (item) => item.model_value === activeList?.chat_model.name,
-  )?.model_vision
+  const is_vision = isVisionModel(activeList?.chat_model)
 
   const addMessage = useChatStore((state) => state.addMessage)
   const clearMessage = useChatStore((state) => state.clearMessage)
@@ -78,7 +76,13 @@ export function ChatFooter() {
     if (!value?.trim()) return textareaRef.current?.focus()
 
     setValue('')
-    addMessage({ chat_id: activeId, message: value.trim(), role: 'user' })
+    setAttachments([])
+    addMessage({
+      chat_id: activeId,
+      message: value.trim(),
+      role: 'user',
+      attachments,
+    })
     sendChat(activeId)
   }
 
@@ -103,9 +107,25 @@ export function ChatFooter() {
           onInput={onResize}
           onKeyDown={onKeyDown}
         />
-        <div>
-          {images.map((img, index) => (
-            <Image key={index} src={img} alt="img" width={100} height={100} />
+        <div className="flex gap-4">
+          {attachments.map((attachment, index) => (
+            <div key={index} className="relative h-20 w-20">
+              <Image
+                src={attachment.url}
+                alt="img"
+                width={80}
+                height={80}
+                className="h-full w-full rounded-md border object-contain"
+              />
+              <div
+                onClick={() => {
+                  setAttachments((prev) => prev.filter((_, i) => i !== index))
+                }}
+                className="absolute -right-2 -top-2 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border bg-white transition-colors hover:bg-slate-100"
+              >
+                <span className="i-mingcute-close-line h-[14px] w-[14px]" />
+              </div>
+            </div>
           ))}
         </div>
         <div className="flex justify-between">
@@ -114,7 +134,7 @@ export function ChatFooter() {
               <span className="i-mingcute-classify-add-2-line h-[18px] w-[18px]" />
             </div>
             {/* Dealing with base64 image temporarily */}
-            {!!model_vision && (
+            {is_vision && (
               <>
                 <Label
                   htmlFor="picture"
@@ -124,15 +144,25 @@ export function ChatFooter() {
                 </Label>
                 <Input
                   id="picture"
+                  ref={inputRef}
                   type="file"
+                  accept="image/gif,image/jpeg,image/jpg,image/png,image/webp"
                   className="sr-only"
                   onChange={(e) => {
-                    // const imgFile = new FileReader()
-                    // imgFile.readAsDataURL(e.target.files?.[0]!)
-                    // imgFile.onload = function () {
-                    //   const imgData = this.result
-                    //   setImages((prev) => [...prev, imgData as string])
-                    // }
+                    if (attachments.length >= 3) {
+                      return toast.error('Maximum 3 attachments allowed')
+                    }
+                    const file = e.target.files?.[0]
+                    const imgFile = new FileReader()
+                    imgFile.readAsDataURL(file!)
+                    imgFile.onload = function () {
+                      const imgData = this.result
+                      setAttachments((prev) => [
+                        ...prev,
+                        { type: 'image', url: imgData as string },
+                      ])
+                      inputRef.current!.value = ''
+                    }
                   }}
                 />
               </>

@@ -29,7 +29,7 @@ export type Message = {
   role: ChatRole
   time: string
   content: string
-  attachment?: MessageAttachment[]
+  attachments?: MessageAttachment[]
 }
 
 export type ChatListItem = {
@@ -65,10 +65,12 @@ export type ChatStore = {
     chat_id,
     message,
     role,
+    attachments,
   }: {
     chat_id: string
     message: string
     role: ChatRole
+    attachments?: MessageAttachment[]
   }) => void
   deleteMessage: (message_id: string) => void
   updateMessage: (message_id: string, content: string) => void

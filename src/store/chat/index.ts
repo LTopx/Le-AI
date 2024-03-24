@@ -5,7 +5,7 @@ import { persist } from 'zustand/middleware'
 
 import { MODEL_LIST } from '@/constants/models'
 import { BASE_PROMPT, GENERATE_CHAT_NAME_PROMPT } from '@/constants/prompt'
-import { getCheapModel } from '@/lib/model'
+import { getCheapModel, isVisionModel } from '@/lib/model'
 import { scrollToBottom } from '@/lib/scroll'
 import { clone } from '@/lib/utils'
 import { fetchEventSource } from '@fortaine/fetch-event-source'
@@ -13,10 +13,16 @@ import { fetchEventSource } from '@fortaine/fetch-event-source'
 import { useModelsStore } from '../models'
 import { usePluginsStore } from '../plugins'
 import { useSettingsStore } from '../settings'
-import { ChatListItem, ChatStore, LOADING_STATE, Message } from './type'
+import {
+  ChatListItem,
+  ChatStore,
+  LOADING_STATE,
+  Message,
+  MessageAttachment,
+} from './type'
 import { getEventSourceContent, getRequestInfo } from './utils'
 
-export type { Message }
+export type { Message, MessageAttachment }
 export { LOADING_STATE }
 
 export const initChatItem: ChatListItem = {
@@ -107,15 +113,16 @@ export const useChatStore = create<ChatStore>()(
       },
 
       // Message
-      addMessage: ({ chat_id, message, role }) => {
+      addMessage: ({ chat_id, message, role, attachments }) => {
         const findChat = get().list.find((item) => item.chat_id === chat_id)
         if (!findChat) return
 
         findChat.chat_list.push({
           id: nanoid(),
           role,
-          content: message,
           time: String(+new Date()),
+          content: message,
+          attachments,
         })
 
         set(() => ({ list: get().list }))
@@ -175,10 +182,38 @@ export const useChatStore = create<ChatStore>()(
           set(() => ({ list: get().list }))
 
           // last 10 messages
-          const messages = findChat.chat_list.slice(-10).map((item) => ({
-            role: item.role,
-            content: item.content,
-          }))
+          const messages: any[] = []
+          findChat.chat_list.slice(-10).forEach((item) => {
+            // This data is processed only under a model that supports vision.
+            if (
+              item.attachments?.length &&
+              isVisionModel(findChat.chat_model)
+            ) {
+              messages.push({
+                role: item.role,
+                content: [
+                  {
+                    type: 'text',
+                    text: item.content,
+                  },
+                  ...item.attachments.map((attachment) => ({
+                    type: 'image_url',
+                    image_url: {
+                      url: attachment.url,
+                      detail: 'low',
+                    },
+                  })),
+                ],
+              })
+            } else {
+              messages.push({
+                role: item.role,
+                content: item.content,
+              })
+            }
+          })
+
+          // last 10 messages
 
           const controller = new AbortController()
           set((state) => ({ abort: { ...state.abort, [chat_id]: controller } }))
