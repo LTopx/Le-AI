@@ -25,6 +25,7 @@ export function ChatFooter() {
   ])
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
   const [attachments, setAttachments] = useState<MessageAttachment[]>([])
+  const [loadingUploadAttachment, setLoadingUploadAttachment] = useState(false)
 
   const activeList = list.find((item) => item.chat_id === activeId)
   const isLoading = activeList?.chat_state !== LOADING_STATE.NONE
@@ -145,10 +146,17 @@ export function ChatFooter() {
             {is_vision && (
               <>
                 <Label
-                  htmlFor="picture"
-                  className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]"
+                  htmlFor={loadingUploadAttachment ? '' : 'picture'}
+                  className={cn(
+                    'flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]',
+                    { 'cursor-default': loadingUploadAttachment },
+                  )}
                 >
-                  <span className="i-ri-attachment-2 h-[18px] w-[18px]" />
+                  {loadingUploadAttachment ? (
+                    <span className="i-mingcute-loading-line h-[18px] w-[18px] animate-spin" />
+                  ) : (
+                    <span className="i-ri-attachment-2 h-[18px] w-[18px]" />
+                  )}
                 </Label>
                 <Input
                   id="picture"
@@ -161,17 +169,30 @@ export function ChatFooter() {
                       return toast.error('Maximum 3 attachments allowed')
                     }
                     const file = e.target.files?.[0]
-                    const imgFile = new FileReader()
-                    imgFile.readAsDataURL(file!)
-                    imgFile.onload = function () {
-                      const imgData = this.result
-                      setAttachments((prev) => [
-                        ...prev,
-                        { type: 'image', url: imgData as string },
-                      ])
-                      inputRef.current!.value = ''
-                      textareaRef.current?.focus()
-                    }
+                    if (!file) return
+
+                    const formData = new FormData()
+                    formData.append('file', file)
+
+                    setLoadingUploadAttachment(true)
+
+                    fetch('https://oss.le-ai.app/api/v1/file', {
+                      method: 'POST',
+                      body: formData,
+                    })
+                      .then((res) => res.json())
+                      .then((res) => {
+                        setAttachments((prev) => [
+                          ...prev,
+                          {
+                            type: 'image',
+                            url: `https://cdn.le-ai.app/${res.data.fileName}`,
+                          },
+                        ])
+                      })
+                      .finally(() => {
+                        setLoadingUploadAttachment(false)
+                      })
                   }}
                 />
               </>

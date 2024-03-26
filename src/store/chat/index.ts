@@ -473,6 +473,7 @@ export const useChatStore = create<ChatStore>()(
       merge: (persistedState: any, currentState) => {
         // reset data
         if (persistedState) {
+          persistedState.inputValue = ''
           persistedState.abort = {}
 
           // If a model is deprecated and cannot be matched with existing models, it needs to be reset to the latest initial model.
