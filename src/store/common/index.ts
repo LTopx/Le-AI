@@ -11,7 +11,7 @@ interface CommonStore {
   settingsOpen: boolean
   updateSettingsOpen: () => void
   activeSettingsMenu: string
-  updateActiveSettingsMenu: (menu: string) => void
+  updateActiveSettingsMenu: (menu?: string) => void
 }
 
 export const menus = [
@@ -57,7 +57,7 @@ export const useCommonStore = create<CommonStore>((set, get) => ({
     set((state) => ({ settingsOpen: !state.settingsOpen }))
   },
   activeSettingsMenu: menus[0].value,
-  updateActiveSettingsMenu: (menu: string) => {
+  updateActiveSettingsMenu: (menu?: string) => {
     const findMenu = menus.find((item) => item.value === menu)
     if (!findMenu) {
       set(() => ({ activeSettingsMenu: menus[0].value }))
