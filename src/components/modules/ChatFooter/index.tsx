@@ -86,6 +86,9 @@ export function ChatFooter() {
       attachments,
     })
     sendChat(activeId)
+    requestAnimationFrame(() => {
+      onResize()
+    })
   }
 
   useEffect(() => {
@@ -142,7 +145,6 @@ export function ChatFooter() {
             <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors hover:bg-[#efefef]">
               <span className="i-mingcute-classify-add-2-line h-[18px] w-[18px]" />
             </div>
-            {/* Dealing with base64 image temporarily */}
             {is_vision && (
               <>
                 <Label

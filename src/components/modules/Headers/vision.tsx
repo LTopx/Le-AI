@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import {
   Tooltip,
   TooltipContent,
@@ -22,7 +23,9 @@ export function Vision() {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <span className="i-mingcute-eye-2-fill h-6 w-6 text-[#ef424f]" />
+          <Button variant="ghost" className="h-9 w-9 px-0">
+            <span className="i-mingcute-eye-2-fill h-6 w-6 text-[#ef424f]" />
+          </Button>
         </TooltipTrigger>
         <TooltipContent>
           <p>Vision</p>
