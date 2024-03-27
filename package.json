@@ -56,10 +56,10 @@
     "@iconify-json/ri": "1.1.20",
     "@iconify-json/simple-icons": "1.1.97",
     "@innei/prettier": "0.13.0",
-    "@tailwindcss/typography": "0.5.10",
+    "@tailwindcss/typography": "0.5.11",
     "@tauri-apps/cli": "2.0.0-beta.5",
     "@types/node": "20.11.30",
-    "@types/react": "18.2.71",
+    "@types/react": "18.2.72",
     "@types/react-dom": "18.2.22",
     "@types/react-syntax-highlighter": "15.5.11",
     "autoprefixer": "10.4.19",
@@ -68,7 +68,7 @@
     "eslint-config-next": "14.1.4",
     "postcss": "8.4.38",
     "prettier": "3.2.5",
-    "tailwindcss": "3.4.1",
+    "tailwindcss": "3.4.2",
     "typescript": "5.4.3"
   }
 }

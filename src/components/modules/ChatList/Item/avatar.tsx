@@ -6,7 +6,13 @@ import { Message, useChatStore } from '@/store/chat'
 import { useCommonStore } from '@/store/common'
 import { useSettingsStore } from '@/store/settings'
 
-export function Avatar({ role }: { role: Message['role'] }) {
+export function Avatar({
+  role,
+  loading,
+}: {
+  role: Message['role']
+  loading: boolean
+}) {
   const avatar = useSettingsStore((state) => state.avatar)
   const [activeId, list] = useChatStore((state) => [state.activeId, state.list])
   const updateSettingsOpen = useCommonStore((state) => state.updateSettingsOpen)
@@ -44,5 +50,7 @@ export function Avatar({ role }: { role: Message['role'] }) {
 
   const chat_model = activeList?.chat_model
 
-  return <Model type={chat_model?.type} name={chat_model?.name} />
+  return (
+    <Model type={chat_model?.type} name={chat_model?.name} loading={loading} />
+  )
 }

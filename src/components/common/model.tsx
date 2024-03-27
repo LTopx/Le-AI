@@ -9,12 +9,14 @@ export function Model({
   name,
   size = 9,
   iconSize = 6,
+  loading,
 }: {
   className?: string
   type?: ModelProvider
   name?: string
   size?: number
   iconSize?: number
+  loading?: boolean
 }) {
   if (!type || !name) {
     return (
@@ -28,11 +30,22 @@ export function Model({
     )
   }
 
+  if (loading) {
+    return (
+      <div
+        className="flex flex-shrink-0 items-center justify-center rounded-md bg-muted"
+        style={{ width: 4 * size, height: 4 * size }}
+      >
+        <span className="i-mingcute-loading-line h-[18px] w-[18px] animate-spin" />
+      </div>
+    )
+  }
+
   if (type === 'openai') {
     return (
       <div
         className={cn(
-          'flex flex-shrink-0 items-center justify-center rounded-md',
+          'relative flex flex-shrink-0 items-center justify-center rounded-md',
           {
             'bg-[rgb(25,195,125)]': name.includes('gpt-3.5'),
             'bg-[rgb(171,104,255)]': name.includes('gpt-4'),

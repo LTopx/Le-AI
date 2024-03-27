@@ -19,7 +19,7 @@ export function ChatItem({ item, isLast, isLoading }: ChatItemProps) {
     <div className="group">
       <div className="relative pl-12">
         <div className="absolute left-0">
-          <Avatar role={item.role} />
+          <Avatar role={item.role} loading={isLoading && isLast} />
         </div>
         <div
           className={cn(
@@ -35,7 +35,7 @@ export function ChatItem({ item, isLast, isLoading }: ChatItemProps) {
               <div className="flex gap-4 px-3 pb-1.5">
                 {item.attachments.map((attachment, index) => (
                   <PhotoView key={index} src={attachment.url}>
-                    <div className="h-16 w-16 cursor-pointer">
+                    <div className="h-20 w-20 cursor-pointer">
                       <Image
                         className="h-full w-full rounded-md border border-slate-300 object-contain"
                         src={attachment.url}

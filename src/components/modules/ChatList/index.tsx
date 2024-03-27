@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { scrollToBottom } from '@/lib/scroll'
 import { cn } from '@/lib/utils'
 import { LOADING_STATE, useChatStore } from '@/store/chat'
@@ -41,16 +42,13 @@ export function ChatList() {
             />
           ))}
         </div>
-        {isLoading && (
-          <div className="mt-4 flex items-center gap-2 pb-10 pl-12 text-muted-foreground">
-            <span className="i-mingcute-loading-line h-[18px] w-[18px] animate-spin" />
-            <span>
-              AI is{' '}
-              {activeChat.chat_state === LOADING_STATE.CONNECTING
-                ? 'thinking'
-                : 'typing'}
-              ...
-            </span>
+        {activeChat?.chat_state === LOADING_STATE.CONNECTING && (
+          <div className="mt-4 flex items-center space-x-4 pb-10">
+            <Skeleton className="flex h-9 w-9 items-center justify-center rounded-md"></Skeleton>
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[240px]" />
+              <Skeleton className="h-4 w-[190px]" />
+            </div>
           </div>
         )}
         {(activeChat.chat_recommendation?.length ||
